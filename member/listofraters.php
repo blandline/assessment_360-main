@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rater list</title>
-    <script src="rater-list.js"></script>
+    <script src="../js/rater-list.js"></script>
     <link rel="stylesheet" type="text/css" href="css/rater-list.css">
 </head>
     <header>
