@@ -229,6 +229,10 @@ $language["leftmenu_settings"] = "Password / Language";
 $language["leftmenu_logout"] = "Logout";
 $language["leftmenu_hello"] = "Hello,";
 
+//---------------------------NEW-------------------------------
+$language["leftmenu_list_of_raters"] = "List of Raters";
+//-------------------------------------------------------------
+
 // users
 $language["users_title"] = "User Management";
 $language["users_username"] = "Username";

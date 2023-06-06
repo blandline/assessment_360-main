@@ -232,6 +232,10 @@ $PACKAGE_CW = "Casual_Worker";
 $PACKAGE_CW_UNIT = "Casual_Worker_Unit";
 $PACKAGE_ASSESS_360 = "Assess360";
 
+//-----------------------------NEW------------------------------------
+$PACKAGE_LIST_OF_RATERS = "List_of_raters";
+//--------------------------------------------------------------------
+
 // session page
 $SESSION_PAGE_BULK = "bulk";
 $SESSION_PAGE_COMPANY = "company";
@@ -277,6 +281,10 @@ $SESSION_PAGE_CW_RECORD = "casualWorkerRecord";
 $SESSION_PAGE_CW_HISTORY = "casualWorkerHistory";
 $SESSION_PAGE_CW_LOG = "casualWorkerLog";
 $SESSION_PAGE_ASSESS_360 = "assess360";
+
+//----------------------------------NEW-----------------------------------
+$SESSION_PAGE_LIST_OF_RATERS = "List_of_raters";
+//------------------------------------------------------------------------
 
 // user setting
 $USER_SETTING_STAFF_ID = 1;
