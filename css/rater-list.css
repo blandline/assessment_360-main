@@ -11,7 +11,7 @@ body {
     height: 40px;
     color:red;
     position: fixed;
-    width:100%;
+    width:auto;
 }
 header h1 {
     text-align: center;
@@ -20,7 +20,8 @@ header h1 {
 }
 
 header {
-    padding: 40px;
+    height:50px;
+    width:inherit;
     background-color: rgb(143, 17, 17);
 }
 
@@ -40,6 +41,7 @@ nav a {
 main {
     background-color: white;
     text-align: center;
+  
 }
 
 h2 {
@@ -88,9 +90,15 @@ table {
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-collapse: collapse;
+   width:inherit
+    
+    
   }
 
   th {
     border: 1px solid black;
 
+  }
+  #formcontainer{
+    
   }

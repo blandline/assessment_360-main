@@ -62,8 +62,8 @@
       </nav>
 
       <div style="margin-top: 95px; position: absolute; right: 12px;">
-      <button type="button" class="btn btn-primary excel"><?= $language["competency_framework_export_excel"]; ?></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button type="button" class="btn btn-primary export"><?= $language["competency_framework_export"]; ?></button>
+      <!-- <button type="button" class="btn btn-primary excel"><?= $language["competency_framework_export_excel"]; ?></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary export"><?= $language["competency_framework_export"]; ?></button> -->
       </div>
 
       <div class="content search-competency-content">
