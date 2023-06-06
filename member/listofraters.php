@@ -1,4 +1,4 @@
-<? include_once 'header.php'; ?>
+<!-- <? include_once 'header.php'; ?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +14,10 @@
 
     </header>
     <main>
+        <div id="topbar">
+
+        </div>
+        <div id="formcontainer">
         <form id="rateform" action="rater-list.php">
             <table id="raterlisttable">
                 <tr>
@@ -63,6 +67,8 @@
                 </tr>
             </table>
         </form>
+        </div>
+        
     
         <button onclick="addrow()">Add</button>
         <button onclick="deleterow()">Delete</button>
