@@ -1,0 +1,4 @@
+<?
+$jspath = "js";
+$isDebug = false;
+?>
