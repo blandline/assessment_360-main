@@ -12,6 +12,7 @@
 </head>
    
 <body>
+    <?php include 'rater-list.php'?>
 <header>
 
 </header>
@@ -21,7 +22,7 @@
 
 </div>
 <div id="formcontainer">
-<form id="rateform" action="rater-list.php">
+<form method="post" id="rateform" action="rater-list.php">
     <table id="raterlisttable">
         <tr>
             <th colspan="2"><p>FOCUS Name</p></th>
@@ -42,8 +43,8 @@
         </tr>
 
         <tr>
-            <td><input type="text" name="FOCUS-first-name"></td>                 
-            <td><input type="text" name="FOCUS-last-name"></td>
+            <td><input type="text" name="FOCUS_first_name"></td>              
+            <td><input type="text" name="FOCUS_last_name"></td>
             <td colspan="2"><input type="date" name="Launch-date"></td>
             <td colspan="2"><input type="date" name="End-date"></td>
             <td><input type="text" name="Rater-first-name"></td>
@@ -69,6 +70,7 @@
             <td><input type="text" name="email"></td>
         </tr>
     </table>
+    <input type="submit" style="background-color:rgb(210, 56, 56); border-color:rgb(253, 253, 255); color:rgb(0, 0, 0)">Activate
 </form>
 </div>
     </div>
@@ -79,7 +81,7 @@
     <button onclick="deleterow()">Delete</button>
     <br>
     <br>
-    <button style="background-color:rgb(210, 56, 56); border-color:rgb(253, 253, 255); color:rgb(0, 0, 0)">Activate
+    
 </main>
 <footer>
 
