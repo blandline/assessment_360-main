@@ -15,7 +15,7 @@ if ($login->isLoggedIn() == true) {
     header('Location: ' . $_SESSION[$session_login_page]);
     unset($_SESSION[$session_login_page]);
   } else if (in_array($PACKAGE_ASSESS_360, $_SESSION[$session_package]) && ($_SESSION[$session_userPermission] == [-1] || in_array($PERMISSION_ASSESS360_VIEW, $_SESSION[$session_userPermission]))) {
-    header('Location: member/assess360');
+    header('Location: member/assess360?a=listofraters');
   } else {
     header('Location: member/blank');
   }

@@ -209,11 +209,11 @@ if ($login->isLoggedIn()) {
       'tempDir' => '../vendor/mpdf/mpdf/tmp',
       "autoScriptToLang" => true,
       "autoLangToFont" => true,
-  );
+    );
 
-  $mpdf = new \Mpdf\Mpdf($mpdfConfig);
-  $mpdf->WriteHTML($html);
-  $mpdf->Output("competency.pdf", "D");
+    $mpdf = new \Mpdf\Mpdf($mpdfConfig);
+    $mpdf->WriteHTML($html);
+    $mpdf->Output("competency.pdf", "D");
   }
 
   // export to excel
@@ -344,13 +344,26 @@ if ($login->isLoggedIn()) {
     var $_GET = <?php echo json_encode($_GET); ?>;
   </script>
 <?
-  if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_ASSESS_360) {
-    $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+  //------------------------------------NEW----------------------------------------
+  if (isset($_GET["a"]) && $_GET["a"] == "listofraters") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_LIST_OF_RATERS) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_LIST_OF_RATERS;
+
+    include("../views/member/listofratersView.php");
+  } elseif (isset($_GET["a"]) && $_GET["a"] == "assess360") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_ASSESS_360) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_ASSESS_360;
+
+    include("../views/member/assess360View.php");
   }
+  //---------------------------------------------------------------------------------
 
-  $_SESSION[$session_page] = $SESSION_PAGE_ASSESS_360;
-
-  include("../views/member/assess360View.php");
 } else {
   $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
   header('Location: ../login');

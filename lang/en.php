@@ -2024,6 +2024,22 @@ $language["competency_framework_confirm_delete"] = "Conifrm Delete?";
 $language["competency_framework_delete"] = "Delete";
 $language["competency_framework_export"] = "Export to PDF";
 $language["competency_framework_export_excel"] = "Export to Excel";
+//---------------------------------NEW---------------------------------
+$language["confirm_button"] = "Confirm";
+
+//list of raters framework
+$language["listofraters_framework_title"] = "List of Raters";
+$language["listofraters_framework_focusname"] = "FOCUS name";
+$language["listofraters_framework_launchdate"] = "Launch on";
+$language["listofraters_framework_enddate"] = "Ended on";
+$language["listofraters_framework_raters"] = "Raters";
+$language["listofraters_framework_role"] = "Role";
+$language["listofraters_framework_gender"] = "Gender";
+$language["listofraters_framework_position"] = "Position";
+$language["listofraters_framework_email"] = "email";
+$language["listofraters_framework_firstname"] = "First";
+$language["listofraters_framework_lastname"] = "Last";
+//---------------------------------------------------------------------
 
 // package
 $language["package_title"] = "Package";
