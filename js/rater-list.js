@@ -22,12 +22,12 @@ function addrow() { // adds rows to the table at the end of the last row
     cell2.innerHTML = "";
     cell3.innerHTML = "";
     cell4.innerHTML = "";
-    cell5.innerHTML = "<input type='text' name='Rater-first-name" + rowcounter +"'>";
-    cell6.innerHTML = "<input type='text' name='Rater-last-name" + rowcounter +"'>";
-    cell7.innerHTML = "<select name='Roles' id='roles'><option value='Focus' name>FOCUS</option><option value='manager' name>Manager</option><option value='colleague' name>Colleague</option><option value='direct-report' name>Direct report</option><option value='otherr' name>Other</option></select>";
-    cell8.innerHTML = "<select name='Genders' id='genders'><option value='Male' name>Male</option><option value='Female' name>Female</option><option value='other-gender' name>Other Gender</option></select>";
-    cell9.innerHTML = "<input type='text' name='position'>";
-    cell10.innerHTML = "<input type='text' name='email'>";
+    cell5.innerHTML = "<input type='text' name='rows[" + rowcounter +"]Rater-first-name'>";
+    cell6.innerHTML = "<input type='text' name='rows[" + rowcounter +"]Rater-last-name'>";
+    cell7.innerHTML = "<select name='rows[" + rowcounter +"]Roles' id='roles'><option value='Focus' name='focus_role'>FOCUS</option><option value='manager' name='manager_role'>Manager</option><option value='colleague' name='colleague_role'>Colleague</option><option value='direct-report' name='direct_report_role'>Direct report</option><option value='Other' name='other_role'>Other</option></select>";
+    cell8.innerHTML = "<select name='rows[" + rowcounter +"]Genders' id='genders'><option value='Male' name='male_gender'>Male</option><option value='Female' name='female_gender'>Female</option><option value='Other Gender' name='other_gender'>Other Gender</option></select>";
+    cell9.innerHTML = "<input type='text' name='rows[" + rowcounter +"]position'>";
+    cell10.innerHTML = "<input type='text' name='rows[" + rowcounter +"]email'>";
     rowcounter++;
   }
 
@@ -36,10 +36,13 @@ function addrow() { // adds rows to the table at the end of the last row
     var rowCount = table.rows.length;
   if (rowCount > 3) {
     table.deleteRow(rowCount - 1);
+    
   }
+  rowcounter--;
+  
+}
 
   function activate_button(){
       confirm("Are you sure");
       
   }
-}

@@ -30,7 +30,7 @@ if (isset($_GET['submit']))
 
 </div>
 <div id="formcontainer">
-<form method="get" id="rateform" action="listofraters.php">
+<!-- <form method="post" id="rateform" action="listofraters.php">
 
 
     <table id="raterlisttable">
@@ -81,34 +81,119 @@ if (isset($_GET['submit']))
         </tr>
     </table> 
     <input type="submit" style="background-color:rgb(210, 56, 56); border-color:rgb(253, 253, 255); color:rgb(0, 0, 0)" value="Activate">
+</form> -->
+
+
+
+////////////////////////////////form for testing///////////////////////////////
+<form method="post" id="rateform" action="listofraters.php">
+
+
+    <table id="raterlisttable">
+        <tr>
+            <th colspan="2"><p>FOCUS Name</p></th>
+            <th colspan="2" rowspan="2"><p>Launch on</p></th>
+            <th colspan="2" rowspan="2"><p>Ended on</p></th>
+            <th colspan="2"><p>Raters</p></th>
+            <th rowspan="2"><p>Role</p></th>
+            <th rowspan="2"><p>Gender</p></th>
+            <th rowspan="2"><p>Position</p></th>
+            <th rowspan="2"><p>Email</p></th>
+        </tr>
+
+        <tr>
+            <th><p>First</p></th>
+            <th><p>Last</p></th>
+            <th><p>First</p></th>
+            <th><p>Last</p></th>
+        </tr>
+
+        <tr>
+            <td><input type="text" name="rows[0]FOCUS_first_name"></td>              
+            <td><input type="text" name="rows[0]FOCUS_last_name"></td>
+            <td colspan="2"><input type="date" name="rows[0]Launch-date"></td>
+            <td colspan="2"><input type="date" name="rows[0]End-date"></td>
+            <td><input type="text" name="rows[0]Rater-first-name"></td>
+            <td><input type="text" name="rows[0]Rater-last-name"></td>
+            <td>
+                <select name="rows[0]Roles" id="roles">
+                    <option value="FOCUS" name='focus_role'>FOCUS</option>
+                    <option value="Manager" name='manager_role'>Manager</option>
+                    <option value="Colleague" name='colleague_role'>Colleague</option>
+                    <option value="Direct report" name='direct_report_role'>Direct report</option>
+                    <option value="Other" name='other_role'>Other</option>
+                </select>
+            </td>
+            <td>
+                <select name="rows[0]Genders" id="genders">
+                    <option value="Male" name='male_gender'>Male</option>
+                    <option value="Female" name='female_gender'>Female</option>
+                    <option value="Other Gender" name='other_gender'>Other Gender</option>
+                    
+                </select>
+            </td>
+            <td><input type="text" name="rows[0]position"></td>
+            <td><input type="text" name="rows[0]email"></td>
+        </tr>
+    </table> 
+    <input type="hidden" name="a" value="addListOfRaters">
+    <input type="submit" style="background-color:rgb(210, 56, 56); border-color:rgb(253, 253, 255); color:rgb(0, 0, 0)" value="Activate">
 </form>
 
 </div>
     </div>
     <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // extract the form data using the $_GET superglobal variable
-    $FOCUS_first_name = $_GET['FOCUS_first_name'];
-    $FOCUS_last_name = $_GET['FOCUS_last_name'];
-    $Launch_date = $_GET['Launch-date'];
-    $End_date = $_GET['End-date'];
-    $Rater_first_name = $_GET['Rater-first-name'];
-    $Rater_last_name = $_GET['Rater-last-name'];
-    $Roles = $_GET['Roles'];
-    $Genders = $_GET['Genders'];
-    $position = $_GET['position'];
-    $email = $_GET['email'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // initialize an array to hold the form data
+        $form_data = array();
+      
+        // iterate over the form data using a foreach loop
+        foreach ($_POST['rows'] as $row) {
+          // create a new associative array for each row
+          $row_data = array(
+            'FOCUS_first_name' => $row['FOCUS_first_name'],
+            'FOCUS_last_name' => $row['FOCUS_last_name'],
+            'Launch_date' => $row['Launch-date'],
+            'End_date' => $row['End-date'],
+            'Rater_first_name' => $row['Rater-first-name'],
+            'Rater_last_name' => $row['Rater-last-name'],
+            'Roles' => $row['Roles'],
+            'Genders' => $row['Genders'],
+            'position' => $row['position'],
+            'email' => $row['email']
+          );
+      
+          // add the row data to the form data array
+          $form_data[] = $row_data;
+        }
+      
+        // output the form data array for testing
+        print_r($form_data);
+      }
+      
+    // if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // // extract the form data using the $_GET superglobal variable
+    // $FOCUS_first_name = $_GET['FOCUS_first_name'];
+    // $FOCUS_last_name = $_GET['FOCUS_last_name'];
+    // $Launch_date = $_GET['Launch-date'];
+    // $End_date = $_GET['End-date'];
+    // $Rater_first_name = $_GET['Rater-first-name'];
+    // $Rater_last_name = $_GET['Rater-last-name'];
+    // $Roles = $_GET['Roles'];
+    // $Genders = $_GET['Genders'];
+    // $position = $_GET['position'];
+    // $email = $_GET['email'];
 
-    // output the form data
-    echo "<p>FOCUS Name: {$FOCUS_first_name} {$FOCUS_last_name}</p>";
-    echo "<p>Launch Date: {$Launch_date}</p>";
-    echo "<p>End Date: {$End_date}</p>";
-    echo "<p>Rater Name: {$Rater_first_name} {$Rater_last_name}</p>";
-    echo "<p>Role: {$Roles}</p>";
-    echo "<p>Gender: {$Genders}</p>";
-    echo "<p>Position: {$position}</p>";
-    echo "<p>Email: {$email}</p>";
-    }
+    // // output the form data
+    // echo "<p>FOCUS Name: {$FOCUS_first_name} {$FOCUS_last_name}</p>";
+    // echo "<p>Launch Date: {$Launch_date}</p>";
+    // echo "<p>End Date: {$End_date}</p>";
+    // echo "<p>Rater Name: {$Rater_first_name} {$Rater_last_name}</p>";
+    // echo "<p>Role: {$Roles}</p>";
+    // echo "<p>Gender: {$Genders}</p>";
+    // echo "<p>Position: {$position}</p>";
+    // echo "<p>Email: {$email}</p>";
+    
 ?>
     
 
