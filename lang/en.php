@@ -2039,9 +2039,19 @@ $language["listofraters_framework_position"] = "Position";
 $language["listofraters_framework_email"] = "email";
 $language["listofraters_framework_firstname"] = "First";
 $language["listofraters_framework_lastname"] = "Last";
+
 $language["listofraters_add_button"] = "Add";
 $language["listofraters_delete_button"] = "Delete";
 
+$language["listofraters_role_focus"] = "Focus";
+$language["listofraters_role_manager"] = "Manager";
+$language["listofraters_role_colleague"] = "Colleague";
+$language["listofraters_role_directreport"] = "Direct report";
+$language["listofraters_role_other"] = "Other";
+
+$language["listofraters_gender_male"] = "Male";
+$language["listofraters_gender_female"] = "Female";
+$language["listofraters_gender_other"] = "Other";
 //---------------------------------------------------------------------
 
 // package

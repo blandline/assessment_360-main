@@ -98,34 +98,31 @@
                         <td><input type="text" name="rows[0][Rater-last-name]" style= "width:75px"></td>
                         <td>
                           <select name="rows[0][Roles]" id="roles" style= "width:95px">
-                            <option value="FOCUS" name='focus_role'>FOCUS</option>
-                            <option value="Manager" name='manager_role'>Manager</option>
-                            <option value="Colleague" name='colleague_role'>Colleague</option>
-                            <option value="Direct report" name='direct_report_role'>Direct report</option>
-                            <option value="Other" name='other_role'>Other</option>
+                            <option value="FOCUS" name='focus_role'><?= $language["listofraters_role_focus"]; ?></option>
+                            <option value="Manager" name='manager_role'><?= $language["listofraters_role_manager"]; ?></option>
+                            <option value="Colleague" name='colleague_role'><?= $language["listofraters_role_colleague"]; ?></option>
+                            <option value="Direct report" name='direct_report_role'><?= $language["listofraters_role_directreport"]; ?></option>
+                            <option value="Other" name='other_role'><?= $language["listofraters_role_other"]; ?></option>
                           </select>
                         </td>
                         <td>
                           <select name="rows[0][Genders]" id="genders" style= "width:60px">
-                            <option value="Male" name='male_gender'>Male</option>
-                            <option value="Female" name='female_gender'>Female</option>
-                            <option value="Other Gender" name='other_gender'>Other</option>
+                            <option value="Male" name='male_gender'><?= $language["listofraters_gender_male"]; ?></option>
+                            <option value="Female" name='female_gender'><?= $language["listofraters_gender_female"]; ?></option>
+                            <option value="Other Gender" name='other_gender'><?= $language["listofraters_gender_other"]; ?></option>
                           </select>
                         <td><input type="text" name="rows[0][position]" style= "width:75px"></td>
                         <td><input type="text" name="rows[0][email]" style= "width:80px"></td>
                       </tr>
                     </table>
+                    <input type="submit" value="Activate">
                   </form>
                 </div>
               </div>
             </div>
           </div>
-          </form>
           <button class="addrow_raterlist"><?= $language["listofraters_add_button"]; ?></button>
           <button class="deleterow_raterlist"><?= $language["listofraters_delete_button"]; ?></button>
-          <br>
-          <br>
-          <input type="submit" value="Activate">
           <!-- ---------------------------------------------------------------- -->
           <? include_once '../member/footer.php'; ?>
         </div>
