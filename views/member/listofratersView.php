@@ -61,31 +61,83 @@
         </div>
       </nav>
 
-      <div style="margin-top: 95px; position: absolute; right: 12px;">
-        <!-- <button type="button" class="btn btn-primary excel"><?= $language["competency_framework_export_excel"]; ?></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-        <button type="button" class="btn btn-primary export"><?= $language["confirm_button"]; ?></button>
-      </div>
-
       <!-- --------------------------------NEW TABLE------------------------- -->
-      <form method="post" id="rateform" action="listofratersView.php">
-        <table id="raterlisttable">
+      <div class="content search-competency-content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="competency-frm-table-div">
+              <div class="card">
+                <div class="div-datatable-competency card-body table-responsive">
+                  <form method="post" id="rateform" action="listofratersView.php">
+                    <table id="raterlisttable" class="competency-frm-table table table-hover" style="width:100%;">
+                      <thead class="text-danger">
+                        <tr>
+                          <th colspan="2"><?= $language["listofraters_framework_focusname"]; ?></th>
+                          <th colspan="2" rowspan="2"><?= $language["listofraters_framework_launchdate"]; ?></th>
+                          <th colspan="2" rowspan="2"><?= $language["listofraters_framework_enddate"]; ?></th>
+                          <th colspan="2"><?= $language["listofraters_framework_raters"]; ?></th>
+                          <th rowspan="2"><?= $language["listofraters_framework_role"]; ?></th>
+                          <th rowspan="2"><?= $language["listofraters_framework_gender"]; ?></th>
+                          <th rowspan="2"><?= $language["listofraters_framework_position"]; ?></th>
+                          <th rowspan="2"><?= $language["listofraters_framework_email"]; ?></th>
+                        </tr>
+
+                        <tr>
+                          <th><?= $language["listofraters_framework_firstname"]; ?></th>
+                          <th><?= $language["listofraters_framework_lastname"]; ?></th>
+                          <th><?= $language["listofraters_framework_firstname"]; ?></th>
+                          <th><?= $language["listofraters_framework_lastname"]; ?></th>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td><input type="text" name="rows[0]FOCUS_first_name"></td>
+                        <td><input type="text" name="rows[0]FOCUS_last_name"></td>
+                        <td colspan="2"><input type="date" name="rows[0]Launch-date"></td>
+                        <td colspan="2"><input type="date" name="rows[0]End-date"></td>
+                        <td><input type="text" name="rows[0]Rater-first-name"></td>
+                        <td><input type="text" name="rows[0]Rater-last-name"></td>
+                        <td>
+                          <select name="rows[0]Roles" id="roles">
+                            <option value="FOCUS" name='focus_role'>FOCUS</option>
+                            <option value="Manager" name='manager_role'>Manager</option>
+                            <option value="Colleague" name='colleague_role'>Colleague</option>
+                            <option value="Direct report" name='direct_report_role'>Direct report</option>
+                            <option value="Other" name='other_role'>Other</option>
+                          </select>
+                        </td>
+                        <td>
+                          <select name="rows[0]Genders" id="genders">
+                            <option value="Male" name='male_gender'>Male</option>
+                            <option value="Female" name='female_gender'>Female</option>
+                            <option value="Other Gender" name='other_gender'>Other Gender</option>
           <tr>
-            <th colspan="2"><?= $language["listofraters_framework_focusname"]; ?></th>
-            <th colspan="2" rowspan="2"><?= $language["listofraters_framework_launchdate"]; ?></th>
-            <th colspan="2" rowspan="2"><?= $language["listofraters_framework_enddate"]; ?></th>
-            <th colspan="2"><?= $language["listofraters_framework_raters"]; ?></th>
-            <th rowspan="2"><?= $language["listofraters_framework_role"]; ?></th>
-            <th rowspan="2"><?= $language["listofraters_framework_gender"]; ?></th>
-            <th rowspan="2"><?= $language["listofraters_framework_position"]; ?></th>
-            <th rowspan="2"><?= $language["listofraters_framework_email"]; ?></th>
+            <th><?= $language["listofraters_framework_firstname"]; ?></th>
+            <th><?= $language["listofraters_framework_lastname"]; ?></th>
+            <th><?= $language["listofraters_framework_firstname"]; ?></th>
+            <th><?= $language["listofraters_framework_lastname"]; ?></th>
           </tr>
 
           <tr>
-            <th><?= $language["listofraters_framework_firstname"]; ?></th>
-            <th><?= $language["listofraters_framework_lastname"]; ?></th>
-            <th><?= $language["listofraters_framework_firstname"]; ?></th>
-            <th><?= $language["listofraters_framework_lastname"]; ?></th>
-          </tr>
+            <td><input type="text" name="rows[0][FOCUS_first_name]"></td>
+            <td><input type="text" name="rows[0][FOCUS_last_name]"></td>
+            <td colspan="2"><input type="date" name="rows[0][Launch-date]"></td>
+            <td colspan="2"><input type="date" name="rows[0][End-date]"></td>
+            <td><input type="text" name="rows[0][Rater-first-name]"></td>
+            <td><input type="text" name="rows[0][Rater-last-name]"></td>
+            <td>
+              <select name="rows[0][Roles]" id="roles">
+                <option value="FOCUS" name='focus_role'>FOCUS</option>
+                <option value="Manager" name='manager_role'>Manager</option>
+                <option value="Colleague" name='colleague_role'>Colleague</option>
+                <option value="Direct report" name='direct_report_role'>Direct report</option>
+                <option value="Other" name='other_role'>Other</option>
+              </select>
+            </td>
+            <td>
+              <select name="rows[0][Genders]" id="genders">
+                <option value="Male" name='male_gender'>Male</option>
+                <option value="Female" name='female_gender'>Female</option>
+                <option value="Other Gender" name='other_gender'>Other Gender</option>
 
           <tr>
             <td><input type="text" name="rows[0][FOCUS_first_name]"></td>
@@ -122,9 +174,27 @@
       <button class="deleterow_raterlist">Delete</button>
       <!-- ---------------------------------------------------------------- -->
       <? include_once '../member/footer.php'; ?>
+                          </select>
+                        </td>
+                        <td><input type="text" name="rows[0]position"></td>
+                        <td><input type="text" name="rows[0]email"></td>
+                      </tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          </form>
+          <button class="addrow_raterlist"><?= $language["listofraters_add_button"]; ?></button>
+          <button class="deleterow_raterlist"><?= $language["listofraters_delete_button"]; ?></button>
+          <br>
+          <br>
+          <input type="submit" value="Activate">
+          <!-- ---------------------------------------------------------------- -->
+          <? include_once '../member/footer.php'; ?>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
   </div>
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>

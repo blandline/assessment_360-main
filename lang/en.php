@@ -2039,6 +2039,9 @@ $language["listofraters_framework_position"] = "Position";
 $language["listofraters_framework_email"] = "email";
 $language["listofraters_framework_firstname"] = "First";
 $language["listofraters_framework_lastname"] = "Last";
+$language["listofraters_add_button"] = "Add";
+$language["listofraters_delete_button"] = "Delete";
+
 //---------------------------------------------------------------------
 
 // package
