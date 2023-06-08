@@ -598,6 +598,7 @@ var Raterlist = function() {
         var cell8 = row.insertCell(7);
         var cell9 = row.insertCell(8);
         var cell10 = row.insertCell(9);
+        var cell11 = row.insertCell(10);
 
 
         
@@ -611,6 +612,8 @@ var Raterlist = function() {
         cell8.innerHTML = "<select name='rows[" + rowcounter +"][Genders]' id='genders' style='width: 60px;'><option value='Male' name='male_gender'>Male</option><option value='Female' name='female_gender'>Female</option><option value='Other Gender' name='other_gender'>Other Gender</option></select>";
         cell9.innerHTML = "<input type='text' name='rows[" + rowcounter +"][position]' style='width: 75px;'>";
         cell10.innerHTML = "<input type='text' name='rows[" + rowcounter +"][email]' style='width: 80px;'>";
+
+        cell11.innerHTML = "<button class='btn btn-dark btn-sm addButton raterlist-delete-btn'>Delete</button>"; //+ <?=$language['listofraters_delete_button']?>
         rowcounter++;
     });
 
