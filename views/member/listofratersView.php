@@ -72,21 +72,21 @@
                     <table id="raterlisttable" class="competency-frm-table table table-hover" style="width:100%;">
                       <thead class="text-danger">
                         <tr>
-                          <th colspan="2"><?= $language["listofraters_framework_focusname"]; ?></th>
-                          <th colspan="2" rowspan="2"><?= $language["listofraters_framework_launchdate"]; ?></th>
-                          <th colspan="2" rowspan="2"><?= $language["listofraters_framework_enddate"]; ?></th>
-                          <th colspan="2"><?= $language["listofraters_framework_raters"]; ?></th>
-                          <th rowspan="2"><?= $language["listofraters_framework_role"]; ?></th>
-                          <th rowspan="2"><?= $language["listofraters_framework_gender"]; ?></th>
-                          <th rowspan="2"><?= $language["listofraters_framework_position"]; ?></th>
-                          <th rowspan="2"><?= $language["listofraters_framework_email"]; ?></th>
+                          <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_focusname"]; ?></th>
+                          <th colspan="2" rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_launchdate"]; ?></th>
+                          <th colspan="2" rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_enddate"]; ?></th>
+                          <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_raters"]; ?></th>
+                          <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_role"]; ?></th>
+                          <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_gender"]; ?></th>
+                          <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_position"]; ?></th>
+                          <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_email"]; ?></th>
                         </tr>
 
                         <tr>
-                          <th><?= $language["listofraters_framework_firstname"]; ?></th>
-                          <th><?= $language["listofraters_framework_lastname"]; ?></th>
-                          <th><?= $language["listofraters_framework_firstname"]; ?></th>
-                          <th><?= $language["listofraters_framework_lastname"]; ?></th>
+                          <th style="text-align: center;"><?= $language["listofraters_framework_firstname"]; ?></th>
+                          <th style="text-align: center;"><?= $language["listofraters_framework_lastname"]; ?></th>
+                          <th style="text-align: center;"><?= $language["listofraters_framework_firstname"]; ?></th>
+                          <th style="text-align: center;"><?= $language["listofraters_framework_lastname"]; ?></th>
                         </tr>
                       </thead>
                       <tr>
