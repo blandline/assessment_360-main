@@ -598,17 +598,19 @@ var Raterlist = function() {
         var cell8 = row.insertCell(7);
         var cell9 = row.insertCell(8);
         var cell10 = row.insertCell(9);
-      
+
+
+        
         cell1.innerHTML = ""; // row counter is added to give every column a unique name to assist in the php form handling
         cell2.innerHTML = "";
         cell3.innerHTML = "";
         cell4.innerHTML = "";
-        cell5.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-first-name]'>";
-        cell6.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-last-name]'>";
-        cell7.innerHTML = "<select name='rows[" + rowcounter +"][Roles]' id='roles'><option value='Focus' name='focus_role'>FOCUS</option><option value='manager' name='manager_role'>Manager</option><option value='colleague' name='colleague_role'>Colleague</option><option value='direct-report' name='direct_report_role'>Direct report</option><option value='Other' name='other_role'>Other</option></select>";
-        cell8.innerHTML = "<select name='rows[" + rowcounter +"][Genders]' id='genders'><option value='Male' name='male_gender'>Male</option><option value='Female' name='female_gender'>Female</option><option value='Other Gender' name='other_gender'>Other Gender</option></select>";
-        cell9.innerHTML = "<input type='text' name='rows[" + rowcounter +"][position]'>";
-        cell10.innerHTML = "<input type='text' name='rows[" + rowcounter +"][email]'>";
+        cell5.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-first-name]' style='width: 75px;'>";
+        cell6.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-last-name]' style='width: 75px;'>";
+        cell7.innerHTML = "<select name='rows[" + rowcounter +"][Roles]' id='roles' style='width: 90px;'><option value='Focus' name='focus_role'>FOCUS</option><option value='manager' name='manager_role'>Manager</option><option value='colleague' name='colleague_role'>Colleague</option><option value='direct-report' name='direct_report_role'>Direct report</option><option value='Other' name='other_role'>Other</option></select>";
+        cell8.innerHTML = "<select name='rows[" + rowcounter +"][Genders]' id='genders' style='width: 65px;'><option value='Male' name='male_gender'>Male</option><option value='Female' name='female_gender'>Female</option><option value='Other Gender' name='other_gender'>Other Gender</option></select>";
+        cell9.innerHTML = "<input type='text' name='rows[" + rowcounter +"][position]' style='width: 75px;'>";
+        cell10.innerHTML = "<input type='text' name='rows[" + rowcounter +"][email]' style='width: 80px;'>";
         rowcounter++;
     });
 

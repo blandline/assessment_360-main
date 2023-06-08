@@ -90,14 +90,14 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td><input type="text" name="rows[0]FOCUS_first_name" style="width: 75px;"></td>
-                        <td><input type="text" name="rows[0]FOCUS_last_name"  style="width: 75px;"></td>
-                        <td colspan="2"><input type="date" name="rows[0]Launch-date" style="width: 115px;"></td>
-                        <td colspan="2"><input type="date" name="rows[0]End-date" style="width: 115px;"></td>
-                        <td><input type="text" name="rows[0]Rater-first-name" style="width: 75px;"></td>
-                        <td><input type="text" name="rows[0]Rater-last-name" style="width: 75px;"></td>
+                        <td><input type="text" name="rows[0][FOCUS_first_name]" style= "width:75px"></td>
+                        <td><input type="text" name="rows[0][FOCUS_last_name]" style= "width:75px"></td>
+                        <td colspan="2"><input type="date" name="rows[0][Launch-date]" style= "width:115px"></td>
+                        <td colspan="2"><input type="date" name="rows[0][End-date]" style= "width:115px"></td>
+                        <td><input type="text" name="rows[0][Rater-first-name]" style= "width:75px"></td>
+                        <td><input type="text" name="rows[0][Rater-last-name]" style= "width:75px"></td>
                         <td>
-                          <select name="rows[0]Roles" id="roles" style="width: 95px;">
+                          <select name="rows[0][Roles]" id="roles" style= "width:95px">
                             <option value="FOCUS" name='focus_role'>FOCUS</option>
                             <option value="Manager" name='manager_role'>Manager</option>
                             <option value="Colleague" name='colleague_role'>Colleague</option>
@@ -106,108 +106,16 @@
                           </select>
                         </td>
                         <td>
-                          <select name="rows[0]Genders" id="genders" style="width: 60px;">
+                          <select name="rows[0][Genders]" id="genders" style= "width:60px">
                             <option value="Male" name='male_gender'>Male</option>
                             <option value="Female" name='female_gender'>Female</option>
                             <option value="Other Gender" name='other_gender'>Other</option>
-                            <option value="Other Gender" name='other_gender'>Other Gender</option>
-          <tr>
-            <th><?= $language["listofraters_framework_firstname"]; ?></th>
-            <th><?= $language["listofraters_framework_lastname"]; ?></th>
-            <th><?= $language["listofraters_framework_firstname"]; ?></th>
-            <th><?= $language["listofraters_framework_lastname"]; ?></th>
-          </tr>
-          <tr>
-            <td><input type="text" name="rows[0][FOCUS_first_name]"></td>
-            <td><input type="text" name="rows[0][FOCUS_last_name]"></td>
-            <td colspan="2"><input type="date" name="rows[0][Launch-date]"></td>
-            <td colspan="2"><input type="date" name="rows[0][End-date]"></td>
-            <td><input type="text" name="rows[0][Rater-first-name]"></td>
-            <td><input type="text" name="rows[0][Rater-last-name]"></td>
-            <td>
-              <select name="rows[0][Roles]" id="roles">
-                <option value="FOCUS" name='focus_role'>FOCUS</option>
-                <option value="Manager" name='manager_role'>Manager</option>
-                <option value="Colleague" name='colleague_role'>Colleague</option>
-                <option value="Direct report" name='direct_report_role'>Direct report</option>
-                <option value="Other" name='other_role'>Other</option>
-              </select>
-            </td>
-            <td>
-              <select name="rows[0][Genders]" id="genders">
-                <option value="Male" name='male_gender'>Male</option>
-                <option value="Female" name='female_gender'>Female</option>
-                <option value="Other Gender" name='other_gender'>Other Gender</option>
-
-          <tr>
-            <td><input type="text" name="rows[0][FOCUS_first_name]"></td>
-            <td><input type="text" name="rows[0][FOCUS_last_name]"></td>
-            <td colspan="2"><input type="date" name="rows[0][Launch-date]"></td>
-            <td colspan="2"><input type="date" name="rows[0][End-date]"></td>
-            <td><input type="text" name="rows[0][Rater-first-name]"></td>
-            <td><input type="text" name="rows[0][Rater-last-name]"></td>
-            <td>
-              <select name="rows[0][Roles]" id="roles">
-                <option value="FOCUS" name='focus_role'>FOCUS</option>
-                <option value="Manager" name='manager_role'>Manager</option>
-                <option value="Colleague" name='colleague_role'>Colleague</option>
-                <option value="Direct report" name='direct_report_role'>Direct report</option>
-                <option value="Other" name='other_role'>Other</option>
-              </select>
-            </td>
-            <td>
-              <select name="rows[0][Genders]" id="genders">
-                <option value="Male" name='male_gender'>Male</option>
-                <option value="Female" name='female_gender'>Female</option>
-                <option value="Other Gender" name='other_gender'>Other Gender</option>
-
-              </select>
-            </td>
-            <td><input type="text" name="rows[0][position]"></td>
-            <td><input type="text" name="rows[0][email]"></td>
-          </tr>
-        </table>
-        <input type="hidden" name="a" value="addListOfRaters">
-        <input type="submit" style="background-color:rgb(210, 56, 56); border-color:rgb(253, 253, 255); color:rgb(0, 0, 0)" value="Activate">
-      </form>
-      <button class="addrow_raterlist">Add</button>
-      <button class="deleterow_raterlist">Delete</button>
-      <!-- ---------------------------------------------------------------- -->
-      <? include_once '../member/footer.php'; ?>
                           </select>
-                        </td>
-                        <td><input type="text" name="rows[0]position" style="width: 75px;"></td>
-                        <td><input type="text" name="rows[0]email" style="width: 90px;"></td>
+                        <td><input type="text" name="rows[0][position]" style= "width:75px"></td>
+                        <td><input type="text" name="rows[0][email]" style= "width:80px"></td>
                       </tr>
-                      <td><input type="text" name="rows[0][FOCUS_first_name]"></td>
-                      <td><input type="text" name="rows[0][FOCUS_last_name]"></td>
-                      <td colspan="2"><input type="date" name="rows[0][Launch-date]"></td>
-                      <td colspan="2"><input type="date" name="rows[0][End-date]"></td>
-                      <td><input type="text" name="rows[0][Rater-first-name]"></td>
-                      <td><input type="text" name="rows[0][Rater-last-name]"></td>
-                      <td>
-                        <select name="rows[0][Roles]" id="roles">
-                          <option value="FOCUS" name='focus_role'>FOCUS</option>
-                          <option value="Manager" name='manager_role'>Manager</option>
-                          <option value="Colleague" name='colleague_role'>Colleague</option>
-                          <option value="Direct report" name='direct_report_role'>Direct report</option>
-                          <option value="Other" name='other_role'>Other</option>
-                        </select>
-                      </td>
-                      <td>
-                        <select name="rows[0][Genders]" id="genders">
-                          <option value="Male" name='male_gender'>Male</option>
-                          <option value="Female" name='female_gender'>Female</option>
-                          <option value="Other Gender" name='other_gender'>Other Gender</option>
                     </table>
-                    
-                    <input type="submit" style="background-color:rgb(210, 56, 56); border-color:rgb(253, 253, 255); color:rgb(0, 0, 0)" value="Activate">
                   </form>
-              
-                  <!-- ---------------------------------------------------------------- -->
-                  <? include_once '../member/footer.php'; ?>
-                  
-                  
                 </div>
               </div>
             </div>
@@ -217,6 +125,7 @@
           <button class="deleterow_raterlist"><?= $language["listofraters_delete_button"]; ?></button>
           <br>
           <br>
+          <input type="submit" value="Activate">
           <!-- ---------------------------------------------------------------- -->
           <? include_once '../member/footer.php'; ?>
         </div>
