@@ -90,14 +90,14 @@
                         </tr>
                       </thead>
                       <tr>
-                        <td><input type="text" name="rows[0]FOCUS_first_name"></td>
-                        <td><input type="text" name="rows[0]FOCUS_last_name"></td>
-                        <td colspan="2"><input type="date" name="rows[0]Launch-date"></td>
-                        <td colspan="2"><input type="date" name="rows[0]End-date"></td>
-                        <td><input type="text" name="rows[0]Rater-first-name"></td>
-                        <td><input type="text" name="rows[0]Rater-last-name"></td>
+                        <td><input type="text" name="rows[0]FOCUS_first_name" style="width: 75px;"></td>
+                        <td><input type="text" name="rows[0]FOCUS_last_name"  style="width: 75px;"></td>
+                        <td colspan="2"><input type="date" name="rows[0]Launch-date" style="width: 115px;"></td>
+                        <td colspan="2"><input type="date" name="rows[0]End-date" style="width: 115px;"></td>
+                        <td><input type="text" name="rows[0]Rater-first-name" style="width: 75px;"></td>
+                        <td><input type="text" name="rows[0]Rater-last-name" style="width: 75px;"></td>
                         <td>
-                          <select name="rows[0]Roles" id="roles">
+                          <select name="rows[0]Roles" id="roles" style="width: 95px;">
                             <option value="FOCUS" name='focus_role'>FOCUS</option>
                             <option value="Manager" name='manager_role'>Manager</option>
                             <option value="Colleague" name='colleague_role'>Colleague</option>
@@ -106,15 +106,15 @@
                           </select>
                         </td>
                         <td>
-                          <select name="rows[0]Genders" id="genders">
+                          <select name="rows[0]Genders" id="genders" style="width: 60px;">
                             <option value="Male" name='male_gender'>Male</option>
                             <option value="Female" name='female_gender'>Female</option>
-                            <option value="Other Gender" name='other_gender'>Other Gender</option>
+                            <option value="Other Gender" name='other_gender'>Other</option>
 
                           </select>
                         </td>
-                        <td><input type="text" name="rows[0]position"></td>
-                        <td><input type="text" name="rows[0]email"></td>
+                        <td><input type="text" name="rows[0]position" style="width: 75px;"></td>
+                        <td><input type="text" name="rows[0]email" style="width: 90px;"></td>
                       </tr>
                     </table>
                 </div>
