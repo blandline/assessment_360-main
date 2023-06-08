@@ -616,6 +616,20 @@ var Raterlist = function() {
         rowcounter++;
     });
 
+    // $("body").on("click", ".raterlist-delete-btn", function(event) {
+    //     if (event.target.classList.contains('delete-row-button')) {
+    //         // get the row that contains the clicked button
+    //         var row = event.target.closest('tr');
+    //         // remove the row from the table
+    //         row.parentNode.removeChild(row);
+    //       }
+    //     // var table = document.getElementById("raterlisttable");
+    //     // var rowCount = table.rows.length;
+    //     // if (rowCount > 3) {
+    //     //     table.deleteRow(rowCount - 1);
+    //     // }
+    //     // rowcounter--;
+    // });    
     $("body").on("click", ".raterlist-delete-btn", function() {
         // get the parent row of the clicked button
         var row = $(this).closest('tr');
@@ -625,7 +639,13 @@ var Raterlist = function() {
         // delete the row
         row.remove();
         }
-    });
+        // var table = document.getElementById("raterlisttable");
+        // var rowCount = table.rows.length;
+        // if (rowCount > 3) {
+        //     table.deleteRow(rowCount - 1);
+        // }
+        // rowcounter--;
+    });
 
     /*
       function activate_button(){
