@@ -61,14 +61,10 @@
         </div>
       </nav>
 
-      <div style="margin-top: 95px; position: absolute; right: 12px;">
-        <!-- <button type="button" class="btn btn-primary excel"><?= $language["competency_framework_export_excel"]; ?></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-        <button type="button" class="btn btn-primary export"><?= $language["confirm_button"]; ?></button>
-      </div>
-
       <!-- --------------------------------NEW TABLE------------------------- -->
       <form method="post" id="rateform" action="listofraters.php">
-        <table id="raterlisttable">
+        <table id="raterlisttable" class="competency-frm-table table table-hover" style="width:100%;">
+          <thead class="text-danger">
           <tr>
             <th colspan="2"><?= $language["listofraters_framework_focusname"]; ?></th>
             <th colspan="2" rowspan="2"><?= $language["listofraters_framework_launchdate"]; ?></th>
@@ -86,7 +82,7 @@
             <th><?= $language["listofraters_framework_firstname"]; ?></th>
             <th><?= $language["listofraters_framework_lastname"]; ?></th>
           </tr>
-
+          </thead>
           <tr>
             <td><input type="text" name="rows[0]FOCUS_first_name"></td>
             <td><input type="text" name="rows[0]FOCUS_last_name"></td>
