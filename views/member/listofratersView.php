@@ -115,14 +115,14 @@
                         <td><input type="text" name="rows[0][email]" style= "width:80px"></td>
                       </tr>
                     </table>
-                    <input type="submit" value="Activate">
+                    <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="Activate">
                   </form>
                 </div>
               </div>
             </div>
           </div>
-          <button class="addrow_raterlist"><?= $language["listofraters_add_button"]; ?></button>
-          <button class="deleterow_raterlist"><?= $language["listofraters_delete_button"]; ?></button>
+          <button class="btn btn-primary btn-sm addButton raterlist-add-btn"><?= $language["listofraters_add_button"]; ?></button>
+          <button class="btn btn-dark btn-sm addButton raterlist-delete-btn"><?= $language["listofraters_delete_button"]; ?></button>
           <!-- ---------------------------------------------------------------- -->
           <? include_once '../member/footer.php'; ?>
         </div>
