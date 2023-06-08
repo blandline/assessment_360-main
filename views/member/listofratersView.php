@@ -111,19 +111,14 @@
                           <option value="Female" name='female_gender'>Female</option>
                           <option value="Other Gender" name='other_gender'>Other Gender</option>
                     </table>
-                    <input type="hidden" name="a" value="addListOfRaters">
+                    
                     <input type="submit" style="background-color:rgb(210, 56, 56); border-color:rgb(253, 253, 255); color:rgb(0, 0, 0)" value="Activate">
                   </form>
-                  <button class="addrow_raterlist">Add</button>
-                  <button class="deleterow_raterlist">Delete</button>
+              
                   <!-- ---------------------------------------------------------------- -->
                   <? include_once '../member/footer.php'; ?>
-                  </select>
-                  </td>
-                  <td><input type="text" name="rows[0]position"></td>
-                  <td><input type="text" name="rows[0]email"></td>
-                  </tr>
-                  </table>
+                  
+                  
                 </div>
               </div>
             </div>
@@ -133,7 +128,6 @@
           <button class="deleterow_raterlist"><?= $language["listofraters_delete_button"]; ?></button>
           <br>
           <br>
-          <input type="submit" value="Activate">
           <!-- ---------------------------------------------------------------- -->
           <? include_once '../member/footer.php'; ?>
         </div>
