@@ -614,13 +614,19 @@ var Raterlist = function() {
         rowcounter++;
     });
 
-    $("body").on("click", ".deleterow_raterlist", function() {
-        var table = document.getElementById("raterlisttable");
-        var rowCount = table.rows.length;
-        if (rowCount > 3) {
-            table.deleteRow(rowCount - 1);
-        }
-        rowcounter--;
+    $("body").on("click", ".deleterow_raterlist", function(event) {
+        if (event.target.classList.contains('delete-row-button')) {
+            // get the row that contains the clicked button
+            var row = event.target.closest('tr');
+            // remove the row from the table
+            row.parentNode.removeChild(row);
+          }
+        // var table = document.getElementById("raterlisttable");
+        // var rowCount = table.rows.length;
+        // if (rowCount > 3) {
+        //     table.deleteRow(rowCount - 1);
+        // }
+        // rowcounter--;
     });    
 
     /*
