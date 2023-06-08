@@ -608,29 +608,24 @@ var Raterlist = function() {
         cell4.innerHTML = "";
         cell5.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-first-name]' style='width: 75px;'>";
         cell6.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-last-name]' style='width: 75px;'>";
-        cell7.innerHTML = "<select name='rows[" + rowcounter +"][Roles]' id='roles' style='width: 95px;'><option value='Focus' name='focus_role'>FOCUS</option><option value='manager' name='manager_role'>Manager</option><option value='colleague' name='colleague_role'>Colleague</option><option value='direct-report' name='direct_report_role'>Direct report</option><option value='Other' name='other_role'>Other</option></select>";
-        cell8.innerHTML = "<select name='rows[" + rowcounter +"][Genders]' id='genders' style='width: 60px;'><option value='Male' name='male_gender'>Male</option><option value='Female' name='female_gender'>Female</option><option value='Other Gender' name='other_gender'>Other Gender</option></select>";
+        cell7.innerHTML = "<select name='rows[" + rowcounter +"][Roles]' id='roles' style='width: 95px;'><option value='Focus' name='focus_role'>"+ lang["listofraters_role_focus"] +"</option><option value='manager' name='manager_role'>"+ lang["listofraters_role_manager"] +"</option><option value='colleague' name='colleague_role'>"+lang["listofraters_role_colleague"]+"</option><option value='direct-report' name='direct_report_role'>"+lang["listofraters_role_directreport"]+"</option><option value='Other' name='other_role'>"+lang["listofraters_role_other"]+"</option></select>";
+        cell8.innerHTML = "<select name='rows[" + rowcounter +"][Genders]' id='genders' style='width: 60px;'><option value='Male' name='male_gender'>"+ lang["listofraters_gender_male"] +"</option><option value='Female' name='female_gender'>"+ lang["listofraters_gender_female"] +"</option><option value='Other Gender' name='other_gender'>"+ lang["listofraters_gender_other"] +"</option></select>";
         cell9.innerHTML = "<input type='text' name='rows[" + rowcounter +"][position]' style='width: 75px;'>";
         cell10.innerHTML = "<input type='text' name='rows[" + rowcounter +"][email]' style='width: 80px;'>";
-
-        cell11.innerHTML = "<button class='btn btn-dark btn-sm addButton raterlist-delete-btn'>Delete</button>"; //+ <?=$language['listofraters_delete_button']?>
+        cell11.innerHTML = "<button class='btn btn-dark btn-sm addButton raterlist-delete-btn'>"+lang["listofraters_delete_button"]+"</button>";
         rowcounter++;
     });
 
-    $("body").on("click", ".deleterow_raterlist", function(event) {
-        if (event.target.classList.contains('delete-row-button')) {
-            // get the row that contains the clicked button
-            var row = event.target.closest('tr');
-            // remove the row from the table
-            row.parentNode.removeChild(row);
-          }
-        // var table = document.getElementById("raterlisttable");
-        // var rowCount = table.rows.length;
-        // if (rowCount > 3) {
-        //     table.deleteRow(rowCount - 1);
-        // }
-        // rowcounter--;
-    });    
+    $("body").on("click", ".raterlist-delete-btn", function() {
+        // get the parent row of the clicked button
+        var row = $(this).closest('tr');
+
+        // check if the row is not the first row
+        if (!row.is(':first-child')) {
+        // delete the row
+        row.remove();
+        }
+    });
 
     /*
       function activate_button(){
