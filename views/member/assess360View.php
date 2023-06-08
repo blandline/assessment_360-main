@@ -198,6 +198,7 @@
   <script>
     var competency = new Competency();
   </script>
+
 </body>
 
 </html>
