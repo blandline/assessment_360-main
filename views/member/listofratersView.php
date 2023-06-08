@@ -68,7 +68,7 @@
             <div class="competency-frm-table-div">
               <div class="card">
                 <div class="div-datatable-competency card-body table-responsive">
-                  <form method="post" id="rateform" action="listofratersView.php">
+                  <form method="post" id="rateform" action="assess360.php">
                     <table id="raterlisttable" class="competency-frm-table table table-hover" style="width:100%;">
                       <thead class="text-danger">
                         <tr>
@@ -155,25 +155,7 @@
   <script>
     var Raterlist = new Raterlist();
   </script>
-  <!----------------------------------SARBULAND------------------------------------------------>
-  <?php
-  // extract the data from the table-like form
-  $form_data = array();
-  foreach ($_POST['rows'] as $row) {
-    $row_data = array();
-    foreach ($row as $column_name => $column_value) {
-      $row_data[$column_name] = $column_value;
-    }
-    $form_data[] = $row_data;
-  }
-
-  // do something with the form data
-  foreach ($form_data as $row_data) {
-    // do something with the row data
-
-  }
-  ?>
-  <!------------------------------------------------------------------------------------------->
+ 
 </body>
 
 </html>
