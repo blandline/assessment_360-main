@@ -607,8 +607,8 @@ var Raterlist = function() {
         cell4.innerHTML = "";
         cell5.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-first-name]' style='width: 75px;'>";
         cell6.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-last-name]' style='width: 75px;'>";
-        cell7.innerHTML = "<select name='rows[" + rowcounter +"][Roles]' id='roles' style='width: 90px;'><option value='Focus' name='focus_role'>FOCUS</option><option value='manager' name='manager_role'>Manager</option><option value='colleague' name='colleague_role'>Colleague</option><option value='direct-report' name='direct_report_role'>Direct report</option><option value='Other' name='other_role'>Other</option></select>";
-        cell8.innerHTML = "<select name='rows[" + rowcounter +"][Genders]' id='genders' style='width: 65px;'><option value='Male' name='male_gender'>Male</option><option value='Female' name='female_gender'>Female</option><option value='Other Gender' name='other_gender'>Other Gender</option></select>";
+        cell7.innerHTML = "<select name='rows[" + rowcounter +"][Roles]' id='roles' style='width: 95px;'><option value='Focus' name='focus_role'>FOCUS</option><option value='manager' name='manager_role'>Manager</option><option value='colleague' name='colleague_role'>Colleague</option><option value='direct-report' name='direct_report_role'>Direct report</option><option value='Other' name='other_role'>Other</option></select>";
+        cell8.innerHTML = "<select name='rows[" + rowcounter +"][Genders]' id='genders' style='width: 60px;'><option value='Male' name='male_gender'>Male</option><option value='Female' name='female_gender'>Female</option><option value='Other Gender' name='other_gender'>Other Gender</option></select>";
         cell9.innerHTML = "<input type='text' name='rows[" + rowcounter +"][position]' style='width: 75px;'>";
         cell10.innerHTML = "<input type='text' name='rows[" + rowcounter +"][email]' style='width: 80px;'>";
         rowcounter++;
