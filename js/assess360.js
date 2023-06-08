@@ -582,7 +582,7 @@ var Competency = function() {
 var Raterlist = function() {
     var rowcounter = 1
 
-    $("body").on("click", ".addrow_raterlist", function() {
+    $("body").on("click", ".raterlist-add-btn", function() {
         var table = document.getElementById("raterlisttable");
         var row = table.insertRow(-1);
         var cell1 = row.insertCell(0);
