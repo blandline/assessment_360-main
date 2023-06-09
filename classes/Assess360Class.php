@@ -8,17 +8,17 @@ class CompetencyClass
         $this->memberClass = $memberClass;
     }
 
-    // public function getCompetencyCluster()
-    // {
-    //     require '../config/dbconnect.php';
-    //     $query = "SELECT * FROM competency WHERE parent_id = -1 ORDER BY order_id";
-    //     $stmt = $conn->prepare($query);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-    //     $stmt->close();
+    public function getCompetencyCluster()
+    {
+        require '../config/dbconnect.php';
+        $query = "SELECT * FROM competency WHERE parent_id = -1 ORDER BY order_id";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
 
-    //     return $result;
-    // }
+        return $result;
+    }
 
     public function getFocus_first_name()
     {
