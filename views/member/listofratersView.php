@@ -60,12 +60,14 @@
           </button>
         </div>
       </nav>
+      
 
       <!-- --------------------------------NEW TABLE------------------------- -->
       <div class="content search-competency-content">
         <div class="container-fluid">
           <div class="row">
             <div class="competency-frm-table-div">
+           
               <div class="card">
                 <div class="div-datatable-competency card-body table-responsive">
                   <div class="listofraters-form-and-button-container">
@@ -73,7 +75,7 @@
                     <table id="raterlisttable" class="competency-frm-table table table-hover" style="width:100%;">
                       <thead class="text-danger">
                         <tr>
-                          <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_focusname"]; ?></th>
+                             <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_focusname"]; ?></th>
                           <th colspan="2" rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_launchdate"]; ?></th>
                           <th colspan="2" rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_enddate"]; ?></th>
                           <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_raters"]; ?></th>
@@ -89,6 +91,8 @@
                           <th style="text-align: center;"><?= $language["listofraters_framework_lastname"]; ?></th>
                           <th style="text-align: center;"><?= $language["listofraters_framework_firstname"]; ?></th>
                           <th style="text-align: center;"><?= $language["listofraters_framework_lastname"]; ?></th>
+                          <div class="addButtonWrapper">
+            
                         </tr>
                       </thead>
                       <tr>
@@ -105,6 +109,7 @@
                             <option value="Colleague" name='colleague_role'><?= $language["listofraters_role_colleague"]; ?></option>
                             <option value="Direct report" name='direct_report_role'><?= $language["listofraters_role_directreport"]; ?></option>
                             <option value="Other" name='other_role'><?= $language["listofraters_role_other"]; ?></option>
+                            
                           </select>
                         </td>
                         <td>
@@ -133,6 +138,7 @@
       </div>
     </div>
   </div>
+  
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
@@ -161,7 +167,6 @@
   </script>
 
   
- 
 </body>
 
 </html>
