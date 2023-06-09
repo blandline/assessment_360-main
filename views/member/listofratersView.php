@@ -103,8 +103,7 @@
                         <td><input type="text" name="rows[0][Rater-first-name]" style= "width:75px"></td>
                         <td><input type="text" name="rows[0][Rater-last-name]" style= "width:75px"></td>
                         <td>
-                          <select name="rows[0][Roles]" id="roles" style= "width:95px">
-                            <option value="" disabled selected><?=$language["listofraters_framework_role"]?> &#9660;</option>
+                          <select name="rows[0][Roles]" id="roles" style= "width:95px; -webkit-appearance: menulist;">
                             <option value="FOCUS" name='focus_role'><?= $language["listofraters_role_focus"]; ?></option>
                             <option value="Manager" name='manager_role'><?= $language["listofraters_role_manager"]; ?></option>
                             <option value="Colleague" name='colleague_role'><?= $language["listofraters_role_colleague"]; ?></option>
@@ -113,8 +112,7 @@
                           </select>
                         </td>
                         <td>
-                          <select name="rows[0][Genders]" id="genders" style= "width:80px">
-                            <option value="" disabled selected><?=$language["listofraters_framework_gender"]?> &#9660;</option>
+                          <select name="rows[0][Genders]" id="genders" style= "width:80px; -webkit-appearance: menulist;">
                             <option value="Male" name='male_gender'><?= $language["listofraters_gender_male"]; ?></option>
                             <option value="Female" name='female_gender'><?= $language["listofraters_gender_female"]; ?></option>
                             <option value="Other Gender" name='other_gender'><?= $language["listofraters_gender_other"]; ?></option>
