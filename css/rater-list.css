@@ -19,6 +19,11 @@ header h1 {
     color: white;
 }
 
+.addButtonWrapper { /* added this to make to add button move tot he right
+    display: flex; /* This makes the wrapper a flex container */
+    justify-content: right; /* This aligns the button to the right of the container */
+  }
+
 header {
     height:50px;
     width:inherit;
