@@ -872,12 +872,14 @@ lang['casual_worker_out'] = 'Out';
 
 //--------------------------------NEW------------------------------------------
 //List of raters
+lang["listofraters_role"] = "Role"
 lang["listofraters_role_focus"] = "Focus";
 lang["listofraters_role_manager"] = "Manager";
 lang["listofraters_role_colleague"] = "Colleague";
 lang["listofraters_role_directreport"] = "Direct report";
 lang["listofraters_role_other"] = "Other";
 
+lang["listofraters_gender"] = "Gender";
 lang["listofraters_gender_male"] = "Male";
 lang["listofraters_gender_female"] = "Female";
 lang["listofraters_gender_other"] = "Other";

@@ -60,19 +60,22 @@
           </button>
         </div>
       </nav>
+      
 
       <!-- --------------------------------NEW TABLE------------------------- -->
       <div class="content search-competency-content">
         <div class="container-fluid">
           <div class="row">
             <div class="competency-frm-table-div">
+           
               <div class="card">
                 <div class="div-datatable-competency card-body table-responsive">
-                  <form method="post" id="rateform" action="assess360.php">
+                  <div class="listofraters-form-and-button-container">
+                  <form method="post" id="rateform" action="assess360?a=listofraters">
                     <table id="raterlisttable" class="competency-frm-table table table-hover" style="width:100%;">
                       <thead class="text-danger">
                         <tr>
-                          <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_focusname"]; ?></th>
+                             <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_focusname"]; ?></th>
                           <th colspan="2" rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_launchdate"]; ?></th>
                           <th colspan="2" rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_enddate"]; ?></th>
                           <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_raters"]; ?></th>
@@ -88,6 +91,8 @@
                           <th style="text-align: center;"><?= $language["listofraters_framework_lastname"]; ?></th>
                           <th style="text-align: center;"><?= $language["listofraters_framework_firstname"]; ?></th>
                           <th style="text-align: center;"><?= $language["listofraters_framework_lastname"]; ?></th>
+                          <div class="addButtonWrapper">
+            
                         </tr>
                       </thead>
                       <tr>
@@ -98,7 +103,7 @@
                         <td><input type="text" name="rows[0][Rater-first-name]" style= "width:75px"></td>
                         <td><input type="text" name="rows[0][Rater-last-name]" style= "width:75px"></td>
                         <td>
-                          <select name="rows[0][Roles]" id="roles" style= "width:95px">
+                          <select name="rows[0][Roles]" id="roles" style= "width:95px; -webkit-appearance: menulist;">
                             <option value="FOCUS" name='focus_role'><?= $language["listofraters_role_focus"]; ?></option>
                             <option value="Manager" name='manager_role'><?= $language["listofraters_role_manager"]; ?></option>
                             <option value="Colleague" name='colleague_role'><?= $language["listofraters_role_colleague"]; ?></option>
@@ -107,29 +112,32 @@
                           </select>
                         </td>
                         <td>
-                          <select name="rows[0][Genders]" id="genders" style= "width:60px">
+                          <select name="rows[0][Genders]" id="genders" style= "width:80px; -webkit-appearance: menulist;">
                             <option value="Male" name='male_gender'><?= $language["listofraters_gender_male"]; ?></option>
                             <option value="Female" name='female_gender'><?= $language["listofraters_gender_female"]; ?></option>
                             <option value="Other Gender" name='other_gender'><?= $language["listofraters_gender_other"]; ?></option>
                           </select>
+                        </td>
                         <td><input type="text" name="rows[0][position]" style= "width:75px"></td>
                         <td><input type="text" name="rows[0][email]" style= "width:80px"></td>
+                        <td></td>
                       </tr>
                     </table>
-                    <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="Activate">
+                    <input class="btn btn-success btn-sm addButton competency-add-btn listofraters-submit-btn" style ="display:inline-block;" type="submit" value="Activate">
                   </form>
+                  <button class="btn btn-primary btn-sm addButton raterlist-add-btn" style="position: absolute; right: 10px; display:inline-block;"><?= $language["listofraters_add_button"]; ?></button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <button class="btn btn-primary btn-sm addButton raterlist-add-btn"><?= $language["listofraters_add_button"]; ?></button>
-          
           <!-- ---------------------------------------------------------------- -->
           <? include_once '../member/footer.php'; ?>
         </div>
       </div>
     </div>
   </div>
+  
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
@@ -158,7 +166,6 @@
   </script>
 
   
- 
 </body>
 
 </html>

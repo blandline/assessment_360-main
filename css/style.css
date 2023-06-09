@@ -13,6 +13,8 @@ a {
     text-decoration: none;
 }
 
+
+
 a:hover {
     color: #ff948c;
     text-decoration: none;
@@ -1402,3 +1404,4 @@ section {
 .bigimg {
     max-height: 68px;
 }
+
