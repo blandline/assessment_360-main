@@ -68,7 +68,8 @@
             <div class="competency-frm-table-div">
               <div class="card">
                 <div class="div-datatable-competency card-body table-responsive">
-                  <form method="post" id="rateform" action="assess360.php">
+                  <div class="listofraters-form-and-button-container">
+                  <form method="post" id="rateform" action="assess360?a=listofraters">
                     <table id="raterlisttable" class="competency-frm-table table table-hover" style="width:100%;">
                       <thead class="text-danger">
                         <tr>
@@ -107,23 +108,25 @@
                           </select>
                         </td>
                         <td>
-                          <select name="rows[0][Genders]" id="genders" style= "width:60px">
+                          <select name="rows[0][Genders]" id="genders" style= "width:60px" title="Gender">
                             <option value="Male" name='male_gender'><?= $language["listofraters_gender_male"]; ?></option>
                             <option value="Female" name='female_gender'><?= $language["listofraters_gender_female"]; ?></option>
                             <option value="Other Gender" name='other_gender'><?= $language["listofraters_gender_other"]; ?></option>
                           </select>
+                        </td>
                         <td><input type="text" name="rows[0][position]" style= "width:75px"></td>
                         <td><input type="text" name="rows[0][email]" style= "width:80px"></td>
+                        <td></td>
                       </tr>
                     </table>
-                    <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="Activate">
+                    <input class="btn btn-success btn-sm addButton competency-add-btn listofraters-submit-btn" style ="display:inline-block;" type="submit" value="Activate">
                   </form>
+                  <button class="btn btn-primary btn-sm addButton raterlist-add-btn" style="position: absolute; right: 10px; display:inline-block;"><?= $language["listofraters_add_button"]; ?></button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <button class="btn btn-primary btn-sm addButton raterlist-add-btn"><?= $language["listofraters_add_button"]; ?></button>
-          
           <!-- ---------------------------------------------------------------- -->
           <? include_once '../member/footer.php'; ?>
         </div>

@@ -7411,3 +7411,16 @@ box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     user-select: none;
 }
+
+/*
+ # List of raters
+*/
+.listofraters-form-and-button-container {
+    position: relative;
+    display: inline-block;
+  }
+
+.listofraters-form-and-button-container button {
+    margin-left: 10px;
+    bottom: 0;
+}
