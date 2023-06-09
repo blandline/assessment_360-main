@@ -869,3 +869,18 @@ lang['casual_worker_delete_success'] = 'Deleted successfully';
 lang['casual_worker_approve_success'] = 'Approved successfully';
 lang['casual_worker_in'] = 'In';
 lang['casual_worker_out'] = 'Out';
+
+//--------------------------------NEW------------------------------------------
+//List of raters
+lang["listofraters_role_focus"] = "Focus";
+lang["listofraters_role_manager"] = "Manager";
+lang["listofraters_role_colleague"] = "Colleague";
+lang["listofraters_role_directreport"] = "Direct report";
+lang["listofraters_role_other"] = "Other";
+
+lang["listofraters_gender_male"] = "Male";
+lang["listofraters_gender_female"] = "Female";
+lang["listofraters_gender_other"] = "Other";
+
+lang["listofraters_delete_button"] = "Delete";
+//-----------------------------------------------------------------------------

@@ -85,6 +85,7 @@
                           <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_gender"]; ?></th>
                           <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_position"]; ?></th>
                           <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_email"]; ?></th>
+                          <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_actions"]; ?></th>
                         </tr>
 
                         <tr>
@@ -134,7 +135,7 @@
           
 
           <button class="btn btn-primary btn-sm addButton raterlist-add-btn"><?= $language["listofraters_add_button"]; ?></button>
-          <!-- <button class="btn btn-dark btn-sm addButton raterlist-delete-btn"><?= $language["listofraters_delete_button"]; ?></button> -->
+          
           <!-- ---------------------------------------------------------------- -->
           <? include_once '../member/footer.php'; ?>
         </div>

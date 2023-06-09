@@ -2036,9 +2036,10 @@ $language["listofraters_framework_raters"] = "Raters";
 $language["listofraters_framework_role"] = "Role";
 $language["listofraters_framework_gender"] = "Gender";
 $language["listofraters_framework_position"] = "Position";
-$language["listofraters_framework_email"] = "email";
+$language["listofraters_framework_email"] = "Email";
 $language["listofraters_framework_firstname"] = "First";
 $language["listofraters_framework_lastname"] = "Last";
+$language["listofraters_framework_actions"] = "Actions";
 
 $language["listofraters_add_button"] = "Add";
 $language["listofraters_delete_button"] = "Delete";
