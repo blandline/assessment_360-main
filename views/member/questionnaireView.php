@@ -12,59 +12,79 @@
 </head>
 
 <body class="questionnaire-body">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel"><?= $language["competency_framework_warning"]; ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <?= $language["questionnaire_areyousure_confirm"]; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= $language["questionnaire_areyousure_no"]; ?></button>
+                    <button type="button" class="btn btn-primary confirm-yes" data-dismiss="modal"><?= $language["questionnaire_areyousure_yes"]; ?></button>
+                </div>
+            </div>
+        </div>
+    </div>
     <section id="intro-page" class="questionnaire-page questionnaire-page-active">
-        <div class="questionnaire-header"><?=$language["questionnaire_header_title"]?></div>
+        <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
         <br>
-        <div class="questionnaire-paragraph-title"><?=$language["questionnaire_intropage_introduction"]?></div><br>
+        <div class="questionnaire-paragraph-title"><?= $language["questionnaire_intropage_introduction"] ?></div><br>
         <div>
-            <?=$language["questionnaire_intropage_introduction_paragraph1"]?>
-            <?=$language["questionnaire_intropage_introduction_paragraph2"]?>
+            <?= $language["questionnaire_intropage_introduction_paragraph1"] ?>
+            <?= $language["questionnaire_intropage_introduction_paragraph2"] ?>
         </div>
 
-        <div class="questionnaire-paragraph-title"><?=$language["questionnaire_intropage_instruction"]?></div><br>
+        <div class="questionnaire-paragraph-title"><?= $language["questionnaire_intropage_instruction"] ?></div><br>
         <div>
-            <?=$language["questionnaire_intropage_instruction_paragraph1"]?>
-            <?=$language["questionnaire_intropage_instruction_paragraph2"]?>
-            <?=$language["questionnaire_intropage_instruction_paragraph3"]?>
-            <?=$language["questionnaire_intropage_instruction_paragraph4"]?>
-            <?=$language["questionnaire_intropage_instruction_paragraph5"]?>
-            <?=$language["questionnaire_intropage_instruction_paragraph6"]?>
+            <?= $language["questionnaire_intropage_instruction_paragraph1"] ?>
+            <?= $language["questionnaire_intropage_instruction_paragraph2"] ?>
+            <?= $language["questionnaire_intropage_instruction_paragraph3"] ?>
+            <?= $language["questionnaire_intropage_instruction_paragraph4"] ?>
+            <?= $language["questionnaire_intropage_instruction_paragraph5"] ?>
+            <?= $language["questionnaire_intropage_instruction_paragraph6"] ?>
         </div>
     </section>
     <section id="importance-of-competency-page" class="questionnaire-page">
-        <div class="questionnaire-header"><?=$language["questionnaire_header_title"]?></div>
+        <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
         <br>
-        <div class="questionnaire-paragraph-title"><?=$language["questionnaire_importanceofcompetency"]?></div>
+        <div class="questionnaire-paragraph-title"><?= $language["questionnaire_importanceofcompetency"] ?></div>
         <br>
-        <?=$language["questionnaire_importanceofcompetency_paragraph1"]?>
+        <?= $language["questionnaire_importanceofcompetency_paragraph1"] ?>
         <!-- TODO list of competencies-->
         <?
         ?>
-        <?=$language["questionnaire_importanceofcompetency_paragraph2"]?>
-        <button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button"><?=$language["questionnaire_confirm_button"]?></button>
+        <?= $language["questionnaire_importanceofcompetency_paragraph2"] ?>
+        <button type="button" class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button" data-toggle="modal" data-target="#deleteModal"><?= $language["questionnaire_confirm_button"] ?></button>
         <br>
         <br>
-        <p><a href="#intro-page"><?=$language["questionnaire_previous_button"]?></a></p>
-        <p><a href="#competency-statements-page"><?=$language["questionnaire_next_button"]?></a></p>
+        <p><a href="#intro-page"><?= $language["questionnaire_previous_button"] ?></a></p>
+        <p><a href="#competency-statements-page"><?= $language["questionnaire_next_button"] ?></a></p>
     </section>
     <section id="competency-statements-page" class="questionnaire-page">
-        <div class="questionnaire-header"><?=$language["questionnaire_header_title"]?></div>
+        <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
         <br>
-        <div class="questionnaire-paragraph-title"><?=$language["questionnaire_competencystatements"]?></div>
+        <div class="questionnaire-paragraph-title"><?= $language["questionnaire_competencystatements"] ?></div>
         <div class="questionnaire-competency-statements-instructions">
-        <?=$language["questionnaire_competencystatements_paragraph"]?>
+            <?= $language["questionnaire_competencystatements_paragraph"] ?>
+            <!-- TODO competency statements-->
         </div>
-        <p><a href="#importance-of-competency-page"><?=$language["questionnaire_previous_button"]?></a></p>
-        <p><a href="#open-end-question-page"><?=$language["questionnaire_next_button"]?></a></p>
+        <p><a href="#importance-of-competency-page"><?= $language["questionnaire_previous_button"] ?></a></p>
+        <p><a href="#open-end-question-page"><?= $language["questionnaire_next_button"] ?></a></p>
     </section>
     <section id="open-end-question-page" class="questionnaire-page">
-        <div class="questionnaire-header"><?=$language["questionnaire_openendquestion"]?></div>
+        <div class="questionnaire-header"><?= $language["questionnaire_openendquestion"] ?></div>
         <br>
-        <?=$language["questionnaire_openendquestion_paragraph1"]?>
+        <?= $language["questionnaire_openendquestion_paragraph1"] ?>
         <input type="text" class="text-input" placeholder="(Maximum 100 words)">
-        <?=$language["questionnaire_openendquestion_paragraph2"]?>
-        <?=$language["questionnaire_openendquestion_finish"]?>
-        <p><a href="#competency-statements-page"><?=$language["questionnaire_previous_button"]?></a></p>
+        <?= $language["questionnaire_openendquestion_paragraph2"] ?>
+        <?= $language["questionnaire_openendquestion_finish"] ?>
+        <p><a href="#competency-statements-page"><?= $language["questionnaire_previous_button"] ?></a></p>
     </section>
 
     <script src="../assets/js/core/jquery.min.js"></script>

@@ -719,5 +719,15 @@ var Questionnaire = function() {
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
         }
+
+        $("#deleteModal").on("click", ".confirm-yes", function() {
+            window.location.href = '#competency-statements-page';
+
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').show();
+            $('#open-end-question-page').hide();
+        });
     });
+
 };

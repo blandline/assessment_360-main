@@ -3117,6 +3117,9 @@ $language["questionnaire_header_title"] = "COMPETENCE AUDIT ON FOCUS";
 $language["questionnaire_confirm_button"] = "Confirm";
 $language["questionnaire_previous_button"] = "Previous";
 $language["questionnaire_next_button"] = "Next";
+$language["questionnaire_areyousure_confirm"] = "Are you sure?";
+$language["questionnaire_areyousure_yes"] = "Yes";
+$language["questionnaire_areyousure_no"] = "No";
 
 //Questionnaire intro page
 $language["questionnaire_intropage_introduction"] = "INTRODUCTION";
