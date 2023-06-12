@@ -13,78 +13,58 @@
 
 <body class="questionnaire-body">
     <section id="intro-page" class="questionnaire-page questionnaire-page-active">
-        <div class="questionnaire-header">COMPETENCE AUDIT ON FOCUS</div>
+        <div class="questionnaire-header"><?=$language["questionnaire_header_title"]?></div>
         <br>
-        <div class="questionnaire-paragraph-title">INTRODUCTION</div><br>
+        <div class="questionnaire-paragraph-title"><?=$language["questionnaire_intropage_introduction"]?></div><br>
         <div>
-            <p>
-                The aim of this questionnaire is to gain your objective feedback on several competencies that are relevant for the professional
-                performance of the FOCUS who will have a good idea of the competencies that are well developed, as well as requiring further development.
-                Therefore, your objective and truthful answer is very important for the FOCUS.</p>
-            <p>The entire questionnaire will be processed anonymously. That means, no one would know your feedback.</p>
+            <?=$language["questionnaire_intropage_introduction_paragraph1"]?>
+            <?=$language["questionnaire_intropage_introduction_paragraph2"]?>
         </div>
 
-        <div class="questionnaire-paragraph-title">INSTRUCTION</div><br>
+        <div class="questionnaire-paragraph-title"><?=$language["questionnaire_intropage_instruction"]?></div><br>
         <div>
-            <p>The Questionnaire takes you 15 to 20 minutes to complete all the simple statements.</p>
-            <p>
-                There are 5 answer categories (5-point scale) per statement that range from "1 - strong development needed" to "5 - exceptional strength".
-                To answer, please click the bullet next to the answer of your choice.
-            </p>
-            <p>If you consider that you do not have enough observation about this statement on the FOCUS, please click the bullet " not enough observation".</p>
-            <p>Please note that:</p>
-            <p>
-                1. Click "Continue Later" tp interrupt the questionnaire and continue again by accessing the given link again. Completed answers will be saved.<br>
-                2. Click "Next" to save your answer and go to the next statement.<br>
-                3. Write your thruthful opinion in the "open-end question" about FOCUS' behavior and performance during work.<br>
-                4. Click "Finish" when completing the questionnaire. No changes on answers anymore.<br>
-            </p>
-            <p>If you are ready by Now, click <a href="#importance-of-competency-page">HERE</a> to start your questionnaire.</p>
+            <?=$language["questionnaire_intropage_instruction_paragraph1"]?>
+            <?=$language["questionnaire_intropage_instruction_paragraph2"]?>
+            <?=$language["questionnaire_intropage_instruction_paragraph3"]?>
+            <?=$language["questionnaire_intropage_instruction_paragraph4"]?>
+            <?=$language["questionnaire_intropage_instruction_paragraph5"]?>
+            <?=$language["questionnaire_intropage_instruction_paragraph6"]?>
         </div>
     </section>
     <section id="importance-of-competency-page" class="questionnaire-page">
-        <div class="questionnaire-header">COMPETENCE AUDIT ON FOCUS</div>
+        <div class="questionnaire-header"><?=$language["questionnaire_header_title"]?></div>
         <br>
-        <div class="questionnaire-paragraph-title">A. IMPORTANCE OF COMPETENCY</div>
+        <div class="questionnaire-paragraph-title"><?=$language["questionnaire_importanceofcompetency"]?></div>
         <br>
-        <p>
-            This section shows how FOCUS and Manager rate each of the competencies in terms of their importance to success in FOCUS's job. There is no
-            right or wrong answer. Just show your objective and truthful answer.
-        </p>
-        <p>When you have completed your rating, please click</p>
-        <button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button">Confirm</button>
+        <?=$language["questionnaire_importanceofcompetency_paragraph1"]?>
+        <!-- TODO list of competencies-->
+        <?
+        ?>
+        <?=$language["questionnaire_importanceofcompetency_paragraph2"]?>
+        <button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button"><?=$language["questionnaire_confirm_button"]?></button>
         <br>
         <br>
-        <p><a href="#intro-page">Back</a></p>
-        <p><a href="#competency-statements-page">Next</a></p>
+        <p><a href="#intro-page"><?=$language["questionnaire_previous_button"]?></a></p>
+        <p><a href="#competency-statements-page"><?=$language["questionnaire_next_button"]?></a></p>
     </section>
     <section id="competency-statements-page" class="questionnaire-page">
-        <div class="questionnaire-header">COMPETENCE AUDIT ON FOCUS</div>
+        <div class="questionnaire-header"><?=$language["questionnaire_header_title"]?></div>
         <br>
-        <div class="questionnaire-paragraph-title">B. COMPETENCY STATEMENTS</div>
+        <div class="questionnaire-paragraph-title"><?=$language["questionnaire_competencystatements"]?></div>
         <div class="questionnaire-competency-statements-instructions">
-            <p>
-                Evaluate each statement by means of following scale:<br>
-                1 : strong development needed <br>
-                2 : development needed <br>
-                3 : competent <br>
-                4 : strength <br>
-                5 : exceptional strength <br>
-                <br>
-                X : not enough observation
-            </p>
+        <?=$language["questionnaire_competencystatements_paragraph"]?>
         </div>
-        <p><a href="#importance-of-competency-page">Back</a></p>
-        <p><a href="#open-end-question-page">Next</a></p>
+        <p><a href="#importance-of-competency-page"><?=$language["questionnaire_previous_button"]?></a></p>
+        <p><a href="#open-end-question-page"><?=$language["questionnaire_next_button"]?></a></p>
     </section>
     <section id="open-end-question-page" class="questionnaire-page">
-        <div class="questionnaire-header">OPEN-END QUESTION ON FOCUS</div>
+        <div class="questionnaire-header"><?=$language["questionnaire_openendquestion"]?></div>
         <br>
-        <p>Additional advice I want to give to the FOCUS:</p>
+        <?=$language["questionnaire_openendquestion_paragraph1"]?>
         <input type="text" class="text-input" placeholder="(Maximum 100 words)">
-        <p>Are you willing to discuss your advice with the FOCUS</p>
-        <p>END OF COMPETENCY AUDIT</p>
-        <p><a href="#competency-statements-page">Back</a></p>
+        <?=$language["questionnaire_openendquestion_paragraph2"]?>
+        <?=$language["questionnaire_openendquestion_finish"]?>
+        <p><a href="#competency-statements-page"><?=$language["questionnaire_previous_button"]?></a></p>
     </section>
 
     <script src="../assets/js/core/jquery.min.js"></script>
