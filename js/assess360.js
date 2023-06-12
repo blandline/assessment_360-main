@@ -656,3 +656,68 @@ var Raterlist = function() {
         }
     });
 };
+
+var Questionnaire = function() {
+    jQuery(document).ready(function($) {
+        ac = $("#ac").length > 0 ? $("#ac").val() : -1;
+
+        $("#ac").change(function() {
+            var form = document.createElement('form');
+            form.style.visibility = 'hidden';
+            form.method = 'POST';
+            form.action = 'competency';
+
+            var typeInput = document.createElement('input');
+            typeInput.name = "ac";
+            typeInput.value = $("#ac").val();
+            form.appendChild(typeInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        });
+        // hide all pages except the first one
+        $('.questionnaire-page:not(:first)').hide();
+
+        // listen for click events on the link
+        $('a[href="#intro-page"]').click(function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $('#intro-page').show();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').hide();
+            $('#open-end-question-page').hide();
+        });
+        $('a[href="#importance-of-competency-page"]').click(function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').show();
+            $('#competency-statements-page').hide();
+            $('#open-end-question-page').hide();
+        });
+        $('a[href="#competency-statements-page"]').click(function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').show();
+            $('#open-end-question-page').hide();
+        });
+        $('a[href="#open-end-question-page"]').click(function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').hide();
+            $('#open-end-question-page').show();
+        });
+
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    });
+};

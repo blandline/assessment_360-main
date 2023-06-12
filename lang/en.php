@@ -3110,4 +3110,8 @@ $language["role_permission_tax_view"] = "View own record";
 $language["role_permission_tax_view_all"] = "View all staff records";
 $language["role_permission_tax_summary"] = "View summary";
 $language["role_permission_tax_generate"] = "Generate report";
+
+//---------------------------------NEW---------------------------------
+
+//---------------------------------------------------------------------
 ?>

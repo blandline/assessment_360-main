@@ -280,6 +280,7 @@ $SESSION_PAGE_ASSESS_360 = "assess360";
 
 //----------------------------------NEW-----------------------------------
 $SESSION_PAGE_LIST_OF_RATERS = "listofraters";
+$SESSION_PAGE_QUESTIONNAIRE = "questionnaire";
 //------------------------------------------------------------------------
 
 // user setting
