@@ -60,7 +60,7 @@
         <?
         ?>
         <?= $language["questionnaire_importanceofcompetency_paragraph2"] ?>
-        <button type="button" class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button" data-toggle="modal" data-target="#deleteModal"><?= $language["questionnaire_confirm_button"] ?></button>
+        <button type="button" class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button" data-toggle="modal" data-target="#deleteModal" style="margin-left: 0px !important;"><?= $language["questionnaire_confirm_button"] ?></button>
         <br>
         <br>
         <p><a href="#intro-page"><?= $language["questionnaire_previous_button"] ?></a></p>
