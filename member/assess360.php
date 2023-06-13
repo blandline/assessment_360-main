@@ -4,11 +4,13 @@ require("../classes/Session.php");
 require("../classes/MemberClass.php");
 require("../classes/Assess360Class.php");
 require("../vendor/autoload.php");
+require("../classes/listofratersClass.php");
 
 // use Spipu\Html2Pdf\Html2Pdf;
 
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
+$listofratersClass = new listofratersClass($login);
 
 if ($login->isLoggedIn()) {
   if ($login->isAdmin()) {
@@ -27,6 +29,33 @@ if ($login->isLoggedIn()) {
 
     $companyId = $login->getCompanyId();
   }
+
+ 
+  /* raters*/
+
+  if(isset($_POST["a"]) && $_POST["a"] == "activate"){
+    header("Location: https://chess.com");
+
+
+   
+
+    for($i=0;$i<count($_POST["rows"]);$i++){
+    $listofratersClass->updateFocusInfo($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+    //$listofratersClass->updateRaterInfo($companyId, $_POST["rows[0][Rater-first-name]"],  $_POST["rows[0][Rater-last-name]"], $_POST["rows[0][Roles]"],$position = $_POST["rows[0][position]"],$gender = $_POST["rows[0][Genders]"],$email = $_POST["rows[0][email]"]);
+    $listofratersClass->updateRaterInfo($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"],$_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+    $listofratersClass->deleteFocusInfo($companyId);
+    $listofratersClass->deleteRaterInfo($companyId);    
+    //$listofratersClass->addFocusData($companyId, $_POST["rows[0][FOCUS_first_name]"],  $_POST["rows[0][FOCUS_last_name]"], $_POST["rows[0][Launch-date]"], $_POST["rows[0][End-date]"], $_POST["rows[0][Roles]"],$position = $_POST["rows[0][Genders]"],$gender = $_POST["rows[0][position]"],$email = $_POST["rows[0][email]"]);
+    $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+    //$listofratersClass->addRaterData($companyId, $_POST["rows[0][Rater-first-name]"],  $_POST["rows[0][Rater-last-name]"], $_POST["rows[0][Roles]"],$position = $_POST["rows[0][Genders]"],$gender = $_POST["rows[0][position]"],$email = $_POST["rows[0][email]"]);
+    $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+    $listofratersClass->getRater_info_WithId($companyId);
+    $listofratersClass-> getRater_info($companyId);
+    $listofratersClass->getFocus_info_WithId($companyId);
+    $listofratersClass-> getFocus_info($companyId);
+    //header('Location:index.html');
+    }
+  } 
 
   // add/edit competency framework
   if (isset($_POST["a"]) && $_POST["a"] == "addFramework") {
@@ -381,36 +410,22 @@ if ($login->isLoggedIn()) {
 
 
  <!----------------------------------SARBULAND------------------------------------------------>
- <?php
-
  
-  // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  //   // initialize an array to hold the form data
-  //   $form_data = array();
-  
-  //   // iterate over the form data using a foreach loop
-  //   foreach ($_POST['rows'] as $row) {
-  //     // create a new associative array for each row
-  //     $row_data = array(
-  //       'FOCUS_first_name' => $row['FOCUS_first_name'],
-  //       'FOCUS_last_name' => $row['FOCUS_last_name'],
-  //       'Launch_date' => $row['Launch-date'],
-  //       'End_date' => $row['End-date'],
-  //       'Rater_first_name' => $row['Rater-first-name'],
-  //       'Rater_last_name' => $row['Rater-last-name'],
-  //       'Roles' => $row['Roles'],
-  //       'Genders' => $row['Genders'],
-  //       'position' => $row['position'],
-  //       'email' => $row['email']
-  //     );
-  
-  //     // add the row data to the form data array
-  //     $form_data[] = $row_data;
-  //   }
-  
-  //   // output the form data array for testing
-  //   print_r($form_data);
-  // }
+<?
+// Get the array from the AJAX request
+$arr_comp = $_POST['comp_arr'];
+$arr_len = count($arr_comp);
+$qu_arr = array();
 
-  ?>
+// Call the getQuestions function with the array as a parameter
+for($x = 0; $x <= $arr_len; $x++){
+  array_push($qu_arr,$competency->getQuestions($arr_comp[$x]));
+}
+
+
+// Return the result to the JavaScript code
+echo json_encode($qu_arr);
+
+
+?>
   <!------------------------------------------------------------------------------------------->

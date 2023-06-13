@@ -8,6 +8,7 @@ class CompetencyClass
         $this->memberClass = $memberClass;
     }
 
+
     public function getCompetencyCluster()
     {
         require '../config/dbconnect.php';
@@ -20,88 +21,8 @@ class CompetencyClass
         return $result;
     }
 
-    public function getFocus_first_name()
-    {
-        require '../config/dbconnect.php';
-        $query = "SELECT focus_first_name FROM focus WHERE focus_first_name IS NOT NULL ORDER BY focus_id";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
 
-        return $result;
-    }
 
-    public function getFocus_last_name()
-    {
-        require '../config/dbconnect.php';
-        $query = "SELECT focus_last_name FROM focus WHERE focus_last_name IS NOT NULL ORDER BY focus_id";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-
-        return $result;
-    }
-
-    public function getFocus_start_date()
-    {
-        require '../config/dbconnect.php';
-        $query = "SELECT start_date FROM focus WHERE start_date IS NOT NULL ORDER BY focus_id";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-
-        return $result;
-    }
-
-    public function getFocus_end_date()
-    {
-        require '../config/dbconnect.php';
-        $query = "SELECT end_date FROM focus WHERE end_date IS NOT NULL ORDER BY focus_id";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-
-        return $result;
-    }
-    public function getFocus_gender()
-    {
-        require '../config/dbconnect.php';
-        $query = "SELECT gender FROM focus WHERE gender IS NOT NULL ORDER BY focus_id";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-
-        return $result;
-    }
-
-    public function getFocus_role()
-    {
-        require '../config/dbconnect.php';
-        $query = "SELECT roles FROM focus WHERE roles IS NOT NULL ORDER BY focus_id";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-
-        return $result;
-    }
-
-    public function getFocus_position()
-    {
-        require '../config/dbconnect.php';
-        $query = "SELECT position FROM focus WHERE position IS NOT NULL ORDER BY focus_id";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-
-        return $result;
-    }
 
     public function getCompetencyFrameworkPosition($companyId)
     {
@@ -240,5 +161,18 @@ class CompetencyClass
         $stmt->execute();
         $stmt->close();
     }
+    //////////////////////////////////////Sarb///////////////////////////////////////
+    public function getQuestions($arr_comp){
+        require '../config/qbconnect.php';
+
+        $query = "SELECT Questions FROM question_base WHERE sub_headings = $arr_comp ORDER BY RAND() LIMIT 3;";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        return $result;
+    }
+    /////////////////////////////////////Sarb///////////////////////////////////////
 }
 ?>
