@@ -64,7 +64,7 @@
       <div style="margin-top: 95px; position: absolute; right: 12px;">
         <!-- <button type="button" class="btn btn-primary excel"><?= $language["competency_framework_export_excel"]; ?></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
         <button type="button" class="btn btn-primary export"><?= $language["confirm_button"]; ?></button>
-        <button type="button" onclick="getxt()" >test butt</button>
+        <button type="button" class="btn btn-primary test-btn">test butt</button>
       </div>
 
       <div class="content search-competency-content">
@@ -201,27 +201,6 @@
     var competency = new Competency();
   </script>
   <!-------------------------------------------SERB------------------------------------------------>
-  <script>
-    function getxt(){
-      // Get all the div elements with class "nowrap" using querySelectorAll
-    const divs = document.querySelectorAll("div.nowrap");
-    var comp_arr =[];
-// Loop through the div elements and read their text content
-    divs.forEach((div) => {
-      
-      var text = div.textContent.trim();
-      if(!text.includes("Edit")){
-        text = text.substring(2);
-        comp_arr.push(text);
-      }
-       // Print the text content to the console
-      
-
-    });
-    console.log(comp_arr);
-  }
-    
-  </script>
 
   <!-------------------------------------------SERB------------------------------------------------>
 

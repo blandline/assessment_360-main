@@ -571,6 +571,25 @@ var Competency = function() {
             form.submit();
         });
 
+        $("body").on("click", ".test-btn", function() {
+            // Get all the div elements with class "nowrap" using querySelectorAll
+            const divs = document.querySelectorAll("div.nowrap");
+            var comp_arr =[];
+            // Loop through the div elements and read their text content
+            divs.forEach((div) => {
+                
+                var text = div.textContent.trim();
+                if(!text.includes("Edit")){
+                text = text.substring(2);
+                comp_arr.push(text);
+                }
+                // Print the text content to the console
+                
+        
+            });
+            console.log(comp_arr);
+        });
+
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
         }
