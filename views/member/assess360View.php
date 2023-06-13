@@ -168,6 +168,7 @@
             </div>
             <br><br><br>
           </div>
+          <p><a class="nav-link" href="./assess360?a=questionnaire">Questionnaire temp</a></p>
           <? include_once '../member/footer.php'; ?>
         </div>
       </div>
