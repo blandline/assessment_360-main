@@ -1,6 +1,6 @@
-<?
-class CompetencyClass
-{
+<? 
+class listofratersClass{
+
     private $memberClass;
 
     public function __construct(MemberClass $memberClass)
@@ -8,19 +8,191 @@ class CompetencyClass
         $this->memberClass = $memberClass;
     }
 
-    public function getCompetencyCluster()
-    {
-        require '../config/dbconnect.php';
-        $query = "SELECT * FROM competency WHERE parent_id = -1 ORDER BY order_id";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
 
-        return $result;
-    }
 
-    public function getCompetencyFrameworkPosition($companyId)
+   /* /// CODE TO GET INFO FROM FOCUS TABLE IN THE DATABASE*/
+
+    // public function getFocus_first_name()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT focus_first_name FROM focus WHERE focus_first_name IS NOT NULL ORDER BY focus_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+    
+    // public function getFocus_last_name()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT focus_last_name FROM focus WHERE focus_last_name IS NOT NULL ORDER BY focus_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+    
+
+    // public function getFocus_start_date()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT start_date FROM focus WHERE start_date IS NOT NULL ORDER BY focus_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+    // public function getFocus_end_date()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT end_date FROM focus WHERE end_date IS NOT NULL ORDER BY focus_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+    // public function getFocus_gender()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT gender FROM focus WHERE gender IS NOT NULL ORDER BY focus_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+   
+
+    // public function getFocus_role()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT roles FROM focus WHERE roles IS NOT NULL ORDER BY focus_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+
+
+    // public function getFocus_position()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT position FROM focus WHERE position IS NOT NULL ORDER BY focus_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+    // public function getFocus_email()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT email FROM focus WHERE email IS NOT NULL ORDER BY focus_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+    
+
+    // /* code to get info for the rater_list table in the <database></database*/ 
+
+    // public function getrater_first_name()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT rater_first_name FROM rater_list WHERE rater_first_name IS NOT NULL ORDER BY rater_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+    // public function getrater_last_name()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT rater_last_name FROM rater_list WHERE rater_last_name IS NOT NULL ORDER BY rater_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+    // public function getrater_gender()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT gender FROM rater_list WHERE gender IS NOT NULL ORDER BY rater_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+    // public function getrater_role()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT roles FROM rater_list WHERE roles IS NOT NULL ORDER BY rater_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+    // public function getrater_position()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT position FROM rater_list WHERE position IS NOT NULL ORDER BY rater_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+    // public function getrater_email()
+    // {
+    //     require '../config/dbconnect.php';
+    //     $query = "SELECT email FROM rater_list WHERE email IS NOT NULL ORDER BY rater_id";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     return $result;
+    // }
+
+    /* get all info about focus with and without focus id*/
+
+    public function getFocus_info($companyId)
     {
         require '../config/dbconnect.php';
 
@@ -29,7 +201,7 @@ class CompetencyClass
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-        $query = "SELECT * FROM " . $dbName . ".competency_frm_position";
+        $query = "SELECT * FROM " . $dbName . ".focus";
         $stmt = $conn->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -38,7 +210,7 @@ class CompetencyClass
         return $result;
     }
 
-    public function getCompetencyFrameworkPositionWithId($companyId)
+    public function getFocus_info_WithId($companyId)
     {
         require '../config/dbconnect.php';
 
@@ -47,9 +219,9 @@ class CompetencyClass
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-        $query = "SELECT * FROM " . $dbName . ".competency_frm_position WHERE id = ?";
+        $query = "SELECT * FROM " . $dbName . ".focus WHERE focus_id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("s", $_POST["id"]);
+        $stmt->bind_param("s", $_POST["focus_id"]);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
@@ -57,7 +229,9 @@ class CompetencyClass
         return $result;
     }
 
-    public function getCompetencyFramework($companyId)
+    /*get all info about raters with and without id*/
+
+    public function getRater_info($companyId)
     {
         require '../config/dbconnect.php';
 
@@ -66,7 +240,7 @@ class CompetencyClass
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-        $query = "SELECT * FROM " . $dbName . ".competency_frm";
+        $query = "SELECT * FROM " . $dbName . ".rater_list";
         $stmt = $conn->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -75,7 +249,7 @@ class CompetencyClass
         return $result;
     }
 
-    public function addCompetencyFrameworkPosition($companyId, $name)
+    public function getRater_info_WithId($companyId)
     {
         require '../config/dbconnect.php';
 
@@ -84,8 +258,30 @@ class CompetencyClass
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-        $stmt = $conn->prepare("INSERT INTO " . $dbName . ".competency_frm_position (name) VALUES (?)");
-        $stmt->bind_param("s", $name);
+        $query = "SELECT * FROM " . $dbName . ".rater_list WHERE rater_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $_POST["rater_id"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        return $result;
+    }
+
+    /* add values into focus table */
+    
+    public function addFocusData($companyId, $FocusfirstName, $FocuslastName, $startDate, $endDate, $roles, $gender, $position,$email)
+    {
+        require '../config/dbconnect.php';
+
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+
+        $stmt = $conn->prepare("INSERT INTO " . $dbName . ".focus (focus_first_name, focus_last_name, start_date, end_date, roles, gender, position, email) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
+        $stmt->bind_param("ssssssss", $FocusfirstName, $FocuslastName, $startDate, $endDate, $roles, $gender, $position, $email);
         $stmt->execute();
         $id = $stmt->insert_id;
         $stmt->close();
@@ -93,7 +289,9 @@ class CompetencyClass
         return $id;
     }
 
-    public function updateCompetencyFrameworkPosition($companyId, $name)
+    /* add values into rater_list table */
+    
+    public function addRaterData($companyId,  $RaterfirstName, $RaterlastName,$roles, $gender, $position,$email)
     {
         require '../config/dbconnect.php';
 
@@ -102,13 +300,33 @@ class CompetencyClass
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-        $stmt = $conn->prepare("UPDATE " . $dbName . ".competency_frm_position SET name = ? WHERE id = ?");
-        $stmt->bind_param("ss", $name, $_POST["id"]);
+
+        $stmt = $conn->prepare("INSERT INTO " . $dbName . ".rater_list (rater_first_name, rater_last_name, roles, Genders, position, email) VALUES (?, ?, ?, ?, ?,?)");
+        $stmt->bind_param("ssssss", $RaterfirstName, $RaterlastName,$roles, $gender, $position,$email);
         $stmt->execute();
+        $id = $stmt->insert_id;
         $stmt->close();
+
+        return $id;
     }
 
-    public function addCompetencyFramework($companyId, $id, $value)
+
+
+
+
+
+    
+
+
+
+
+
+
+
+    /* update focus and rater info */
+
+    
+    public function updateFocusInfo($companyId,  $FocusfirstName, $FocuslastName, $startDate, $endDate, $roles, $gender, $position, $email)
     {
         require '../config/dbconnect.php';
 
@@ -117,13 +335,13 @@ class CompetencyClass
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-        $stmt = $conn->prepare("INSERT INTO " . $dbName . ".competency_frm (competency_position_id, competency_id) VALUES (?, ?)");
-        $stmt->bind_param("ss", $id, $value);
+        $stmt = $conn->prepare("UPDATE " . $dbName . ".focus SET focus_first_name = ?, focus_last_name = ?, start_date = ?, end_date = ?, roles = ?, gender = ?, position = ?, email = ? WHERE focus_id = ?");
+        $stmt->bind_param("ssssssssi", $FocusfirstName, $FocuslastName, $startDate, $endDate, $roles, $gender, $position, $email, $_POST["focus_id"]);
         $stmt->execute();
         $stmt->close();
     }
 
-    public function updateCompetencyFramework($companyId, $value)
+    public function updateRaterInfo($companyId,  $RaterfirstName, $RaterlastName,$roles, $gender, $position, $email)
     {
         require '../config/dbconnect.php';
 
@@ -132,13 +350,18 @@ class CompetencyClass
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-        $stmt = $conn->prepare("UPDATE " . $dbName . ".competency_frm SET competency_id = ? WHERE competency_position_id = ?");
-        $stmt->bind_param("ss", $value, $_POST["id"]);
+        $stmt = $conn->prepare("UPDATE " . $dbName . ".rater_list SET rater_first_name = ?, rater_last_name = ?,roles = ?, Genders = ?, position = ?, email = ? WHERE rater_id = ?");
+        $stmt->bind_param("ssssssi", $RaterfirstName, $RaterlastName,$roles, $gender, $position, $email, $_POST["rater_id"]);
         $stmt->execute();
         $stmt->close();
     }
 
-    public function deleteCompetencyFramework($companyId)
+   
+
+
+    /* Delete focus and rater info */
+
+    public function deleteFocusInfo($companyId)
     {
         require '../config/dbconnect.php';
 
@@ -147,15 +370,46 @@ class CompetencyClass
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-        $stmt = $conn->prepare("DELETE FROM " . $dbName . ".competency_frm_position WHERE id = ?");
-        $stmt->bind_param("s", $_POST["id"]);
+
+        $stmt = $conn->prepare("DELETE FROM " . $dbName . ".focus WHERE focus_id = ?");
+        $stmt->bind_param("i", $_POST["focus_id"]);
         $stmt->execute();
         $stmt->close();
 
-        $stmt = $conn->prepare("DELETE FROM " . $dbName . ".competency_frm WHERE competency_position_id = ?");
-        $stmt->bind_param("s", $_POST["id"]);
+    }
+
+    public function deleteRaterInfo($companyId)
+    {
+        require '../config/dbconnect.php';
+
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+
+        $stmt = $conn->prepare("DELETE FROM " . $dbName . ".rater_list WHERE rater_id = ?");
+        $stmt->bind_param("i", $_POST["rater_id"]);
         $stmt->execute();
         $stmt->close();
+       
     }
+
+   
+
+   
 }
-?>
+
+    
+
+  
+  
+
+/* code for what happens after activate button is clicked */
+
+
+
+
+
+
+
