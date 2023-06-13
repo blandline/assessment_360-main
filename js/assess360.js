@@ -570,7 +570,7 @@ var Competency = function() {
             document.body.appendChild(form);
             form.submit();
         });
-
+/////////////////////////////////////////////////Serb//////////////////////////////////////
         $("body").on("click", ".test-btn", function() {
             // Get all the div elements with class "nowrap" using querySelectorAll
             const divs = document.querySelectorAll("div.nowrap");
@@ -588,14 +588,30 @@ var Competency = function() {
         
             });
             console.log(comp_arr);
+
         });
+
+        $.ajax({
+            url: "assess360",
+            data: { comp_arr: comp_arr },
+            type: "POST",
+            dataType: "json",
+            success: function(response) {
+                // Handle the response from the server here
+                console.log(response);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+    });
 
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
         }
 
         $(".competency-add-table").hide();
-    });
+
 };
 
 var Raterlist = function() {

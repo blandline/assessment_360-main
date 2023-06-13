@@ -381,36 +381,22 @@ if ($login->isLoggedIn()) {
 
 
  <!----------------------------------SARBULAND------------------------------------------------>
- <?php
-
  
-  // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  //   // initialize an array to hold the form data
-  //   $form_data = array();
-  
-  //   // iterate over the form data using a foreach loop
-  //   foreach ($_POST['rows'] as $row) {
-  //     // create a new associative array for each row
-  //     $row_data = array(
-  //       'FOCUS_first_name' => $row['FOCUS_first_name'],
-  //       'FOCUS_last_name' => $row['FOCUS_last_name'],
-  //       'Launch_date' => $row['Launch-date'],
-  //       'End_date' => $row['End-date'],
-  //       'Rater_first_name' => $row['Rater-first-name'],
-  //       'Rater_last_name' => $row['Rater-last-name'],
-  //       'Roles' => $row['Roles'],
-  //       'Genders' => $row['Genders'],
-  //       'position' => $row['position'],
-  //       'email' => $row['email']
-  //     );
-  
-  //     // add the row data to the form data array
-  //     $form_data[] = $row_data;
-  //   }
-  
-  //   // output the form data array for testing
-  //   print_r($form_data);
-  // }
+<?
+// Get the array from the AJAX request
+$arr_comp = $_POST['comp_arr'];
+$arr_len = count($arr_comp);
+$qu_arr = array();
 
-  ?>
+// Call the getQuestions function with the array as a parameter
+for($x = 0; $x <= $arr_len; $x++){
+  array_push($qu_arr,$competency->getQuestions($arr_comp[$x]));
+}
+
+
+// Return the result to the JavaScript code
+echo json_encode($qu_arr);
+
+
+?>
   <!------------------------------------------------------------------------------------------->

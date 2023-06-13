@@ -240,5 +240,18 @@ class CompetencyClass
         $stmt->execute();
         $stmt->close();
     }
+    //////////////////////////////////////Sarb///////////////////////////////////////
+    public function getQuestions($arr_comp){
+        require '../config/qbconnect.php';
+
+        $query = "SELECT Questions FROM question_base WHERE sub_headings = $arr_comp ORDER BY RAND() LIMIT 3;";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        return $result;
+    }
+    /////////////////////////////////////Sarb///////////////////////////////////////
 }
 ?>
