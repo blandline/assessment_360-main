@@ -70,8 +70,10 @@
            
               <div class="card">
                 <div class="div-datatable-competency card-body table-responsive">
-                  <div class="listofraters-form-and-button-container">
-                  <form method="post" id="rateform" action="assess360?a=listofraters">
+                <div class="listofraters-form-and-button-container">
+                    
+                
+                  <form method="post" id="rateform" action="assess360">
                     <table id="raterlisttable" class="competency-frm-table table table-hover" style="width:100%;">
                       <thead class="text-danger">
                         <tr>
@@ -107,7 +109,7 @@
                             <option value="FOCUS" name='focus_role'><?= $language["listofraters_role_focus"]; ?></option>
                             <option value="Manager" name='manager_role'><?= $language["listofraters_role_manager"]; ?></option>
                             <option value="Colleague" name='colleague_role'><?= $language["listofraters_role_colleague"]; ?></option>
-                            <option value="Direct report" name='direct_report_role'><?= $language["listofraters_role_directreport"]; ?></option>
+                            <option value="Direct report" name='direct_report_role'><?= $language["listofraters_role_directreport"]; ?></option>                
                             <option value="Other" name='other_role'><?= $language["listofraters_role_other"]; ?></option>
                           </select>
                         </td>
@@ -123,11 +125,11 @@
                         <td></td>
                       </tr>
                     </table>
-                    <input class="btn btn-success btn-sm addButton competency-add-btn listofraters-submit-btn" style ="display:inline-block;" type="submit" value="Activate">
+                    <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="Activate">
+                  
                   </form>
-                  <button class="btn btn-primary btn-sm addButton raterlist-add-btn" style="position: absolute; right: 10px; display:inline-block;"><?= $language["listofraters_add_button"]; ?></button>
-                  </div>
                 </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -136,6 +138,7 @@
         </div>
       </div>
     </div>
+    
   </div>
   
   <script src="../assets/js/core/jquery.min.js"></script>
@@ -164,6 +167,17 @@
   <script>
     var Raterlist = new Raterlist();
   </script>
+
+  <!-- <?php
+
+if(isset($_POST["Activate"])){
+  header('https://chess.com');
+}  
+  
+  ?> -->
+  
+
+
 
   
 </body>
