@@ -571,6 +571,25 @@ var Competency = function() {
             form.submit();
         });
 
+        $("body").on("click", ".test-btn", function() {
+            // Get all the div elements with class "nowrap" using querySelectorAll
+            const divs = document.querySelectorAll("div.nowrap");
+            var comp_arr =[];
+            // Loop through the div elements and read their text content
+            divs.forEach((div) => {
+                
+                var text = div.textContent.trim();
+                if(!text.includes("Edit")){
+                text = text.substring(2);
+                comp_arr.push(text);
+                }
+                // Print the text content to the console
+                
+        
+            });
+            console.log(comp_arr);
+        });
+
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
         }
@@ -608,8 +627,8 @@ var Raterlist = function() {
         cell4.innerHTML = "";
         cell5.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-first-name]' style='width: 75px;'>";
         cell6.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-last-name]' style='width: 75px;'>";
-        cell7.innerHTML = "<select name='rows[" + rowcounter +"][Roles]' id='roles' style='width: 95px;'><option value='Focus' name='focus_role'>"+ lang["listofraters_role_focus"] +"</option><option value='manager' name='manager_role'>"+ lang["listofraters_role_manager"] +"</option><option value='colleague' name='colleague_role'>"+lang["listofraters_role_colleague"]+"</option><option value='direct-report' name='direct_report_role'>"+lang["listofraters_role_directreport"]+"</option><option value='Other' name='other_role'>"+lang["listofraters_role_other"]+"</option></select>";
-        cell8.innerHTML = "<select name='rows[" + rowcounter +"][Genders]' id='genders' style='width: 60px;'><option value='Male' name='male_gender'>"+ lang["listofraters_gender_male"] +"</option><option value='Female' name='female_gender'>"+ lang["listofraters_gender_female"] +"</option><option value='Other Gender' name='other_gender'>"+ lang["listofraters_gender_other"] +"</option></select>";
+        cell7.innerHTML = "<select name='rows[" + rowcounter +"][Roles]' id='roles' style='width: 95px; -webkit-appearance: menulist;'><option value='Focus' name='focus_role'>"+ lang["listofraters_role_focus"] +"</option><option value='manager' name='manager_role'>"+ lang["listofraters_role_manager"] +"</option><option value='colleague' name='colleague_role'>"+lang["listofraters_role_colleague"]+"</option><option value='direct-report' name='direct_report_role'>"+lang["listofraters_role_directreport"]+"</option><option value='Other' name='other_role'>"+lang["listofraters_role_other"]+"</option></select>";
+        cell8.innerHTML = "<select name='rows[" + rowcounter +"][Genders]' id='genders' style='width: 80px; -webkit-appearance: menulist;'><option value='Male' name='male_gender'>"+ lang["listofraters_gender_male"] +"</option><option value='Female' name='female_gender'>"+ lang["listofraters_gender_female"] +"</option><option value='Other Gender' name='other_gender'>"+ lang["listofraters_gender_other"] +"</option></select>";
         cell9.innerHTML = "<input type='text' name='rows[" + rowcounter +"][position]' style='width: 75px;'>";
         cell10.innerHTML = "<input type='text' name='rows[" + rowcounter +"][email]' style='width: 80px;'>";
         cell11.innerHTML = "<button class='btn btn-dark btn-sm addButton raterlist-delete-btn'>"+lang["listofraters_delete_button"]+"</button>";
@@ -655,4 +674,79 @@ var Raterlist = function() {
             window.history.replaceState(null, null, window.location.href);
         }
     });
+};
+
+var Questionnaire = function() {
+    jQuery(document).ready(function($) {
+        ac = $("#ac").length > 0 ? $("#ac").val() : -1;
+
+        $("#ac").change(function() {
+            var form = document.createElement('form');
+            form.style.visibility = 'hidden';
+            form.method = 'POST';
+            form.action = 'competency';
+
+            var typeInput = document.createElement('input');
+            typeInput.name = "ac";
+            typeInput.value = $("#ac").val();
+            form.appendChild(typeInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        });
+        // hide all pages except the first one
+        $('.questionnaire-page:not(:first)').hide();
+
+        // listen for click events on the link
+        $('a[href="#intro-page"]').click(function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $('#intro-page').show();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').hide();
+            $('#open-end-question-page').hide();
+        });
+        $('a[href="#importance-of-competency-page"]').click(function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').show();
+            $('#competency-statements-page').hide();
+            $('#open-end-question-page').hide();
+        });
+        $('a[href="#competency-statements-page"]').click(function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').show();
+            $('#open-end-question-page').hide();
+        });
+        $('a[href="#open-end-question-page"]').click(function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').hide();
+            $('#open-end-question-page').show();
+        });
+
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+
+        $("#deleteModal").on("click", ".confirm-yes", function() {
+            window.location.href = '#competency-statements-page';
+
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').show();
+            $('#open-end-question-page').hide();
+        });
+    });
+
 };

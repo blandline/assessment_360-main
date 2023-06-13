@@ -70,7 +70,7 @@
            
               <div class="card">
                 <div class="div-datatable-competency card-body table-responsive">
-                
+                <div class="listofraters-form-and-button-container">
                     
                 
                   <form method="post" id="rateform" action="assess360">
@@ -105,53 +105,34 @@
                         <td><input type="text" name="rows[0][Rater-first-name]" style= "width:75px"></td>
                         <td><input type="text" name="rows[0][Rater-last-name]" style= "width:75px"></td>
                         <td>
-                          <select name="rows[0][Roles]" id="roles" style= "width:95px">
+                          <select name="rows[0][Roles]" id="roles" style= "width:95px; -webkit-appearance: menulist;">
                             <option value="FOCUS" name='focus_role'><?= $language["listofraters_role_focus"]; ?></option>
                             <option value="Manager" name='manager_role'><?= $language["listofraters_role_manager"]; ?></option>
                             <option value="Colleague" name='colleague_role'><?= $language["listofraters_role_colleague"]; ?></option>
                             <option value="Direct report" name='direct_report_role'><?= $language["listofraters_role_directreport"]; ?></option>                
                             <option value="Other" name='other_role'><?= $language["listofraters_role_other"]; ?></option>
-                            
                           </select>
                         </td>
                         <td>
-                          <select name="rows[0][Genders]" id="genders" style= "width:60px">
+                          <select name="rows[0][Genders]" id="genders" style= "width:80px; -webkit-appearance: menulist;">
                             <option value="Male" name='male_gender'><?= $language["listofraters_gender_male"]; ?></option>
                             <option value="Female" name='female_gender'><?= $language["listofraters_gender_female"]; ?></option>
                             <option value="Other Gender" name='other_gender'><?= $language["listofraters_gender_other"]; ?></option>
                           </select>
+                        </td>
                         <td><input type="text" name="rows[0][position]" style= "width:75px"></td>
                         <td><input type="text" name="rows[0][email]" style= "width:80px"></td>
+                        <td></td>
                       </tr>
                     </table>
-                    <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="Activate" >
-                   <input type="hidden" name="a" value="activate">
+                    <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="Activate">
+                  
                   </form>
-
-                  <br>
-
-                   <!-- <?php
-                  $FocusfirstName = $_POST["rows[0][FOCUS_first_name]"];
-                  $FocuslastName = $_POST["rows[0][FOCUS_last_name]"];
-                  $RaterlastName = $_POST["rows[0][Rater-first-name]"];
-                  $RaterlastName = $_POST["rows[0][Rater-last-name]"];
-                  $startDate = $_POST["rows[0][Launch-date]"];
-                  $endDate = $_POST["rows[0][End-date]"];
-                  $roles = $_POST["rows[0][Roles]"];
-                  $position = $_POST["rows[0][position]"];
-                  $gender = $_POST["rows[0][Genders]"];
-                  $email = $_POST["rows[0][email]"];
-                  ?>  -->
-
                 </div>
+                  </div>
               </div>
             </div>
           </div>
-
-          
-
-          <button class="btn btn-primary btn-sm addButton raterlist-add-btn"><?= $language["listofraters_add_button"]; ?></button>
-          
           <!-- ---------------------------------------------------------------- -->
           <? include_once '../member/footer.php'; ?>
         </div>

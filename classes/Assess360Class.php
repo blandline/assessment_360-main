@@ -8,6 +8,7 @@ class CompetencyClass
         $this->memberClass = $memberClass;
     }
 
+
     public function getCompetencyCluster()
     {
         require '../config/dbconnect.php';
@@ -19,6 +20,9 @@ class CompetencyClass
 
         return $result;
     }
+
+
+
 
     public function getCompetencyFrameworkPosition($companyId)
     {
