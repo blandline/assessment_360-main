@@ -58,6 +58,12 @@
         <?= $language["questionnaire_importanceofcompetency_paragraph1"] ?>
         <!-- TODO list of competencies-->
         <?
+        if (isset($_POST['comp_arr'])) {
+            $comp_arr = $_POST['comp_arr'];
+            foreach ($comp_arr as $comp) {
+                echo "<div>" . $comp . "</div>";
+            }
+        }
         ?>
         <?= $language["questionnaire_importanceofcompetency_paragraph2"] ?>
         <button type="button" class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button" data-toggle="modal" data-target="#deleteModal" style="margin-left: 0px !important;"><?= $language["questionnaire_confirm_button"] ?></button>
