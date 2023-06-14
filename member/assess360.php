@@ -412,7 +412,7 @@ if ($login->isLoggedIn()) {
 
  <!----------------------------------SARBULAND------------------------------------------------>
  
-<!-- <?
+<?
 // Get the array from the AJAX request
 $arr_comp = $_POST['comp_arr'];
 $arr_len = count($arr_comp);

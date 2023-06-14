@@ -3117,6 +3117,7 @@ $language["questionnaire_header_title"] = "COMPETENCE AUDIT ON FOCUS";
 $language["questionnaire_confirm_button"] = "Confirm";
 $language["questionnaire_previous_button"] = "Previous";
 $language["questionnaire_next_button"] = "Next";
+$language["questionnaire_finish_button"] = "Finish";
 $language["questionnaire_areyousure_confirm"] = "Are you sure?";
 $language["questionnaire_areyousure_yes"] = "Yes";
 $language["questionnaire_areyousure_no"] = "No";
@@ -3127,7 +3128,7 @@ $language["questionnaire_intropage_introduction_paragraph1"] = "<p>The aim of th
 $language["questionnaire_intropage_introduction_paragraph2"] = "<p>The entire questionnaire will be processed anonymously. That means, no one would know your feedback.</p>";
 $language["questionnaire_intropage_instruction"] = "INSTRUCTION";
 $language["questionnaire_intropage_instruction_paragraph1"] = "<p>The Questionnaire takes you 15 to 20 minutes to complete all the simple statements.</p>";
-$language["questionnaire_intropage_instruction_paragraph2"] = "<p>There are 5 answer categories (5-point scale) per statement that range from '1 - strong development needed' to '5 - exceptional strength'. To answer, please click the bullet next to the answer of your choice.</p>";
+$language["questionnaire_intropage_instruction_paragraph2"] = '<p>There are 5 answer categories (5-point scale) per statement that range from "1 - strong development needed" to "5 - exceptional strength". To answer, please click the bullet next to the answer of your choice.</p>';
 $language["questionnaire_intropage_instruction_paragraph3"] = "<p>If you consider that you do not have enough observation about this statement on the FOCUS, please click the bullet 'not enough observation'.</p>";
 $language["questionnaire_intropage_instruction_paragraph4"] = "<p>Please note that:</p>";
 $language["questionnaire_intropage_instruction_paragraph5"] = "<p>1. Click 'Continue Later' to interrupt the questionnaire and continue again by accessing the given link again. Completed answers will be saved.<br>2. Click 'Next' to save your answer and go to the next statement.<br>3. Write your thruthful opinion in the 'open-end question' about FOCUS' behavior and performance during work.<br>4. Click 'Finish' when completing the questionnaire. No changes on answers anymore.<br></p>";
@@ -3145,7 +3146,7 @@ $language["questionnaire_competencystatements_paragraph"] = "<p>Evaluate each st
 //Open-end Question page
 $language["questionnaire_openendquestion"] = "OPEN-END QUESTION ON FOCUS";
 $language["questionnaire_openendquestion_paragraph1"] = "<p>Additional advice I want to give to the FOCUS:</p>";
-$language["questionnaire_openendquestion_paragraph2"] = "<p>Are you willing to discuss your advice with the FOCUS</p>";
+$language["questionnaire_openendquestion_paragraph2"] = "Are you willing to discuss your advice with the FOCUS";
 $language["questionnaire_openendquestion_finish"] = "<p>END OF COMPETENCY AUDIT</p>";
 //---------------------------------------------------------------------
 ?>
