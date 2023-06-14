@@ -3121,6 +3121,7 @@ $language["questionnaire_finish_button"] = "Finish";
 $language["questionnaire_areyousure_confirm"] = "Are you sure?";
 $language["questionnaire_areyousure_yes"] = "Yes";
 $language["questionnaire_areyousure_no"] = "No";
+$language["questionnaire_questions"] = "Questions";
 
 //Questionnaire intro page
 $language["questionnaire_intropage_introduction"] = "INTRODUCTION";
@@ -3141,12 +3142,17 @@ $language["questionnaire_importanceofcompetency_paragraph2"] = "<p>When you have
 
 //Competency Statements page
 $language["questionnaire_competencystatements"] = "B. COMPETENCY STATEMENTS";
-$language["questionnaire_competencystatements_paragraph"] = "<p>Evaluate each statement by means of following scale:<br>1 : strong development needed <br>2 : development needed <br>3 : competent <br>4 : strength <br>5 : exceptional strength <br><br>X : not enough observation</p>";
+$language["questionnaire_competencystatements_paragraph0"] = "<p>Evaluate each statement by means of following scale:</p>";
+$language["questionnaire_competencystatements_paragraph1"] = "<p>1 : strong development needed <br>2 : development needed <br>3 : competent <br>4 : strength <br>5 : exceptional strength <br></p>";
+$language["questionnaire_competencystatements_paragraph2"] = "My observation on Focus";
+$language["questionnaire_competencystatements_paragraph3"] = "X : not enough observation";
 
 //Open-end Question page
 $language["questionnaire_openendquestion"] = "OPEN-END QUESTION ON FOCUS";
 $language["questionnaire_openendquestion_paragraph1"] = "<p>Additional advice I want to give to the FOCUS:</p>";
 $language["questionnaire_openendquestion_paragraph2"] = "Are you willing to discuss your advice with the FOCUS";
 $language["questionnaire_openendquestion_finish"] = "<p>END OF COMPETENCY AUDIT</p>";
+$language["questionnaire_openendquestion_discuss_yes"]= "YES";
+$language["questionnaire_openendquestion_discuss_no"]= "NO";
 //---------------------------------------------------------------------
 ?>
