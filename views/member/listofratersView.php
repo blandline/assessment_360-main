@@ -119,6 +119,7 @@
                           <td></td>
                         </tr>
                       </table>
+                      <input type="hidden" name="a" value="activate">
                       <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="Activate">
                     </form>
                     <button class="btn btn-primary btn-sm addButton raterlist-add-btn" style="position: absolute; right: 10px; display:inline-block;"><?= $language["listofraters_add_button"]; ?></button>
@@ -161,13 +162,7 @@
     var Raterlist = new Raterlist();
   </script>
 
-  <!-- <?php
 
-        if (isset($_POST["Activate"])) {
-          header('https://chess.com');
-        }
-
-        ?> -->
 
 
 
