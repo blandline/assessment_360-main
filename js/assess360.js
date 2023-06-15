@@ -184,18 +184,25 @@ var Competency = function () {
             tmp.push("");
             for (var j = 0; j < frameworkTableColCount - 3; j++) {
                 //----------------------------- EDIT ---------------------------
-                if (j == 0) {
+                if (j == 0 || j == 1) {
                     if (editRowID == i) {
                         var value = "";
                         if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
                             value = frameworkTableObj[i][j][0];
                         }
-                        var textfield =
-                            '<div class="nowrap"><input type="text" class="firstname_input" value="' + value + '"></div>';
-                        tmp.push(textfield);
-                        var textfield = 
-                            '<div class="nowrap"><input type="text" class="lastname_input" value="' + value + '"></div>';
-                        tmp.push(textfield);
+                        if (j == 0) {
+                            var textfield =
+                                '<div class="nowrap"><input type="text" class="firstname_input" value="' +
+                                value +
+                                '"></div>';
+                            tmp.push(textfield);
+                        } else if (j == 1) {
+                            var textfield =
+                                '<div class="nowrap"><input type="text" class="lastname_input" value="' +
+                                value +
+                                '"></div>';
+                            tmp.push(textfield);
+                        }
                     } else {
                         if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
                             tmp.push(frameworkTableObj[i][j][0]);
@@ -203,7 +210,6 @@ var Competency = function () {
                             tmp.push("");
                         }
                     }
-                    
                 } else {
                     if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
                         var value = "";
@@ -755,9 +761,9 @@ var Raterlist = function () {
     });
 
     /*
-        function activate_button(){
-            confirm("Are you sure");
-        }*/
+          function activate_button(){
+              confirm("Are you sure");
+          }*/
 
     jQuery(document).ready(function ($) {
         ac = $("#ac").length > 0 ? $("#ac").val() : -1;
@@ -804,17 +810,17 @@ var Questionnaire = function () {
         // hide all pages except the first one
         $(".questionnaire-page:not(:first)").hide();
 
-    $('a[href="#importance-of-competency-page"]').click(function (event) {
-      event.preventDefault(); // prevent the link from navigating to the target
         $('a[href="#importance-of-competency-page"]').click(function (event) {
             event.preventDefault(); // prevent the link from navigating to the target
+            $('a[href="#importance-of-competency-page"]').click(function (event) {
+                event.preventDefault(); // prevent the link from navigating to the target
 
-      // hide the current page and show the target page
-      $("#intro-page").hide();
-      $("#importance-of-competency-page").show();
-      $("#competency-statements-page").hide();
-      $("#open-end-question-page").hide();
-    });
+                // hide the current page and show the target page
+                $("#intro-page").hide();
+                $("#importance-of-competency-page").show();
+                $("#competency-statements-page").hide();
+                $("#open-end-question-page").hide();
+            });
             // hide the current page and show the target page
             $("#intro-page").hide();
             $("#importance-of-competency-page").show();
@@ -822,182 +828,188 @@ var Questionnaire = function () {
             $("#open-end-question-page").hide();
         });
 
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href);
-    }
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
 
-    $("#deleteModal").on("click", ".confirm-yes", function (event) {
-      event.preventDefault();
         $("#deleteModal").on("click", ".confirm-yes", function (event) {
             event.preventDefault();
+            $("#deleteModal").on("click", ".confirm-yes", function (event) {
+                event.preventDefault();
 
-            $("#intro-page").hide();
-            $("#importance-of-competency-page").hide();
-            $("#competency-statements-page").show();
-            $("#open-end-question-page").hide();
-        });
-
-        $("body").on(
-            "click",
-            ".questionnaire-importanceofcompetency-previous",
-            function (event) {
-                event.preventDefault(); // prevent the link from navigating to the target
-
-                // hide the current page and show the target page
-                $("#intro-page").show();
-                $("#importance-of-competency-page").hide();
-                $("#competency-statements-page").hide();
-                $("#open-end-question-page").hide();
-            }
-        );
-
-        $("body").on(
-            "click",
-            ".questionnaire-importanceofcompetency-next",
-            function (event) {
-                event.preventDefault(); // prevent the link from navigating to the target
-
-            // hide the current page and show the target page
-            $('#intro-page').hide();
-            $('#importance-of-competency-page').hide();
-            $('#competency-statements-page').show();
-            $('#open-end-question-page').hide();
-        });
-
-        $("body").on(
-            "click",
-            ".questionnaire-competencystatement-previous",
-            function (event) {
-                event.preventDefault(); // prevent the link from navigating to the target
-
-            // hide the current page and show the target page
-            $('#intro-page').hide();
-            $('#importance-of-competency-page').show();
-            $('#competency-statements-page').hide();
-            $('#open-end-question-page').hide();
-        });
-
-        $("body").on(
-            "click",
-            ".questionnaire-competencystatement-next",
-            function (event) {
-                event.preventDefault(); // prevent the link from navigating to the target
-
-      // hide the current page and show the target page
-      $("#intro-page").hide();
-      $("#importance-of-competency-page").hide();
-      $("#competency-statements-page").hide();
-      $("#open-end-question-page").show();
-    });
-
-        $("body").on(
-            "click",
-            ".questionnaire-openendquestion-previous",
-            function (event) {
-                event.preventDefault(); // prevent the link from navigating to the target
-
-                // hide the current page and show the target page
                 $("#intro-page").hide();
                 $("#importance-of-competency-page").hide();
                 $("#competency-statements-page").show();
                 $("#open-end-question-page").hide();
-            }
-        );
+            });
 
-        $("body").on(
-            "keyup",
-            ".questionnaire_openendquestion_text-input",
-            function () {
-                // Get the value of the text area
-                var value = $(this).val();
+            $("body").on(
+                "click",
+                ".questionnaire-importanceofcompetency-previous",
+                function (event) {
+                    event.preventDefault(); // prevent the link from navigating to the target
 
-                // Convert the value to an array of words
-                var words = value.trim().split(/\s+/);
-
-                // If the number of words is greater than 100, prevent further input
-                if (words.length > 100) {
-                    // Remove the last word from the array
-                    words.splice(100);
-
-                    // Join the remaining words into a string
-                    var newValue = words.join(" ");
-
-                    // Set the value of the text area to the truncated string
-                    $(this).val(newValue);
-
-                    // Disable the text area to prevent further input
-                    alert("You have reached the maximum word limit of 100.");
-                } else {
-                    // Enable the text area if the word limit is not reached
-                    $(this).attr("disabled", false);
+                    // hide the current page and show the target page
+                    $("#intro-page").show();
+                    $("#importance-of-competency-page").hide();
+                    $("#competency-statements-page").hide();
+                    $("#open-end-question-page").hide();
                 }
-            }
+            );
+
+            $("body").on(
+                "click",
+                ".questionnaire-importanceofcompetency-next",
+                function (event) {
+                    event.preventDefault(); // prevent the link from navigating to the target
+
+                    // hide the current page and show the target page
+                    $("#intro-page").hide();
+                    $("#importance-of-competency-page").hide();
+                    $("#competency-statements-page").show();
+                    $("#open-end-question-page").hide();
+                }
+            );
+
+            $("body").on(
+                "click",
+                ".questionnaire-competencystatement-previous",
+                function (event) {
+                    event.preventDefault(); // prevent the link from navigating to the target
+
+                    // hide the current page and show the target page
+                    $("#intro-page").hide();
+                    $("#importance-of-competency-page").show();
+                    $("#competency-statements-page").hide();
+                    $("#open-end-question-page").hide();
+                }
+            );
+
+            $("body").on(
+                "click",
+                ".questionnaire-competencystatement-next",
+                function (event) {
+                    event.preventDefault(); // prevent the link from navigating to the target
+
+                    // hide the current page and show the target page
+                    $("#intro-page").hide();
+                    $("#importance-of-competency-page").hide();
+                    $("#competency-statements-page").hide();
+                    $("#open-end-question-page").show();
+                }
+            );
+
+            $("body").on(
+                "click",
+                ".questionnaire-openendquestion-previous",
+                function (event) {
+                    event.preventDefault(); // prevent the link from navigating to the target
+
+                    // hide the current page and show the target page
+                    $("#intro-page").hide();
+                    $("#importance-of-competency-page").hide();
+                    $("#competency-statements-page").show();
+                    $("#open-end-question-page").hide();
+                }
+            );
+
+            $("body").on(
+                "keyup",
+                ".questionnaire_openendquestion_text-input",
+                function () {
+                    // Get the value of the text area
+                    var value = $(this).val();
+
+                    // Convert the value to an array of words
+                    var words = value.trim().split(/\s+/);
+
+                    // If the number of words is greater than 100, prevent further input
+                    if (words.length > 100) {
+                        // Remove the last word from the array
+                        words.splice(100);
+
+                        // Join the remaining words into a string
+                        var newValue = words.join(" ");
+
+                        // Set the value of the text area to the truncated string
+                        $(this).val(newValue);
+
+                        // Disable the text area to prevent further input
+                        alert("You have reached the maximum word limit of 100.");
+                    } else {
+                        // Enable the text area if the word limit is not reached
+                        $(this).attr("disabled", false);
+                    }
+                }
+            );
+        });
+    });
+
+    /////////////////////////////////////////////////Serb//////////////////////////////////////
+    // var comp_arr = [];
+    // $("body").on("click", ".test-btn", function () {
+    //   // Get all the div elements with class "nowrap" using querySelectorAll
+    //   const divs = document.querySelectorAll("div.nowrap");
+
+    //   // Loop through the div elements and read their text content
+    //   divs.forEach((div) => {
+    //     var text = div.textContent.trim();
+    //     if (!text.includes("Edit")) {
+    //       text = text.substring(2);
+    //       comp_arr.push(text);
+    //     }
+    //     // Print the text content to the console
+    //   });
+    //   console.log(comp_arr);
+
+    // });
+
+    ////////////////////////////////////////////test new func//////////////////////////
+    $("body").on("click", ".test-btn", function () {
+        // Get all the rows in the table
+        const rows = document.querySelectorAll(
+            "table.competency-frm-table tbody tr"
         );
+
+        // Create an array to store the data for each row
+        var data_arr = [];
+
+        // Loop through each row
+        rows.forEach((row) => {
+            // Get all the div elements with class "nowrap" within the row
+            const divs = row.querySelectorAll("div.nowrap");
+
+            // Create an array to store the text content of each div element in the row
+            var comp_arr = [];
+
+            // Loop through each div element and push its text content into the array
+            divs.forEach((div) => {
+                var text = div.textContent.trim();
+                if (!text.includes("Edit")) {
+                    text = text.substring(2);
+                    comp_arr.push(text);
+                }
+            });
+
+            // Push the array of text content into the data_arr array
+            data_arr.push(comp_arr);
+
+            console.log(data_arr);
+        });
+
+        // Create an AJAX request to send the array to the PHP file
+        // $.ajax({
+        //     url: 'assess360',
+        //     data: {'comp_arr': comp_arr},
+        //     type: 'POST',
+        //     dataType: 'json',
+        //     success: function(response) {
+        //         // Get the response from the PHP file
+        //         console.log(response);
+        //     },
+        //     // error: function(jqXHR, textStatus, errorThrown) {
+        //     //     console.log(textStatus, errorThrown);
+        //     // }
+        // });
     });
 };
-
-/////////////////////////////////////////////////Serb//////////////////////////////////////
-// var comp_arr = [];
-// $("body").on("click", ".test-btn", function () {
-//   // Get all the div elements with class "nowrap" using querySelectorAll
-//   const divs = document.querySelectorAll("div.nowrap");
-
-//   // Loop through the div elements and read their text content
-//   divs.forEach((div) => {
-//     var text = div.textContent.trim();
-//     if (!text.includes("Edit")) {
-//       text = text.substring(2);
-//       comp_arr.push(text);
-//     }
-//     // Print the text content to the console
-//   });
-//   console.log(comp_arr);
-
-// });
-
-////////////////////////////////////////////test new func//////////////////////////
-$("body").on("click", ".test-btn", function () {
-  // Get all the rows in the table
-  const rows = document.querySelectorAll("table.competency-frm-table tbody tr");
-
-  // Create an array to store the data for each row
-  var data_arr = [];
-
-  // Loop through each row
-  rows.forEach((row) => {
-    // Get all the div elements with class "nowrap" within the row
-    const divs = row.querySelectorAll("div.nowrap");
-
-    // Create an array to store the text content of each div element in the row
-    var comp_arr = [];
-
-    // Loop through each div element and push its text content into the array
-    divs.forEach((div) => {
-      var text = div.textContent.trim();
-      if (!text.includes("Edit")) {
-        text = text.substring(2);
-        comp_arr.push(text);
-      }
-    });
-
-    // Push the array of text content into the data_arr array
-    data_arr.push(comp_arr);
-
-    console.log(data_arr);
-  });
-
-  // Create an AJAX request to send the array to the PHP file
-  // $.ajax({
-  //     url: 'assess360',
-  //     data: {'comp_arr': comp_arr},
-  //     type: 'POST',
-  //     dataType: 'json',
-  //     success: function(response) {
-  //         // Get the response from the PHP file
-  //         console.log(response);
-  //     },
-  //     // error: function(jqXHR, textStatus, errorThrown) {
-  //     //     console.log(textStatus, errorThrown);
-  //     // }
-  // });
-});
