@@ -162,17 +162,61 @@ class CompetencyClass
         $stmt->close();
     }
     //////////////////////////////////////Sarb///////////////////////////////////////
-    public function getQuestions($arr_comp){
-        require '../config/qbconnect.php';
-
-        $query = "SELECT Questions FROM question_base WHERE sub_headings = $arr_comp ORDER BY RAND() LIMIT 3;";
+    public function getQuestions($companyId, $arr_comp){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+        $query = "SELECT Questions FROM `" . $dbName . "`.`question_base` WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
         $stmt = $conn->prepare($query);
+        $stmt->bind_param('s', $arr_comp);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
 
-        return $result;
+         // Fetch the rows from the result set and store them in an array
+        $questions = array();
+            while ($row = $result->fetch_assoc()) {
+                $questions[] = $row['Questions'];
+            }
+
+        return $questions;
     }
-    /////////////////////////////////////Sarb///////////////////////////////////////
+
+
+    public function getsetQuestions($companyId, $arr_comp) {
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+        
+        $query = "SELECT Questions FROM `" . $dbName . "`.`question_base` WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('s', $arr_comp);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        $questions = array();
+            while ($row = $result->fetch_assoc()) {
+                array_push($questions, $row['Questions']);
+            }
+    
+        // Insert the questions into the database
+        $insertQuery = "INSERT INTO `" . $dbName . "`.`competency_questions` (competency, question) VALUES (?, ?)";
+        $stmt = $conn->prepare($insertQuery);
+        for ($x = 0 ; $x<3 ;$x++) {
+            $stmt->bind_param('ss', $arr_comp, $questions[$x]);
+            $stmt->execute();
+        }
+        $stmt->close();
+    
+        //return $questions;
+    }
+     /////////////////////////////////////Sarb///////////////////////////////////////
 }
 ?>
