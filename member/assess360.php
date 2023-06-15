@@ -36,8 +36,9 @@ if ($login->isLoggedIn()) {
 
   /* raters*/
 
-  if (isset($_POST["a"]) && $_POST["a"] == "activate") {
-    header("Location: https://chess.com");
+  if(isset($_POST["a"]) && $_POST["a"] == "activate"){
+    //header("Location: welcome.php");
+    header("Location: welcome.php");
 
 
 

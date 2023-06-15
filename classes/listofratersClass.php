@@ -301,7 +301,7 @@ class listofratersClass{
             $dbName = $this->memberClass->getCompanyDB();
         }
 
-        $stmt = $conn->prepare("INSERT INTO " . $dbName . ".rater_list (rater_first_name, rater_last_name, roles, Genders, position, email) VALUES (?, ?, ?, ?, ?,?)");
+        $stmt = $conn->prepare("INSERT INTO " . $dbName . ".rater_list (rater_first_name, rater_last_name, roles, gender, position, email) VALUES (?, ?, ?, ?, ?,?)");
         $stmt->bind_param("ssssss", $RaterfirstName, $RaterlastName,$roles, $gender, $position,$email);
         $stmt->execute();
         $id = $stmt->insert_id;
@@ -350,7 +350,7 @@ class listofratersClass{
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-        $stmt = $conn->prepare("UPDATE " . $dbName . ".rater_list SET rater_first_name = ?, rater_last_name = ?,roles = ?, Genders = ?, position = ?, email = ? WHERE rater_id = ?");
+        $stmt = $conn->prepare("UPDATE " . $dbName . ".rater_list SET rater_first_name = ?, rater_last_name = ?,roles = ?, gender = ?, position = ?, email = ? WHERE rater_id = ?");
         $stmt->bind_param("ssssssi", $RaterfirstName, $RaterlastName,$roles, $gender, $position, $email, $_POST["rater_id"]);
         $stmt->execute();
         $stmt->close();

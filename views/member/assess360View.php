@@ -168,12 +168,13 @@
             </div>
             <br><br><br>
           </div>
+          <p><a class="nav-link" href="./assess360?a=questionnaire">Questionnaire temp</a></p>
           <? include_once '../member/footer.php'; ?>
         </div>
       </div>
     </div>
   </div>
-  
+
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap-material-design.min.js"></script>

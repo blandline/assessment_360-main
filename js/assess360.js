@@ -799,36 +799,61 @@ var Questionnaire = function () {
     // hide all pages except the first one
     $(".questionnaire-page:not(:first)").hide();
 
-    // listen for click events on the link
-    $('a[href="#intro-page"]').click(function (event) {
-      event.preventDefault(); // prevent the link from navigating to the target
+        $('a[href="#importance-of-competency-page"]').click(function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
 
-      // hide the current page and show the target page
-      $("#intro-page").show();
-      $("#importance-of-competency-page").hide();
-      $("#competency-statements-page").hide();
-      $("#open-end-question-page").hide();
-    });
-    $('a[href="#importance-of-competency-page"]').click(function (event) {
-      event.preventDefault(); // prevent the link from navigating to the target
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').show();
+            $('#competency-statements-page').hide();
+            $('#open-end-question-page').hide();
+        });
 
-      // hide the current page and show the target page
-      $("#intro-page").hide();
-      $("#importance-of-competency-page").show();
-      $("#competency-statements-page").hide();
-      $("#open-end-question-page").hide();
-    });
-    $('a[href="#competency-statements-page"]').click(function (event) {
-      event.preventDefault(); // prevent the link from navigating to the target
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
 
-      // hide the current page and show the target page
-      $("#intro-page").hide();
-      $("#importance-of-competency-page").hide();
-      $("#competency-statements-page").show();
-      $("#open-end-question-page").hide();
-    });
-    $('a[href="#open-end-question-page"]').click(function (event) {
-      event.preventDefault(); // prevent the link from navigating to the target
+        $("#deleteModal").on("click", ".confirm-yes", function(event) {
+            event.preventDefault();
+
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').show();
+            $('#open-end-question-page').hide();
+        });
+        
+        $("body").on("click", ".questionnaire-importanceofcompetency-previous", function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $('#intro-page').show();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').hide();
+            $('#open-end-question-page').hide();
+        });
+
+        $("body").on("click", ".questionnaire-importanceofcompetency-next", function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').show();
+            $('#open-end-question-page').hide();
+        });
+
+        $("body").on("click", ".questionnaire-competencystatement-previous", function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').show();
+            $('#competency-statements-page').hide();
+            $('#open-end-question-page').hide();
+        });
+
+        $("body").on("click", ".questionnaire-competencystatement-next", function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
 
       // hide the current page and show the target page
       $("#intro-page").hide();
@@ -837,19 +862,43 @@ var Questionnaire = function () {
       $("#open-end-question-page").show();
     });
 
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href);
-    }
+        $("body").on("click", ".questionnaire-openendquestion-previous", function(event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+    
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').show();
+            $('#open-end-question-page').hide();
+        });
 
-    $("#deleteModal").on("click", ".confirm-yes", function () {
-      window.location.href = "#competency-statements-page";
-
-      $("#intro-page").hide();
-      $("#importance-of-competency-page").hide();
-      $("#competency-statements-page").show();
-      $("#open-end-question-page").hide();
+        $("body").on("keyup", ".questionnaire_openendquestion_text-input", function() {
+            // Get the value of the text area
+            var value = $(this).val();
+          
+            // Convert the value to an array of words
+            var words = value.trim().split(/\s+/);
+          
+            // If the number of words is greater than 100, prevent further input
+            if (words.length > 100) {
+                // Remove the last word from the array
+                words.splice(100);
+            
+                // Join the remaining words into a string
+                var newValue = words.join(" ");
+            
+                // Set the value of the text area to the truncated string
+                $(this).val(newValue);
+              
+                // Disable the text area to prevent further input
+                 alert("You have reached the maximum word limit of 100.");
+            } else {
+                // Enable the text area if the word limit is not reached
+                $(this).attr("disabled", false);
+            }
+        });
     });
-  });
+    
 };
 
     /////////////////////////////////////////////////Serb//////////////////////////////////////
