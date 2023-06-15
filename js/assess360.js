@@ -998,18 +998,18 @@ var Questionnaire = function () {
         });
 
         // Create an AJAX request to send the array to the PHP file
-        // $.ajax({
-        //     url: 'assess360',
-        //     data: {'comp_arr': comp_arr},
-        //     type: 'POST',
-        //     dataType: 'json',
-        //     success: function(response) {
-        //         // Get the response from the PHP file
-        //         console.log(response);
-        //     },
-        //     // error: function(jqXHR, textStatus, errorThrown) {
-        //     //     console.log(textStatus, errorThrown);
-        //     // }
-        // });
+        $.ajax({
+            url: 'assess360',
+            data: {'comp_arr': comp_arr},
+            type: 'POST',
+            dataType: 'json',
+            success: function(response) {
+                // Get the response from the PHP file
+                console.log(response);
+            },
+            // error: function(jqXHR, textStatus, errorThrown) {
+            //     console.log(textStatus, errorThrown);
+            // }
+        });
     });
 };
