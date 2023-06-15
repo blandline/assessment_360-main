@@ -78,8 +78,9 @@
                       <tr>
                         <th style="width:0px"></th>
                         <!--------------------------- NEW ------------------------------------>
-                        <th><?= $language["competency_framework_firstname"]; ?></th>
-                        <th><?= $language["competency_framework_lastname"]; ?></th>
+                        <th><?= $language["competency_framework_position"]; ?></th>
+                        <!--<th><?= $language["competency_framework_firstname"]; ?></th>-->
+                        <!--<th><?= $language["competency_framework_lastname"]; ?></th>-->
                         <!-------------------------------------------------------------------->
                         <?
                         $result = $competency->getCompetencyCluster();
