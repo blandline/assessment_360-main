@@ -183,6 +183,7 @@ var Competency = function () {
             var tmp = [];
             tmp.push("");
             for (var j = 0; j < frameworkTableColCount - 3; j++) {
+                //----------------------------- EDIT ---------------------------
                 if (j == 0) {
                     if (editRowID == i) {
                         var value = "";
@@ -190,7 +191,10 @@ var Competency = function () {
                             value = frameworkTableObj[i][j][0];
                         }
                         var textfield =
-                            '<input type="text" class="positionName" value="' + value + '">';
+                            '<div class="nowrap"><input type="text" class="firstname_input" value="' + value + '"></div>';
+                        tmp.push(textfield);
+                        var textfield = 
+                            '<div class="nowrap"><input type="text" class="lastname_input" value="' + value + '"></div>';
                         tmp.push(textfield);
                     } else {
                         if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {

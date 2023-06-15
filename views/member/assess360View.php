@@ -77,7 +77,10 @@
                     <thead class="text-danger">
                       <tr>
                         <th style="width:0px"></th>
-                        <th><?= $language["competency_framework_position"]; ?></th>
+                        <!--------------------------- NEW ------------------------------------>
+                        <th><?= $language["competency_framework_firstname"]; ?></th>
+                        <th><?= $language["competency_framework_lastname"]; ?></th>
+                        <!-------------------------------------------------------------------->
                         <?
                         $result = $competency->getCompetencyCluster();
                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
