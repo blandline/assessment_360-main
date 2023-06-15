@@ -203,6 +203,7 @@ var Competency = function () {
                             tmp.push("");
                         }
                     }
+                    
                 } else {
                     if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
                         var value = "";
