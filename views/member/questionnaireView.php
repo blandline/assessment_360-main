@@ -60,23 +60,26 @@
             <div style="display: flex; justify-content: flex-end;"><--------Importance--------></div>
             <!-- TODO list of competencies -->
             <?
+            //------------------------------------
             // if (isset($_POST['comp_arr'])) {
             //     $comp_arr = $_POST['comp_arr'];
+
             //     foreach ($comp_arr as $comp) {
-            //         echo "<div>" . $comp . "</div>";
+            //         echo $comp;
             //     }
             // }
+            //------------------------------------
             $temp_title = ["Deciding", "Problem Solving", "Innovating", "Providing Support", "Competency"];
             $temp_definition = ["Making decisions based on (in)complete information and initiating the necessary steps to implement the Decision.", "Responding to and controlling unexpected situations by evaluationg possible solutions based on experience and knowledge...", "Offering innovative and original ideas that do not stem from existing...", "Supporting others by accepting a formal role as mentor, by acting...", "Definition"];
             for ($i = 0; $i < 5; $i++) {
                 echo
                 "<div style='width: 100%; display: flex; justify-content: space-between;'>
                     <div class='questionnaire_importanceofcompetency_component' style=' width:80%; display: inline-block; vertical-align: middle; border: 1px solid black;'>" .
-                        "<div class='questionnaire_importanceofcompetency_title' style='font-family: `Calibri`; font-size: 14px; font-weight: bold; padding-left: 5px;'>" . $temp_title[$i] . "</div>" .
-                        "<div class='questionnaire_importanceofcompetency_definition' style='font-family: `Calibri`; font-size: 12px; padding-left: 5px;'>" . $temp_definition[$i] . "</div>" .
+                    "<div class='questionnaire_importanceofcompetency_title' style='font-family: `Calibri`; font-size: 14px; font-weight: bold; padding-left: 5px;'>" . $temp_title[$i] . "</div>" .
+                    "<div class='questionnaire_importanceofcompetency_definition' style='font-family: `Calibri`; font-size: 12px; padding-left: 5px;'>" . $temp_definition[$i] . "</div>" .
                     "</div>" .
                     "<div class='questionnaire_importanceofcompetency_table' style='display: inline-block; vertical-align: middle; margin-left: auto;'>" .
-                        "<table style=' width:20%; border: 1px solid black;'>
+                    "<table style=' width:20%; border: 1px solid black;'>
                                 <thead>
                                     <tr>
                                         <th style='text-align: center;'>1</th>
@@ -86,14 +89,14 @@
                                         <th style='text-align: center;'>5</th>
                                     </tr>
                                 </thead>" .
-                        "<tr>
+                    "<tr>
                                     <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='1'></td>
                                     <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='2'></td>
                                     <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='3'></td>
                                     <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='4'></td>
                                     <td style='border: 1px solid black; border-right: none; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='5'></td>
                                 </tr>" .
-                        "</table>" .
+                    "</table>" .
                     "</div>" .
                     "</div>";
             }
