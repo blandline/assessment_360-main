@@ -804,9 +804,17 @@ var Questionnaire = function () {
         // hide all pages except the first one
         $(".questionnaire-page:not(:first)").hide();
 
+    $('a[href="#importance-of-competency-page"]').click(function (event) {
+      event.preventDefault(); // prevent the link from navigating to the target
         $('a[href="#importance-of-competency-page"]').click(function (event) {
             event.preventDefault(); // prevent the link from navigating to the target
 
+      // hide the current page and show the target page
+      $("#intro-page").hide();
+      $("#importance-of-competency-page").show();
+      $("#competency-statements-page").hide();
+      $("#open-end-question-page").hide();
+    });
             // hide the current page and show the target page
             $("#intro-page").hide();
             $("#importance-of-competency-page").show();
@@ -814,10 +822,12 @@ var Questionnaire = function () {
             $("#open-end-question-page").hide();
         });
 
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
-        }
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
 
+    $("#deleteModal").on("click", ".confirm-yes", function (event) {
+      event.preventDefault();
         $("#deleteModal").on("click", ".confirm-yes", function (event) {
             event.preventDefault();
 
@@ -847,13 +857,12 @@ var Questionnaire = function () {
             function (event) {
                 event.preventDefault(); // prevent the link from navigating to the target
 
-                // hide the current page and show the target page
-                $("#intro-page").hide();
-                $("#importance-of-competency-page").hide();
-                $("#competency-statements-page").show();
-                $("#open-end-question-page").hide();
-            }
-        );
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').hide();
+            $('#competency-statements-page').show();
+            $('#open-end-question-page').hide();
+        });
 
         $("body").on(
             "click",
@@ -861,13 +870,12 @@ var Questionnaire = function () {
             function (event) {
                 event.preventDefault(); // prevent the link from navigating to the target
 
-                // hide the current page and show the target page
-                $("#intro-page").hide();
-                $("#importance-of-competency-page").show();
-                $("#competency-statements-page").hide();
-                $("#open-end-question-page").hide();
-            }
-        );
+            // hide the current page and show the target page
+            $('#intro-page').hide();
+            $('#importance-of-competency-page').show();
+            $('#competency-statements-page').hide();
+            $('#open-end-question-page').hide();
+        });
 
         $("body").on(
             "click",
@@ -875,13 +883,12 @@ var Questionnaire = function () {
             function (event) {
                 event.preventDefault(); // prevent the link from navigating to the target
 
-                // hide the current page and show the target page
-                $("#intro-page").hide();
-                $("#importance-of-competency-page").hide();
-                $("#competency-statements-page").hide();
-                $("#open-end-question-page").show();
-            }
-        );
+      // hide the current page and show the target page
+      $("#intro-page").hide();
+      $("#importance-of-competency-page").hide();
+      $("#competency-statements-page").hide();
+      $("#open-end-question-page").show();
+    });
 
         $("body").on(
             "click",
@@ -948,35 +955,49 @@ var Questionnaire = function () {
 
 // });
 
+////////////////////////////////////////////test new func//////////////////////////
 $("body").on("click", ".test-btn", function () {
-    // Get all the div elements with class "nowrap" using querySelectorAll
-    const divs = document.querySelectorAll("div.nowrap");
+  // Get all the rows in the table
+  const rows = document.querySelectorAll("table.competency-frm-table tbody tr");
 
-    // Create an array to store the company names
+  // Create an array to store the data for each row
+  var data_arr = [];
+
+  // Loop through each row
+  rows.forEach((row) => {
+    // Get all the div elements with class "nowrap" within the row
+    const divs = row.querySelectorAll("div.nowrap");
+
+    // Create an array to store the text content of each div element in the row
     var comp_arr = [];
 
-    // Loop through the div elements and read their text content
+    // Loop through each div element and push its text content into the array
     divs.forEach((div) => {
-        var text = div.textContent.trim();
-        if (!text.includes("Edit")) {
-            text = text.substring(2);
-            comp_arr.push(text);
-        }
+      var text = div.textContent.trim();
+      if (!text.includes("Edit")) {
+        text = text.substring(2);
+        comp_arr.push(text);
+      }
     });
-    console.log(comp_arr);
 
-    // Create an AJAX request to send the company names to the PHP file
-    $.ajax({
-        url: "assess360",
-        data: { comp_arr: comp_arr },
-        type: "POST",
-        dataType: "json",
-        success: function (response) {
-            // Get the response from the PHP file
-            console.log(response);
-        },
-        // error: function(jqXHR, textStatus, errorThrown) {
-        //     console.log(textStatus, errorThrown);
-        // }
-    });
+    // Push the array of text content into the data_arr array
+    data_arr.push(comp_arr);
+
+    console.log(data_arr);
+  });
+
+  // Create an AJAX request to send the array to the PHP file
+  // $.ajax({
+  //     url: 'assess360',
+  //     data: {'comp_arr': comp_arr},
+  //     type: 'POST',
+  //     dataType: 'json',
+  //     success: function(response) {
+  //         // Get the response from the PHP file
+  //         console.log(response);
+  //     },
+  //     // error: function(jqXHR, textStatus, errorThrown) {
+  //     //     console.log(textStatus, errorThrown);
+  //     // }
+  // });
 });
