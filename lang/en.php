@@ -2018,6 +2018,13 @@ $language["competency_not_important"] = "Not Important";
 // competency framework
 $language["competency_framework_title"] = "Competency Framework Design and Result";
 $language["competency_framework_position"] = "Position";
+//-------------------------NEW-----------------------------------
+$language["competency_framework_name"] = "Name";
+$language["competency_framework_lastname"] = "Focus Last Name";
+$language["competency_framework_firstname"] = "Focus First Name";
+$language["competency_framework_lastname"] = "Focus Last Name";
+$language["competency_framework_email"] = "Email";
+//---------------------------------------------------------------
 $language["competency_framework_cancel"] = "Cancel";
 $language["competency_framework_warning"] = "Warning";
 $language["competency_framework_confirm_delete"] = "Conifrm Delete?";
