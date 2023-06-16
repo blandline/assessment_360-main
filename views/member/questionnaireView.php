@@ -60,9 +60,13 @@
             <?= $language["questionnaire_importanceofcompetency_paragraph1"]?>
             <div style='width: 100%; display: flex; justify-content: space-between;'>
                 <div style="width: 80%"></div>
-                <div style="width: 20%; display:inline-block; text-align: center;">
-                    <div style="margin-left: 10px;"><?= $language["questionnaire_importanceofcompetency_importance"] ?></div>
-                    <div style="margin-left: 10px;"><?= $language["questionnaire_importanceofcompetency_doubleheaded_arrow"] ?></div>
+                <div style="width: 20%; display:inline-block;">
+                    <div style="margin-left: 10px; text-align: center;"><?= $language["questionnaire_importanceofcompetency_importance"] ?></div>
+                    <div style="display:flex;">
+                        <div style="justify-content: flex-start; text-align:left; flex:1; margin-left:10px;"><?= $language["questionnaire_importanceofcompetency_low"] ?></div>
+                        <div style="justify-content: flex-end; text-align:right; flex:1;"><?= $language["questionnaire_importanceofcompetency_high"] ?></div>
+                    </div> 
+                    <div style="margin-left: 10px; text-align: center;"><?= $language["questionnaire_importanceofcompetency_doubleheaded_arrow"] ?></div>
                 </div>
             </div>
             <!-- TODO list of competencies -->
