@@ -820,20 +820,27 @@ var Questionnaire = function () {
             $("#open-end-question-page").hide();
         });
 
+        $('a[href="#competency-statements-page"]').click(function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $("#intro-page").hide();
+            $("#importance-of-competency-page").hide();
+            $("#competency-statements-page").show();
+            $("#open-end-question-page").hide();
+        });
+
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
         }
 
         $("#deleteModal").on("click", ".confirm-yes", function (event) {
             event.preventDefault();
-            $("#deleteModal").on("click", ".confirm-yes", function (event) {
-                event.preventDefault();
 
                 $("#intro-page").hide();
                 $("#importance-of-competency-page").hide();
                 $("#competency-statements-page").show();
                 $("#open-end-question-page").hide();
-            });
         });
 
         $("body").on("click", ".questionnaire-importanceofcompetency-previous", function (event) {
