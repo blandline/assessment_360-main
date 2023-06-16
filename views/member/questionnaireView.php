@@ -57,7 +57,7 @@
             <div class="questionnaire-paragraph-title"><?= $language["questionnaire_importanceofcompetency"] ?></div>
             <br>
             <?= $language["questionnaire_importanceofcompetency_paragraph1"] ?>
-            <div style="display: flex; justify-content: flex-end;"><--------Importance--------></div>
+            <!--<div style="display: flex; justify-content: flex-end;"><--------Importance------</div>-->
             <!-- TODO list of competencies -->
             <?
             //------------------------------------
