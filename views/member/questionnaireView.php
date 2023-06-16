@@ -54,10 +54,13 @@
         <section id="importance-of-competency-page" class="questionnaire-page">
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
-            <div class="questionnaire-paragraph-title"><?= $language["questionnaire_importanceofcompetency"] ?></div>
-            <br>
-            <?= $language["questionnaire_importanceofcompetency_paragraph1"] ?>
-            <!--<div style="display: flex; justify-content: flex-end;"><--------Importance------</div>-->
+            <div style='width: 100%; display: flex; justify-content: space-between;'>
+                <div style="width: 80%"></div>
+                <div style="width: 20%; display:inline-block; text-align: center;">
+                    <div style="margin-left: 10px;"><?= $language["questionnaire_importanceofcompetency_importance"] ?></div>
+                    <div style="margin-left: 10px;"><?= $language["questionnaire_importanceofcompetency_doubleheaded_arrow"] ?></div>
+                </div>
+            </div>
             <!-- TODO list of competencies -->
             <?
             //------------------------------------
@@ -78,7 +81,7 @@
                     "<div class='questionnaire_importanceofcompetency_title' style='font-family: `Calibri`; font-size: 14px; font-weight: bold; padding-left: 5px;'>" . $temp_title[$i] . "</div>" .
                     "<div class='questionnaire_importanceofcompetency_definition' style='font-family: `Calibri`; font-size: 12px; padding-left: 5px;'>" . $temp_definition[$i] . "</div>" .
                     "</div>" .
-                    "<div class='questionnaire_importanceofcompetency_table' style='display: inline-block; vertical-align: middle; margin-left: auto;'>" .
+                    "<div class='questionnaire_importanceofcompetency_table' style='display: inline-block; vertical-align: middle; margin-left: 10px;'>" .
                     "<table style=' width:20%; border: 1px solid black;'>
                                 <thead>
                                     <tr>

@@ -916,56 +916,56 @@ var Questionnaire = function () {
 }
 
     /////////////////////////////////////////////////Serb//////////////////////////////////////
-    // var comp_arr = [];
-    // $("body").on("click", ".test-btn", function () {
-    //   // Get all the div elements with class "nowrap" using querySelectorAll
-    //   const divs = document.querySelectorAll("div.nowrap");
+    var comp_arr = [];
+    $("body").on("click", ".test-btn", function () {
+      // Get all the div elements with class "nowrap" using querySelectorAll
+      const divs = document.querySelectorAll("div.nowrap");
 
-    //   // Loop through the div elements and read their text content
-    //   divs.forEach((div) => {
-    //     var text = div.textContent.trim();
-    //     if (!text.includes("Edit")) {
-    //       text = text.substring(2);
-    //       comp_arr.push(text);
-    //     }
-    //     // Print the text content to the console
-    //   });
-    //   console.log(comp_arr);
+      // Loop through the div elements and read their text content
+      divs.forEach((div) => {
+        var text = div.textContent.trim();
+        if (!text.includes("Edit")) {
+          text = text.substring(2);
+          comp_arr.push(text);
+        }
+        // Print the text content to the console
+      });
+      console.log(comp_arr);
 
-    // });
+    });
 
     ////////////////////////////////////////////test new func//////////////////////////
-    // $("body").on("click", ".test-btn", function () {
-    //     // Get all the rows in the table
-    //     const rows = document.querySelectorAll(
-    //         "table.competency-frm-table tbody tr"
-    //     );
+    $("body").on("click", ".test-btn", function () {
+        // Get all the rows in the table
+        const rows = document.querySelectorAll(
+            "table.competency-frm-table tbody tr"
+        );
 
-    //     // Create an array to store the data for each row
-    //     var data_arr = [];
+        // Create an array to store the data for each row
+        var data_arr = [];
 
-    //     // Loop through each row
-    //     rows.forEach((row) => {
-    //         // Get all the div elements with class "nowrap" within the row
-    //         const divs = row.querySelectorAll("div.nowrap");
+        // Loop through each row
+        rows.forEach((row) => {
+            // Get all the div elements with class "nowrap" within the row
+            const divs = row.querySelectorAll("div.nowrap");
 
-    //         // Create an array to store the text content of each div element in the row
-    //         var comp_arr = [];
+            // Create an array to store the text content of each div element in the row
+            var comp_arr = [];
 
-    //         // Loop through each div element and push its text content into the array
-    //         divs.forEach((div) => {
-    //             var text = div.textContent.trim();
-    //             if (!text.includes("Edit")) {
-    //                 text = text.substring(2);
-    //                 comp_arr.push(text);
-    //             }
-    //         });
+            // Loop through each div element and push its text content into the array
+            divs.forEach((div) => {
+                var text = div.textContent.trim();
+                if (!text.includes("Edit")) {
+                    text = text.substring(2);
+                    comp_arr.push(text);
+                }
+            });
 
-    //         // Push the array of text content into the data_arr array
-    //         data_arr.push(comp_arr);
+            // Push the array of text content into the data_arr array
+            data_arr.push(comp_arr);
 
-    //         console.log(data_arr);
-    //     });
+            console.log(data_arr);
+        });
 
         // Create an AJAX request to send the array to the PHP file
         $.ajax({
@@ -982,4 +982,4 @@ var Questionnaire = function () {
             // }
         });
     });
-};
+//};

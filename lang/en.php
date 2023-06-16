@@ -3146,6 +3146,8 @@ $language["questionnaire_intropage_instruction_paragraph6"] = '<p>If you are rea
 $language["questionnaire_importanceofcompetency"] = "A. IMPORTANCE OF COMPETENCY";
 $language["questionnaire_importanceofcompetency_paragraph1"] = "<p>This section shows how FOCUS and Manager rate each of the competencies in terms of their importance to success in FOCUS's job. There is no right or wrong answer. Just show your objective and truthful answer.</p>";
 $language["questionnaire_importanceofcompetency_paragraph2"] = "<p>When you have completed your rating, please click</p>";
+$language["questionnaire_importanceofcompetency_importance"] = "Importance";
+$language["questionnaire_importanceofcompetency_doubleheaded_arrow"] = "<-------------------------------------->";
 
 //Competency Statements page
 $language["questionnaire_competencystatements"] = "B. COMPETENCY STATEMENTS";
