@@ -54,6 +54,10 @@
         <section id="importance-of-competency-page" class="questionnaire-page">
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
+            <?= $language["questionnaire_importanceofcompetency"]?>
+            <br>
+            <br>
+            <?= $language["questionnaire_importanceofcompetency_paragraph1"]?>
             <div style='width: 100%; display: flex; justify-content: space-between;'>
                 <div style="width: 80%"></div>
                 <div style="width: 20%; display:inline-block; text-align: center;">
