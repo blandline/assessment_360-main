@@ -192,16 +192,10 @@ var Competency = function () {
                         }
                         if (j == 0) {
                             var textfield =
-                                '<div class="nowrap"><input type="text" class="firstname_input" value="' +
+                                '<div class="nowrap"><input type="text" class="positionname" value="' +
                                 value +
                                 '"></div>';
-                            tmp.push(textfield);
-                        // } else if (j == 1) {
-                        //     var textfield =
-                        //         '<div class="nowrap"><input type="text" class="lastname_input" value="' +
-                        //         value +
-                        //         '"></div>';
-                        //     tmp.push(textfield);
+                            tmp.push(textfield);                     
                 //---------------------------------------------------------------------
                         }
                     } else {
@@ -282,17 +276,17 @@ var Competency = function () {
                 }
             }
             var button = "";
-            if (editRowID >= 0) {
-                button =
-                    '<button type="button" class="btn btn-success btn-sm addButton competency-add-btn">' +
-                    lang["competency_framework_save"] +
-                    "</button>";
-            } else {
-                button =
-                    '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' +
-                    lang["competency_framework_add"] +
-                    "</button>";
-            }
+            // if (editRowID >= 0) {
+            //     button =
+            //         '<button type="button" class="btn btn-success btn-sm addButton competency-add-btn">' +
+            //         lang["competency_framework_save"] +
+            //         "</button>";
+            // } else {
+            //     button =
+            //         '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' +
+            //         lang["competency_framework_add"] +
+            //         "</button>";
+            // }
             tmp.push(button);
             tmp.push(-1);
             data.push(tmp);
@@ -472,7 +466,7 @@ var Competency = function () {
         );
 
         $("body").on("click", ".competency-add-btn", function () {
-            editRowID = $(this).parent().parent()[0].rowIndex - 1;
+            editRowID = $(this).parent().parent()[0].rowIndex -1;
             if (!frameworkTableObj[editRowID]) {
                 frameworkTableObj[editRowID] = [];
             }
@@ -592,6 +586,7 @@ var Competency = function () {
                 .parent()
                 .parent()
                 .parent()
+
                 .find(".hideRowId")
                 .html();
         });
@@ -916,23 +911,36 @@ var Questionnaire = function () {
 }
 
     /////////////////////////////////////////////////Serb//////////////////////////////////////
-    // var comp_arr = [];
-    // $("body").on("click", ".test-btn", function () {
-    //   // Get all the div elements with class "nowrap" using querySelectorAll
-    //   const divs = document.querySelectorAll("div.nowrap");
+    
+    $("body").on("click", ".test-btn", function () {
+      // Get all the div elements with class "nowrap" using querySelectorAll
+      const divs = document.querySelectorAll("div.nowrap");
+      var comp_arr = [];
+      // Loop through the div elements and read their text content
+      divs.forEach((div) => {
+        var text = div.textContent.trim();
+        if (!text.includes("Edit")) {
+          text = text.substring(2);
+          comp_arr.push(text);
+        }
+        // Print the text content to the console
+      });
+      console.log(comp_arr);
+      $.ajax({
+        url: 'assess360',
+        data: {'comp_arr': comp_arr},
+        type: 'POST',
+        dataType: 'json',
+        success: function(response) {
+            // Get the response from the PHP file
+            console.log(response);
+        },
+        // error: function(jqXHR, textStatus, errorThrown) {
+        //     console.log(textStatus, errorThrown);
+        // }
+    });
 
-    //   // Loop through the div elements and read their text content
-    //   divs.forEach((div) => {
-    //     var text = div.textContent.trim();
-    //     if (!text.includes("Edit")) {
-    //       text = text.substring(2);
-    //       comp_arr.push(text);
-    //     }
-    //     // Print the text content to the console
-    //   });
-    //   console.log(comp_arr);
-
-    // });
+    });
 
     ////////////////////////////////////////////test new func//////////////////////////
     // $("body").on("click", ".test-btn", function () {
@@ -967,19 +975,19 @@ var Questionnaire = function () {
     //         console.log(data_arr);
     //     });
 
-        // Create an AJAX request to send the array to the PHP file
-        $.ajax({
-            url: 'assess360',
-            data: {'comp_arr': comp_arr},
-            type: 'POST',
-            dataType: 'json',
-            success: function(response) {
-                // Get the response from the PHP file
-                console.log(response);
-            },
-            // error: function(jqXHR, textStatus, errorThrown) {
-            //     console.log(textStatus, errorThrown);
-            // }
-        });
-    });
-};
+    //     // Create an AJAX request to send the array to the PHP file
+    //     $.ajax({
+    //         url: 'assess360',
+    //         data: {'comp_arr': comp_arr},
+    //         type: 'POST',
+    //         dataType: 'json',
+    //         success: function(response) {
+    //             // Get the response from the PHP file
+    //             console.log(response);
+    //         },
+    //         // error: function(jqXHR, textStatus, errorThrown) {
+    //         //     console.log(textStatus, errorThrown);
+    //         // }
+    //     });
+    // });
+
