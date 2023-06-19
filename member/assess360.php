@@ -8,12 +8,14 @@ require("../classes/MemberClass.php");
 require("../classes/Assess360Class.php");
 require("../vendor/autoload.php");
 require("../classes/listofratersClass.php");
+require("../classes/QuestionsClass.php");
 
 // use Spipu\Html2Pdf\Html2Pdf;
 
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
+$QuestionsClass = new QuestionsClass($login);
 
 if ($login->isLoggedIn()) {
   if ($login->isAdmin()) {
@@ -402,6 +404,14 @@ if ($login->isLoggedIn()) {
     $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
     include("../views/member/questionnaireView.php");
+  }elseif(isset($_GET["a"]) && $_GET["a"] == "competency"){
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY;
+
+    include("../views/member/competencyView.php");
   }
   //---------------------------------------------------------------------------------
 
@@ -424,7 +434,7 @@ if ($login->isLoggedIn()) {
     // Loop through the company names and call the getquestion function on each one
     $questions = array();
     foreach ($comp_arr as $comp) {
-      $competency->getsetQuestions($companyId,$comp);
+      $QuestionsClass->getsetQuestions($comp);
       //$questions[] = $competency->getQuestions($companyId,$comp);
     }
     

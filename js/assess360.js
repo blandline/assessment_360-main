@@ -192,16 +192,10 @@ var Competency = function () {
                         }
                         if (j == 0) {
                             var textfield =
-                                '<div class="nowrap"><input type="text" class="firstname_input" value="' +
+                                '<div class="nowrap"><input type="text" class="positionname" value="' +
                                 value +
                                 '"></div>';
-                            tmp.push(textfield);
-                        // } else if (j == 1) {
-                        //     var textfield =
-                        //         '<div class="nowrap"><input type="text" class="lastname_input" value="' +
-                        //         value +
-                        //         '"></div>';
-                        //     tmp.push(textfield);
+                            tmp.push(textfield);                     
                 //---------------------------------------------------------------------
                         }
                     } else {
@@ -282,17 +276,17 @@ var Competency = function () {
                 }
             }
             var button = "";
-            if (editRowID >= 0) {
-                button =
-                    '<button type="button" class="btn btn-success btn-sm addButton competency-add-btn">' +
-                    lang["competency_framework_save"] +
-                    "</button>";
-            } else {
-                button =
-                    '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' +
-                    lang["competency_framework_add"] +
-                    "</button>";
-            }
+            // if (editRowID >= 0) {
+            //     button =
+            //         '<button type="button" class="btn btn-success btn-sm addButton competency-add-btn">' +
+            //         lang["competency_framework_save"] +
+            //         "</button>";
+            // } else {
+            //     button =
+            //         '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' +
+            //         lang["competency_framework_add"] +
+            //         "</button>";
+            // }
             tmp.push(button);
             tmp.push(-1);
             data.push(tmp);
@@ -472,7 +466,7 @@ var Competency = function () {
         );
 
         $("body").on("click", ".competency-add-btn", function () {
-            editRowID = $(this).parent().parent()[0].rowIndex - 1;
+            editRowID = $(this).parent().parent()[0].rowIndex -1;
             if (!frameworkTableObj[editRowID]) {
                 frameworkTableObj[editRowID] = [];
             }
@@ -592,6 +586,7 @@ var Competency = function () {
                 .parent()
                 .parent()
                 .parent()
+
                 .find(".hideRowId")
                 .html();
         });

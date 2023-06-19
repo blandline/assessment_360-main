@@ -3170,5 +3170,6 @@ $language["questionnaire_openendquestion_paragraph2"] = "Are you willing to disc
 $language["questionnaire_openendquestion_finish"] = "<p>END OF COMPETENCY AUDIT</p>";
 $language["questionnaire_openendquestion_discuss_yes"]= "YES";
 $language["questionnaire_openendquestion_discuss_no"]= "NO";
+$language["leftmenu_competencies"] = "Competencies"
 //---------------------------------------------------------------------
 ?>
