@@ -815,20 +815,27 @@ var Questionnaire = function () {
             $("#open-end-question-page").hide();
         });
 
+        $('a[href="#competency-statements-page"]').click(function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $("#intro-page").hide();
+            $("#importance-of-competency-page").hide();
+            $("#competency-statements-page").show();
+            $("#open-end-question-page").hide();
+        });
+
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
         }
 
         $("#deleteModal").on("click", ".confirm-yes", function (event) {
             event.preventDefault();
-            $("#deleteModal").on("click", ".confirm-yes", function (event) {
-                event.preventDefault();
 
                 $("#intro-page").hide();
                 $("#importance-of-competency-page").hide();
                 $("#competency-statements-page").show();
                 $("#open-end-question-page").hide();
-            });
         });
 
         $("body").on("click", ".questionnaire-importanceofcompetency-previous", function (event) {
@@ -911,11 +918,11 @@ var Questionnaire = function () {
 }
 
     /////////////////////////////////////////////////Serb//////////////////////////////////////
-    
+    var comp_arr = [];
     $("body").on("click", ".test-btn", function () {
       // Get all the div elements with class "nowrap" using querySelectorAll
       const divs = document.querySelectorAll("div.nowrap");
-      var comp_arr = [];
+
       // Loop through the div elements and read their text content
       divs.forEach((div) => {
         var text = div.textContent.trim();
@@ -926,68 +933,55 @@ var Questionnaire = function () {
         // Print the text content to the console
       });
       console.log(comp_arr);
-      $.ajax({
-        url: 'assess360',
-        data: {'comp_arr': comp_arr},
-        type: 'POST',
-        dataType: 'json',
-        success: function(response) {
-            // Get the response from the PHP file
-            console.log(response);
-        },
-        // error: function(jqXHR, textStatus, errorThrown) {
-        //     console.log(textStatus, errorThrown);
-        // }
-    });
 
     });
 
     ////////////////////////////////////////////test new func//////////////////////////
-    // $("body").on("click", ".test-btn", function () {
-    //     // Get all the rows in the table
-    //     const rows = document.querySelectorAll(
-    //         "table.competency-frm-table tbody tr"
-    //     );
+    $("body").on("click", ".test-btn", function () {
+        // Get all the rows in the table
+        const rows = document.querySelectorAll(
+            "table.competency-frm-table tbody tr"
+        );
 
-    //     // Create an array to store the data for each row
-    //     var data_arr = [];
+        // Create an array to store the data for each row
+        var data_arr = [];
 
-    //     // Loop through each row
-    //     rows.forEach((row) => {
-    //         // Get all the div elements with class "nowrap" within the row
-    //         const divs = row.querySelectorAll("div.nowrap");
+        // Loop through each row
+        rows.forEach((row) => {
+            // Get all the div elements with class "nowrap" within the row
+            const divs = row.querySelectorAll("div.nowrap");
 
-    //         // Create an array to store the text content of each div element in the row
-    //         var comp_arr = [];
+            // Create an array to store the text content of each div element in the row
+            var comp_arr = [];
 
-    //         // Loop through each div element and push its text content into the array
-    //         divs.forEach((div) => {
-    //             var text = div.textContent.trim();
-    //             if (!text.includes("Edit")) {
-    //                 text = text.substring(2);
-    //                 comp_arr.push(text);
-    //             }
-    //         });
+            // Loop through each div element and push its text content into the array
+            divs.forEach((div) => {
+                var text = div.textContent.trim();
+                if (!text.includes("Edit")) {
+                    text = text.substring(2);
+                    comp_arr.push(text);
+                }
+            });
 
-    //         // Push the array of text content into the data_arr array
-    //         data_arr.push(comp_arr);
+            // Push the array of text content into the data_arr array
+            data_arr.push(comp_arr);
 
-    //         console.log(data_arr);
-    //     });
+            console.log(data_arr);
+        });
 
-    //     // Create an AJAX request to send the array to the PHP file
-    //     $.ajax({
-    //         url: 'assess360',
-    //         data: {'comp_arr': comp_arr},
-    //         type: 'POST',
-    //         dataType: 'json',
-    //         success: function(response) {
-    //             // Get the response from the PHP file
-    //             console.log(response);
-    //         },
-    //         // error: function(jqXHR, textStatus, errorThrown) {
-    //         //     console.log(textStatus, errorThrown);
-    //         // }
-    //     });
-    // });
-
+        // Create an AJAX request to send the array to the PHP file
+        $.ajax({
+            url: 'assess360',
+            data: {'comp_arr': comp_arr},
+            type: 'POST',
+            dataType: 'json',
+            success: function(response) {
+                // Get the response from the PHP file
+                console.log(response);
+            },
+            // error: function(jqXHR, textStatus, errorThrown) {
+            //     console.log(textStatus, errorThrown);
+            // }
+        });
+    });
+//};

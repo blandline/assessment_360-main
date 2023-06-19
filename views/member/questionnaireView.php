@@ -11,6 +11,10 @@
     <title>Questionnaire</title>
 </head>
 
+<? 
+    $role_arr =["focus", "manager", "colleague", "direct report", "others"];
+    $role = $role_arr[0];
+?>
 <body class="questionnaire-body">
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -49,15 +53,35 @@
                 <?= $language["questionnaire_intropage_instruction_paragraph4"] ?>
                 <?= $language["questionnaire_intropage_instruction_paragraph5"] ?>
                 <?= $language["questionnaire_intropage_instruction_paragraph6"] ?>
+                <?
+                    if($role == "manager" or $role == "focus"){
+                       echo '<a href="#importance-of-competency-page">' , $language["questionnaire_intropage_instruction_paragraph7"] ,'</a>';
+                    }
+                    elseif($role != "manager" and $role != "focus"){
+                        echo '<a href="#competency-statements-page">' , $language["questionnaire_intropage_instruction_paragraph7"] ,'</a>';
+                    }
+                ?>
+                <?=$language["questionnaire_intropage_instruction_paragraph8"] ?>
             </div>
         </section>
         <section id="importance-of-competency-page" class="questionnaire-page">
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
-            <div class="questionnaire-paragraph-title"><?= $language["questionnaire_importanceofcompetency"] ?></div>
+            <?= $language["questionnaire_importanceofcompetency_title"]?>
             <br>
-            <?= $language["questionnaire_importanceofcompetency_paragraph1"] ?>
-            <div style="display: flex; justify-content: flex-end;"><--------Importance--------></div>
+            <br>
+            <?= $language["questionnaire_importanceofcompetency_paragraph1"]?>
+            <div style='width: 100%; display: flex; justify-content: space-between;'>
+                <div style="width: 80%"></div>
+                <div style="width: 20%; display:inline-block;">
+                    <div style="margin-left: 10px; text-align: center;"><?= $language["questionnaire_importanceofcompetency_importance"] ?></div>
+                    <div style="display:flex;">
+                        <div style="justify-content: flex-start; text-align:left; flex:1; margin-left:10px;"><?= $language["questionnaire_importanceofcompetency_low"] ?></div>
+                        <div style="justify-content: flex-end; text-align:right; flex:1;"><?= $language["questionnaire_importanceofcompetency_high"] ?></div>
+                    </div> 
+                    <div style="margin-left: 10px; text-align: center;"><?= $language["questionnaire_importanceofcompetency_doubleheaded_arrow"] ?></div>
+                </div>
+            </div>
             <!-- TODO list of competencies -->
             <?
             //------------------------------------
@@ -78,7 +102,7 @@
                     "<div class='questionnaire_importanceofcompetency_title' style='font-family: `Calibri`; font-size: 14px; font-weight: bold; padding-left: 5px;'>" . $temp_title[$i] . "</div>" .
                     "<div class='questionnaire_importanceofcompetency_definition' style='font-family: `Calibri`; font-size: 12px; padding-left: 5px;'>" . $temp_definition[$i] . "</div>" .
                     "</div>" .
-                    "<div class='questionnaire_importanceofcompetency_table' style='display: inline-block; vertical-align: middle; margin-left: auto;'>" .
+                    "<div class='questionnaire_importanceofcompetency_table' style='display: inline-block; vertical-align: middle; margin-left: 10px;'>" .
                     "<table style=' width:20%; border: 1px solid black;'>
                                 <thead>
                                     <tr>
@@ -105,13 +129,24 @@
             <?= $language["questionnaire_importanceofcompetency_paragraph2"] ?>
             <button type="button" class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button" data-toggle="modal" data-target="#deleteModal" style="margin-left: 0px !important;"><?= $language["questionnaire_confirm_button"] ?></button>
             <br>
+            <!--
             <button class="btn btn-primary btn-sm questionnaire-importanceofcompetency-previous"><?= $language["questionnaire_previous_button"] ?></button>
             <button class="btn btn-primary btn-sm questionnaire-importanceofcompetency-next"><?= $language["questionnaire_next_button"] ?></button>
+            -->
         </section>
         <section id="competency-statements-page" class="questionnaire-page">
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
-            <div class="questionnaire-paragraph-title"><?= $language["questionnaire_competencystatements"] ?></div>
+            <div class="questionnaire-paragraph-title">
+                <?
+                    if($role == "manager" or $role == "focus"){
+                        echo $language["questionnaire_competencystatements_title_for_focus_manager"];
+                     }
+                     elseif($role != "manager" and $role != "focus"){
+                         echo $language["questionnaire_competencystatements_title_for_others"];
+                     }
+                ?>
+            </div>
             <div class="questionnaire-competency-statements-instructions">
                 <div class="questionnaire-competencystatements-container">
                     <div style="display: flex; flex-direction: column;">
@@ -154,12 +189,31 @@
                 </table>
             </div>
             <br>
-            <button class="btn btn-primary btn-sm questionnaire-competencystatement-previous"><?= $language["questionnaire_previous_button"] ?></a></button>
-            <button class="btn btn-primary btn-sm questionnaire-competencystatement-next"><?= $language["questionnaire_next_button"] ?></a></button>
+            <?
+            if($role == "manager"){
+                echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"] ,'</a></button>';
+                echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">' , $language["questionnaire_next_button"] , '</a></button>';
+            }
+            elseif($role == "focus"){
+                echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"] ,'</a></button>';
+                echo '<button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button">', $language["questionnaire_finish_button"], '</button>';
+            }
+            else{
+                echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">' , $language["questionnaire_next_button"] , '</a></button>';
+            }
+            ?>
         </section>
         <section id="open-end-question-page" class="questionnaire-page">
-            <div class="questionnaire-header"><?= $language["questionnaire_openendquestion"] ?></div>
+            <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
+            <?
+                if($role == "manager"){
+                    echo $language["questionnaire_openendquestion_title_for_manager"];
+                }
+                elseif($role != "manager"){
+                    echo $language["questionnaire_openendquestion_title_for_others"];
+                }
+            ?>
             <?= $language["questionnaire_openendquestion_paragraph1"] ?>
             <textarea class="questionnaire_openendquestion_text-input" name="questionnaire_openendquestion" placeholder="(Maximum 100 words)" rows="6"></textarea>
             <!-- --------------------------- YES/NO BUTTONS ----------------------------- -->
@@ -171,7 +225,7 @@
             <!-- ------------------------------------------------------------------------- -->
             <?= $language["questionnaire_openendquestion_finish"] ?>
             <button class="btn btn-primary btn-sm questionnaire-openendquestion-previous"><a style="color:white;" href="#competency-statements-page"><?= $language["questionnaire_previous_button"] ?></a></button>
-            <button><?= $language["questionnaire_finish_button"] ?></button>
+            <button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button"><?= $language["questionnaire_finish_button"] ?></button>
         </section>
     </form>
 
