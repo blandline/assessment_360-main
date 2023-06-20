@@ -2,8 +2,8 @@
 <? include_once '../member/header.php'; ?>
 
 <body>
-  <div class="wrapper">
-    <? include_once '../member/leftmenu.php'; ?>
+    <div class="wrapper">
+    <? include_once '../member/leftmenu.php'; ?> 
 
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -15,11 +15,11 @@
             </button>
           </div>
           <div class="modal-body">
-            <?= $language["competency_framework_confirm_delete"]; ?>
+
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= $language["competency_framework_cancel"]; ?></button>
-            <button type="button" class="btn btn-primary confirm-delete" data-dismiss="modal"><?= $language["competency_framework_delete"]; ?></button>
+
+            
           </div>
         </div>
       </div>
@@ -31,26 +31,7 @@
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <a class="navbar-brand"><?= $language["competency_framework_title"]; ?></a>
-            <?
-            if ($login->isAdmin()) {
-              if (isset($_POST["ac"])) {
-                $_SESSION[$session_admin_temp_compId] = $_POST["ac"];
-              }
-            ?>
-              <select id="ac" style="-webkit-appearance: menulist;">
-                <?
-                $result = $login->getCompany(true);
-                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                  $name = $row["en_name"];
-                  if (!empty(@$_SESSION[$session_admin_temp_compId]) && $row["id"] == $_SESSION[$session_admin_temp_compId]) {
-                ?>
-                    <option selected value="<?= $row["id"]; ?>"><?= $name; ?></option>
-                  <? } else { ?>
-                    <option value="<?= $row["id"]; ?>"><?= $name; ?></option>
-                  <? } ?>
-                <? } ?>
-              </select>
-            <? } ?>
+        
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -62,8 +43,7 @@
       </nav>
 
       <div style="margin-top: 95px; position: absolute; right: 12px;">
-        <!-- <button type="button" class="btn btn-primary excel"><?= $language["competency_framework_export_excel"]; ?></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-        <!-- <button type="button" class="btn btn-primary export"><?= $language["confirm_button"]; ?></button> -->
+ 
         <button type="button" class="btn btn-primary test-btn">Confirm</button>
       </div>
 
@@ -75,104 +55,28 @@
                 <div class="div-datatable-competency card-body table-responsive">
                   <table class="competency-frm-table table table-hover" style="width:100%;">
                     <thead class="text-danger">
-                      <tr>
-                        <th style="width:0px"></th>
-                        <!--------------------------- NEW ------------------------------------>
-                        <th><?= $language["competency_framework_position"]; ?></th>
-                        <!-- <th><?= $language["competency_framework_firstname"]; ?></th>
-                        <th><?= $language["competency_framework_lastname"]; ?></th> -->
-                        <!-------------------------------------------------------------------->
-                        <?
-                        $result = $competency->getCompetencyCluster();
-                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                          if (isset($_COOKIE['lang']) && $_COOKIE['lang'] == "tc") {
-                            echo "<th>" . $row["tc_name"] . "</th>";
-                          } else if (isset($_COOKIE['lang']) && $_COOKIE['lang'] == "sc") {
-                            echo "<th>" . $row["sc_name"] . "</th>";
-                          } else {
-                            echo "<th>" . $row["en_name"] . "</th>";
-                          }
-                        }
-                        ?>
-                        <th class="text-right name-nowrap"><?= $language["competency_actions"]; ?></th>
-                        <th class="text-center hideRowId">#</th>
-                      </tr>
+                        <tr>
+                            <th>
+                                Focus
+                            </th>
+                            <th>
+                                Launch Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                            <th>
+                                Competencies
+                            </th>
+                        </tr>
+                        
                     </thead>
-                    <tbody>
-                    </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="row competency-add-table">
-            <div class="competency-table-group-div" style="display:none;">
-              <div class="card">
-                <div class="card-header card-header-danger">
-                  <h4 class="card-title"><?= $language["competency_cluster"]; ?></h4>
-                </div>
-                <div class="div-datatable-competency card-body table-responsive">
-                  <table class="competency-table-group table table-hover" style="width:100%;">
-                    <thead class="text-danger">
-                      <tr>
-                        <th></th>
-                        <th class="name-nowrap"><?= $language["competency_name"]; ?></th>
-                        <th class="text-center hideRowId">#</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div id="competency-next-div" class="align-self-center" style="display:none;"><i class="material-icons">arrow_forward_ios</i></div>
-            <div class="competency-table-competency-div" style="display:none;">
-              <div class="card">
-                <div class="card-header card-header-danger">
-                  <h4 class="card-title"><?= $language["competency_competency"]; ?></h4>
-                </div>
-                <div class="div-datatable-competency card-body table-responsive">
-                  <table class="competency-table-competency table table-hover" style="width:100%;">
-                    <thead class="text-danger">
-                      <tr>
-                        <th style="width:0px"></th>
-                        <th class="name-nowrap"><?= $language["competency_name"]; ?></th>
-                        <th class="text-right name-nowrap"><?= $language["competency_actions"]; ?></th>
-                        <th class="text-center hideRowId">#</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div id="competency-next-div2" class="align-self-center" style="display:none;"><i class="material-icons">arrow_forward_ios</i></div>
-            <div class="competency-table-component-div" style="display:none;">
-              <div class="card">
-                <div class="card-header card-header-danger">
-                  <h4 class="card-title"><?= $language["competency_component"]; ?></h4>
-                </div>
-                <div class="div-datatable-competency card-body table-responsive">
-                  <table class="competency-table-component table table-hover" style="width:100%;">
-                    <thead class="text-danger">
-                      <tr>
-                        <th style="width:0px"></th>
-                        <th class="name-nowrap"><?= $language["competency_name"]; ?></th>
-                        <th class="text-center hideRowId">#</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <br><br><br>
-          </div>
-          <p><a class="nav-link" href="./assess360?a=questionnaire">Questionnaire temp</a></p>
           <? include_once '../member/footer.php'; ?>
         </div>
       </div>
@@ -202,9 +106,9 @@
   <script src="../lib/dataTables/js/dataTables.min.js"></script>
   <script src="../js/lang/<?= $_COOKIE['lang'] ?>.js?v=<?= $jsVersion; ?>"></script>
   <script src="../<?= $jspath; ?>/assess360.js?v=<?= $jsVersion; ?>"></script>
-  <script>
+  <!-- <script>
     var competency = new Competency();
-  </script>
+  </script> -->
   <!-------------------------------------------SERB------------------------------------------------>
 
   <!-------------------------------------------SERB------------------------------------------------>
