@@ -98,6 +98,7 @@
                           <td colspan="2"><input type="date" name="rows[0][End-date]" style="width:115px"></td>
                           <td><input type="text" name="rows[0][Rater-first-name]" style="width:75px"></td>
                           <td><input type="text" name="rows[0][Rater-last-name]" style="width:75px"></td>
+                      
                           <td>
                             <select name="rows[0][Roles]" id="roles" style="width:95px; -webkit-appearance: menulist;">
                               <option value="FOCUS" name='focus_role'><?= $language["listofraters_role_focus"]; ?></option>
@@ -119,8 +120,12 @@
                           <td></td>
                         </tr>
                       </table>
-                      <input type="hidden" name="a" value="activate">
+                      <input type="hidden" name="a" value="activate">                    
                       <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="Activate">
+                     
+                    
+
+                    
                     </form>
                     <button class="btn btn-primary btn-sm addButton raterlist-add-btn" style="position: absolute; right: 10px; display:inline-block;"><?= $language["listofraters_add_button"]; ?></button>
                   </div>
