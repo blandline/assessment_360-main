@@ -113,4 +113,27 @@ class QuestionsClass
         return $en_desp;
     }
 
+
+
+
+
+
+
+    public function getCompetencyForCompetencydb()
+    {
+        require '../config/dbconnect.php';
+        $query = "SELECT DISTINCT competency FROM competency_questions WHERE focus_first_name ='Shadman' ";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        
+        $competencies = array();
+        while ($row = $result->fetch_assoc()) {
+            $competencies[] = $row['competency'];
+        }
+        
+        return $competencies;
+    }
+
 }
