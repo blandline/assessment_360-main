@@ -2018,6 +2018,13 @@ $language["competency_not_important"] = "Not Important";
 // competency framework
 $language["competency_framework_title"] = "Competency Framework Design and Result";
 $language["competency_framework_position"] = "Position";
+//-------------------------NEW-----------------------------------
+$language["competency_framework_name"] = "Name";
+$language["competency_framework_lastname"] = "Focus Last Name";
+$language["competency_framework_firstname"] = "Focus First Name";
+$language["competency_framework_lastname"] = "Focus Last Name";
+$language["competency_framework_email"] = "Email";
+//---------------------------------------------------------------
 $language["competency_framework_cancel"] = "Cancel";
 $language["competency_framework_warning"] = "Warning";
 $language["competency_framework_confirm_delete"] = "Conifrm Delete?";
@@ -3121,6 +3128,7 @@ $language["questionnaire_finish_button"] = "Finish";
 $language["questionnaire_areyousure_confirm"] = "Are you sure?";
 $language["questionnaire_areyousure_yes"] = "Yes";
 $language["questionnaire_areyousure_no"] = "No";
+$language["questionnaire_questions"] = "Questions";
 
 //Questionnaire intro page
 $language["questionnaire_intropage_introduction"] = "INTRODUCTION";
@@ -3132,21 +3140,36 @@ $language["questionnaire_intropage_instruction_paragraph2"] = '<p>There are 5 an
 $language["questionnaire_intropage_instruction_paragraph3"] = "<p>If you consider that you do not have enough observation about this statement on the FOCUS, please click the bullet 'not enough observation'.</p>";
 $language["questionnaire_intropage_instruction_paragraph4"] = "<p>Please note that:</p>";
 $language["questionnaire_intropage_instruction_paragraph5"] = "<p>1. Click 'Continue Later' to interrupt the questionnaire and continue again by accessing the given link again. Completed answers will be saved.<br>2. Click 'Next' to save your answer and go to the next statement.<br>3. Write your thruthful opinion in the 'open-end question' about FOCUS' behavior and performance during work.<br>4. Click 'Finish' when completing the questionnaire. No changes on answers anymore.<br></p>";
-$language["questionnaire_intropage_instruction_paragraph6"] = '<p>If you are ready by Now, click <a href="#importance-of-competency-page">HERE</a> to start your questionnaire.</p>';
+$language["questionnaire_intropage_instruction_paragraph6"] = '<p>If you are ready by Now, click ';
+$language["questionnaire_intropage_instruction_paragraph7"] = "HERE";
+$language["questionnaire_intropage_instruction_paragraph8"] = 'to start your questionnaire.</p>';
 
 //Importance of competency page
-$language["questionnaire_importanceofcompetency"] = "A. IMPORTANCE OF COMPETENCY";
+$language["questionnaire_importanceofcompetency_title"] = "A. IMPORTANCE OF COMPETENCY";
 $language["questionnaire_importanceofcompetency_paragraph1"] = "<p>This section shows how FOCUS and Manager rate each of the competencies in terms of their importance to success in FOCUS's job. There is no right or wrong answer. Just show your objective and truthful answer.</p>";
 $language["questionnaire_importanceofcompetency_paragraph2"] = "<p>When you have completed your rating, please click</p>";
+$language["questionnaire_importanceofcompetency_importance"] = "Importance";
+$language["questionnaire_importanceofcompetency_low"] = "Low";
+$language["questionnaire_importanceofcompetency_high"] = "High";
+$language["questionnaire_importanceofcompetency_doubleheaded_arrow"] = "<----------------------------------------->";
 
 //Competency Statements page
-$language["questionnaire_competencystatements"] = "B. COMPETENCY STATEMENTS";
-$language["questionnaire_competencystatements_paragraph"] = "<p>Evaluate each statement by means of following scale:<br>1 : strong development needed <br>2 : development needed <br>3 : competent <br>4 : strength <br>5 : exceptional strength <br><br>X : not enough observation</p>";
+$language["questionnaire_competencystatements_title_for_focus_manager"] = "B. COMPETENCY STATEMENTS";
+$language["questionnaire_competencystatements_title_for_others"] = "A. COMPETENCY STATEMENTS";
+$language["questionnaire_competencystatements_paragraph0"] = "<p>Evaluate each statement by means of following scale:</p>";
+$language["questionnaire_competencystatements_paragraph1"] = "<p>1 : strong development needed <br>2 : development needed <br>3 : competent <br>4 : strength <br>5 : exceptional strength <br></p>";
+$language["questionnaire_competencystatements_paragraph2"] = "My observation on Focus";
+$language["questionnaire_competencystatements_paragraph3"] = "X : not enough observation";
 
 //Open-end Question page
-$language["questionnaire_openendquestion"] = "OPEN-END QUESTION ON FOCUS";
+//$language["questionnaire_openendquestion"] = "OPEN-END QUESTION ON FOCUS";
+$language["questionnaire_openendquestion_title_for_manager"] = "C. OPEN-END QUESTION";
+$language["questionnaire_openendquestion_title_for_others"] = "B. OPEN-END QUESTION";
 $language["questionnaire_openendquestion_paragraph1"] = "<p>Additional advice I want to give to the FOCUS:</p>";
 $language["questionnaire_openendquestion_paragraph2"] = "Are you willing to discuss your advice with the FOCUS";
 $language["questionnaire_openendquestion_finish"] = "<p>END OF COMPETENCY AUDIT</p>";
+$language["questionnaire_openendquestion_discuss_yes"]= "YES";
+$language["questionnaire_openendquestion_discuss_no"]= "NO";
+$language["leftmenu_competencies"] = "Competencies"
 //---------------------------------------------------------------------
 ?>

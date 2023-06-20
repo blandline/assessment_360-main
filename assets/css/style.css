@@ -7450,11 +7450,16 @@ box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     font-size: 14px;
 }
 
-.questionnaire-competency-statements-instructions{
-    text-align: right;
+.questionnaire-competencystatements-container{
+    display: flex; 
+    justify-content: flex-end;
 }
 
-#open-end-question-page .text-input{
+.questionnaire-competency-statements-instruction12345{
+    text-align: left;
+}
+
+.questionnaire_openendquestion_text-input{
     width: 100%;
-    height: 20%;
+    height: 50%;
 }

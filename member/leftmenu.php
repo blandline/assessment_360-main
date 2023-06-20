@@ -29,7 +29,6 @@
       if ($isShowAssess360) {
         $isViewAssess360 = isset($_SESSION[$session_page]) && $_SESSION[$session_page] == $SESSION_PAGE_ASSESS_360;
       ?>
-
         <li class="nav-item <? if ($isViewAssess360) echo "leftMenuActive"; ?>">
           <a class="nav-link" href="./assess360?a=assess360">
             <i class="material-icons">check_circle</i>
@@ -37,6 +36,23 @@
           </a>
         </li>
       <? } ?>
+
+        
+
+      <?
+      $isShowCompetency = !empty(@$_SESSION[$session_admin]) || (in_array($PACKAGE_ASSESS_360, $_SESSION[$session_package]) && $login->checkUserPermission($PERMISSION_ASSESS360_VIEW));
+      if ($isShowCompetency) {
+        $isViewCompetency = isset($_SESSION[$session_page]) && $_SESSION[$session_page] == $SESSION_PAGE_COMPETENCY;
+      ?>
+  <li class="nav-item <? if ($isViewCompetency) echo "leftMenuActive"; ?>">
+            <a class="nav-link" href="./assess360?a=competency">
+              <i class="material-icons">check_circle</i>
+              <p><?= $language["leftmenu_competencies"]; ?></p>
+            </a>
+          </li>
+        <? } ?>
+      
+      
 
       <li class="nav-item">
         <a class="nav-link" href="logout">

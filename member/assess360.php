@@ -1,16 +1,21 @@
 <?
+
+use Mpdf\Tag\Br;
+
 require("../classes/CheckSession.php");
 require("../classes/Session.php");
 require("../classes/MemberClass.php");
 require("../classes/Assess360Class.php");
 require("../vendor/autoload.php");
 require("../classes/listofratersClass.php");
+require("../classes/QuestionsClass.php");
 
 // use Spipu\Html2Pdf\Html2Pdf;
 
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
+$QuestionsClass = new QuestionsClass($login);
 
 if ($login->isLoggedIn()) {
   if ($login->isAdmin()) {
@@ -30,7 +35,7 @@ if ($login->isLoggedIn()) {
     $companyId = $login->getCompanyId();
   }
 
- 
+
   /* raters*/
 
   if(isset($_POST["a"]) && $_POST["a"] == "activate"){
@@ -39,42 +44,25 @@ if ($login->isLoggedIn()) {
    
 
 
-   
+
 
     for($i=0;$i<count($_POST["rows"]);$i++){
-      $to = $_POST["rows"][$i]["email"];
-      $subject = "Title";
-      $from = 'do-not-reply@performve.com';
-      $body = "Click on this link http://localhost/assessment_360-main/member/welcome";
-      $headers = "From: Performve <" . $from . ">\r\n";
-      $headers .= "Reply-To: Performve <" . $from . ">\r\n";
-      $headers .= "Return-Path: Performve <" . $from . ">\r\n";
-      $headers .= "MIME-Version: 1.0\r\n";
-      $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-      mail($to, $subject, $body, $headers, "-f " . $from);
-    // $listofratersClass->updateFocusInfo($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-    // $listofratersClass->updateRaterInfo($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"],$_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-    // $listofratersClass->deleteFocusInfo($companyId);
-    // $listofratersClass->deleteRaterInfo($companyId);
-    //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]); 
-    if($i == 0){
-      $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-    }
-    
-         
-    $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]); 
-    
-    
+    $listofratersClass->updateFocusInfo($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+    //$listofratersClass->updateRaterInfo($companyId, $_POST["rows[0][Rater-first-name]"],  $_POST["rows[0][Rater-last-name]"], $_POST["rows[0][Roles]"],$position = $_POST["rows[0][position]"],$gender = $_POST["rows[0][Genders]"],$email = $_POST["rows[0][email]"]);
+    $listofratersClass->updateRaterInfo($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"],$_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+    $listofratersClass->deleteFocusInfo($companyId);
+    $listofratersClass->deleteRaterInfo($companyId);    
+    //$listofratersClass->addFocusData($companyId, $_POST["rows[0][FOCUS_first_name]"],  $_POST["rows[0][FOCUS_last_name]"], $_POST["rows[0][Launch-date]"], $_POST["rows[0][End-date]"], $_POST["rows[0][Roles]"],$position = $_POST["rows[0][Genders]"],$gender = $_POST["rows[0][position]"],$email = $_POST["rows[0][email]"]);
+    $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
     //$listofratersClass->addRaterData($companyId, $_POST["rows[0][Rater-first-name]"],  $_POST["rows[0][Rater-last-name]"], $_POST["rows[0][Roles]"],$position = $_POST["rows[0][Genders]"],$gender = $_POST["rows[0][position]"],$email = $_POST["rows[0][email]"]);
-    // $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-    // $listofratersClass->getRater_info_WithId($companyId);
-    // $listofratersClass-> getRater_info($companyId);
-    // $listofratersClass->getFocus_info_WithId($companyId);
-    // $listofratersClass-> getFocus_info($companyId);
-    // //header('Location:index.html');
-    header("Location: welcome.php");
+    $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+    $listofratersClass->getRater_info_WithId($companyId);
+    $listofratersClass-> getRater_info($companyId);
+    $listofratersClass->getFocus_info_WithId($companyId);
+    $listofratersClass-> getFocus_info($companyId);
+    //header('Location:index.html');
     }
-  } 
+  }
 
   // if(isset($_POST["a"]) && $_POST["a"] == "activate"){
 
@@ -430,7 +418,7 @@ if ($login->isLoggedIn()) {
     $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
     include("../views/member/questionnaireView.php");
-  } 
+  }
   //---------------------------------------------------------------------------------
 
  else {
@@ -443,23 +431,24 @@ if ($login->isLoggedIn()) {
 
 
 
- <!----------------------------------SARBULAND------------------------------------------------>
- 
+<!----------------------------------SARBULAND------------------------------------------------>
+
 <?
-// Get the array from the AJAX request
-$arr_comp = $_POST['comp_arr'];
-$arr_len = count($arr_comp);
-$qu_arr = array();
 
-// Call the getQuestions function with the array as a parameter
-for($x = 0; $x <= $arr_len; $x++){
-  array_push($qu_arr,$competency->getQuestions($arr_comp[$x]));
-}
+    // Get the company names from the AJAX request
+    if(isset($_POST['comp_arr'])){
+    $comp_arr = $_POST['comp_arr'];
 
+    // Loop through the company names and call the getquestion function on each one
+    $questions = array();
+    foreach ($comp_arr as $comp) {
+      $QuestionsClass->getsetQuestions($comp);
+      //$questions[] = $competency->getQuestions($companyId,$comp);
+    }
+    
+    // Return the questions as a JSON response
+    // echo json_encode($questions);
+    echo json_encode($questions);
+  }
 
-// Return the result to the JavaScript code
-echo json_encode($qu_arr);
-
-
-?> -->
-  <!------------------------------------------------------------------------------------------->
+?>

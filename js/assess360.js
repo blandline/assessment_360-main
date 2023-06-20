@@ -1,10 +1,12 @@
-var Competency = function() {
-    const saveCursorPosition = function(e) {
-        document.documentElement.style.setProperty('--x', e.x);
-        document.documentElement.style.setProperty('--y', e.y);
-    }
+var Competency = function () {
+    const saveCursorPosition = function (e) {
+        document.documentElement.style.setProperty("--x", e.x);
+        document.documentElement.style.setProperty("--y", e.y);
+    };
 
-    document.addEventListener('mousemove', e => { saveCursorPosition(e); })
+    document.addEventListener("mousemove", (e) => {
+        saveCursorPosition(e);
+    });
 
     var ac = -1;
     var selectedGroupID = -1;
@@ -20,11 +22,12 @@ var Competency = function() {
     var excelForm = null;
 
     function changeCompetencyTable() {
-        if (typeof competencyObj !== 'undefined') {
+        if (typeof competencyObj !== "undefined") {
             var orderId = 9999;
             var data = [];
             var title = [];
-            var actionButton = '<button type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm addButton">&nbsp;&nbsp;<i class="material-icons">add</i>&nbsp;&nbsp;</button>';
+            var actionButton =
+                '<button type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm addButton">&nbsp;&nbsp;<i class="material-icons">add</i>&nbsp;&nbsp;</button>';
             for (var id in competencyObj) {
                 if (competencyObj.hasOwnProperty(id)) {
                     var competency = competencyObj[id];
@@ -32,17 +35,28 @@ var Competency = function() {
                     var name = decodeURIComponent(competency[keyName]);
                     var keyDefine = currentLang + "_desp";
                     var define = "";
-                    if (typeof competency[keyDefine] !== 'undefined') {
+                    if (typeof competency[keyDefine] !== "undefined") {
                         define = decodeURIComponent(competency[keyDefine]);
                     }
                     if (name != "") {
-                        if (selectedGroupID >= 0 && competency["parent"] == selectedGroupID) {
+                        if (
+                            selectedGroupID >= 0 &&
+                            competency["parent"] == selectedGroupID
+                        ) {
                             $("#competency-next-div").show();
                             $(".competency-table-competency-div").show();
-                            data.push([competency["order_id"], (name + "<span>" + define + "</span>"), actionButton, id]);
+                            data.push([
+                                competency["order_id"],
+                                name + "<span>" + define + "</span>",
+                                actionButton,
+                                id,
+                            ]);
                             title[id] = define;
 
-                            if (selectedCompetencyID == -1 && competency["order_id"] < orderId) {
+                            if (
+                                selectedCompetencyID == -1 &&
+                                competency["order_id"] < orderId
+                            ) {
                                 orderId = competency["order_id"];
                                 selectedCompetencyID = id;
                             }
@@ -52,7 +66,7 @@ var Competency = function() {
             }
 
             if (competencyTable == null) {
-                competencyTable = $('.competency-table-competency').DataTable({
+                competencyTable = $(".competency-table-competency").DataTable({
                     data: data,
                     searching: false,
                     info: false,
@@ -63,14 +77,14 @@ var Competency = function() {
                     rowReorder: false,
                     columnDefs: [
                         { orderable: true, targets: 0, visible: false },
-                        { className: 'competency-name name', targets: 1 },
-                        { className: 'text-center actionButton', targets: 2 },
-                        { className: 'hideRowId', targets: 3 },
-                        { orderable: false, targets: '_all' }
+                        { className: "competency-name name", targets: 1 },
+                        { className: "text-center actionButton", targets: 2 },
+                        { className: "hideRowId", targets: 3 },
+                        { orderable: false, targets: "_all" },
                     ],
                     language: {
-                        "sEmptyTable": lang['general_table_no_data'],
-                    }
+                        sEmptyTable: lang["general_table_no_data"],
+                    },
                 });
             } else {
                 competencyTable.clear();
@@ -80,12 +94,17 @@ var Competency = function() {
             }
 
             if (selectedCompetencyID > -1) {
-                $('.competency-table-competency tbody tr').find('td').each(function() {
-                    if ($(this).hasClass("hideRowId") && $(this).html() == selectedCompetencyID) {
-                        $(this).parent().addClass("table-row-highlight");
-                        return false;
-                    }
-                });
+                $(".competency-table-competency tbody tr")
+                    .find("td")
+                    .each(function () {
+                        if (
+                            $(this).hasClass("hideRowId") &&
+                            $(this).html() == selectedCompetencyID
+                        ) {
+                            $(this).parent().addClass("table-row-highlight");
+                            return false;
+                        }
+                    });
             }
 
             changeComponentTable();
@@ -93,7 +112,7 @@ var Competency = function() {
     }
 
     function changeComponentTable() {
-        if (typeof competencyObj !== 'undefined') {
+        if (typeof competencyObj !== "undefined") {
             var data = [];
             var title = [];
             for (var id in competencyObj) {
@@ -103,14 +122,21 @@ var Competency = function() {
                     var name = decodeURIComponent(competency[keyName]);
                     var keyDefine = currentLang + "_desp";
                     var define = "";
-                    if (typeof competency[keyDefine] !== 'undefined') {
+                    if (typeof competency[keyDefine] !== "undefined") {
                         define = decodeURIComponent(competency[keyDefine]);
                     }
                     if (name != "") {
-                        if (selectedCompetencyID >= 0 && competency["parent"] == selectedCompetencyID) {
+                        if (
+                            selectedCompetencyID >= 0 &&
+                            competency["parent"] == selectedCompetencyID
+                        ) {
                             $("#competency-next-div2").show();
                             $(".competency-table-component-div").show();
-                            data.push([competency["order_id"], (name + "<span>" + define + "</span>"), id]);
+                            data.push([
+                                competency["order_id"],
+                                name + "<span>" + define + "</span>",
+                                id,
+                            ]);
                             title[id] = define;
                         }
                     }
@@ -118,7 +144,7 @@ var Competency = function() {
             }
 
             if (componentTable == null) {
-                componentTable = $('.competency-table-component').DataTable({
+                componentTable = $(".competency-table-component").DataTable({
                     data: data,
                     searching: false,
                     info: false,
@@ -129,13 +155,13 @@ var Competency = function() {
                     rowReorder: false,
                     columnDefs: [
                         { orderable: true, targets: 0, visible: false },
-                        { className: 'competency-name name', targets: 1 },
-                        { className: 'hideRowId', targets: 2 },
-                        { orderable: false, targets: '_all' }
+                        { className: "competency-name name", targets: 1 },
+                        { className: "hideRowId", targets: 2 },
+                        { orderable: false, targets: "_all" },
                     ],
                     language: {
-                        "sEmptyTable": lang['general_table_no_data'],
-                    }
+                        sEmptyTable: lang["general_table_no_data"],
+                    },
                 });
             } else {
                 componentTable.clear();
@@ -157,14 +183,21 @@ var Competency = function() {
             var tmp = [];
             tmp.push("");
             for (var j = 0; j < frameworkTableColCount - 3; j++) {
-                if (j == 0) {
+                //----------------------------- EDIT ---------------------------
+                if (j == 0 /*|| j == 1*/) {
                     if (editRowID == i) {
                         var value = "";
                         if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
                             value = frameworkTableObj[i][j][0];
                         }
-                        var textfield = '<input type="text" class="positionName" value="' + value + '">';
-                        tmp.push(textfield);
+                        if (j == 0) {
+                            var textfield =
+                                '<div class="nowrap"><input type="text" class="positionname" value="' +
+                                value +
+                                '"></div>';
+                            tmp.push(textfield);                     
+                //---------------------------------------------------------------------
+                        }
                     } else {
                         if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
                             tmp.push(frameworkTableObj[i][j][0]);
@@ -184,7 +217,12 @@ var Competency = function() {
                                     // value += "<br>";
                                 }
                                 if (editRowID == i) {
-                                    value += "<div class='nowrap'>&bull;&nbsp;" + name + "<button type='button' class='btn btn-primary btn-link btn-sm deleteButton' id='" + frameworkTableObj[i][j][k] + "'><i class='material-icons'>close</i></button></div>";
+                                    value +=
+                                        "<div class='nowrap'>&bull;&nbsp;" +
+                                        name +
+                                        "<button type='button' class='btn btn-primary btn-link btn-sm deleteButton' id='" +
+                                        frameworkTableObj[i][j][k] +
+                                        "'><i class='material-icons'>close</i></button></div>";
                                 } else {
                                     value += "<div class='nowrap'>&bull;&nbsp;" + name + "</div>";
                                 }
@@ -198,15 +236,27 @@ var Competency = function() {
             }
 
             if (editRowID == i) {
-                var button = '<div class="nowrap"><button type="button" class="btn btn-success btn-sm addButton competency-save-btn">' + lang['competency_framework_save'] + '</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-dark btn-sm addButton competency-cancel-btn">' + lang['competency_framework_cancel'] + '</button></div>';
+                var button =
+                    '<div class="nowrap"><button type="button" class="btn btn-success btn-sm addButton competency-save-btn">' +
+                    lang["competency_framework_save"] +
+                    '</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-dark btn-sm addButton competency-cancel-btn">' +
+                    lang["competency_framework_cancel"] +
+                    "</button></div>";
                 tmp.push(button);
-
             } else {
-                var button = '<div class="nowrap"><button type="button" class="btn btn-primary btn-sm addButton competency-edit-btn">' + lang['competency_framework_edit'] + '</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-dark btn-sm addButton competency-delete-btn" data-toggle="modal" data-target="#deleteModal">' + lang['competency_framework_delete'] + '</button></div>';
+                var button =
+                    '<div class="nowrap"><button type="button" class="btn btn-primary btn-sm addButton competency-edit-btn">' +
+                    lang["competency_framework_edit"] +
+                    '</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-dark btn-sm addButton competency-delete-btn" data-toggle="modal" data-target="#deleteModal">' +
+                    lang["competency_framework_delete"] +
+                    "</button></div>";
                 tmp.push(button);
             }
 
-            if (frameworkTableObj[i][frameworkTableColCount] && frameworkTableObj[i][frameworkTableColCount].length > 0) {
+            if (
+                frameworkTableObj[i][frameworkTableColCount] &&
+                frameworkTableObj[i][frameworkTableColCount].length > 0
+            ) {
                 tmp.push(frameworkTableObj[i][frameworkTableColCount][0]);
             } else {
                 tmp.push(-1);
@@ -225,12 +275,18 @@ var Competency = function() {
                     tmp.push("");
                 }
             }
-            var button = '';
-            if (editRowID >= 0) {
-                button = '<button type="button" class="btn btn-success btn-sm addButton competency-add-btn">' + lang['competency_framework_save'] + '</button>';
-            } else {
-                button = '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' + lang['competency_framework_add'] + '</button>';
-            }
+            var button = "";
+            // if (editRowID >= 0) {
+            //     button =
+            //         '<button type="button" class="btn btn-success btn-sm addButton competency-add-btn">' +
+            //         lang["competency_framework_save"] +
+            //         "</button>";
+            // } else {
+            //     button =
+            //         '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' +
+            //         lang["competency_framework_add"] +
+            //         "</button>";
+            // }
             tmp.push(button);
             tmp.push(-1);
             data.push(tmp);
@@ -242,15 +298,18 @@ var Competency = function() {
                 if (i == 0) {
                     array[i] = { orderable: true, targets: i, visible: false };
                 } else if (i == frameworkTableColCount - 2) {
-                    array[i] = { className: 'text-center', targets: i };
+                    array[i] = { className: "text-center", targets: i };
                 } else {
-                    array[i] = { className: 'text-left', targets: i };
+                    array[i] = { className: "text-left", targets: i };
                 }
             }
-            array[frameworkTableColCount - 1] = { className: 'hideRowId', targets: (frameworkTableColCount - 1) };
-            array[frameworkTableColCount] = { orderable: false, targets: '_all' };
+            array[frameworkTableColCount - 1] = {
+                className: "hideRowId",
+                targets: frameworkTableColCount - 1,
+            };
+            array[frameworkTableColCount] = { orderable: false, targets: "_all" };
 
-            frameworkTable = $('.competency-frm-table').DataTable({
+            frameworkTable = $(".competency-frm-table").DataTable({
                 data: data,
                 searching: false,
                 info: false,
@@ -261,8 +320,8 @@ var Competency = function() {
                 rowReorder: false,
                 columnDefs: array,
                 language: {
-                    "sEmptyTable": lang['general_table_no_data'],
-                }
+                    sEmptyTable: lang["general_table_no_data"],
+                },
             });
         } else {
             frameworkTable.clear();
@@ -276,29 +335,29 @@ var Competency = function() {
         $.ajax({
             url: "assess360",
             data: {
-                "ac": ac,
-                "a": "getFramework",
+                ac: ac,
+                a: "getFramework",
             },
             method: "POST",
-            success: function(response) {
+            success: function (response) {
                 if (response.indexOf("<script>") >= 0) {
-                    alert(lang['general_time_out']);
+                    alert(lang["general_time_out"]);
                     window.location = "logout";
                     return;
                 }
 
                 frameworkTableObj = JSON.parse(response);
                 updateFrameworkTable();
-            }
+            },
         });
     }
 
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
         ac = $("#ac").length > 0 ? $("#ac").val() : -1;
 
         getFrameworkTableData();
 
-        if (typeof competencyObj !== 'undefined') {
+        if (typeof competencyObj !== "undefined") {
             var data = [];
             var title = [];
             for (var id in competencyObj) {
@@ -308,14 +367,20 @@ var Competency = function() {
                     var name = decodeURIComponent(competency[keyName]);
                     var keyDefine = currentLang + "_desp";
                     var define = "";
-                    if (typeof competency[keyDefine] !== 'undefined') {
+                    if (typeof competency[keyDefine] !== "undefined") {
                         define = decodeURIComponent(competency[keyDefine]);
                     }
                     if (name != "") {
                         // group table
                         if (competency["parent"] == -1) {
-                            $(".dropdown-competency-group-menu").append('<li><a id="' + id + '">' + name + '</a></li>');
-                            data.push([competency["order_id"], (name + "<span>" + define + "</span>"), id]);
+                            $(".dropdown-competency-group-menu").append(
+                                '<li><a id="' + id + '">' + name + "</a></li>"
+                            );
+                            data.push([
+                                competency["order_id"],
+                                name + "<span>" + define + "</span>",
+                                id,
+                            ]);
                             title[id] = define;
 
                             if (selectedGroupID == -1 && competency["order_id"] == 0) {
@@ -330,7 +395,7 @@ var Competency = function() {
                 $(".competency-table-group-div").show();
             }
 
-            var groupTable = $('.competency-table-group').DataTable({
+            var groupTable = $(".competency-table-group").DataTable({
                 data: data,
                 searching: false,
                 info: false,
@@ -341,32 +406,39 @@ var Competency = function() {
                 rowReorder: false,
                 columnDefs: [
                     { orderable: true, targets: 0, visible: false },
-                    { className: 'competency-name name', targets: 1 },
-                    { className: 'hideRowId', targets: 2 },
-                    { orderable: false, targets: '_all' }
+                    { className: "competency-name name", targets: 1 },
+                    { className: "hideRowId", targets: 2 },
+                    { orderable: false, targets: "_all" },
                 ],
                 language: {
-                    "sEmptyTable": lang['general_table_no_data'],
-                }
+                    sEmptyTable: lang["general_table_no_data"],
+                },
             });
 
             if (selectedGroupID > -1) {
-                $('.competency-table-group tbody tr').find('td').each(function() {
-                    if ($(this).hasClass("hideRowId") && $(this).html() == selectedGroupID) {
-                        $(this).parent().addClass("table-row-highlight");
-                        return false;
-                    }
-                });
+                $(".competency-table-group tbody tr")
+                    .find("td")
+                    .each(function () {
+                        if (
+                            $(this).hasClass("hideRowId") &&
+                            $(this).html() == selectedGroupID
+                        ) {
+                            $(this).parent().addClass("table-row-highlight");
+                            return false;
+                        }
+                    });
             }
 
             changeCompetencyTable();
         }
 
-        $(".competency-table-group tr").click(function() {
+        $(".competency-table-group tr").click(function () {
             if ($(this).parent("tbody").is("tbody")) {
-                $(".competency-table-group").find('tr').each(function() {
-                    $(this).removeClass("table-row-highlight");
-                });
+                $(".competency-table-group")
+                    .find("tr")
+                    .each(function () {
+                        $(this).removeClass("table-row-highlight");
+                    });
                 $(this).addClass("table-row-highlight");
 
                 selectedGroupID = $(this)[0].lastChild.innerHTML;
@@ -375,20 +447,26 @@ var Competency = function() {
             }
         });
 
-        $(".div-datatable-competency").on("click", ".competency-table-competency tr", function() {
-            if ($(this).parent("tbody").is("tbody")) {
-                $(".competency-table-competency").find('tr').each(function() {
-                    $(this).removeClass("table-row-highlight");
-                });
-                $(this).addClass("table-row-highlight");
+        $(".div-datatable-competency").on(
+            "click",
+            ".competency-table-competency tr",
+            function () {
+                if ($(this).parent("tbody").is("tbody")) {
+                    $(".competency-table-competency")
+                        .find("tr")
+                        .each(function () {
+                            $(this).removeClass("table-row-highlight");
+                        });
+                    $(this).addClass("table-row-highlight");
 
-                selectedCompetencyID = $(this)[0].lastChild.innerHTML;
-                changeComponentTable();
+                    selectedCompetencyID = $(this)[0].lastChild.innerHTML;
+                    changeComponentTable();
+                }
             }
-        });
+        );
 
-        $("body").on("click", ".competency-add-btn", function() {
-            editRowID = $(this).parent().parent()[0].rowIndex - 1;
+        $("body").on("click", ".competency-add-btn", function () {
+            editRowID = $(this).parent().parent()[0].rowIndex -1;
             if (!frameworkTableObj[editRowID]) {
                 frameworkTableObj[editRowID] = [];
             }
@@ -396,7 +474,7 @@ var Competency = function() {
             $(".competency-add-table").show();
         });
 
-        $("body").on("click", ".competency-edit-btn", function() {
+        $("body").on("click", ".competency-edit-btn", function () {
             editRowID = $(this).parent().parent().parent()[0].rowIndex - 1;
             if (!frameworkTableObj[editRowID]) {
                 frameworkTableObj[editRowID] = [];
@@ -405,13 +483,13 @@ var Competency = function() {
             $(".competency-add-table").show();
         });
 
-        $("body").on("click", ".competency-cancel-btn", function() {
+        $("body").on("click", ".competency-cancel-btn", function () {
             editRowID = -1;
             getFrameworkTableData();
             $(".competency-add-table").hide();
         });
 
-        $("body").on("click", ".deleteButton", function() {
+        $("body").on("click", ".deleteButton", function () {
             if (editRowID >= 0 && frameworkTableObj[editRowID]) {
                 var id = $(this).attr("id");
                 for (var i = 1; i < frameworkTableColCount - 3; i++) {
@@ -427,7 +505,7 @@ var Competency = function() {
             }
         });
 
-        $("body").on("click", ".competency-save-btn", function() {
+        $("body").on("click", ".competency-save-btn", function () {
             $(".competency-add-table").hide();
 
             if (editRowID >= 0 && frameworkTableObj[editRowID]) {
@@ -436,55 +514,65 @@ var Competency = function() {
                 $.ajax({
                     url: "assess360",
                     data: {
-                        "ac": ac,
-                        "a": "addFramework",
-                        "id": id,
-                        "value": JSON.stringify(obj),
+                        ac: ac,
+                        a: "addFramework",
+                        id: id,
+                        value: JSON.stringify(obj),
                     },
                     method: "POST",
-                    success: function(response) {
+                    success: function (response) {
                         if (response.indexOf("<script>") >= 0) {
-                            alert(lang['general_time_out']);
+                            alert(lang["general_time_out"]);
                             window.location = "logout";
                             return;
                         }
 
                         editRowID = -1;
                         getFrameworkTableData();
-                    }
+                    },
                 });
             }
         });
 
-        $("body").on("click", ".competency-table-competency .addButton", function() {
-            if (editRowID >= 0) {
-                $(this).parent().parent().find('td').each(function() {
-                    if ($(this).hasClass("hideRowId")) {
-                        var id = $(this).html();
-                        if (!frameworkTableObj[editRowID]) {
-                            frameworkTableObj[editRowID] = [];
-                        }
-                        var i = 0;
-                        $(".competency-frm-table tr:first th").each(function() {
-                            var keyName = currentLang + "_name";
-                            var name = decodeURIComponent(competencyObj[selectedGroupID][keyName]);
-                            if ($(this).html() == name) {
-                                if (!frameworkTableObj[editRowID][i]) {
-                                    frameworkTableObj[editRowID][i] = [];
+        $("body").on(
+            "click",
+            ".competency-table-competency .addButton",
+            function () {
+                if (editRowID >= 0) {
+                    $(this)
+                        .parent()
+                        .parent()
+                        .find("td")
+                        .each(function () {
+                            if ($(this).hasClass("hideRowId")) {
+                                var id = $(this).html();
+                                if (!frameworkTableObj[editRowID]) {
+                                    frameworkTableObj[editRowID] = [];
                                 }
-                                if (!frameworkTableObj[editRowID][i].includes(id)) {
-                                    frameworkTableObj[editRowID][i].push(id);
-                                }
+                                var i = 0;
+                                $(".competency-frm-table tr:first th").each(function () {
+                                    var keyName = currentLang + "_name";
+                                    var name = decodeURIComponent(
+                                        competencyObj[selectedGroupID][keyName]
+                                    );
+                                    if ($(this).html() == name) {
+                                        if (!frameworkTableObj[editRowID][i]) {
+                                            frameworkTableObj[editRowID][i] = [];
+                                        }
+                                        if (!frameworkTableObj[editRowID][i].includes(id)) {
+                                            frameworkTableObj[editRowID][i].push(id);
+                                        }
+                                    }
+                                    i++;
+                                });
                             }
-                            i++;
                         });
-                    }
-                });
-                updateFrameworkTable();
+                    updateFrameworkTable();
+                }
             }
-        });
+        );
 
-        $("body").on("change paste keyup", ".positionName", function() {
+        $("body").on("change paste keyup", ".positionName", function () {
             if (editRowID >= 0) {
                 if (!frameworkTableObj[editRowID]) {
                     frameworkTableObj[editRowID] = [];
@@ -493,43 +581,49 @@ var Competency = function() {
             }
         });
 
-        $("body").on("click", ".competency-delete-btn", function() {
-            deleteRowId = $(this).parent().parent().parent().find(".hideRowId").html();
+        $("body").on("click", ".competency-delete-btn", function () {
+            deleteRowId = $(this)
+                .parent()
+                .parent()
+                .parent()
+
+                .find(".hideRowId")
+                .html();
         });
 
-        $("#deleteModal").on("click", ".confirm-delete", function() {
+        $("#deleteModal").on("click", ".confirm-delete", function () {
             if (deleteRowId >= 0) {
                 $.ajax({
                     url: "assess360",
                     data: {
-                        "ac": ac,
-                        "a": "deleteFramework",
-                        "id": deleteRowId,
+                        ac: ac,
+                        a: "deleteFramework",
+                        id: deleteRowId,
                     },
                     method: "POST",
 
-                    success: function(response) {
+                    success: function (response) {
                         if (response.indexOf("<script>") >= 0) {
-                            alert(lang['general_time_out']);
+                            alert(lang["general_time_out"]);
                             window.location = "logout";
                             return;
                         }
 
                         getFrameworkTableData();
                         deleteRowId = -1;
-                    }
+                    },
                 });
             }
         });
 
-        $("body").on("click", ".excel", function() {
+        $("body").on("click", ".excel", function () {
             if (!excelForm) {
-                excelForm = document.createElement('form');
-                excelForm.style.visibility = 'hidden';
-                excelForm.method = 'POST';
-                excelForm.action = 'competency';
+                excelForm = document.createElement("form");
+                excelForm.style.visibility = "hidden";
+                excelForm.method = "POST";
+                excelForm.action = "competency";
 
-                var typeInput = document.createElement('input');
+                var typeInput = document.createElement("input");
                 typeInput.name = "a";
                 typeInput.value = "excel";
                 excelForm.appendChild(typeInput);
@@ -539,14 +633,14 @@ var Competency = function() {
             excelForm.submit();
         });
 
-        $("body").on("click", ".export", function() {
+        $("body").on("click", ".export", function () {
             if (!exportForm) {
-                exportForm = document.createElement('form');
-                exportForm.style.visibility = 'hidden';
-                exportForm.method = 'POST';
-                exportForm.action = 'competency';
+                exportForm = document.createElement("form");
+                exportForm.style.visibility = "hidden";
+                exportForm.method = "POST";
+                exportForm.action = "competency";
 
-                var typeInput = document.createElement('input');
+                var typeInput = document.createElement("input");
                 typeInput.name = "a";
                 typeInput.value = "pdf";
                 exportForm.appendChild(typeInput);
@@ -556,13 +650,13 @@ var Competency = function() {
             exportForm.submit();
         });
 
-        $("#ac").change(function() {
-            var form = document.createElement('form');
-            form.style.visibility = 'hidden';
-            form.method = 'POST';
-            form.action = 'competency';
+        $("#ac").change(function () {
+            var form = document.createElement("form");
+            form.style.visibility = "hidden";
+            form.method = "POST";
+            form.action = "competency";
 
-            var typeInput = document.createElement('input');
+            var typeInput = document.createElement("input");
             typeInput.name = "ac";
             typeInput.value = $("#ac").val();
             form.appendChild(typeInput);
@@ -570,61 +664,26 @@ var Competency = function() {
             document.body.appendChild(form);
             form.submit();
         });
-/////////////////////////////////////////////////Serb//////////////////////////////////////
-        $("body").on("click", ".test-btn", function() {
-            // Get all the div elements with class "nowrap" using querySelectorAll
-            const divs = document.querySelectorAll("div.nowrap");
-            var comp_arr =[];
-            // Loop through the div elements and read their text content
-            divs.forEach((div) => {
-                
-                var text = div.textContent.trim();
-                if(!text.includes("Edit")){
-                text = text.substring(2);
-                comp_arr.push(text);
-                }
-                // Print the text content to the console
-                
-        
-            });
-            console.log(comp_arr);
-
-        });
-
-        $.ajax({
-            url: "assess360",
-            data: { comp_arr: comp_arr },
-            type: "POST",
-            dataType: "json",
-            success: function(response) {
-                // Handle the response from the server here
-                console.log(response);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(textStatus, errorThrown);
-            }
-        });
     });
 
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
-        }
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
 
-        $(".competency-add-table").hide();
-
+    $(".competency-add-table").hide();
 };
 
-var Raterlist = function() {
-    var rowcounter = 1
+var Raterlist = function () {
+    var rowcounter = 1;
 
-    $("body").on("click", ".raterlist-add-btn", function() {
+    $("body").on("click", ".raterlist-add-btn", function () {
         var table = document.getElementById("raterlisttable");
         var row = table.insertRow(-1);
         var cell1 = row.insertCell(0);
-        
+
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
-        cell3.colSpan = "2";            //adjust the size of columns to fit the table
+        cell3.colSpan = "2"; //adjust the size of columns to fit the table
         var cell4 = row.insertCell(3);
         cell4.colSpan = "2";
         var cell5 = row.insertCell(4);
@@ -635,49 +694,83 @@ var Raterlist = function() {
         var cell10 = row.insertCell(9);
         var cell11 = row.insertCell(10);
 
-
-        
         cell1.innerHTML = ""; // row counter is added to give every column a unique name to assist in the php form handling
         cell2.innerHTML = "";
         cell3.innerHTML = "";
         cell4.innerHTML = "";
-        cell5.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-first-name]' style='width: 75px;'>";
-        cell6.innerHTML = "<input type='text' name='rows[" + rowcounter +"][Rater-last-name]' style='width: 75px;'>";
-        cell7.innerHTML = "<select name='rows[" + rowcounter +"][Roles]' id='roles' style='width: 95px; -webkit-appearance: menulist;'><option value='Focus' name='focus_role'>"+ lang["listofraters_role_focus"] +"</option><option value='manager' name='manager_role'>"+ lang["listofraters_role_manager"] +"</option><option value='colleague' name='colleague_role'>"+lang["listofraters_role_colleague"]+"</option><option value='direct-report' name='direct_report_role'>"+lang["listofraters_role_directreport"]+"</option><option value='Other' name='other_role'>"+lang["listofraters_role_other"]+"</option></select>";
-        cell8.innerHTML = "<select name='rows[" + rowcounter +"][Genders]' id='genders' style='width: 80px; -webkit-appearance: menulist;'><option value='Male' name='male_gender'>"+ lang["listofraters_gender_male"] +"</option><option value='Female' name='female_gender'>"+ lang["listofraters_gender_female"] +"</option><option value='Other Gender' name='other_gender'>"+ lang["listofraters_gender_other"] +"</option></select>";
-        cell9.innerHTML = "<input type='text' name='rows[" + rowcounter +"][position]' style='width: 75px;'>";
-        cell10.innerHTML = "<input type='text' name='rows[" + rowcounter +"][email]' style='width: 80px;'>";
-        cell11.innerHTML = "<button class='btn btn-dark btn-sm addButton raterlist-delete-btn'>"+lang["listofraters_delete_button"]+"</button>";
+        cell5.innerHTML =
+            "<input type='text' name='rows[" +
+            rowcounter +
+            "][Rater-first-name]' style='width: 75px;'>";
+        cell6.innerHTML =
+            "<input type='text' name='rows[" +
+            rowcounter +
+            "][Rater-last-name]' style='width: 75px;'>";
+        cell7.innerHTML =
+            "<select name='rows[" +
+            rowcounter +
+            "][Roles]' id='roles' style='width: 95px; -webkit-appearance: menulist;'><option value='Focus' name='focus_role'>" +
+            lang["listofraters_role_focus"] +
+            "</option><option value='manager' name='manager_role'>" +
+            lang["listofraters_role_manager"] +
+            "</option><option value='colleague' name='colleague_role'>" +
+            lang["listofraters_role_colleague"] +
+            "</option><option value='direct-report' name='direct_report_role'>" +
+            lang["listofraters_role_directreport"] +
+            "</option><option value='Other' name='other_role'>" +
+            lang["listofraters_role_other"] +
+            "</option></select>";
+        cell8.innerHTML =
+            "<select name='rows[" +
+            rowcounter +
+            "][Genders]' id='genders' style='width: 80px; -webkit-appearance: menulist;'><option value='Male' name='male_gender'>" +
+            lang["listofraters_gender_male"] +
+            "</option><option value='Female' name='female_gender'>" +
+            lang["listofraters_gender_female"] +
+            "</option><option value='Other Gender' name='other_gender'>" +
+            lang["listofraters_gender_other"] +
+            "</option></select>";
+        cell9.innerHTML =
+            "<input type='text' name='rows[" +
+            rowcounter +
+            "][position]' style='width: 75px;'>";
+        cell10.innerHTML =
+            "<input type='text' name='rows[" +
+            rowcounter +
+            "][email]' style='width: 80px;'>";
+        cell11.innerHTML =
+            "<button class='btn btn-dark btn-sm addButton raterlist-delete-btn'>" +
+            lang["listofraters_delete_button"] +
+            "</button>";
         rowcounter++;
     });
 
-
-    $("body").on("click", ".raterlist-delete-btn", function() {
+    $("body").on("click", ".raterlist-delete-btn", function () {
         // get the parent row of the clicked button
-        var row = $(this).closest('tr');
+        var row = $(this).closest("tr");
 
         // check if the row is not the first row
-        if (!row.is(':first-child')) {
-        // delete the row
-        row.remove();
+        if (!row.is(":first-child")) {
+            // delete the row
+            row.remove();
         }
     });
 
     /*
-      function activate_button(){
-          confirm("Are you sure");
-      }*/
+          function activate_button(){
+              confirm("Are you sure");
+          }*/
 
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
         ac = $("#ac").length > 0 ? $("#ac").val() : -1;
 
-        $("#ac").change(function() {
-            var form = document.createElement('form');
-            form.style.visibility = 'hidden';
-            form.method = 'POST';
-            form.action = 'competency';
+        $("#ac").change(function () {
+            var form = document.createElement("form");
+            form.style.visibility = "hidden";
+            form.method = "POST";
+            form.action = "competency";
 
-            var typeInput = document.createElement('input');
+            var typeInput = document.createElement("input");
             typeInput.name = "ac";
             typeInput.value = $("#ac").val();
             form.appendChild(typeInput);
@@ -692,17 +785,17 @@ var Raterlist = function() {
     });
 };
 
-var Questionnaire = function() {
-    jQuery(document).ready(function($) {
+var Questionnaire = function () {
+    jQuery(document).ready(function ($) {
         ac = $("#ac").length > 0 ? $("#ac").val() : -1;
 
-        $("#ac").change(function() {
-            var form = document.createElement('form');
-            form.style.visibility = 'hidden';
-            form.method = 'POST';
-            form.action = 'competency';
+        $("#ac").change(function () {
+            var form = document.createElement("form");
+            form.style.visibility = "hidden";
+            form.method = "POST";
+            form.action = "competency";
 
-            var typeInput = document.createElement('input');
+            var typeInput = document.createElement("input");
             typeInput.name = "ac";
             typeInput.value = $("#ac").val();
             form.appendChild(typeInput);
@@ -711,58 +804,184 @@ var Questionnaire = function() {
             form.submit();
         });
         // hide all pages except the first one
-        $('.questionnaire-page:not(:first)').hide();
+        $(".questionnaire-page:not(:first)").hide();
 
-        // listen for click events on the link
-        $('a[href="#intro-page"]').click(function(event) {
+        $('a[href="#importance-of-competency-page"]').click(function (event) {
             event.preventDefault(); // prevent the link from navigating to the target
-
             // hide the current page and show the target page
-            $('#intro-page').show();
-            $('#importance-of-competency-page').hide();
-            $('#competency-statements-page').hide();
-            $('#open-end-question-page').hide();
+            $("#intro-page").hide();
+            $("#importance-of-competency-page").show();
+            $("#competency-statements-page").hide();
+            $("#open-end-question-page").hide();
         });
-        $('a[href="#importance-of-competency-page"]').click(function(event) {
+
+        $('a[href="#competency-statements-page"]').click(function (event) {
             event.preventDefault(); // prevent the link from navigating to the target
 
             // hide the current page and show the target page
-            $('#intro-page').hide();
-            $('#importance-of-competency-page').show();
-            $('#competency-statements-page').hide();
-            $('#open-end-question-page').hide();
-        });
-        $('a[href="#competency-statements-page"]').click(function(event) {
-            event.preventDefault(); // prevent the link from navigating to the target
-
-            // hide the current page and show the target page
-            $('#intro-page').hide();
-            $('#importance-of-competency-page').hide();
-            $('#competency-statements-page').show();
-            $('#open-end-question-page').hide();
-        });
-        $('a[href="#open-end-question-page"]').click(function(event) {
-            event.preventDefault(); // prevent the link from navigating to the target
-
-            // hide the current page and show the target page
-            $('#intro-page').hide();
-            $('#importance-of-competency-page').hide();
-            $('#competency-statements-page').hide();
-            $('#open-end-question-page').show();
+            $("#intro-page").hide();
+            $("#importance-of-competency-page").hide();
+            $("#competency-statements-page").show();
+            $("#open-end-question-page").hide();
         });
 
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
         }
 
-        $("#deleteModal").on("click", ".confirm-yes", function() {
-            window.location.href = '#competency-statements-page';
+        $("#deleteModal").on("click", ".confirm-yes", function (event) {
+            event.preventDefault();
 
-            $('#intro-page').hide();
-            $('#importance-of-competency-page').hide();
-            $('#competency-statements-page').show();
-            $('#open-end-question-page').hide();
+                $("#intro-page").hide();
+                $("#importance-of-competency-page").hide();
+                $("#competency-statements-page").show();
+                $("#open-end-question-page").hide();
+        });
+
+        $("body").on("click", ".questionnaire-importanceofcompetency-previous", function (event) {
+                event.preventDefault(); // prevent the link from navigating to the target
+
+                // hide the current page and show the target page
+                $("#intro-page").show();
+                $("#importance-of-competency-page").hide();
+                $("#competency-statements-page").hide();
+                $("#open-end-question-page").hide();
+            }
+        );
+
+        $("body").on("click", ".questionnaire-importanceofcompetency-next", function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $("#intro-page").hide();
+            $("#importance-of-competency-page").hide();
+            $("#competency-statements-page").show();
+            $("#open-end-question-page").hide();
+        });
+
+        $("body").on("click", ".questionnaire-competencystatement-previous", function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $("#intro-page").hide();
+            $("#importance-of-competency-page").show();
+            $("#competency-statements-page").hide();
+            $("#open-end-question-page").hide();
+        });
+
+        $("body").on("click", ".questionnaire-competencystatement-next", function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $("#intro-page").hide();
+            $("#importance-of-competency-page").hide();
+            $("#competency-statements-page").hide();
+            $("#open-end-question-page").show();
+        });
+
+        $("body").on("click",".questionnaire-openendquestion-previous",function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $("#intro-page").hide();
+            $("#importance-of-competency-page").hide();
+            $("#competency-statements-page").show();
+            $("#open-end-question-page").hide();
+        });
+
+        $("body").on("keyup", ".questionnaire_openendquestion_text-input", function () {
+                // Get the value of the text area
+                var value = $(this).val();
+
+                // Convert the value to an array of words
+                var words = value.trim().split(/\s+/);
+
+                // If the number of words is greater than 100, prevent further input
+                if (words.length > 100) {
+                    // Remove the last word from the array
+                    words.splice(100);
+
+                    // Join the remaining words into a string
+                    var newValue = words.join(" ");
+
+                    // Set the value of the text area to the truncated string
+                    $(this).val(newValue);
+
+                    // Disable the text area to prevent further input
+                    alert("You have reached the maximum word limit of 100.");
+                } else {
+                    // Enable the text area if the word limit is not reached
+                    $(this).attr("disabled", false);
+                }
         });
     });
+}
 
-};
+    /////////////////////////////////////////////////Serb//////////////////////////////////////
+    var comp_arr = [];
+    $("body").on("click", ".test-btn", function () {
+      // Get all the div elements with class "nowrap" using querySelectorAll
+      const divs = document.querySelectorAll("div.nowrap");
+
+      // Loop through the div elements and read their text content
+      divs.forEach((div) => {
+        var text = div.textContent.trim();
+        if (!text.includes("Edit")) {
+          text = text.substring(2);
+          comp_arr.push(text);
+        }
+        // Print the text content to the console
+      });
+      console.log(comp_arr);
+
+    });
+
+    ////////////////////////////////////////////test new func//////////////////////////
+    $("body").on("click", ".test-btn", function () {
+        // Get all the rows in the table
+        const rows = document.querySelectorAll(
+            "table.competency-frm-table tbody tr"
+        );
+
+        // Create an array to store the data for each row
+        var data_arr = [];
+
+        // Loop through each row
+        rows.forEach((row) => {
+            // Get all the div elements with class "nowrap" within the row
+            const divs = row.querySelectorAll("div.nowrap");
+
+            // Create an array to store the text content of each div element in the row
+            var comp_arr = [];
+
+            // Loop through each div element and push its text content into the array
+            divs.forEach((div) => {
+                var text = div.textContent.trim();
+                if (!text.includes("Edit")) {
+                    text = text.substring(2);
+                    comp_arr.push(text);
+                }
+            });
+
+            // Push the array of text content into the data_arr array
+            data_arr.push(comp_arr);
+
+            console.log(data_arr);
+        });
+
+        // Create an AJAX request to send the array to the PHP file
+        $.ajax({
+            url: 'assess360',
+            data: {'comp_arr': comp_arr},
+            type: 'POST',
+            dataType: 'json',
+            success: function(response) {
+                // Get the response from the PHP file
+                console.log(response);
+            },
+            // error: function(jqXHR, textStatus, errorThrown) {
+            //     console.log(textStatus, errorThrown);
+            // }
+        });
+    });
+//};
