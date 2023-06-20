@@ -15,7 +15,7 @@ require("../classes/QuestionsClass.php");
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
-$QuestionsClass = new QuestionsClass($login);
+$questionsClass = new QuestionsClass($login);
 
 if ($login->isLoggedIn()) {
   if ($login->isAdmin()) {
@@ -426,15 +426,15 @@ if ($login->isLoggedIn()) {
 <!----------------------------------SARBULAND------------------------------------------------>
 
 <?
-
-    // Get the company names from the AJAX request
-    if(isset($_POST['comp_arr'])){
+  // Get the company names from the AJAX request
+  if(isset($_POST['comp_arr'])){
     $comp_arr = $_POST['comp_arr'];
 
+    $result_arr = $questionsClass->getQuestions($comp_arr);
     // Loop through the company names and call the getquestion function on each one
     $questions = array();
     foreach ($comp_arr as $comp) {
-      $QuestionsClass->getsetQuestions($comp);
+      $questionsClass->getsetQuestions($comp);
       //$questions[] = $competency->getQuestions($companyId,$comp);
     }
     
@@ -442,5 +442,6 @@ if ($login->isLoggedIn()) {
     // echo json_encode($questions);
     echo json_encode($questions);
   }
+  //-------------------------------------------------------------------------------
 
 ?>

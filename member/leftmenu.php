@@ -6,13 +6,13 @@
   <div class="sidebar-wrapper" id="leftmenubar">
     <ul class="nav">
 
-  
+
       <?
       $isShowListOfRaters = !empty(@$_SESSION[$session_admin]) || (in_array($PACKAGE_ASSESS_360, $_SESSION[$session_package]) && $login->checkUserPermission($PERMISSION_ASSESS360_VIEW));
       if ($isShowListOfRaters) {
         $isViewListOfRaters = isset($_SESSION[$session_page]) && $_SESSION[$session_page] == $SESSION_PAGE_LIST_OF_RATERS;
       ?>
-      
+
         <li class="nav-item <? if ($isViewListOfRaters) echo "leftMenuActive"; ?>">
           <a class="nav-link" href="./assess360?a=listofraters">
             <i class="material-icons">check_circle</i>
@@ -34,22 +34,22 @@
         </li>
       <? } ?>
 
-        
+
 
       <?
       $isShowCompetency = !empty(@$_SESSION[$session_admin]) || (in_array($PACKAGE_ASSESS_360, $_SESSION[$session_package]) && $login->checkUserPermission($PERMISSION_ASSESS360_VIEW));
       if ($isShowCompetency) {
         $isViewCompetency = isset($_SESSION[$session_page]) && $_SESSION[$session_page] == $SESSION_PAGE_COMPETENCY;
       ?>
-  <li class="nav-item <? if ($isViewCompetency) echo "leftMenuActive"; ?>">
-            <a class="nav-link" href="./assess360?a=competency">
-              <i class="material-icons">check_circle</i>
-              <p><?= $language["leftmenu_competencies"]; ?></p>
-            </a>
-          </li>
-        <? } ?>
-      
-      
+        <li class="nav-item <? if ($isViewCompetency) echo "leftMenuActive"; ?>">
+          <a class="nav-link" href="./assess360?a=competency">
+            <i class="material-icons">check_circle</i>
+            <p><?= $language["leftmenu_competencies"]; ?></p>
+          </a>
+        </li>
+      <? } ?>
+
+
 
       <li class="nav-item">
         <a class="nav-link" href="logout">
