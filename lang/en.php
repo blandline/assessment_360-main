@@ -231,6 +231,10 @@ $language["leftmenu_hello"] = "Hello,";
 
 //---------------------------NEW-------------------------------
 $language["leftmenu_list_of_raters"] = "List of Raters";
+$language["leftmenu_list_of_raters_rater_form"] = "Rater Form";
+$language["leftmenu_list_of_raters_data_center"] = "Data Center";
+$language["leftmenu_competency_selection"] = "Selection";
+$language["leftmenu_competency_focus_competency"] = "Focus Competency";
 //-------------------------------------------------------------
 
 // users
@@ -2032,7 +2036,9 @@ $language["competency_framework_delete"] = "Delete";
 $language["competency_framework_export"] = "Export to PDF";
 $language["competency_framework_export_excel"] = "Export to Excel";
 //---------------------------------NEW---------------------------------
+$language["competency_focus_competency_framework_title"] = "Focus Competency";
 $language["confirm_button"] = "Confirm";
+
 
 //list of raters framework
 $language["listofraters_framework_title"] = "List of Raters";
@@ -2060,6 +2066,9 @@ $language["listofraters_role_other"] = "Other";
 $language["listofraters_gender_male"] = "Male";
 $language["listofraters_gender_female"] = "Female";
 $language["listofraters_gender_other"] = "Other";
+
+//data center framework
+$language["listofraters_data_center_framework_title"] = "Data Center";
 //---------------------------------------------------------------------
 
 // package
