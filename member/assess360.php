@@ -395,11 +395,11 @@ if ($login->isLoggedIn()) {
 <?
   //------------------------------------NEW----------------------------------------
   if (isset($_GET["a"]) && $_GET["a"] == "listofraters") {
-    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_LIST_OF_RATERS) {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_LIST_OF_RATERS_RATERFORM) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
     }
 
-    $_SESSION[$session_page] = $SESSION_PAGE_LIST_OF_RATERS;
+    $_SESSION[$session_page] = $SESSION_PAGE_LIST_OF_RATERS_RATERFORM;
 
     include("../views/member/listofratersView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "assess360") {
@@ -410,6 +410,30 @@ if ($login->isLoggedIn()) {
     $_SESSION[$session_page] = $SESSION_PAGE_ASSESS_360;
 
     include("../views/member/assess360View.php");
+  } elseif (isset($_GET["a"]) && $_GET["a"] == "datacenter") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER;
+
+    include("../views/member/datacenterView.php");
+  } elseif (isset($_GET["a"]) && $_GET["a"] == "competency") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY_SELECTION) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_SELECTION;
+  //temporary go to the assess360view
+    include("../views/member/assess360View.php");
+  } elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetency") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY;
+    
+    include("../views/member/focuscompetencyView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
