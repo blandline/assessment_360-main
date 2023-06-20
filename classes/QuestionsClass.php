@@ -58,7 +58,7 @@ class QuestionsClass
                 $stmt->execute();
             }
             $stmt->close();
-        
+    
         }
 
         public function getQuestionsForQuestionnaire()

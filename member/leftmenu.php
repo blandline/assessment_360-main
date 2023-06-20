@@ -21,6 +21,9 @@
         </li>
       <? } ?>
 
+     
+
+
       <?
       $isShowAssess360 = !empty(@$_SESSION[$session_admin]) || (in_array($PACKAGE_ASSESS_360, $_SESSION[$session_package]) && $login->checkUserPermission($PERMISSION_ASSESS360_VIEW));
       if ($isShowAssess360) {

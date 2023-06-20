@@ -292,7 +292,10 @@ class listofratersClass{
     /* add values into rater_list table */
     
     public function addRaterData($companyId,  $RaterfirstName, $RaterlastName,$roles, $gender, $position,$email)
+    
     {
+        //die("AA".$RaterlastName." , ".$RaterlastName);
+
         require '../config/dbconnect.php';
 
         if ($this->memberClass->isAdmin()) {
@@ -394,6 +397,31 @@ class listofratersClass{
         $stmt->close();
        
     }
+
+    public function getrater_email()
+    {
+        require '../config/dbconnect.php';
+        $query = "SELECT email FROM rater_list WHERE email IS NOT NULL ORDER BY rater_id";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        return $result;
+     }
+
+      public function getFocus_email()
+    {
+        require '../config/dbconnect.php';
+        $query = "SELECT email FROM focus WHERE email IS NOT NULL ORDER BY focus_id";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        return $result;
+    }
+
 
    
 
