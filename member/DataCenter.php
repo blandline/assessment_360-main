@@ -46,22 +46,34 @@
   <div class="sidebar-wrapper" id="leftmenubar">
     <ul class="nav">
 
+
+        <li class="nav-item ">
+            <a class="nav-link" href="./assess360?a=assess360">
+                <i class="material-icons">check_circle</i>
+                <p>Assessment 360</p>
+            </a>
+            </li>
+
   
             
         <li class="nav-item leftMenuActive">
           <a class="nav-link" href="./assess360?a=listofraters">
             <i class="material-icons">check_circle</i>
-            <p>List of raters</p>
+            <p>List of Raters</p>
           </a>
         </li>
-      
-      
+
         <li class="nav-item ">
-          <a class="nav-link" href="./assess360?a=assess360">
-            <i class="material-icons">check_circle</i>
-            <p>Assessment 360</p>
-          </a>
-        </li>
+            <a class="nav-link" href="./assess360?a=DataCenter">
+                <i class="material-icons">check_circle</i>
+                <p>Data Center</p>
+            </a>
+            </li>
+
+        
+      
+      
+       
       
       <li class="nav-item">
         <a class="nav-link" href="logout">
@@ -98,33 +110,11 @@
       </div>
     </div>
 
-    <!-- /* taking the box down*/ -->
-    <style>.container-fluid {
-    padding-top: 20px;
-    padding-left: 20px
-    }
-</style>
-
     <div class="main-panel">
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
-      <!-- <img class = "image1" src="https://www.performve.com/img/logo.png" alt="performVe">
-      <style>
-            .image1 {
-    /* display: block;
-    max-width: 100%;
-    height: 200%;
-    text-align: center;
-    
-    margin: 10px; */
-    display: block;
-  margin: 0 auto;
-  text-align: center;
-    }
-      </style> -->
-      
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand"> </p> </a>
+            <a class="navbar-brand">Data Center</a>
                       </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -143,31 +133,62 @@
             <div class="competency-frm-table-div">
               <div class="card">
                 <div class="div-datatable-competency card-body table-responsive">
-                <!-- <a class="navbar-brand"> <h4> -->
-               <h4> <br>Thank you for completing the form, a questionnaire will be sent to each of the rater's email soon!<br><br><br></h4></a>
-                <style>   h4 {
-                /* color: inherit;
-                font-size: 1.3em;
-                font-weight: bold; */
-                font-family: system-ui, sans-serif;
-                font-size: 1.8rem;
-                
-                cursor: pointer;
-                --s: 0.1em;   /* the thickness of the line */
-                --c: red; /* the color */
-                
-                color: #0000;
-                padding-bottom: var(--s);
-                background: 
-                    linear-gradient(90deg,var(--c) 50%,#000 0) calc(100% - var(--_p,0%))/200% 100%,
-                    linear-gradient(var(--c) 0 0) 0% 100%/var(--_p,0%) var(--s) no-repeat;
-                -webkit-background-clip: text,padding-box;
-                        background-clip: text,padding-box;
-                transition: 0.5s;
-                
-                }
-                h4:hover {--_p: 100%}</style>
-
+                  <div class="listofraters-form-and-button-container">
+                    <form method="post" id="rateform" action="assess360">
+                      <table id="raterlisttable" class="competency-frm-table table table-hover" style="width:100%;">
+                        <thead class="text-danger">
+                          <tr>
+                            <th colspan="2" style="text-align: center;">FOCUS name</th>
+                            <th colspan="2" rowspan="2" style="text-align: center;">Launch on</th>
+                            <th colspan="2" rowspan="2" style="text-align: center;">Ended on</th>
+                            <th colspan="2" style="text-align: center;">Raters</th>
+                            <th rowspan="2" style="text-align: center;">Role</th>
+                            <th rowspan="2" style="text-align: center;">Gender</th>
+                            <th rowspan="2" style="text-align: center;">Position</th>
+                            <th rowspan="2" style="text-align: center;">Email</th>
+                            <th rowspan="2" style="text-align: center;">Actions</th>
+                          </tr>
+                          <tr>
+                            <th style="text-align: center;">First</th>
+                            <th style="text-align: center;">Last</th>
+                            <th style="text-align: center;">First</th>
+                            <th style="text-align: center;">Last</th>
+                            <div class="addButtonWrapper">
+                          </tr>
+                        </thead>
+                        <tr>
+                          <td><input type="text" name="rows[0][FOCUS_first_name]" style="width:75px"></td>
+                          <td><input type="text" name="rows[0][FOCUS_last_name]" style="width:75px"></td>
+                          <td colspan="2"><input type="date" name="rows[0][Launch-date]" style="width:115px"></td>
+                          <td colspan="2"><input type="date" name="rows[0][End-date]" style="width:115px"></td>
+                          <td><input type="text" name="rows[0][Rater-first-name]" style="width:75px"></td>
+                          <td><input type="text" name="rows[0][Rater-last-name]" style="width:75px"></td>
+                          <td>
+                            <select name="rows[0][Roles]" id="roles" style="width:95px; -webkit-appearance: menulist;">
+                              <option value="FOCUS" name='focus_role'>Focus</option>
+                              <option value="Manager" name='manager_role'>Manager</option>
+                              <option value="Colleague" name='colleague_role'>Colleague</option>
+                              <option value="Direct report" name='direct_report_role'>Direct report</option>
+                              <option value="Other" name='other_role'>Other</option>
+                            </select>
+                          </td>
+                          <td>
+                            <select name="rows[0][Genders]" id="genders" style="width:80px; -webkit-appearance: menulist;">
+                              <option value="Male" name='male_gender'>Male</option>
+                              <option value="Female" name='female_gender'>Female</option>
+                              <option value="Other Gender" name='other_gender'>Other</option>
+                            </select>
+                          </td>
+                          <td><input type="text" name="rows[0][position]" style="width:75px"></td>
+                          <td><input type="text" name="rows[0][email]" style="width:80px"></td>
+                          <td></td>
+                        </tr>
+                      </table>
+                      <input type="hidden" name="a" value="activate">
+                      <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="Activate">
+                    </form>
+                    <button class="btn btn-primary btn-sm addButton raterlist-add-btn" style="position: absolute; right: 10px; display:inline-block;">Add</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -179,9 +200,7 @@
   <footer class="footer">
     <div class="copyright float-left">
       &copy;
-      
       <script>
-       
         document.write(new Date().getFullYear())
       </script> PerformVE Limited. All rights reserved. | Room 18, Unit 109B-113, 1/F, Enterprise Place (5W), No. 5 Science Park West Avenue, Hong Kong Science Park    </div>
   </footer>        </div>
@@ -229,10 +248,10 @@
 
  <!----------------------------------SARBULAND------------------------------------------------>
  
-<!-- <br />
-<b>Warning</b>:  Undefined array key "comp_arr" in <b>C:\xampp\htdocs\assessment_360-main\member\assess360.php</b> on line <b>417</b><br />
 <br />
-<b>Fatal error</b>:  Uncaught TypeError: count(): Argument #1 ($value) must be of type Countable|array, null given in C:\xampp\htdocs\assessment_360-main\member\assess360.php:418
+<b>Warning</b>:  Undefined array key "comp_arr" in <b>C:\xampp\htdocs\assessment_360-main\member\assess360.php</b> on line <b>428</b><br />
+<br />
+<b>Fatal error</b>:  Uncaught TypeError: count(): Argument #1 ($value) must be of type Countable|array, null given in C:\xampp\htdocs\assessment_360-main\member\assess360.php:429
 Stack trace:
 #0 {main}
-  thrown in <b>C:\xampp\htdocs\assessment_360-main\member\assess360.php</b> on line <b>418</b><br />
+  thrown in <b>C:\xampp\htdocs\assessment_360-main\member\assess360.php</b> on line <b>429</b><br />
