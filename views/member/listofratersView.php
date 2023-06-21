@@ -121,7 +121,9 @@
                         </tr>
                       </table>
                       <input type="hidden" name="a" value="activate">                    
-                      <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="Activate">
+                      <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="Activate">      
+                      <!-- <input type="hidden" name="a" value="DataCenter">                    
+                      <input class="btn btn-success btn-sm addButton competency-add-btn" type="submit" value="DataCenter"> -->
                      
                     
 

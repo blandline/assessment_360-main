@@ -192,6 +192,19 @@ class listofratersClass{
 
     /* get all info about focus with and without focus id*/
 
+     public function getFocus_role()
+    {
+        require '../config/dbconnect.php';
+        $query = "SELECT roles FROM focus WHERE roles IS NOT NULL ORDER BY focus_id";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        return $result;
+    }
+
+
     public function getFocus_info($companyId)
     {
         require '../config/dbconnect.php';
@@ -210,24 +223,67 @@ class listofratersClass{
         return $result;
     }
 
-    public function getFocus_info_WithId($companyId)
+    public function getFocus_Id($companyId)
     {
         require '../config/dbconnect.php';
-
+    
         if ($this->memberClass->isAdmin()) {
             $dbName = $this->memberClass->getCompanyDBById($companyId);
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-        $query = "SELECT * FROM " . $dbName . ".focus WHERE focus_id = ?";
+    
+        // Prepare and execute the query
+        $query = "SELECT focus_id FROM $dbName.focus";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("s", $_POST["focus_id"]);
         $stmt->execute();
+    
+        // Handle errors that may occur during the query
+        if ($stmt->error) {
+            $error = $stmt->error;
+            $stmt->close();
+            $conn->close();
+            return ['error' => $error];
+        }
+    
         $result = $stmt->get_result();
         $stmt->close();
-
+        $conn->close();
+    
         return $result;
     }
+
+//     public function insertFocusIdIntoRaterList($companyId)
+// {
+//     require '../config/dbconnect.php';
+//     $focusID = 1;
+
+//     if ($this->memberClass->isAdmin()) {
+//         $dbName = $this->memberClass->getCompanyDBById($companyId);
+//     } else {
+//         $dbName = $this->memberClass->getCompanyDB();
+//     }
+
+//     // Prepare the INSERT INTO statement with a subquery
+//     $query = "INSERT INTO " . $dbName . ".rater_list (focus_id) VALUES ($focusID)";
+//     $focusID++;
+
+//     // Execute the query
+//     $stmt = $conn->prepare($query);
+//     $stmt->execute();
+
+//     // Handle errors that may occur during the query
+//     if ($stmt->error) {
+//         $error = $stmt->error;
+//         $stmt->close();
+//         $conn->close();
+//         return ['error' => $error];
+//     }
+
+//     // Close the statement and database connection
+//     $stmt->close();
+//     $conn->close();
+// }
 
     /*get all info about raters with and without id*/
 
@@ -274,6 +330,7 @@ class listofratersClass{
     {
         require '../config/dbconnect.php';
 
+
         if ($this->memberClass->isAdmin()) {
             $dbName = $this->memberClass->getCompanyDBById($companyId);
         } else {
@@ -291,7 +348,7 @@ class listofratersClass{
 
     /* add values into rater_list table */
     
-    public function addRaterData($companyId,  $RaterfirstName, $RaterlastName,$roles, $gender, $position,$email)
+    public function addRaterData($companyId,  $RaterfirstName, $RaterlastName,$focusID,$roles, $gender, $position,$email)
     
     {
         //die("AA".$RaterlastName." , ".$RaterlastName);
@@ -304,8 +361,8 @@ class listofratersClass{
             $dbName = $this->memberClass->getCompanyDB();
         }
 
-        $stmt = $conn->prepare("INSERT INTO " . $dbName . ".rater_list (rater_first_name, rater_last_name, roles, gender, position, email) VALUES (?, ?, ?, ?, ?,?)");
-        $stmt->bind_param("ssssss", $RaterfirstName, $RaterlastName,$roles, $gender, $position,$email);
+        $stmt = $conn->prepare("INSERT INTO " . $dbName . ".rater_list (rater_first_name, rater_last_name, focus_id, roles, gender, position, email) VALUES (?, ?,?, ?, ?, ?,?)");
+        $stmt->bind_param("sssssss", $RaterfirstName, $RaterlastName,$focusID,$roles, $gender, $position,$email);
         $stmt->execute();
         $id = $stmt->insert_id;
         $stmt->close();
