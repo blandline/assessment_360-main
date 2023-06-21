@@ -88,7 +88,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <!-- ------------------SHOW THE FOCUS SELECTION TABLE HERE-------------- -->
+                          <!-- ------------------SHOW THE FOCUS SELECTION TABLE HERE------------- -->
                           <tr>
                             <td>temp</td>
                             <td>temp</td>
@@ -97,7 +97,7 @@
                             <td>temp</td>
                             <td><button class="btn btn-primary btn-sm goto-competency-selection">Competency Selection</button></td>
                           </tr>
-                          <!-- ------------------------------------------------------------------- -->
+                          <!-- ------------------------------------------------------------------ -->
                         </tbody>
                       </table>
                     </form>
