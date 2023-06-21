@@ -31,7 +31,7 @@
 
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand"><?= $language["competency_framework_title"]; ?></a>
+            <a class="navbar-brand"><?= $language["competency_focus_competency_framework_title"]; ?></a>
         
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,11 +42,6 @@
           </button>
         </div>
       </nav>
-
-      <div style="margin-top: 95px; position: absolute; right: 12px;">
- 
-        <button type="button" class="btn btn-primary test-btn">Confirm</button>
-      </div>
 
       <div class="content search-competency-content">
         <div class="container-fluid">
