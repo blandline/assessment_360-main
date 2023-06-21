@@ -12,6 +12,8 @@ require("../classes/QuestionsClass.php");
 
 // use Spipu\Html2Pdf\Html2Pdf;
 
+$focusID = 1;
+
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
@@ -36,45 +38,63 @@ if ($login->isLoggedIn()) {
   }
 
 
-  /* raters*/
-
-  if(isset($_POST["a"]) && $_POST["a"] == "activate"){
-
   
-   
 
 
 
 
-    for($i=0;$i<count($_POST["rows"]);$i++){
-    $listofratersClass->updateFocusInfo($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-    //$listofratersClass->updateRaterInfo($companyId, $_POST["rows[0][Rater-first-name]"],  $_POST["rows[0][Rater-last-name]"], $_POST["rows[0][Roles]"],$position = $_POST["rows[0][position]"],$gender = $_POST["rows[0][Genders]"],$email = $_POST["rows[0][email]"]);
-    $listofratersClass->updateRaterInfo($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"],$_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-    $listofratersClass->deleteFocusInfo($companyId);
-    $listofratersClass->deleteRaterInfo($companyId);    
-    //$listofratersClass->addFocusData($companyId, $_POST["rows[0][FOCUS_first_name]"],  $_POST["rows[0][FOCUS_last_name]"], $_POST["rows[0][Launch-date]"], $_POST["rows[0][End-date]"], $_POST["rows[0][Roles]"],$position = $_POST["rows[0][Genders]"],$gender = $_POST["rows[0][position]"],$email = $_POST["rows[0][email]"]);
-    $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-    //$listofratersClass->addRaterData($companyId, $_POST["rows[0][Rater-first-name]"],  $_POST["rows[0][Rater-last-name]"], $_POST["rows[0][Roles]"],$position = $_POST["rows[0][Genders]"],$gender = $_POST["rows[0][position]"],$email = $_POST["rows[0][email]"]);
-    $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-    $listofratersClass->getRater_info_WithId($companyId);
-    $listofratersClass-> getRater_info($companyId);
-    $listofratersClass->getFocus_info_WithId($companyId);
-    $listofratersClass-> getFocus_info($companyId);
-    //header('Location:index.html');
+  /* raters*/
+  // if(isset($_POST["a"]) && $_POST["a"] == "DataCenter"){
+  //   header("Location: DataCenter.php");
+  // }
+
+     
+ 
+
+  if(isset($_POST["a"]) && $_POST["a"] == "activate"){ 
+    $focusID++;   
+
+    for($i=0;$i<count($_POST["rows"]);$i++){ 
+
+    // $to = $_POST["rows"][$i]["email"];
+    // $subject = "Title";
+    // $from = 'do-not-reply@performve.com';
+    // $body = "Hi";
+    // $headers = "From: Performve <" . $from . ">\r\n";
+    // $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+    // $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+    // $headers .= "MIME-Version: 1.0\r\n";
+    // $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    // mail($to, $subject, $body, $headers, "-f " . $from);
+
+    if($i == 0){
+      $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
     }
+
+
+    //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
+    $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+    
+    //$listofratersClass-> insertFocusIdIntoRaterList($companyId);
+    
   }
 
-  // if(isset($_POST["a"]) && $_POST["a"] == "activate"){
-
-  //   //header("Location: welcome.php");
-  //   header("Location: DataCenter.php");
-
-
+ 
    
-
+   
    
     
-  // } 
+    
+    header("Location: welcome.php");
+     // Data Center
+  
+
+  
+  }
+  
+
+ 
+
 
 
   // add/edit competency framework
@@ -448,8 +468,12 @@ if ($login->isLoggedIn()) {
  else {
   $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
   header('Location: ../login');
+ }
 }
-}
+
+
+
+
 
 ?>
 

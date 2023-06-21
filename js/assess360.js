@@ -586,7 +586,6 @@ var Competency = function () {
                 .parent()
                 .parent()
                 .parent()
-
                 .find(".hideRowId")
                 .html();
         });
