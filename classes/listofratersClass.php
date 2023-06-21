@@ -270,7 +270,9 @@ class listofratersClass{
         // Check if the query returned any rows
         if ($result->num_rows > 0) {
             // Fetch the first row from the result set
-            $row = $result->fetch_assoc();
+            for($i=0;$i<$result->num_rows;$i++){
+                $row = $result->fetch_assoc();
+            }
     
             // Store the focus_id value in a variable
             $focusId = $row['focus_id'];

@@ -14,7 +14,7 @@ require("../classes/QuestionsClass.php");
 
 
 
-$focusID = 1;
+
 
 
 $login = new MemberClass();
@@ -107,7 +107,7 @@ if ($login->isLoggedIn()) {
   
   }
 
-  $focusID=$temp;
+  
   
 
  
