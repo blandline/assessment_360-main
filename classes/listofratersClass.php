@@ -223,67 +223,71 @@ class listofratersClass{
         return $result;
     }
 
-    public function getFocus_Id($companyId)
-    {
-        require '../config/dbconnect.php';
+    // public function getFocus_Id($companyId)
+    // {
+    //     require '../config/dbconnect.php';
     
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    
+    //     // Prepare and execute the query
+    //     $query = "SELECT focus_id FROM $dbName.focus";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    
+    //     // Handle errors that may occur during the query
+    //     if ($stmt->error) {
+    //         $error = $stmt->error;
+    //         $stmt->close();
+    //         $conn->close();
+    //         return ['error' => $error];
+    //     }
+    
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+    //     $conn->close();
+    
+    //     return $result;
+    // }
+
+    function getFocusId($companyId) {
+        // Connect to the database
+        require '../config/dbconnect.php';
+
         if ($this->memberClass->isAdmin()) {
             $dbName = $this->memberClass->getCompanyDBById($companyId);
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
     
-        // Prepare and execute the query
-        $query = "SELECT focus_id FROM $dbName.focus";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
+        // Execute the SELECT query to retrieve the focus_id value from the focus table
+        $query = "SELECT focus_id FROM " . $dbName . ".focus";
+        $result = $conn->query($query);
     
-        // Handle errors that may occur during the query
-        if ($stmt->error) {
-            $error = $stmt->error;
-            $stmt->close();
-            $conn->close();
-            return ['error' => $error];
+        // Check if the query returned any rows
+        if ($result->num_rows > 0) {
+            // Fetch the first row from the result set
+            $row = $result->fetch_assoc();
+    
+            // Store the focus_id value in a variable
+            $focusId = $row['focus_id'];
+        } else {
+            // No rows were returned by the query
+            $focusId = 0;
         }
     
-        $result = $stmt->get_result();
-        $stmt->close();
+        // Close the database connection
         $conn->close();
     
-        return $result;
+        // Return the focus_id value
+        return $focusId;
     }
 
-//     public function insertFocusIdIntoRaterList($companyId)
-// {
-//     require '../config/dbconnect.php';
-//     $focusID = 1;
+    
 
-//     if ($this->memberClass->isAdmin()) {
-//         $dbName = $this->memberClass->getCompanyDBById($companyId);
-//     } else {
-//         $dbName = $this->memberClass->getCompanyDB();
-//     }
-
-//     // Prepare the INSERT INTO statement with a subquery
-//     $query = "INSERT INTO " . $dbName . ".rater_list (focus_id) VALUES ($focusID)";
-//     $focusID++;
-
-//     // Execute the query
-//     $stmt = $conn->prepare($query);
-//     $stmt->execute();
-
-//     // Handle errors that may occur during the query
-//     if ($stmt->error) {
-//         $error = $stmt->error;
-//         $stmt->close();
-//         $conn->close();
-//         return ['error' => $error];
-//     }
-
-//     // Close the statement and database connection
-//     $stmt->close();
-//     $conn->close();
-// }
 
     /*get all info about raters with and without id*/
 
