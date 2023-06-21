@@ -1,6 +1,7 @@
 <? include_once '../config/config.php'; ?>
 <? include_once '../member/header.php'; ?>
 
+
 <body>
   <div class="wrapper">
     <? include_once '../member/leftmenu.php'; ?>

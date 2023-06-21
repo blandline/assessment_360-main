@@ -12,7 +12,10 @@ require("../classes/QuestionsClass.php");
 
 // use Spipu\Html2Pdf\Html2Pdf;
 
-$focusID = 1;
+
+
+
+
 
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
@@ -51,10 +54,17 @@ if ($login->isLoggedIn()) {
      
  
 
-  if(isset($_POST["a"]) && $_POST["a"] == "activate"){ 
-    $focusID++;   
+  if(isset($_POST["a"]) && $_POST["a"] == "activate"){
+    
+   
+
+    
+    
+  
+      
 
     for($i=0;$i<count($_POST["rows"]);$i++){ 
+
 
     // $to = $_POST["rows"][$i]["email"];
     // $subject = "Title";
@@ -69,7 +79,12 @@ if ($login->isLoggedIn()) {
 
     if($i == 0){
       $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+     
+      
     }
+
+    $focusID = $listofratersClass->getFocusId($companyId);
+    
 
 
     //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
@@ -91,6 +106,8 @@ if ($login->isLoggedIn()) {
 
   
   }
+
+  
   
 
  
@@ -453,7 +470,7 @@ if ($login->isLoggedIn()) {
 
     $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY;
     
-    include("../views/member/focuscompetencyView.php");
+    include("../views/member/competencyView.php"); /////// you changed this from focuscompetencyView(serb)
   } elseif (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
