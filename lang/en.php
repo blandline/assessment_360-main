@@ -2069,6 +2069,9 @@ $language["listofraters_gender_other"] = "Other";
 
 //data center framework
 $language["listofraters_data_center_framework_title"] = "Data Center";
+$language["listofraters_data_center_status"] = "Status";
+$language["listofraters_data_center_status_start"] = "Start on";
+$language["listofraters_data_center_status_end"] = "Finish on";
 //---------------------------------------------------------------------
 
 // package

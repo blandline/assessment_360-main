@@ -470,7 +470,7 @@ if ($login->isLoggedIn()) {
 
     $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY;
     
-    include("../views/member/focuscompetencyView.php");
+    include("../views/member/competencyView.php"); /////// you changed this from focuscompetencyView(serb)
   } elseif (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
