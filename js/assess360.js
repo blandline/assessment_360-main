@@ -184,7 +184,7 @@ var Competency = function () {
             tmp.push("");
             for (var j = 0; j < frameworkTableColCount - 3; j++) {
                 //----------------------------- EDIT ---------------------------
-                if (j == 0 /*|| j == 1*/) {
+                if (j == 0) {
                     if (editRowID == i) {
                         var value = "";
                         if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
