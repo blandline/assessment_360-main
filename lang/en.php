@@ -2072,6 +2072,15 @@ $language["listofraters_data_center_framework_title"] = "Data Center";
 $language["listofraters_data_center_status"] = "Status";
 $language["listofraters_data_center_status_start"] = "Start on";
 $language["listofraters_data_center_status_end"] = "Finish on";
+
+//focus selection page
+$language["competency_focus_selection_firstname"] = "First Name";
+$language["competency_focus_selection_lastname"] = "Last Name";
+$language["competency_focus_selection_position"] = "Position";
+$language["competency_focus_selection_launchdate"] = "Launch Date";
+$language["competency_focus_selection_enddate"] = "End Date";
+$language["competency_focus_selection_action"] = "Action";
+$language["competency_focus_selection_focusid"] = "Focus Id";
 //---------------------------------------------------------------------
 
 // package

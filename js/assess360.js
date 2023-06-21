@@ -916,6 +916,42 @@ var Questionnaire = function () {
     });
 }
 
+var CompetencySelection = function(){
+    jQuery(document).ready(function ($) {
+        ac = $("#ac").length > 0 ? $("#ac").val() : -1;
+
+        $("#ac").change(function () {
+            var form = document.createElement("form");
+            form.style.visibility = "hidden";
+            form.method = "POST";
+            form.action = "competency";
+
+            var typeInput = document.createElement("input");
+            typeInput.name = "ac";
+            typeInput.value = $("#ac").val();
+            form.appendChild(typeInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        });
+
+        //---------------------------------- NEW ------------------------------------
+        $("#focus-selection-page").show();
+        $("#competency-selection-page").hide();
+        $("#competency-selection-page-button").hide();
+
+        $("body").on("click",".goto-competency-selection",function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $("#focus-selection-page").hide();
+            $("#competency-selection-page").show();
+            $("#competency-selection-page-button").show();
+        });
+        //---------------------------------------------------------------------------
+    });
+}
+
     /////////////////////////////////////////////////Serb//////////////////////////////////////
     var comp_arr = [];
     $("body").on("click", ".test-btn", function () {

@@ -461,8 +461,8 @@ if ($login->isLoggedIn()) {
     }
 
     $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_SELECTION;
-  //temporary go to the assess360view
-    include("../views/member/assess360View.php");
+  
+    include("../views/member/competencyView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetency") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
@@ -470,7 +470,7 @@ if ($login->isLoggedIn()) {
 
     $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY;
     
-    include("../views/member/competencyView.php"); /////// you changed this from focuscompetencyView(serb)
+    include("../views/member/focuscompetencyView.php"); /////// you changed this from focuscompetencyView(serb)
   } elseif (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
