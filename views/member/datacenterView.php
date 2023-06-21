@@ -72,6 +72,27 @@
                             <th style="text-align: center;"><?= $language["listofraters_data_center_status_end"]?></th>
                           </tr>
                         </thead>
+                        <tbody>
+                            <!-- ------------ MAKE NEW TABLE HERE ----------------------- -->
+                            <tr>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                                <td>temp</td>
+                            </tr>
+                            <!-------------------------------------------------------------- -->
+                        </tbody>
                       </table>
                   </div>
                 </div>
