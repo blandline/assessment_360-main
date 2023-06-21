@@ -1,6 +1,7 @@
 <? include_once '../config/config.php'; ?>
 <? include_once '../member/header.php'; ?>
 
+
 <body>
     <div class="wrapper">
     <? include_once '../member/leftmenu.php'; ?> 
@@ -53,7 +54,8 @@
             <div class="competency-frm-table-div">
               <div class="card">
                 <div class="div-datatable-competency card-body table-responsive">
-                  <table class="competency-frm-table table table-hover" style="width:100%;">
+                <? $questionsClass->SumCompTable()?>
+                  <!-- <table class="competency-frm-table table table-hover" style="width:100%;">
                     <thead class="text-danger">
                         <tr>
                             <th>
@@ -69,9 +71,11 @@
                                 Competencies
                             </th>
                         </tr>
-                        
                     </thead>
-                  </table>
+                    <tbody>
+
+                    </tbody>
+                  </table> -->
                 </div>
               </div>
             </div>
