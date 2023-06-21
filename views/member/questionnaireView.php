@@ -84,18 +84,13 @@
             </div>
             <!-- TODO list of competencies -->
             <?
-            //------------------------------------
-            // if (isset($_POST['comp_arr'])) {
-            //     $comp_arr = $_POST['comp_arr'];
-
-            //     foreach ($comp_arr as $comp) {
-            //         echo $comp;
-            //     }
-            // }
-            //------------------------------------
-            $temp_title = ["Deciding", "Problem Solving", "Innovating", "Providing Support", "Competency"];
-            $temp_definition = ["Making decisions based on (in)complete information and initiating the necessary steps to implement the Decision.", "Responding to and controlling unexpected situations by evaluationg possible solutions based on experience and knowledge...", "Offering innovative and original ideas that do not stem from existing...", "Supporting others by accepting a formal role as mentor, by acting...", "Definition"];
-            for ($i = 0; $i < 5; $i++) {
+            // $temp_definition = ["Making decisions based on (in)complete information and initiating the necessary steps to implement the Decision.", "Responding to and controlling unexpected situations by evaluationg possible solutions based on experience and knowledge...", "Offering innovative and original ideas that do not stem from existing...", "Supporting others by accepting a formal role as mentor, by acting...", "Definition"];
+            $temp_title = $questionsClass->getCompetencyForQuestionnaire();
+            $temp_definition = array();
+            for ($i = 0; $i < count($temp_title); $i++){
+                $temp_definition[$i] = $questionsClass->getEnDespByCompetency($temp_title[$i]);
+            }
+            for ($i = 0; $i < count($temp_title); $i++) {
                 echo
                 "<div style='width: 100%; display: flex; justify-content: space-between;'>
                     <div class='questionnaire_importanceofcompetency_component' style=' width:80%; display: inline-block; vertical-align: middle; border: 1px solid black;'>" .
@@ -172,11 +167,11 @@
                         </tr>
                     </thead>
                     <?
-                    $temp_arr = ["Monitors the progress in the development of employees", "Accurately evaluates the need for specific resources", "Listens and gathers input and feedback from others to come to the best solution", "Understands and relates financial information and communicates accordingly", "Ensure effective utilisation of all organisational resources (people, logistics and budget)"];
-                    for ($i = 0; $i < 5; $i++) {
+                    $result_arr = $questionsClass->getQuestionsForQuestionnaire();
+                    for ($i = 0; $i < count($result_arr); $i++) {
                         echo
                         "<tr style='font-size: 14px;'>
-                            <td style='border: 1px solid black; padding-left: 5px;'>$temp_arr[$i]</td>
+                            <td style='border: 1px solid black; padding-left: 5px;'>$result_arr[$i]</td>
                             <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='1'></td>
                             <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='2'></td>
                             <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='3'></td>

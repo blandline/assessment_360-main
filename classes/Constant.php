@@ -279,7 +279,10 @@ $SESSION_PAGE_CW_LOG = "casualWorkerLog";
 $SESSION_PAGE_ASSESS_360 = "assess360";
 
 //----------------------------------NEW-----------------------------------
-$SESSION_PAGE_LIST_OF_RATERS = "listofraters";
+$SESSION_PAGE_LIST_OF_RATERS_RATERFORM = "raterform";
+$SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER = "datacenter";
+$SESSION_PAGE_COMPETENCY_SELECTION = "selection";
+$SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY = "focuscompetency";
 $SESSION_PAGE_QUESTIONNAIRE = "questionnaire";
 //------------------------------------------------------------------------
 

@@ -17,7 +17,7 @@ $focusID = 1;
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
-$QuestionsClass = new QuestionsClass($login);
+$questionsClass = new QuestionsClass($login);
 
 if ($login->isLoggedIn()) {
   if ($login->isAdmin()) {
@@ -415,11 +415,11 @@ if ($login->isLoggedIn()) {
 <?
   //------------------------------------NEW----------------------------------------
   if (isset($_GET["a"]) && $_GET["a"] == "listofraters") {
-    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_LIST_OF_RATERS) {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_LIST_OF_RATERS_RATERFORM) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
     }
 
-    $_SESSION[$session_page] = $SESSION_PAGE_LIST_OF_RATERS;
+    $_SESSION[$session_page] = $SESSION_PAGE_LIST_OF_RATERS_RATERFORM;
 
     include("../views/member/listofratersView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "assess360") {
@@ -430,6 +430,30 @@ if ($login->isLoggedIn()) {
     $_SESSION[$session_page] = $SESSION_PAGE_ASSESS_360;
 
     include("../views/member/assess360View.php");
+  } elseif (isset($_GET["a"]) && $_GET["a"] == "datacenter") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER;
+
+    include("../views/member/datacenterView.php");
+  } elseif (isset($_GET["a"]) && $_GET["a"] == "competency") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY_SELECTION) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_SELECTION;
+  //temporary go to the assess360view
+    include("../views/member/assess360View.php");
+  } elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetency") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY;
+    
+    include("../views/member/focuscompetencyView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
@@ -458,15 +482,15 @@ if ($login->isLoggedIn()) {
 <!----------------------------------SARBULAND------------------------------------------------>
 
 <?
-
-    // Get the company names from the AJAX request
-    if(isset($_POST['comp_arr'])){
+  // Get the company names from the AJAX request
+  if(isset($_POST['comp_arr'])){
     $comp_arr = $_POST['comp_arr'];
 
+    $result_arr = $questionsClass->getQuestions($comp_arr);
     // Loop through the company names and call the getquestion function on each one
     $questions = array();
     foreach ($comp_arr as $comp) {
-      $QuestionsClass->getsetQuestions($comp);
+      $questionsClass->getsetQuestions($comp);
       //$questions[] = $competency->getQuestions($companyId,$comp);
     }
     
@@ -474,5 +498,6 @@ if ($login->isLoggedIn()) {
     // echo json_encode($questions);
     echo json_encode($questions);
   }
+  //-------------------------------------------------------------------------------
 
 ?>
