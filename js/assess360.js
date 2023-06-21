@@ -184,7 +184,7 @@ var Competency = function () {
             tmp.push("");
             for (var j = 0; j < frameworkTableColCount - 3; j++) {
                 //----------------------------- EDIT ---------------------------
-                if (j == 0 /*|| j == 1*/) {
+                if (j == 0) {
                     if (editRowID == i) {
                         var value = "";
                         if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
@@ -276,17 +276,17 @@ var Competency = function () {
                 }
             }
             var button = "";
-            // if (editRowID >= 0) {
-            //     button =
-            //         '<button type="button" class="btn btn-success btn-sm addButton competency-add-btn">' +
-            //         lang["competency_framework_save"] +
-            //         "</button>";
-            // } else {
-            //     button =
-            //         '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' +
-            //         lang["competency_framework_add"] +
-            //         "</button>";
-            // }
+            if (editRowID >= 0) {
+                button =
+                    '<button type="button" class="btn btn-success btn-sm addButton competency-add-btn">' +
+                    lang["competency_framework_save"] +
+                    "</button>";
+            } else {
+                button =
+                    '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' +
+                    lang["competency_framework_add"] +
+                    "</button>";
+            }
             tmp.push(button);
             tmp.push(-1);
             data.push(tmp);
