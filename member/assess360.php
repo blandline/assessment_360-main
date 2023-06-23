@@ -448,16 +448,20 @@ if ($login->isLoggedIn()) {
 
     include("../views/member/assess360View.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "datacenter") {
-    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER) {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER) {      
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
     }
 
+
     $_SESSION[$session_page] = $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER;
+    
 
     include("../views/member/datacenterView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "competency") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY_SELECTION) {
+     
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+      
     }
 
     $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_SELECTION;
@@ -486,6 +490,8 @@ if ($login->isLoggedIn()) {
   $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
   header('Location: ../login');
  }
+
+ 
 }
 
 
