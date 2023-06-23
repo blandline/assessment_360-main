@@ -124,15 +124,15 @@ if ($login->isLoggedIn()) {
         if (isset($obj[$i])) {
           $obj2 = $obj[$i];
           if ($obj2 && count($obj2) > 0) {
-            if ($i == 0) {
-              $name = $obj2[0];
-            } else {
+            // if ($i == 0) {
+            //   $name = $obj2[0];
+            // } else {
               for ($j = 0; $j < count($obj2); $j++) {
                 if ($value != "") {
                   $value .= ",";
                 }
                 $value .= $obj2[$j];
-              }
+              //}
             }
           }
         }
@@ -181,8 +181,8 @@ if ($login->isLoggedIn()) {
       $name = $row["name"];
 
       $tmp = [];
-      $tmp[0] = [$name];
-      $tmp[9] = [$id];
+    
+      $tmp[8] = [$id];
 
       if (isset($frameworkArray[$id])) {
         $tmpArray = explode(",", $frameworkArray[$id]);
@@ -190,7 +190,7 @@ if ($login->isLoggedIn()) {
           $competencyId = $tmpArray[$i];
           if (isset($competencyArray[$competencyId])) {
             $clusterId = $competencyArray[$competencyId];
-            $order = array_search($clusterId, $clusterArray) + 1;
+            $order = array_search($clusterId, $clusterArray);
             if (!isset($tmp[$order])) {
               $tmp[$order] = [];
             }
