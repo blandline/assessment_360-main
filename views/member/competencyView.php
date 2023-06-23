@@ -89,14 +89,19 @@
                         </thead>
                         <tbody>
                           <!-- ------------------SHOW THE FOCUS SELECTION TABLE HERE------------- -->
-                          <tr>
+                            <?
+                            for($i=0; $i<2; $i++){
+                            echo '
+                            <tr>
                             <td>temp</td>
                             <td>temp</td>
                             <td>temp</td>
                             <td>temp</td>
                             <td>temp</td>
                             <td><button class="btn btn-primary btn-sm goto-competency-selection">Competency Selection</button></td>
-                          </tr>
+                            </tr>';
+                            }
+                            ?>
                           <!-- ------------------------------------------------------------------ -->
                         </tbody>
                       </table>
@@ -107,7 +112,7 @@
                       <thead class="text-danger">
                         <tr>
                           <th style="width:0px"></th>
-                          <th><?= $language["competency_framework_position"]; ?></th>
+                      
                           <?
                           $result = $competency->getCompetencyCluster();
                           while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {

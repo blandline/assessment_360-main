@@ -183,55 +183,31 @@ var Competency = function () {
             var tmp = [];
             tmp.push("");
             for (var j = 0; j < frameworkTableColCount - 3; j++) {
-                //----------------------------- EDIT ---------------------------
-                if (j == 0) {
-                    if (editRowID == i) {
-                        var value = "";
-                        if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
-                            value = frameworkTableObj[i][j][0];
-                        }
-                        if (j == 0) {
-                            var textfield =
-                                '<div class="nowrap"><input type="text" class="positionname" value="' +
-                                value +
-                                '"></div>';
-                            tmp.push(textfield);                     
-                //---------------------------------------------------------------------
-                        }
-                    } else {
-                        if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
-                            tmp.push(frameworkTableObj[i][j][0]);
-                        } else {
-                            tmp.push("");
-                        }
-                    }
-                } else {
-                    if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
-                        var value = "";
-                        for (var k = 0; k < frameworkTableObj[i][j].length; k++) {
-                            if (competencyObj[frameworkTableObj[i][j][k]]) {
-                                var competency = competencyObj[frameworkTableObj[i][j][k]];
-                                var keyName = currentLang + "_name";
-                                var name = decodeURIComponent(competency[keyName]);
-                                if (value != "") {
-                                    // value += "<br>";
-                                }
-                                if (editRowID == i) {
-                                    value +=
-                                        "<div class='nowrap'>&bull;&nbsp;" +
-                                        name +
-                                        "<button type='button' class='btn btn-primary btn-link btn-sm deleteButton' id='" +
-                                        frameworkTableObj[i][j][k] +
-                                        "'><i class='material-icons'>close</i></button></div>";
-                                } else {
-                                    value += "<div class='nowrap'>&bull;&nbsp;" + name + "</div>";
-                                }
+                if (frameworkTableObj[i][j] && frameworkTableObj[i][j].length > 0) {
+                    var value = "";
+                    for (var k = 0; k < frameworkTableObj[i][j].length; k++) {
+                        if (competencyObj[frameworkTableObj[i][j][k]]) {
+                            var competency = competencyObj[frameworkTableObj[i][j][k]];
+                            var keyName = currentLang + "_name";
+                            var name = decodeURIComponent(competency[keyName]);
+                            if (value != "") {
+                                // value += "<br>";
+                            }
+                            if (editRowID == i) {
+                                value +=
+                                    "<div class='nowrap'>&bull;&nbsp;" +
+                                    name +
+                                    "<button type='button' class='btn btn-primary btn-link btn-sm deleteButton' id='" +
+                                    frameworkTableObj[i][j][k] +
+                                    "'><i class='material-icons'>close</i></button></div>";
+                            } else {
+                                value += "<div class='nowrap'>&bull;&nbsp;" + name + "</div>";
                             }
                         }
-                        tmp.push(value);
-                    } else {
-                        tmp.push("");
                     }
+                    tmp.push(value);
+                } else {
+                    tmp.push("");
                 }
             }
 
@@ -268,12 +244,14 @@ var Competency = function () {
         if (editRowID < 0) {
             var tmp = [];
             for (var i = 0; i < frameworkTableColCount - 2; i++) {
-                if (i == 1 && editRowID >= 0) {
-                    var textfield = '<input type="text" class="positionName">';
-                    tmp.push(textfield);
-                } else {
-                    tmp.push("");
-                }
+                //---------------------------------- EDIT ---------------------------------
+                // if (i == 1 && editRowID >= 0) {
+                //     var textfield = '<input type="text" class="positionName">';
+                //     tmp.push(textfield);
+                // } else {
+                     tmp.push("");
+                // }
+                //-------------------------------------------------------------------------
             }
             var button = "";
             if (editRowID >= 0) {
@@ -534,43 +512,39 @@ var Competency = function () {
             }
         });
 
-        $("body").on(
-            "click",
-            ".competency-table-competency .addButton",
-            function () {
-                if (editRowID >= 0) {
-                    $(this)
-                        .parent()
-                        .parent()
-                        .find("td")
-                        .each(function () {
-                            if ($(this).hasClass("hideRowId")) {
-                                var id = $(this).html();
-                                if (!frameworkTableObj[editRowID]) {
-                                    frameworkTableObj[editRowID] = [];
-                                }
-                                var i = 0;
-                                $(".competency-frm-table tr:first th").each(function () {
-                                    var keyName = currentLang + "_name";
-                                    var name = decodeURIComponent(
-                                        competencyObj[selectedGroupID][keyName]
-                                    );
-                                    if ($(this).html() == name) {
-                                        if (!frameworkTableObj[editRowID][i]) {
-                                            frameworkTableObj[editRowID][i] = [];
-                                        }
-                                        if (!frameworkTableObj[editRowID][i].includes(id)) {
-                                            frameworkTableObj[editRowID][i].push(id);
-                                        }
-                                    }
-                                    i++;
-                                });
+        $("body").on("click",".competency-table-competency .addButton",function () {
+            if (editRowID >= 0) {
+                $(this)
+                    .parent()
+                    .parent()
+                    .find("td")
+                    .each(function () {
+                        if ($(this).hasClass("hideRowId")) {
+                            var id = $(this).html();
+                            if (!frameworkTableObj[editRowID]) {
+                                frameworkTableObj[editRowID] = [];
                             }
-                        });
-                    updateFrameworkTable();
-                }
+                            var i = 0;
+                            $(".competency-frm-table tr:first th").each(function () {
+                                var keyName = currentLang + "_name";
+                                var name = decodeURIComponent(
+                                    competencyObj[selectedGroupID][keyName]
+                                );
+                                if ($(this).html() == name) {
+                                    if (!frameworkTableObj[editRowID][i]) {
+                                        frameworkTableObj[editRowID][i] = [];
+                                    }
+                                    if (!frameworkTableObj[editRowID][i].includes(id)) {
+                                        frameworkTableObj[editRowID][i].push(id);
+                                    }
+                                }
+                                i++;
+                            });
+                        }
+                    });
+                updateFrameworkTable();
             }
-        );
+        });
 
         $("body").on("change paste keyup", ".positionName", function () {
             if (editRowID >= 0) {
