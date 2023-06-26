@@ -108,7 +108,8 @@
                     </form>
                   </section>
                   <section id="competency-selection-page" class="competency-page">
-                    <table class="competency-frm-table table table-hover" style="width:100%;">
+
+                    <table id="competency-selection-table" class="competency-frm-table table table-hover" style="width:100% !important;">
                       <thead class="text-danger">
                         <tr>
                           <th style="width:0px"></th>
