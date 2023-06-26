@@ -84,8 +84,10 @@
             </div>
             <!-- TODO list of competencies -->
             <?
-            // $temp_definition = ["Making decisions based on (in)complete information and initiating the necessary steps to implement the Decision.", "Responding to and controlling unexpected situations by evaluationg possible solutions based on experience and knowledge...", "Offering innovative and original ideas that do not stem from existing...", "Supporting others by accepting a formal role as mentor, by acting...", "Definition"];
-            $temp_title = $questionsClass->getCompetencyForQuestionnaire();
+            //$focus_id = $listofratersClass->getFocusId($companyId);
+            $focus_id = 0;
+            $temp_title = $questionsClass->getCompetencyByFocusID($focus_id);
+            // $temp_title = $questionsClass->getCompetencyForQuestionnaire();
             $temp_definition = array();
             for ($i = 0; $i < count($temp_title); $i++){
                 $temp_definition[$i] = $questionsClass->getEnDespByCompetency($temp_title[$i]);

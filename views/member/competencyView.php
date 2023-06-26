@@ -109,7 +109,7 @@
                   </section>
                   <section id="competency-selection-page" class="competency-page">
 
-                    <table id="competency-selection-table" class="competency-frm-table table table-hover" style="width:100% !important;">
+                    <table class="competency-frm-table table table-hover" style="width:100% !important;">
                       <thead class="text-danger">
                         <tr>
                           <th style="width:0px"></th>
