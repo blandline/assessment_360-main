@@ -1,6 +1,8 @@
 <? include_once '../config/config.php'; ?>
 <? include_once '../member/header.php'; ?>
 
+
+
 <body>
   <div class="wrapper">
     <? include_once '../member/leftmenu.php'; ?>
@@ -44,12 +46,17 @@
       <div class="content search-competency-content">
         <div class="container-fluid">
           <div class="row">
+          
             <div class="competency-frm-table-div">
-              <div class="card">
+
+           
+            <?$listofratersClass->printTabletwo($companyId); ?>
+              <!-- <div class="card">
                 <div class="div-datatable-competency card-body table-responsive">
                   <div class="listofraters-form-and-button-container">
                     <form method="post" id="rateform" action="assess360">
                       <table id="raterlisttable" class="competency-frm-table table table-hover" style="width:100%;">
+                      
                         <thead class="text-danger">
                           <tr>
                             <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_focusname"]; ?></th>
@@ -62,6 +69,7 @@
                             <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_email"]; ?></th>
                             <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_actions"]; ?></th>
                             <th colspan="2" style="text-align: center;"><?= $language["listofraters_data_center_status"]?></th>
+                            <
                           </tr>
                           <tr>
                             <th style="text-align: center;"><?= $language["listofraters_framework_firstname"]; ?></th>
@@ -71,34 +79,42 @@
                             <th style="text-align: center;"><?= $language["listofraters_data_center_status_start"]?></th>
                             <th style="text-align: center;"><?= $language["listofraters_data_center_status_end"]?></th>
                           </tr>
+                         
                         </thead>
                         <tbody>
+                        
+                           
                             <!-- ------------ MAKE NEW TABLE HERE ----------------------- -->
-                            <tr>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                                <td>temp</td>
-                            </tr>
+                            <!-- <tr>
+                                                 
+                                <td>Shadman</td>
+                                <td>Yakub</td>
+                                <td>13  - 08</td>
+                                <td>-2023</td>
+                                <td>18  - 08</td>
+                                <td>-2023</td>
+                                <td>Shadman</td>
+                                <td>Yakub</td>
+                                <td>Focus</td>
+                                <td>Male</td>
+                                <td>Manager</td>
+                                <td>shadmanyakub747@gmail.com</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                                <td>No</td> 
+                                
+                            </tr> -->
                             <!-------------------------------------------------------------- -->
-                        </tbody>
+                        </tbody>                      
+                        
                       </table>
-                  </div>
+                  </div> 
                 </div>
               </div>
             </div>
         </div>
+
+       
     </div>
     <script src="../assets/js/core/jquery.min.js"></script>
     <script src="../assets/js/core/popper.min.js"></script>

@@ -377,6 +377,111 @@ class listofratersClass{
     }
 
 
+    // function printTable($companyId){
+
+    //     require '../config/dbconnect.php';
+
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+      
+    
+    //     // Select data from the table
+    //     $query = "SELECT * FROM " . $dbName . ".rater_list";
+    //     $result = $conn->query($query);
+    //     // Check if there are any rows returned
+    //     if ($result->num_rows > 0) {
+    //         // Output data of each row in a table format
+    //         // echo "<table border='1'>";            
+    //         // echo "<tr><th>First Name</th><th>Last Name</th><th>Role</th><th>Gender</th><th>Position</th><th>Email</th></tr>";
+    //         echo "<table style='border-collapse: collapse;'>";
+    //     echo "<tr style='background-color: white; color: red;'><th style='padding: 10px;'>First Name</th><th style='padding: 10px;'>Last Name</th><th style='padding: 10px;'>Role</th><th style='padding: 10px;'>Gender</th><th style='padding: 10px;'>Position</th><th style='padding: 10px;'>Email</th></tr>";
+    //         while ($row = $result->fetch_assoc()) {
+    //         //     echo "<tr><td>" . $row["rater_first_name"] . "</td><td>" . $row["rater_last_name"] ."</td><td>" . $row["roles"] . "</td><td>" . $row["gender"] . "</td><td>" . $row["position"] . "</td><td>" . $row["email"] . "</td></tr>";
+    //         // }
+    //         // echo "</table>";
+    //         echo "<tr style='background-color: #fff; color: #333;'><td style='padding: 10px;'>" . $row["rater_first_name"] . "</td><td style='padding: 10px;'>" . $row["rater_last_name"] ."</td><td style='padding: 10px;'>" . $row["roles"] . "</td><td style='padding: 10px;'>" . $row["gender"] . "</td><td style='padding: 10px;'>" . $row["position"] . "</td><td style='padding: 10px;'>" . $row["email"] . "</td></tr>";
+    //     }
+    //     echo "</table>";
+    //     } else {
+    //         echo "No data found in the table.";
+    //     }
+    
+    //     // Close the database connection
+    //     $conn->close();
+        
+    // }
+
+//     public function printTabletwo($companyId)
+// {
+//     require '../config/dbconnect.php';
+//     if ($this->memberClass->isAdmin()) {
+//         $dbName = $this->memberClass->getCompanyDBById($companyId);
+//     } else {
+//         $dbName = $this->memberClass->getCompanyDB();
+//     }
+
+//     $query = "SELECT *
+//             FROM ". $dbName. ".focus f
+//             JOIN ". $dbName. ".rater_list rl ON f.focus_id = rl.focus_id";
+//     $result = $conn->query($query);
+//     if ($result->num_rows > 0) {
+//         echo "<table style='border-collapse: collapse;'>";
+//        echo "<tr style='background-color: white; color: #f44336; font-size: 300;'><th style='padding: 10px; font-size: 15; font-weight: 4;'>Focus first Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Focus Last Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Focus ID</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Start Date</th><th style='padding: 10px; font-size: 15;font-weight: 4;'>End Date</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Rater First Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>RaterLast Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Role</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Gender</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Position</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Email</th></tr>";
+//         while ($row = $result->fetch_assoc()) {
+//             echo "<tr style='background-color: #fff; color: #333; font-size: 15; font-weight:4;'><td style='padding: 10px;'>" . $row["focus_first_name"] . "</td><td style='padding: 10px;'>" . $row["focus_last_name"] ."</td><td style='padding: 10px;'>" . $row["focus_id"]. "</td><td style='padding: 10px;'>" . $row["start_date"] . "</td><td style='padding: 10px;'>" . $row["end_date"]."</td><td style='padding: 10px;'>" . $row["rater_first_name"] ."</td><td style='padding: 10px;'>" . $row["rater_last_name"] ."</td><td style='padding: 10px;'>" . $row["roles"] . "</td><td style='padding: 10px;'>" . $row["gender"] . "</td><td style='padding: 10px;'>" . $row["position"] . "</td><td style='padding: 10px;'>" . $row["email"] . "</td></tr>";
+//         }
+//         echo "</table>";
+//     } else {
+//         echo "No data found in the table.";
+//     }
+
+//     // Close the database connection
+//     $conn->close();
+// }
+public function printTabletwo($companyId)
+{
+    require '../config/dbconnect.php';
+    if ($this->memberClass->isAdmin()) {
+        $dbName = $this->memberClass->getCompanyDBById($companyId);
+    } else {
+        $dbName = $this->memberClass->getCompanyDB();
+    }
+
+    $query = "SELECT *
+              FROM ". $dbName. ".focus f
+              JOIN ". $dbName. ".rater_list rl ON f.focus_id = rl.focus_id
+              ORDER BY f.focus_id";
+    $result = $conn->query($query);
+    if ($result->num_rows > 0) {
+        $currentFocusId = null;
+        echo "<table style='border-collapse: collapse;'>";
+        while ($row = $result->fetch_assoc()) {
+            if ($currentFocusId !== $row['focus_id']) {
+                // Start new table for different focus_id value
+                if ($currentFocusId !== null) {
+                    echo "</table><br><br>";
+                }
+                $currentFocusId = $row['focus_id'];
+                echo "<h3> Focus ID: $currentFocusId</h3>";
+                
+                echo "<table style='border-collapse: collapse;'>";
+                echo "<tr style='background-color: white; color: #f44336;'><th style='padding: 10px;'>Focus first Name</th><th style='padding: 10px;'>Focus Last Name</th><th style='padding: 10px;'>Start Date</th><th style='padding: 10px;'>End Date</th><th style='padding: 10px;'>Rater First Name</th><th style='padding: 10px;'>RaterLast Name</th><th style='padding: 10px;'>Role</th><th style='padding: 10px;'>Gender</th><th style='padding: 10px;'>Position</th><th style='padding: 10px;'>Email</th></tr>";
+            }
+            echo "<tr style='background-color: #fff; color: #333;'><td style='padding: 10px;'>" . $row["focus_first_name"] . "</td><td style='padding: 10px;'>" . $row["focus_last_name"] ."</td><td style='padding: 10px;'>" . $row["start_date"] . "</td><td style='padding: 10px;'>" . $row["end_date"]."</td><td style='padding: 10px;'>" . $row["rater_first_name"] ."</td><td style='padding: 10px;'>" . $row["rater_last_name"] ."</td><td style='padding: 10px;'>" . $row["roles"] . "</td><td style='padding: 10px;'>" . $row["gender"] . "</td><td style='padding: 10px;'>" . $row["position"] . "</td><td style='padding: 10px;'>" . $row["email"] . "</td></tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "No data found in the table.";
+    }
+
+    // Close the database connection
+    $conn->close();
+}
+
+
 
 
 
