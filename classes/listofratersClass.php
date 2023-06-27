@@ -608,13 +608,13 @@ class listofratersClass
         echo '<table id="raterlisttable" class="table table-hover" style="width:100%;">
         <thead class="text-danger">
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Position</th>
-            <th>Launch Date</th>
-            <th>End Date</th>
-            <th>Action</th>
-            <th style="display:none">Focus Id</th>
+          <th><?= $language["competency_focus_selection_firstname"]?></th>
+          <th><?= $language["competency_focus_selection_lastname"]?></th>
+          <th><?= $language["competency_focus_selection_position"]?></th>
+          <th><?= $language["competency_focus_selection_launchdate"]?></th>
+          <th><?= $language["competency_focus_selection_enddate"]?></th>
+          <th><?= $language["competency_focus_selection_action"]?></th>
+          <th style="display:none"><?= $language["competency_focus_selection_focusid"]?></th>
           </tr>
         </thead>
         <tbody>';
