@@ -114,12 +114,6 @@ class QuestionsClass
         return $en_desp;
     }
 
-
-
-
-
-
-
     public function getCompetencyForCompetencydb()
     {
         require '../config/dbconnect.php';
@@ -159,5 +153,26 @@ class QuestionsClass
 
         // Close database connection
         $conn->close();
+    }
+
+    public function getCompetencyByFocusID($focus_id){
+        require '../config/dbconnect.php';
+        $query = "SELECT DISTINCT competency 
+                    FROM competency_questions
+                    WHERE competency_questions.focus_id = ?";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $focus_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $competencies = array();
+        while ($row = $result->fetch_assoc()) {
+            $competencies[] = $row['competency'];
+        }
+
+        $stmt->close();
+        $conn->close();
+        return $competencies;
     }
 }

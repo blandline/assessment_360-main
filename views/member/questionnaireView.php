@@ -84,8 +84,10 @@
             </div>
             <!-- TODO list of competencies -->
             <?
-            // $temp_definition = ["Making decisions based on (in)complete information and initiating the necessary steps to implement the Decision.", "Responding to and controlling unexpected situations by evaluationg possible solutions based on experience and knowledge...", "Offering innovative and original ideas that do not stem from existing...", "Supporting others by accepting a formal role as mentor, by acting...", "Definition"];
-            $temp_title = $questionsClass->getCompetencyForQuestionnaire();
+            //$focus_id = $listofratersClass->getFocusId($companyId);
+            $focus_id = 0;
+            $temp_title = $questionsClass->getCompetencyByFocusID($focus_id);
+            // $temp_title = $questionsClass->getCompetencyForQuestionnaire();
             $temp_definition = array();
             for ($i = 0; $i < count($temp_title); $i++){
                 $temp_definition[$i] = $questionsClass->getEnDespByCompetency($temp_title[$i]);
@@ -172,6 +174,12 @@
                         echo
                         "<tr style='font-size: 14px;'>
                             <td style='border: 1px solid black; padding-left: 5px;'>$result_arr[$i]</td>
+                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='1'></td>
+                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='2'></td>
+                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='3'></td>
+                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='4'></td>
+                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='5'></td>
+                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;'><input type='radio' name='competencystatements[{$i}]' value='X'></td>
                         </tr>";
                     }
                     ?>
