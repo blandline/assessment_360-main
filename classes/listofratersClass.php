@@ -456,28 +456,28 @@ class listofratersClass
               FROM " . $dbName . ".focus f
               JOIN " . $dbName . ".rater_list rl ON f.focus_id = rl.focus_id
               ORDER BY f.focus_id";
-        $result = $conn->query($query);
-        if ($result->num_rows > 0) {
-            $currentFocusId = null;
-            echo "<table style='border-collapse: collapse;'>";
-            while ($row = $result->fetch_assoc()) {
-                if ($currentFocusId !== $row['focus_id']) {
-                    // Start new table for different focus_id value
-                    if ($currentFocusId !== null) {
-                        echo "</table><br><br>";
-                    }
-                    $currentFocusId = $row['focus_id'];
-                    echo "<h3> Focus ID: $currentFocusId</h3>";
-
-                    echo "<table style='border-collapse: collapse;'>";
-                    echo "<tr style='background-color: white; color: #f44336;'><th style='padding: 10px;'>Focus first Name</th><th style='padding: 10px;'>Focus Last Name</th><th style='padding: 10px;'>Start Date</th><th style='padding: 10px;'>End Date</th><th style='padding: 10px;'>Rater First Name</th><th style='padding: 10px;'>RaterLast Name</th><th style='padding: 10px;'>Role</th><th style='padding: 10px;'>Gender</th><th style='padding: 10px;'>Position</th><th style='padding: 10px;'>Email</th></tr>";
+    $result = $conn->query($query);
+    if ($result->num_rows > 0) {
+        $currentFocusId = null;
+        echo "<table style='border-collapse: collapse;'>";
+        while ($row = $result->fetch_assoc()) {
+            if ($currentFocusId !== $row['focus_id']) {
+                // Start new table for different focus_id value
+                if ($currentFocusId !== null) {
+                    echo "</table><br><br>";
                 }
-                echo "<tr style='background-color: #fff; color: #333;'><td style='padding: 10px;'>" . $row["focus_first_name"] . "</td><td style='padding: 10px;'>" . $row["focus_last_name"] . "</td><td style='padding: 10px;'>" . $row["start_date"] . "</td><td style='padding: 10px;'>" . $row["end_date"] . "</td><td style='padding: 10px;'>" . $row["rater_first_name"] . "</td><td style='padding: 10px;'>" . $row["rater_last_name"] . "</td><td style='padding: 10px;'>" . $row["roles"] . "</td><td style='padding: 10px;'>" . $row["gender"] . "</td><td style='padding: 10px;'>" . $row["position"] . "</td><td style='padding: 10px;'>" . $row["email"] . "</td></tr>";
+                $currentFocusId = $row['focus_id'];
+                //echo "<h3> Focus ID: $currentFocusId</h3>";
+                
+                echo "<table style='border-collapse: collapse;'>";
+                echo "<tr style='background-color: white; color: #f44336;'><th style='padding: 10px;'>Focus first Name</th><th style='padding: 10px;'>Focus Last Name</th><th style='padding: 10px;'>Start Date</th><th style='padding: 10px;'>End Date</th><th style='padding: 10px;'>Rater First Name</th><th style='padding: 10px;'>RaterLast Name</th><th style='padding: 10px;'>Role</th><th style='padding: 10px;'>Gender</th><th style='padding: 10px;'>Position</th><th style='padding: 10px;'>Email</th></tr>";
             }
-            echo "</table>";
-        } else {
-            echo "No data found in the table.";
+            echo "<tr style='background-color: #fff; color: #333;'><td style='padding: 10px;'>" . $row["focus_first_name"] . "</td><td style='padding: 10px;'>" . $row["focus_last_name"] ."</td><td style='padding: 10px;'>" . $row["start_date"] . "</td><td style='padding: 10px;'>" . $row["end_date"]."</td><td style='padding: 10px;'>" . $row["rater_first_name"] ."</td><td style='padding: 10px;'>" . $row["rater_last_name"] ."</td><td style='padding: 10px;'>" . $row["roles"] . "</td><td style='padding: 10px;'>" . $row["gender"] . "</td><td style='padding: 10px;'>" . $row["position"] . "</td><td style='padding: 10px;'>" . $row["email"] . "</td></tr>";
         }
+        echo "</table>";
+    } else {
+        echo "No data found in the table.";
+    }
 
         // Close the database connection
         $conn->close();
