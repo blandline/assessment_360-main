@@ -465,7 +465,7 @@ public function printTabletwo($companyId)
                     echo "</table><br><br>";
                 }
                 $currentFocusId = $row['focus_id'];
-                echo "<h3> Focus ID: $currentFocusId</h3>";
+                //echo "<h3> Focus ID: $currentFocusId</h3>";
                 
                 echo "<table style='border-collapse: collapse;'>";
                 echo "<tr style='background-color: white; color: #f44336;'><th style='padding: 10px;'>Focus first Name</th><th style='padding: 10px;'>Focus Last Name</th><th style='padding: 10px;'>Start Date</th><th style='padding: 10px;'>End Date</th><th style='padding: 10px;'>Rater First Name</th><th style='padding: 10px;'>RaterLast Name</th><th style='padding: 10px;'>Role</th><th style='padding: 10px;'>Gender</th><th style='padding: 10px;'>Position</th><th style='padding: 10px;'>Email</th></tr>";
