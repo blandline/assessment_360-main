@@ -1,5 +1,6 @@
-<? 
-class listofratersClass{
+<?
+class listofratersClass
+{
 
     private $memberClass;
 
@@ -10,7 +11,7 @@ class listofratersClass{
 
 
 
-   /* /// CODE TO GET INFO FROM FOCUS TABLE IN THE DATABASE*/
+    /* /// CODE TO GET INFO FROM FOCUS TABLE IN THE DATABASE*/
 
     // public function getFocus_first_name()
     // {
@@ -24,7 +25,7 @@ class listofratersClass{
     //     return $result;
     // }
 
-    
+
     // public function getFocus_last_name()
     // {
     //     require '../config/dbconnect.php';
@@ -37,7 +38,7 @@ class listofratersClass{
     //     return $result;
     // }
 
-    
+
 
     // public function getFocus_start_date()
     // {
@@ -74,7 +75,7 @@ class listofratersClass{
     //     return $result;
     // }
 
-   
+
 
     // public function getFocus_role()
     // {
@@ -114,7 +115,7 @@ class listofratersClass{
     //     return $result;
     // }
 
-    
+
 
     // /* code to get info for the rater_list table in the <database></database*/ 
 
@@ -192,7 +193,7 @@ class listofratersClass{
 
     /* get all info about focus with and without focus id*/
 
-     public function getFocus_role()
+    public function getFocus_role()
     {
         require '../config/dbconnect.php';
         $query = "SELECT roles FROM focus WHERE roles IS NOT NULL ORDER BY focus_id";
@@ -226,18 +227,18 @@ class listofratersClass{
     // public function getFocus_Id($companyId)
     // {
     //     require '../config/dbconnect.php';
-    
+
     //     if ($this->memberClass->isAdmin()) {
     //         $dbName = $this->memberClass->getCompanyDBById($companyId);
     //     } else {
     //         $dbName = $this->memberClass->getCompanyDB();
     //     }
-    
+
     //     // Prepare and execute the query
     //     $query = "SELECT focus_id FROM $dbName.focus";
     //     $stmt = $conn->prepare($query);
     //     $stmt->execute();
-    
+
     //     // Handle errors that may occur during the query
     //     if ($stmt->error) {
     //         $error = $stmt->error;
@@ -245,15 +246,16 @@ class listofratersClass{
     //         $conn->close();
     //         return ['error' => $error];
     //     }
-    
+
     //     $result = $stmt->get_result();
     //     $stmt->close();
     //     $conn->close();
-    
+
     //     return $result;
     // }
 
-    function getFocusId($companyId) {
+    function getFocusId($companyId)
+    {
         // Connect to the database
         require '../config/dbconnect.php';
 
@@ -262,33 +264,33 @@ class listofratersClass{
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-    
+
         // Execute the SELECT query to retrieve the focus_id value from the focus table
         $query = "SELECT focus_id FROM " . $dbName . ".focus";
         $result = $conn->query($query);
-    
+
         // Check if the query returned any rows
         if ($result->num_rows > 0) {
             // Fetch the first row from the result set
-            for($i=0;$i<$result->num_rows;$i++){
+            for ($i = 0; $i < $result->num_rows; $i++) {
                 $row = $result->fetch_assoc();
             }
-    
+
             // Store the focus_id value in a variable
             $focusId = $row['focus_id'];
         } else {
             // No rows were returned by the query
             $focusId = 0;
         }
-    
+
         // Close the database connection
         $conn->close();
-    
+
         // Return the focus_id value
         return $focusId;
     }
 
-    
+
 
 
     /*get all info about raters with and without id*/
@@ -331,8 +333,8 @@ class listofratersClass{
     }
 
     /* add values into focus table */
-    
-    public function addFocusData($companyId, $FocusfirstName, $FocuslastName, $startDate, $endDate, $roles, $gender, $position,$email)
+
+    public function addFocusData($companyId, $FocusfirstName, $FocuslastName, $startDate, $endDate, $roles, $gender, $position, $email)
     {
         require '../config/dbconnect.php';
 
@@ -353,9 +355,9 @@ class listofratersClass{
     }
 
     /* add values into rater_list table */
-    
-    public function addRaterData($companyId,  $RaterfirstName, $RaterlastName,$focusID,$roles, $gender, $position,$email)
-    
+
+    public function addRaterData($companyId,  $RaterfirstName, $RaterlastName, $focusID, $roles, $gender, $position, $email)
+
     {
         //die("AA".$RaterlastName." , ".$RaterlastName);
 
@@ -368,7 +370,7 @@ class listofratersClass{
         }
 
         $stmt = $conn->prepare("INSERT INTO " . $dbName . ".rater_list (rater_first_name, rater_last_name, focus_id, roles, gender, position, email) VALUES (?, ?,?, ?, ?, ?,?)");
-        $stmt->bind_param("sssssss", $RaterfirstName, $RaterlastName,$focusID,$roles, $gender, $position,$email);
+        $stmt->bind_param("sssssss", $RaterfirstName, $RaterlastName, $focusID, $roles, $gender, $position, $email);
         $stmt->execute();
         $id = $stmt->insert_id;
         $stmt->close();
@@ -386,8 +388,8 @@ class listofratersClass{
     //     } else {
     //         $dbName = $this->memberClass->getCompanyDB();
     //     }
-      
-    
+
+
     //     // Select data from the table
     //     $query = "SELECT * FROM " . $dbName . ".rater_list";
     //     $result = $conn->query($query);
@@ -408,51 +410,51 @@ class listofratersClass{
     //     } else {
     //         echo "No data found in the table.";
     //     }
-    
+
     //     // Close the database connection
     //     $conn->close();
-        
+
     // }
 
-//     public function printTabletwo($companyId)
-// {
-//     require '../config/dbconnect.php';
-//     if ($this->memberClass->isAdmin()) {
-//         $dbName = $this->memberClass->getCompanyDBById($companyId);
-//     } else {
-//         $dbName = $this->memberClass->getCompanyDB();
-//     }
+    //     public function printTabletwo($companyId)
+    // {
+    //     require '../config/dbconnect.php';
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
 
-//     $query = "SELECT *
-//             FROM ". $dbName. ".focus f
-//             JOIN ". $dbName. ".rater_list rl ON f.focus_id = rl.focus_id";
-//     $result = $conn->query($query);
-//     if ($result->num_rows > 0) {
-//         echo "<table style='border-collapse: collapse;'>";
-//        echo "<tr style='background-color: white; color: #f44336; font-size: 300;'><th style='padding: 10px; font-size: 15; font-weight: 4;'>Focus first Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Focus Last Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Focus ID</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Start Date</th><th style='padding: 10px; font-size: 15;font-weight: 4;'>End Date</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Rater First Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>RaterLast Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Role</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Gender</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Position</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Email</th></tr>";
-//         while ($row = $result->fetch_assoc()) {
-//             echo "<tr style='background-color: #fff; color: #333; font-size: 15; font-weight:4;'><td style='padding: 10px;'>" . $row["focus_first_name"] . "</td><td style='padding: 10px;'>" . $row["focus_last_name"] ."</td><td style='padding: 10px;'>" . $row["focus_id"]. "</td><td style='padding: 10px;'>" . $row["start_date"] . "</td><td style='padding: 10px;'>" . $row["end_date"]."</td><td style='padding: 10px;'>" . $row["rater_first_name"] ."</td><td style='padding: 10px;'>" . $row["rater_last_name"] ."</td><td style='padding: 10px;'>" . $row["roles"] . "</td><td style='padding: 10px;'>" . $row["gender"] . "</td><td style='padding: 10px;'>" . $row["position"] . "</td><td style='padding: 10px;'>" . $row["email"] . "</td></tr>";
-//         }
-//         echo "</table>";
-//     } else {
-//         echo "No data found in the table.";
-//     }
+    //     $query = "SELECT *
+    //             FROM ". $dbName. ".focus f
+    //             JOIN ". $dbName. ".rater_list rl ON f.focus_id = rl.focus_id";
+    //     $result = $conn->query($query);
+    //     if ($result->num_rows > 0) {
+    //         echo "<table style='border-collapse: collapse;'>";
+    //        echo "<tr style='background-color: white; color: #f44336; font-size: 300;'><th style='padding: 10px; font-size: 15; font-weight: 4;'>Focus first Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Focus Last Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Focus ID</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Start Date</th><th style='padding: 10px; font-size: 15;font-weight: 4;'>End Date</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Rater First Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>RaterLast Name</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Role</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Gender</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Position</th><th style='padding: 10px; font-size: 15; font-weight: 4;'>Email</th></tr>";
+    //         while ($row = $result->fetch_assoc()) {
+    //             echo "<tr style='background-color: #fff; color: #333; font-size: 15; font-weight:4;'><td style='padding: 10px;'>" . $row["focus_first_name"] . "</td><td style='padding: 10px;'>" . $row["focus_last_name"] ."</td><td style='padding: 10px;'>" . $row["focus_id"]. "</td><td style='padding: 10px;'>" . $row["start_date"] . "</td><td style='padding: 10px;'>" . $row["end_date"]."</td><td style='padding: 10px;'>" . $row["rater_first_name"] ."</td><td style='padding: 10px;'>" . $row["rater_last_name"] ."</td><td style='padding: 10px;'>" . $row["roles"] . "</td><td style='padding: 10px;'>" . $row["gender"] . "</td><td style='padding: 10px;'>" . $row["position"] . "</td><td style='padding: 10px;'>" . $row["email"] . "</td></tr>";
+    //         }
+    //         echo "</table>";
+    //     } else {
+    //         echo "No data found in the table.";
+    //     }
 
-//     // Close the database connection
-//     $conn->close();
-// }
-public function printTabletwo($companyId)
-{
-    require '../config/dbconnect.php';
-    if ($this->memberClass->isAdmin()) {
-        $dbName = $this->memberClass->getCompanyDBById($companyId);
-    } else {
-        $dbName = $this->memberClass->getCompanyDB();
-    }
+    //     // Close the database connection
+    //     $conn->close();
+    // }
+    public function printTabletwo($companyId)
+    {
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
 
-    $query = "SELECT *
-              FROM ". $dbName. ".focus f
-              JOIN ". $dbName. ".rater_list rl ON f.focus_id = rl.focus_id
+        $query = "SELECT *
+              FROM " . $dbName . ".focus f
+              JOIN " . $dbName . ".rater_list rl ON f.focus_id = rl.focus_id
               ORDER BY f.focus_id";
     $result = $conn->query($query);
     if ($result->num_rows > 0) {
@@ -465,7 +467,7 @@ public function printTabletwo($companyId)
                     echo "</table><br><br>";
                 }
                 $currentFocusId = $row['focus_id'];
-                echo "<h3> Focus ID: $currentFocusId</h3>";
+                //echo "<h3> Focus ID: $currentFocusId</h3>";
                 
                 echo "<table style='border-collapse: collapse;'>";
                 echo "<tr style='background-color: white; color: #f44336;'><th style='padding: 10px;'>Focus first Name</th><th style='padding: 10px;'>Focus Last Name</th><th style='padding: 10px;'>Start Date</th><th style='padding: 10px;'>End Date</th><th style='padding: 10px;'>Rater First Name</th><th style='padding: 10px;'>RaterLast Name</th><th style='padding: 10px;'>Role</th><th style='padding: 10px;'>Gender</th><th style='padding: 10px;'>Position</th><th style='padding: 10px;'>Email</th></tr>";
@@ -477,16 +479,16 @@ public function printTabletwo($companyId)
         echo "No data found in the table.";
     }
 
-    // Close the database connection
-    $conn->close();
-}
+        // Close the database connection
+        $conn->close();
+    }
 
 
 
 
 
 
-    
+
 
 
 
@@ -496,7 +498,7 @@ public function printTabletwo($companyId)
 
     /* update focus and rater info */
 
-    
+
     public function updateFocusInfo($companyId,  $FocusfirstName, $FocuslastName, $startDate, $endDate, $roles, $gender, $position, $email)
     {
         require '../config/dbconnect.php';
@@ -512,7 +514,7 @@ public function printTabletwo($companyId)
         $stmt->close();
     }
 
-    public function updateRaterInfo($companyId,  $RaterfirstName, $RaterlastName,$roles, $gender, $position, $email)
+    public function updateRaterInfo($companyId,  $RaterfirstName, $RaterlastName, $roles, $gender, $position, $email)
     {
         require '../config/dbconnect.php';
 
@@ -522,12 +524,12 @@ public function printTabletwo($companyId)
             $dbName = $this->memberClass->getCompanyDB();
         }
         $stmt = $conn->prepare("UPDATE " . $dbName . ".rater_list SET rater_first_name = ?, rater_last_name = ?,roles = ?, gender = ?, position = ?, email = ? WHERE rater_id = ?");
-        $stmt->bind_param("ssssssi", $RaterfirstName, $RaterlastName,$roles, $gender, $position, $email, $_POST["rater_id"]);
+        $stmt->bind_param("ssssssi", $RaterfirstName, $RaterlastName, $roles, $gender, $position, $email, $_POST["rater_id"]);
         $stmt->execute();
         $stmt->close();
     }
 
-   
+
 
 
     /* Delete focus and rater info */
@@ -546,7 +548,6 @@ public function printTabletwo($companyId)
         $stmt->bind_param("i", $_POST["focus_id"]);
         $stmt->execute();
         $stmt->close();
-
     }
 
     public function deleteRaterInfo($companyId)
@@ -563,7 +564,6 @@ public function printTabletwo($companyId)
         $stmt->bind_param("i", $_POST["rater_id"]);
         $stmt->execute();
         $stmt->close();
-       
     }
 
     public function getrater_email()
@@ -576,9 +576,9 @@ public function printTabletwo($companyId)
         $stmt->close();
 
         return $result;
-     }
+    }
 
-      public function getFocus_email()
+    public function getFocus_email()
     {
         require '../config/dbconnect.php';
         $query = "SELECT email FROM focus WHERE email IS NOT NULL ORDER BY focus_id";
@@ -591,9 +591,55 @@ public function printTabletwo($companyId)
     }
 
 
-   
+    public function print_comp_selection_tb()
+    {
+        require '../config/dbconnect.php';
 
-   
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+        // Fetch data from the database
+        $sql = "SELECT * FROM " . $dbName . ".focus";
+        $result = $conn->query($sql);
+
+        // Generate the HTML table
+        echo '<table id="raterlisttable" class="table table-hover" style="width:100%;">
+        <thead class="text-danger">
+          <tr>
+          <th><?= $language["competency_focus_selection_firstname"]?></th>
+          <th><?= $language["competency_focus_selection_lastname"]?></th>
+          <th><?= $language["competency_focus_selection_position"]?></th>
+          <th><?= $language["competency_focus_selection_launchdate"]?></th>
+          <th><?= $language["competency_focus_selection_enddate"]?></th>
+          <th><?= $language["competency_focus_selection_action"]?></th>
+          <th style="display:none"><?= $language["competency_focus_selection_focusid"]?></th>
+          </tr>
+        </thead>
+        <tbody>';
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<tr>
+                <td>' . $row["focus_first_name"] . '</td>
+                <td>' . $row["focus_last_name"] . '</td>
+                <td>' . $row["position"] . '</td>
+                <td>' . $row["start_date"] . '</td>
+                <td>' . $row["end_date"] . '</td>
+                <td><button class="btn btn-primary btn-sm goto-competency-selection" data-id="' . $row["focus_id"] . '">Competency Selection</button></td>
+                <td style="display:none">' . $row["focus_id"] . '</td>
+              </tr>';
+            }
+        } else {
+            echo '<tr><td colspan="7">No data available</td></tr>';
+        }
+
+        echo '</tbody></table>';
+
+        // Close the database connection
+        $conn->close();
+    }
 }
 
     
@@ -602,10 +648,3 @@ public function printTabletwo($companyId)
   
 
 /* code for what happens after activate button is clicked */
-
-
-
-
-
-
-

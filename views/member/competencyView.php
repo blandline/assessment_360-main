@@ -75,7 +75,8 @@
                 <div class="div-datatable-competency card-body table-responsive">
                   <section id="focus-selection-page" class="competency-page competency-page-active">
                     <form method="post" id="rateform" action="assess360">
-                      <table id="raterlisttable" class="table table-hover" style="width:100%;">
+                    <? $listofratersClass->print_comp_selection_tb()?>
+                      <!-- <table id="raterlisttable" class="table table-hover" style="width:100%;">
                         <thead class="text-danger">
                           <tr>
                             <th><?= $language["competency_focus_selection_firstname"]?></th>
@@ -87,24 +88,24 @@
                             <th style="display:none"><?= $language["competency_focus_selection_focusid"]?></th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody> -->
                           <!-- ------------------SHOW THE FOCUS SELECTION TABLE HERE------------- -->
                             <?
-                            for($i=0; $i<2; $i++){
-                            echo '
-                            <tr>
-                            <td>temp</td>
-                            <td>temp</td>
-                            <td>temp</td>
-                            <td>temp</td>
-                            <td>temp</td>
-                            <td><button class="btn btn-primary btn-sm goto-competency-selection">Competency Selection</button></td>
-                            </tr>';
-                            }
+                            // for($i=0; $i<2; $i++){
+                            // echo '
+                            // <tr>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td><button class="btn btn-primary btn-sm goto-competency-selection">Competency Selection</button></td>
+                            // </tr>';
+                            // }
                             ?>
                           <!-- ------------------------------------------------------------------ -->
-                        </tbody>
-                      </table>
+                        <!-- </tbody>
+                      </table>  -->
                     </form>
                   </section>
                   <section id="competency-selection-page" class="competency-page">
@@ -240,6 +241,7 @@
   <script>
     var competencyselection = new CompetencySelection();
     var competency = new Competency();
+  
   </script>
 
 </body>
