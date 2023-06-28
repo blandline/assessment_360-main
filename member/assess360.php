@@ -43,7 +43,7 @@ if ($login->isLoggedIn()) {
   }
 
 
-  
+
 
 
 
@@ -52,10 +52,18 @@ if ($login->isLoggedIn()) {
   // if(isset($_POST["a"]) && $_POST["a"] == "DataCenter"){
   //   header("Location: DataCenter.php");
   // }
+
+     
  
 
   if(isset($_POST["a"]) && $_POST["a"] == "activate"){
+    
+   
 
+    
+    
+  
+      
 
     for($i=0;$i<count($_POST["rows"]);$i++){ 
 
@@ -79,42 +87,38 @@ if ($login->isLoggedIn()) {
 
     if($i == 0){
       $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-      $listofratersClass->sendAutomatedEmail($companyId, $i);
+     
       
     }
-    else{
-      $listofratersClass->sendAutomatedEmail($companyId, $i);
-    
+
+      $focusID = $listofratersClass->getFocusId($companyId);
+
+
+
+      //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
+      $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
+
+      //$listofratersClass-> insertFocusIdIntoRaterList($companyId);
+
     }
 
-    $focusID = $listofratersClass->getFocusId($companyId);
-    
 
 
-    //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
-    $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-    
-    //$listofratersClass-> insertFocusIdIntoRaterList($companyId);
-    
-  }
 
- 
-   
-   
-   
-    
-    
+
+
+
     header("Location: welcome.php");
-     // Data Center
-  
+    // Data Center
 
-  
+
+
   }
 
-  
-  
 
- 
+
+
+
 
 
 
@@ -131,11 +135,11 @@ if ($login->isLoggedIn()) {
             // if ($i == 0) {
             //   $name = $obj2[0];
             // } else {
-              for ($j = 0; $j < count($obj2); $j++) {
-                if ($value != "") {
-                  $value .= ",";
-                }
-                $value .= $obj2[$j];
+            for ($j = 0; $j < count($obj2); $j++) {
+              if ($value != "") {
+                $value .= ",";
+              }
+              $value .= $obj2[$j];
               //}
             }
           }
@@ -185,7 +189,7 @@ if ($login->isLoggedIn()) {
       $name = $row["name"];
 
       $tmp = [];
-    
+
       $tmp[8] = [$id];
 
       if (isset($frameworkArray[$id])) {
@@ -452,24 +456,23 @@ if ($login->isLoggedIn()) {
 
     include("../views/member/assess360View.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "datacenter") {
-    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER) {      
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
     }
 
 
     $_SESSION[$session_page] = $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER;
-    
+
 
     include("../views/member/datacenterView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "competency") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY_SELECTION) {
-     
+
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
-      
     }
 
     $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_SELECTION;
-  
+
     include("../views/member/competencyView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetency") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY) {
@@ -477,7 +480,7 @@ if ($login->isLoggedIn()) {
     }
 
     $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY;
-    
+
     include("../views/member/focuscompetencyView.php"); /////// you changed this from focuscompetencyView(serb)
   } elseif (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
@@ -490,12 +493,10 @@ if ($login->isLoggedIn()) {
   }
   //---------------------------------------------------------------------------------
 
- else {
-  $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
-  header('Location: ../login');
- }
-
- 
+  else {
+    $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
+    header('Location: ../login');
+  }
 }
 
 
@@ -509,22 +510,70 @@ if ($login->isLoggedIn()) {
 <!----------------------------------SARBULAND------------------------------------------------>
 
 <?
-  // Get the company names from the AJAX request
-  if(isset($_POST['comp_arr'])){
-    $comp_arr = $_POST['comp_arr'];
+// Get the company names from the AJAX request
+if (isset($_POST['comp_arr'])) {
+  $comp_arr = $_POST['comp_arr'];
 
-    $result_arr = $questionsClass->getQuestions($comp_arr);
-    // Loop through the company names and call the getquestion function on each one
-    $questions = array();
-    foreach ($comp_arr as $comp) {
-      $questionsClass->getsetQuestions($comp);
-      //$questions[] = $competency->getQuestions($companyId,$comp);
-    }
-    
-    // Return the questions as a JSON response
-    // echo json_encode($questions);
-    echo json_encode($questions);
+  $result_arr = $questionsClass->getQuestions($comp_arr);
+  // Loop through the company names and call the getquestion function on each one
+  $questions = array();
+  foreach ($comp_arr as $comp) {
+    $questionsClass->getsetQuestions($comp);
+    //$questions[] = $competency->getQuestions($companyId,$comp);
   }
-  //-------------------------------------------------------------------------------
+
+  // Return the questions as a JSON response
+  // echo json_encode($questions);
+  echo json_encode($questions);
+}
+//-------------------------------------------------------------------------------
 
 ?>
+
+<!-- ----------------------------Questionnaire Competency Statements--------------------------- -->
+<?
+// Get the page number from the query string
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$questions_per_page = isset($_GET['questions_per_page']) ? $_GET['questions_per_page'] : 5;
+$total_questions = isset($_GET['total_questions']) ? $_GET['total_questions'] : 0;
+$result_arr = isset($_GET['result_arr']) ? json_decode($_GET['result_arr']) : array();
+
+// Calculate the starting and ending index of the questions to display
+$start = ($page - 1) * $questions_per_page;
+$end = $start + $questions_per_page - 1;
+
+// Check if there are any competency statements to display on the current page
+if ($start < $total_questions) {
+  // Build the competency statements table HTML
+  $table = '<table style="border: 1px solid black; width: 100%;">
+            <thead style="text-align:center; background-color: #59A5CB; color:white; font-size: 14px;">
+                <tr>
+                    <th style="width:80%">' . $language["questionnaire_questions"] . '</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th style="margin-left:10px;">X</th>
+                </tr>
+            </thead>';
+  $table .= '<tbody>';
+  for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
+    $table .= '<tr style="font-size: 14px;">
+                  <td style="border: 1px solid black; padding-left: 5px;">' . $result_arr[$i] . '</td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="1"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="2"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="3"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="4"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="5"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="X"></td>
+              </tr>';
+  }
+  $table .= '</tbody>';
+  $table .= '</table>';
+
+  // Return the competency statements table HTML
+  echo $table;
+}
+?>
+<!-- ------------------------------------------------------------------------------------------ -->
