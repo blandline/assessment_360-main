@@ -1,7 +1,5 @@
 <?
-
 use Mpdf\Tag\Br;
-
 require("../classes/CheckSession.php");
 require("../classes/Session.php");
 require("../classes/MemberClass.php");
@@ -10,13 +8,7 @@ require("../vendor/autoload.php");
 require("../classes/listofratersClass.php");
 require("../classes/QuestionsClass.php");
 require("../classes/emailClass.php");
-
 // use Spipu\Html2Pdf\Html2Pdf;
-
-
-
-
-
 
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
@@ -42,32 +34,12 @@ if ($login->isLoggedIn()) {
     $companyId = $login->getCompanyId();
   }
 
-
-
-
-
-
-
   /* raters*/
   // if(isset($_POST["a"]) && $_POST["a"] == "DataCenter"){
   //   header("Location: DataCenter.php");
   // }
-
-     
- 
-
   if(isset($_POST["a"]) && $_POST["a"] == "activate"){
-    
-   
-
-    
-    
-  
-      
-
     for($i=0;$i<count($_POST["rows"]);$i++){ 
-
-
     // $to = $_POST["rows"][$i]["email"];
     // $subject = "Title";
     // $from = 'do-not-reply@performve.com';
@@ -80,47 +52,17 @@ if ($login->isLoggedIn()) {
     // mail($to, $subject, $body, $headers, "-f " . $from);
     //$listofratersClass->sendAutomatedEmail($companyId, $i);
       //$listofratersClass->sendAutomatedEmail($companyId, $i);
-    
-
-
-
-
     if($i == 0){
       $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-     
-      
     }
-
-      $focusID = $listofratersClass->getFocusId($companyId);
-
-
-
-      //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
-      $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
-
-      //$listofratersClass-> insertFocusIdIntoRaterList($companyId);
-
+    $focusID = $listofratersClass->getFocusId($companyId);
+    //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
+    $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
+    //$listofratersClass-> insertFocusIdIntoRaterList($companyId);
     }
-
-
-
-
-
-
-
     header("Location: welcome.php");
     // Data Center
-
-
-
   }
-
-
-
-
-
-
-
 
   // add/edit competency framework
   if (isset($_POST["a"]) && $_POST["a"] == "addFramework") {
@@ -437,6 +379,74 @@ if ($login->isLoggedIn()) {
     var $_POST = <?php echo json_encode($_POST); ?>;
     var $_GET = <?php echo json_encode($_GET); ?>;
   </script>
+
+<!----------------------------------SARBULAND------------------------------------------------>
+<?
+// Get the company names from the AJAX request
+if (isset($_POST['comp_arr'])) {
+  $comp_arr = $_POST['comp_arr'];
+
+  $result_arr = $questionsClass->getQuestions($comp_arr);
+  // Loop through the company names and call the getquestion function on each one
+  $questions = array();
+  foreach ($comp_arr as $comp) {
+    $questionsClass->getsetQuestions($comp);
+    //$questions[] = $competency->getQuestions($companyId,$comp);
+  }
+
+  // Return the questions as a JSON response
+  // echo json_encode($questions);
+  echo json_encode($questions);
+}
+?>
+<!------------------------------------------------------------------------------------------->
+<!-- ----------------------------Questionnaire Competency Statements--------------------------- -->
+<?
+// Get the page number from the query string
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$questions_per_page = isset($_GET['questions_per_page']) ? $_GET['questions_per_page'] : 5;
+$total_questions = isset($_GET['total_questions']) ? $_GET['total_questions'] : 0;
+$result_arr = isset($_GET['result_arr']) ? json_decode($_GET['result_arr']) : array();
+
+// Calculate the starting and ending index of the questions to display
+$start = ($page - 1) * $questions_per_page;
+$end = $start + $questions_per_page - 1;
+
+// Check if there are any competency statements to display on the current page
+if ($start < $total_questions) {
+  // Build the competency statements table HTML
+  $table = '<table style="border: 1px solid black; width: 100%;">
+            <thead style="text-align:center; background-color: #59A5CB; color:white; font-size: 14px;">
+                <tr>
+                    <th style="width:80%">' . $language["questionnaire_questions"] . '</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th style="margin-left:10px;">X</th>
+                </tr>
+            </thead>';
+  $table .= '<tbody>';
+  for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
+    $table .= '<tr style="font-size: 14px;">
+                  <td style="border: 1px solid black; padding-left: 5px;">' . $result_arr[$i] . '</td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="1"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="2"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="3"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="4"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="5"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="X"></td>
+              </tr>';
+  }
+  $table .= '</tbody>';
+  $table .= '</table>';
+
+  // Return the competency statements table HTML
+  echo $table;
+}
+?>
+<!-- ------------------------------------------------------------------------------------------ -->
 <?
   //------------------------------------NEW----------------------------------------
   if (isset($_GET["a"]) && $_GET["a"] == "listofraters") {
@@ -499,76 +509,3 @@ else {
   header('Location: ../login');
 }
 ?>
-
-
-
-<!----------------------------------SARBULAND------------------------------------------------>
-
-<?
-// Get the company names from the AJAX request
-if (isset($_POST['comp_arr'])) {
-  $comp_arr = $_POST['comp_arr'];
-
-  $result_arr = $questionsClass->getQuestions($comp_arr);
-  // Loop through the company names and call the getquestion function on each one
-  $questions = array();
-  foreach ($comp_arr as $comp) {
-    $questionsClass->getsetQuestions($comp);
-    //$questions[] = $competency->getQuestions($companyId,$comp);
-  }
-
-  // Return the questions as a JSON response
-  // echo json_encode($questions);
-  echo json_encode($questions);
-}
-//-------------------------------------------------------------------------------
-
-?>
-
-<!-- ----------------------------Questionnaire Competency Statements--------------------------- -->
-<?
-// Get the page number from the query string
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$questions_per_page = isset($_GET['questions_per_page']) ? $_GET['questions_per_page'] : 5;
-$total_questions = isset($_GET['total_questions']) ? $_GET['total_questions'] : 0;
-$result_arr = isset($_GET['result_arr']) ? json_decode($_GET['result_arr']) : array();
-
-// Calculate the starting and ending index of the questions to display
-$start = ($page - 1) * $questions_per_page;
-$end = $start + $questions_per_page - 1;
-
-// Check if there are any competency statements to display on the current page
-if ($start < $total_questions) {
-  // Build the competency statements table HTML
-  $table = '<table style="border: 1px solid black; width: 100%;">
-            <thead style="text-align:center; background-color: #59A5CB; color:white; font-size: 14px;">
-                <tr>
-                    <th style="width:80%">' . $language["questionnaire_questions"] . '</th>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
-                    <th>5</th>
-                    <th style="margin-left:10px;">X</th>
-                </tr>
-            </thead>';
-  $table .= '<tbody>';
-  for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
-    $table .= '<tr style="font-size: 14px;">
-                  <td style="border: 1px solid black; padding-left: 5px;">' . $result_arr[$i] . '</td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="1"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="2"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="3"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="4"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="5"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="X"></td>
-              </tr>';
-  }
-  $table .= '</tbody>';
-  $table .= '</table>';
-
-  // Return the competency statements table HTML
-  echo $table;
-}
-?>
-<!-- ------------------------------------------------------------------------------------------ -->
