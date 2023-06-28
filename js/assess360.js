@@ -759,6 +759,73 @@ var Raterlist = function () {
 };
 
 var Questionnaire = function () {
+    function changePage(page, questions_per_page, total_questions, result_arr, total_pages) {
+        $.ajax({
+            url: 'assess360',
+            type: 'GET',
+            data: {
+                page: page,
+                questions_per_page: questions_per_page,
+                total_questions: total_questions,
+                result_arr: JSON.stringify(result_arr)
+            },
+            success: function(html) {
+                $('#competency-statements-container').html(html);
+                updatePaginationLinks(page, total_pages);
+            }
+        });
+    }
+    
+    function onPageChange(page) {
+        changePage(page, questions_per_page, total_questions, result_arr, total_pages);
+    }
+    
+    function updatePaginationLinks(currentPage, total_pages) {
+        var paginationLinks = $('#competency-statements-pagination .pagination');
+        paginationLinks.empty();
+        if (total_pages > 1) {
+            var prevLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);" data-page="' + (currentPage - 1) + '">' + lang["questionnaire_pagination_previous"] + '</a></li>');
+            if (currentPage > 1) {
+                prevLink.find('a').click(function(event) {
+                    event.preventDefault();
+                    onPageChange(currentPage - 1);
+                });
+            } else {
+                prevLink.addClass('disabled');
+            }
+            paginationLinks.append(prevLink);
+            var maxLinks = 5;
+            var startLink = Math.max(1, currentPage - 2);
+            var endLink = Math.min(total_pages, startLink + maxLinks - 1);
+            startLink = Math.max(1, endLink - maxLinks + 1);
+            for (var i = startLink; i <= endLink; i++) {
+                var pageLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);" data-page="' + i + '">' + i + '</a></li>');
+                if (i == currentPage) {
+                    pageLink.addClass('active');
+                } else {
+                    pageLink.find('a').click(function(event) {
+                        event.preventDefault();
+                        currentPage = parseInt($(this).data('page')); // update the currentPage variable
+                        onPageChange(currentPage);
+                    });
+                }
+                paginationLinks.append(pageLink);
+            }
+            var nextLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);" data-page="' + (currentPage + 1) + '">' + lang["questionnaire_pagination_next"] + '</a></li>');
+            if (currentPage < total_pages) {
+                nextLink.find('a').click(function(event) {
+                    event.preventDefault();
+                    if (currentPage < total_pages) {
+                        currentPage++; // update the currentPage variable
+                        onPageChange(currentPage);
+                    }
+                });
+            } else {
+                nextLink.addClass('disabled');
+            }
+            paginationLinks.append(nextLink);
+        }
+    }
     jQuery(document).ready(function ($) {
         ac = $("#ac").length > 0 ? $("#ac").val() : -1;
 
@@ -887,6 +954,14 @@ var Questionnaire = function () {
                     $(this).attr("disabled", false);
                 }
         });
+
+        //-------------------------Competency Statements------------------------------------
+        $('a[href="javascript:void(0);"]').click(function (event) {
+            event.preventDefault();
+            var page = $(this).data('page');
+            onPageChange(page);
+        });
+        //----------------------------------------------------------------------------------
     });
 }
 

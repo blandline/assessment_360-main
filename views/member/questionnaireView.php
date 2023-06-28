@@ -13,7 +13,7 @@
 
 <?
 $role_arr = ["focus", "manager", "colleague", "direct report", "others"];
-$role = $role_arr[2];
+$role = $role_arr[1];
 ?>
 
 <body class="questionnaire-body">
@@ -171,7 +171,6 @@ $role = $role_arr[2];
 
                         <?
                         $result_arr = $questionsClass->getQuestionsForQuestionnaire();
-
                         $total_questions = count($result_arr);
                         $questions_per_page = 5;
                         $total_pages = ceil($total_questions / $questions_per_page);
@@ -200,21 +199,27 @@ $role = $role_arr[2];
                     </table>
                 </div>
                 <div id="competency-statements-pagination" style="display: flex; justify-content: center; margin-top: 20px;">
-                    <? if ($total_pages > 1) : ?>
+                    <?php if ($total_pages > 1) : ?>
                         <ul class="pagination">
-                            <li class="page-item disabled"><a class="page-link" style="color:#2196f3;" onclick="changePage(<? echo $page - 1; ?>)"><? echo $language["questionnaire_pagination_previous"]; ?></a></li>
-                            <? for ($i = 1; $i <= min(5, $total_pages); $i++) : ?>
-                                <? if ($i == $page) : ?>
-                                    <li class="page-item active"><a class="page-link"><? echo $i; ?></a></li>
-                                <? else : ?>
-                                    <li class="page-item"><a class="page-link"  style="color:#2196f3;" onclick="changePage(<? echo $i; ?>)"><? echo $i; ?></a></li>
-                                <? endif; ?>
-                            <? endfor; ?>
-                            <? if ($page < $total_pages) : ?>
-                                <li class="page-item"><a class="page-link" style="color:#2196f3;" onclick="changePage(<? echo $page + 1; ?>)"><? echo $language["questionnaire_pagination_next"]; ?></a></li>
-                            <? endif; ?>
+                            <li class="page-item <?php echo $page == 1 ? 'disabled' : ''; ?>">
+                                <a class="page-link" href="javascript:void(0);" data-page="<?php echo $page - 1; ?>">
+                                    <?php echo $language['questionnaire_pagination_previous']; ?>
+                                </a>
+                            </li>
+                            <?php for ($i = 1; $i <= min(5, $total_pages); $i++) : ?>
+                                <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                                    <a class="page-link" href="javascript:void(0);" data-page="<?php echo $i; ?>">
+                                        <?php echo $i; ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
+                            <li class="page-item <?php echo $page == $total_pages ? 'disabled' : ''; ?>">
+                                <a class="page-link" href="javascript:void(0);" data-page="<?php echo $page + 1; ?>">
+                                    <?php echo $language['questionnaire_pagination_next']; ?>
+                                </a>
+                            </li>
                         </ul>
-                    <? endif; ?>
+                    <?php endif; ?>
                 </div>
             </div>
             <br>
@@ -230,71 +235,6 @@ $role = $role_arr[2];
             }
             ?>
         </section>
-
-        <script>
-            function changePage(page) {
-                $.ajax({
-                    url: 'assess360',
-                    type: 'GET',
-                    data: {
-                        page: page,
-                        questions_per_page: <?php echo $questions_per_page; ?>,
-                        total_questions: <?php echo $total_questions; ?>,
-                        result_arr: JSON.stringify(<?php echo json_encode($result_arr); ?>)
-                    },
-                    success: function(html) {
-                        $('#competency-statements-container').html(html);
-                        total_pages = <?php echo $total_pages; ?>;
-                        updatePaginationLinks(page);
-                    }
-                });
-            }
-
-            function updatePaginationLinks(currentPage) {
-                var paginationLinks = $('#competency-statements-pagination .pagination');
-                paginationLinks.empty();
-                if (total_pages > 1) {
-                    var prevLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);"><?php echo $language["questionnaire_pagination_previous"]; ?></a></li>');
-                    if (currentPage > 1) {
-                        prevLink.click(function() {
-                            changePage(currentPage - 1);
-                        });
-                    } else {
-                        prevLink.addClass('disabled');
-                    }
-                    paginationLinks.append(prevLink);
-                    var maxLinks = 5;
-                    var startLink = Math.max(1, currentPage - 2);
-                    var endLink = Math.min(total_pages, startLink + maxLinks - 1);
-                    startLink = Math.max(1, endLink - maxLinks + 1);
-                    for (var i = startLink; i <= endLink; i++) {
-                        var pageLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);">' + i + '</a></li>');
-                        if (i == currentPage) {
-                            pageLink.addClass('active');
-                        } else {
-                            pageLink.click(function() {
-                                currentPage = parseInt($(this).text()); // update the currentPage variable
-                                changePage($(this).text());
-                            });
-                        }
-                        paginationLinks.append(pageLink);
-                    }
-                    var nextLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);"><?php echo $language["questionnaire_pagination_next"]; ?></a></li>');
-                    if (currentPage < total_pages) {
-                        nextLink.click(function() {
-                            if (currentPage < total_pages) {
-                                currentPage++; // update the currentPage variable
-                                changePage(currentPage);
-                            }
-                        });
-                    } else {
-                        nextLink.addClass('disabled');
-                    }
-                    paginationLinks.append(nextLink);
-                }
-            }
-        </script>
-
         <section id="open-end-question-page" class="questionnaire-page">
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
@@ -343,7 +283,11 @@ $role = $role_arr[2];
     <script src="../lib/dataTables/js/dataTables.min.js"></script>
     <script src="../js/lang/<?= $_COOKIE['lang'] ?>.js?v=<?= $jsVersion; ?>"></script>
     <script src="../<?= $jspath; ?>/assess360.js?v=<?= $jsVersion; ?>"></script>
-    <script>
+    <script> 
+        questions_per_page = <? echo $questions_per_page?>;
+        total_questions = <? echo $total_questions?>;
+        total_pages = <? echo $total_pages; ?>;
+        result_arr = <? echo json_encode($result_arr) ?>;
         var Questionnaire = new Questionnaire();
     </script>
 </body>

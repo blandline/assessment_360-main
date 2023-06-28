@@ -885,4 +885,8 @@ lang["listofraters_gender_female"] = "Female";
 lang["listofraters_gender_other"] = "Other";
 
 lang["listofraters_delete_button"] = "Delete";
+
+//Questionnaire
+lang["questionnaire_pagination_previous"] = "Previous";
+lang["questionnaire_pagination_next"] = "Next";
 //-----------------------------------------------------------------------------

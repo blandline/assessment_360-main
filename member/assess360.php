@@ -483,16 +483,11 @@ if ($login->isLoggedIn()) {
   }
   //---------------------------------------------------------------------------------
 
-  else {
-    $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
-    header('Location: ../login');
-  }
 }
-
-
-
-
-
+else {
+  $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
+  header('Location: ../login');
+}
 ?>
 
 
