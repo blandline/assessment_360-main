@@ -9,6 +9,7 @@ require("../classes/Assess360Class.php");
 require("../vendor/autoload.php");
 require("../classes/listofratersClass.php");
 require("../classes/QuestionsClass.php");
+require("../classes/emailClass.php");
 
 // use Spipu\Html2Pdf\Html2Pdf;
 
@@ -21,6 +22,7 @@ $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
 $questionsClass = new QuestionsClass($login);
+//$emailClass = new emailClass($login);
 
 if ($login->isLoggedIn()) {
   if ($login->isAdmin()) {
@@ -50,18 +52,10 @@ if ($login->isLoggedIn()) {
   // if(isset($_POST["a"]) && $_POST["a"] == "DataCenter"){
   //   header("Location: DataCenter.php");
   // }
-
-     
  
 
   if(isset($_POST["a"]) && $_POST["a"] == "activate"){
-    
-   
 
-    
-    
-  
-      
 
     for($i=0;$i<count($_POST["rows"]);$i++){ 
 
@@ -76,11 +70,21 @@ if ($login->isLoggedIn()) {
     // $headers .= "MIME-Version: 1.0\r\n";
     // $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
     // mail($to, $subject, $body, $headers, "-f " . $from);
+    //$listofratersClass->sendAutomatedEmail($companyId, $i);
+      //$listofratersClass->sendAutomatedEmail($companyId, $i);
+    
+
+
+
 
     if($i == 0){
       $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-     
+      $listofratersClass->sendAutomatedEmail($companyId, $i);
       
+    }
+    else{
+      $listofratersClass->sendAutomatedEmail($companyId, $i);
+    
     }
 
     $focusID = $listofratersClass->getFocusId($companyId);
