@@ -498,3 +498,10 @@ $MPF_TYPE_EMPLOYER = 1;
 $CW_RECORD_STATUS_UNAPPROVE = 0;
 $CW_RECORD_STATUS_APPROVED = 1;
 $CW_RECORD_STATUS_PAID = 2;
+
+//----------------------------------NEW---------------------------------------
+//Questionnaire question type
+$QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY = 0;
+$QUESTIONNAIRE_COMPETENCY_STATEMENTS = 1;
+$QUESTIONNAIRE_OPEN_END_QUESTION = 2;
+//----------------------------------------------------------------------------

@@ -79,6 +79,23 @@ class QuestionsClass
         return $questions;
     }
 
+//     public function getQuestionsForQuestionnaire()
+// {
+//     require '../config/dbconnect.php';
+//     $query = "SELECT competency, question FROM competency_questions ORDER BY RAND()";
+//     $stmt = $conn->prepare($query);
+//     $stmt->execute();
+//     $result = $stmt->get_result();
+//     $stmt->close();
+
+//     $questions = array();
+//     while ($row = $result->fetch_assoc()) {
+//         $questions[$row['competency']] = $row['question'];
+//     }
+
+//     return $questions;
+// }
+
     public function getCompetencyForQuestionnaire()
     {
         require '../config/dbconnect.php';
@@ -175,4 +192,35 @@ class QuestionsClass
         $conn->close();
         return $competencies;
     }
+
+    public function getCompetencyIdByCompetency($competency){
+        require '../config/dbconnect.php';
+        $query = "SELECT id FROM competency WHERE competency.en_name = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $competency);
+        $stmt->execute();
+        $stmt->bind_result($competencyid);
+        $stmt->fetch();
+        $stmt->close();
+
+        return $competencyid;
+    }    
+
+    //--------------------------QUESTIONNAIRE DATABASE--------------------------
+    public function addQuestionnaireData($companyId, $rater_id, $question_type_id, $competency_id, $question_id, $answer)
+    {
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+
+        $stmt = $conn->prepare("INSERT INTO " . $dbName . ".questionnaire_result (rater_id, question_type_id, competency_id, question_id, answer) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $rater_id, $question_type_id, $competency_id, $question_id, $answer);
+        $stmt->execute();
+        $stmt->close();
+        return $id;
+    }
+    //--------------------------------------------------------------------------    
 }

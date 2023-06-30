@@ -962,6 +962,46 @@ var Questionnaire = function () {
             onPageChange(page);
         });
         //----------------------------------------------------------------------------------
+        $("body").on("click", ".questionnaire-finish-button", function (event) {
+            event.preventDefault();
+            var selected_inputs = $('input[type=radio]:checked');
+            var importance_of_competencies = {};
+            selected_inputs.each(function(index, input) {
+                importance_of_competencies[index] = input.value;
+            });
+            $.ajax({
+                url: 'assess360',
+                data: {
+                    'importanceofcompetencies': importance_of_competencies,
+                    'competency_arr': JSON.stringify(competency_arr),
+                    'a': 'submitQuestionnaire',
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                },
+            });
+        });
+        // event.preventDefault();
+        // var selected_inputs = $('input[type=radio]:checked').serializeArray();
+        // var importance_of_competencies = {};
+        // $.each(selected_inputs, function(index, item) {
+        //     importance_of_competencies[item.name] = item.value;
+        // });
+        // $.ajax({
+        //     url: 'assess360',
+        //     data: {
+        //         'importanceofcompetencies': importance_of_competencies,
+        //         'competency_arr': JSON.stringify(competency_arr),
+        //         a: 'submitQuestionnaire',
+        //     },
+        //     type: 'POST',
+        //     dataType: 'json',
+        //     success: function(response) {
+        //         console.log(response);
+        //     },
+        // });
     });
 }
 

@@ -40,25 +40,25 @@ if ($login->isLoggedIn()) {
   // }
   if(isset($_POST["a"]) && $_POST["a"] == "activate"){
     for($i=0;$i<count($_POST["rows"]);$i++){ 
-    // $to = $_POST["rows"][$i]["email"];
-    // $subject = "Title";
-    // $from = 'do-not-reply@performve.com';
-    // $body = "Hi";
-    // $headers = "From: Performve <" . $from . ">\r\n";
-    // $headers .= "Reply-To: Performve <" . $from . ">\r\n";
-    // $headers .= "Return-Path: Performve <" . $from . ">\r\n";
-    // $headers .= "MIME-Version: 1.0\r\n";
-    // $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-    // mail($to, $subject, $body, $headers, "-f " . $from);
-    //$listofratersClass->sendAutomatedEmail($companyId, $i);
+      // $to = $_POST["rows"][$i]["email"];
+      // $subject = "Title";
+      // $from = 'do-not-reply@performve.com';
+      // $body = "Hi";
+      // $headers = "From: Performve <" . $from . ">\r\n";
+      // $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+      // $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+      // $headers .= "MIME-Version: 1.0\r\n";
+      // $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+      // mail($to, $subject, $body, $headers, "-f " . $from);
       //$listofratersClass->sendAutomatedEmail($companyId, $i);
-    if($i == 0){
-      $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-    }
-    $focusID = $listofratersClass->getFocusId($companyId);
-    //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
-    $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
-    //$listofratersClass-> insertFocusIdIntoRaterList($companyId);
+        //$listofratersClass->sendAutomatedEmail($companyId, $i);
+      if($i == 0){
+        $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+      }
+      $focusID = $listofratersClass->getFocusId($companyId);
+      //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
+      $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
+      //$listofratersClass-> insertFocusIdIntoRaterList($companyId);
     }
     header("Location: welcome.php");
     // Data Center
@@ -447,6 +447,31 @@ if ($start < $total_questions) {
 }
 ?>
 <!-- ------------------------------------------------------------------------------------------ -->
+<?
+//---------------------------------Questionnaire Submit---------------------------------
+  $result_arr = isset($_GET['result_arr']) ? json_decode($_GET['result_arr']) : array();
+  $competency_arr = isset($_POST['competency_arr']) ? json_decode($_POST['competency_arr']) : array();
+  $competency_id_arr = array();
+  for($i=0; $i<count($competency_arr); $i++){
+    $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
+  }
+
+  if(isset($_POST["a"]) && $_POST["a"] == "submitQuestionnaire"){
+    //Importance of Competencies
+    $importance_of_competencies = $_POST['importanceofcompetencies'];
+    for($i=0;$i<count($competency_arr);$i++){ 
+      $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
+      $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, $importance_of_competencies[$i]);
+    }
+
+    //Competency Statements
+    for($i=0;$i<count($result_arr);$i++){ 
+      $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
+      $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $result_arr[$i], NULL, $importance_of_competencies[$i]);
+    }
+  }
+  //-------------------------------------------------------------------------------------
+?>
 <?
   //------------------------------------NEW----------------------------------------
   if (isset($_GET["a"]) && $_GET["a"] == "listofraters") {

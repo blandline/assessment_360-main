@@ -36,7 +36,7 @@ $role = $role_arr[1];
             </div>
         </div>
     </div>
-    <form>
+    <form method="post" id="questionnaire_form" action="assess360">
         <section id="intro-page" class="questionnaire-page questionnaire-page-active">
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
@@ -86,37 +86,37 @@ $role = $role_arr[1];
             <?
             //$focus_id = $listofratersClass->getFocusId($companyId);
             $focus_id = 0;
-            $temp_title = $questionsClass->getCompetencyByFocusID($focus_id);
+            $competency_arr = $questionsClass->getCompetencyByFocusID($focus_id);
             // $temp_title = $questionsClass->getCompetencyForQuestionnaire();
-            $temp_definition = array();
-            for ($i = 0; $i < count($temp_title); $i++) {
-                $temp_definition[$i] = $questionsClass->getEnDespByCompetency($temp_title[$i]);
+            $competency_def_arr = array();
+            for ($i = 0; $i < count($competency_arr); $i++) {
+                $competency_def_arr[$i] = $questionsClass->getEnDespByCompetency($competency_arr[$i]);
             }
-            for ($i = 0; $i < count($temp_title); $i++) {
+            for ($i = 0; $i < count($competency_arr); $i++) {
                 echo
                 "<div style='width: 100%; display: flex; justify-content: space-between;'>
                     <div class='questionnaire_importanceofcompetency_component' style=' width:80%; display: inline-block; vertical-align: middle; border: 1px solid black;'>" .
-                    "<div class='questionnaire_importanceofcompetency_title' style='font-family: `Calibri`; font-size: 14px; font-weight: bold; padding-left: 5px;'>" . $temp_title[$i] . "</div>" .
-                    "<div class='questionnaire_importanceofcompetency_definition' style='font-family: `Calibri`; font-size: 12px; padding-left: 5px;'>" . $temp_definition[$i] . "</div>" .
+                    "<div class='questionnaire_importanceofcompetency_title' style='font-family: `Calibri`; font-size: 14px; font-weight: bold; padding-left: 5px;'>" . $competency_arr[$i] . "</div>" .
+                    "<div class='questionnaire_importanceofcompetency_definition' style='font-family: `Calibri`; font-size: 12px; padding-left: 5px;'>" . $competency_def_arr[$i] . "</div>" .
                     "</div>" .
                     "<div class='questionnaire_importanceofcompetency_table' style='display: inline-block; vertical-align: middle; margin-left: 10px;'>" .
                     "<table style=' width:20%; border: 1px solid black;'>
-                                <thead>
-                                    <tr>
-                                        <th style='text-align: center;'>1</th>
-                                        <th style='text-align: center;'>2</th>
-                                        <th style='text-align: center;'>3</th>
-                                        <th style='text-align: center;'>4</th>
-                                        <th style='text-align: center;'>5</th>
-                                    </tr>
-                                </thead>" .
-                    "<tr>
-                                    <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='1'></td>
-                                    <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='2'></td>
-                                    <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='3'></td>
-                                    <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='4'></td>
-                                    <td style='border: 1px solid black; border-right: none; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='5'></td>
-                                </tr>" .
+                        <thead>
+                            <tr>
+                                <th style='text-align: center;'>1</th>
+                                <th style='text-align: center;'>2</th>
+                                <th style='text-align: center;'>3</th>
+                                <th style='text-align: center;'>4</th>
+                                <th style='text-align: center;'>5</th>
+                            </tr>
+                        </thead>" .
+                        "<tr>
+                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='1'></td>
+                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='2'></td>
+                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='3'></td>
+                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='4'></td>
+                            <td style='border: 1px solid black; border-right: none; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='5'></td>
+                        </tr>" .
                     "</table>" .
                     "</div>" .
                     "</div>";
@@ -181,6 +181,7 @@ $role = $role_arr[1];
 
                         // Output the competency statements for the current page
                         $table = '<tbody>';
+                        // {$result_arr[array_keys($result_arr)[$i]]} TEMPPPPP
                         for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
                             $table .=
                                 "<tr style='font-size: 14px;'>
@@ -229,6 +230,7 @@ $role = $role_arr[1];
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
             } elseif ($role == "focus") {
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"], '</a></button>';
+                echo '<input type="hidden" name="a" value="submitQuestionnaire"> ';
                 echo '<button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button">', $language["questionnaire_finish_button"], '</button>';
             } else {
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
@@ -256,8 +258,10 @@ $role = $role_arr[1];
             <!-- ------------------------------------------------------------------------- -->
             <?= $language["questionnaire_openendquestion_finish"] ?>
             <button class="btn btn-primary btn-sm questionnaire-openendquestion-previous"><a style="color:white;" href="#competency-statements-page"><?= $language["questionnaire_previous_button"] ?></a></button>
-            <button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button"><?= $language["questionnaire_finish_button"] ?></button>
-        </section>
+            <input type="hidden" name="a" value="submitQuestionnaire"> 
+            <!-- <button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button"><?= $language["questionnaire_finish_button"] ?></button> -->
+            <input class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button" type="submit">
+        </section> 
     </form>
 
     <script src="../assets/js/core/jquery.min.js"></script>
@@ -284,6 +288,7 @@ $role = $role_arr[1];
     <script src="../js/lang/<?= $_COOKIE['lang'] ?>.js?v=<?= $jsVersion; ?>"></script>
     <script src="../<?= $jspath; ?>/assess360.js?v=<?= $jsVersion; ?>"></script>
     <script> 
+        competency_arr = <? echo json_encode($competency_arr) ?>;
         questions_per_page = <? echo $questions_per_page?>;
         total_questions = <? echo $total_questions?>;
         total_pages = <? echo $total_pages; ?>;
