@@ -170,8 +170,8 @@ $role = $role_arr[1];
                         </thead>
 
                         <?
-                        $result_arr = $questionsClass->getQuestionsForQuestionnaire();
-                        $total_questions = count($result_arr);
+                        $questions_arr = $questionsClass->getQuestionsForQuestionnaire();
+                        $total_questions = count($questions_arr);
                         $questions_per_page = 5;
                         $total_pages = ceil($total_questions / $questions_per_page);
 
@@ -181,11 +181,10 @@ $role = $role_arr[1];
 
                         // Output the competency statements for the current page
                         $table = '<tbody>';
-                        // {$result_arr[array_keys($result_arr)[$i]]} TEMPPPPP
                         for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
                             $table .=
                                 "<tr style='font-size: 14px;'>
-                                <td style='border: 1px solid black; padding-left: 5px;'>{$result_arr[$i]}</td>
+                                <td style='border: 1px solid black; padding-left: 5px;'>{$questions_arr[$i]}</td>
                                 <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='1'></td>
                                 <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='2'></td>
                                 <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='3'></td>
@@ -292,7 +291,7 @@ $role = $role_arr[1];
         questions_per_page = <? echo $questions_per_page?>;
         total_questions = <? echo $total_questions?>;
         total_pages = <? echo $total_pages; ?>;
-        result_arr = <? echo json_encode($result_arr) ?>;
+        questions_arr = <? echo json_encode($questions_arr) ?>;
         var Questionnaire = new Questionnaire();
     </script>
 </body>

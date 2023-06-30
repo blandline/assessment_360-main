@@ -406,7 +406,7 @@ if (isset($_POST['comp_arr'])) {
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $questions_per_page = isset($_GET['questions_per_page']) ? $_GET['questions_per_page'] : 5;
 $total_questions = isset($_GET['total_questions']) ? $_GET['total_questions'] : 0;
-$result_arr = isset($_GET['result_arr']) ? json_decode($_GET['result_arr']) : array();
+$questions_arr = isset($_GET['questions_arr']) ? json_decode($_GET['questions_arr']) : array();
 
 // Calculate the starting and ending index of the questions to display
 $start = ($page - 1) * $questions_per_page;
@@ -430,7 +430,7 @@ if ($start < $total_questions) {
   $table .= '<tbody>';
   for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
     $table .= '<tr style="font-size: 14px;">
-                  <td style="border: 1px solid black; padding-left: 5px;">' . $result_arr[$i] . '</td>
+                  <td style="border: 1px solid black; padding-left: 5px;">' . $questions_arr[$i] . '</td>
                   <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="1"></td>
                   <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="2"></td>
                   <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="3"></td>
@@ -449,7 +449,7 @@ if ($start < $total_questions) {
 <!-- ------------------------------------------------------------------------------------------ -->
 <?
 //---------------------------------Questionnaire Submit---------------------------------
-  $result_arr = isset($_GET['result_arr']) ? json_decode($_GET['result_arr']) : array();
+  $questions_arr = isset($_GET['questions_arr']) ? json_decode($_GET['questions_arr']) : array();
   $competency_arr = isset($_POST['competency_arr']) ? json_decode($_POST['competency_arr']) : array();
   $competency_id_arr = array();
   for($i=0; $i<count($competency_arr); $i++){
@@ -465,9 +465,9 @@ if ($start < $total_questions) {
     }
 
     //Competency Statements
-    for($i=0;$i<count($result_arr);$i++){ 
+    for($i=0;$i<count($questions_arr);$i++){ 
       $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
-      $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $result_arr[$i], NULL, $importance_of_competencies[$i]);
+      $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $questions_arr[$i], NULL, $importance_of_competencies[$i]);
     }
   }
   //-------------------------------------------------------------------------------------

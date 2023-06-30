@@ -759,7 +759,7 @@ var Raterlist = function () {
 };
 
 var Questionnaire = function () {
-    function changePage(page, questions_per_page, total_questions, result_arr, total_pages) {
+    function changePage(page, questions_per_page, total_questions, questions_arr, total_pages) {
         $.ajax({
             url: 'assess360',
             type: 'GET',
@@ -767,7 +767,7 @@ var Questionnaire = function () {
                 page: page,
                 questions_per_page: questions_per_page,
                 total_questions: total_questions,
-                result_arr: JSON.stringify(result_arr)
+                questions_arr: JSON.stringify(questions_arr)
             },
             success: function(html) {
                 $('#competency-statements-container').html(html);
@@ -777,7 +777,7 @@ var Questionnaire = function () {
     }
     
     function onPageChange(page) {
-        changePage(page, questions_per_page, total_questions, result_arr, total_pages);
+        changePage(page, questions_per_page, total_questions, questions_arr, total_pages);
     }
     
     function updatePaginationLinks(currentPage, total_pages) {
