@@ -431,12 +431,12 @@ if ($start < $total_questions) {
   for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
     $table .= '<tr style="font-size: 14px;">
                   <td style="border: 1px solid black; padding-left: 5px;">' . $questions_arr[$i] . '</td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="1"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="2"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="3"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="4"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="5"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;"><input type="radio" name="competencystatements[' . ($start + $i) . ']" value="X"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . $i . ']" value="1"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . $i . ']" value="2"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . $i . ']" value="3"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . $i . ']" value="4"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . $i . ']" value="5"></td>
+                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;"><input type="radio" name="competencystatements[' . $i . ']" value="X"></td>
               </tr>';
   }
   $table .= '</tbody>';
@@ -449,26 +449,56 @@ if ($start < $total_questions) {
 <!-- ------------------------------------------------------------------------------------------ -->
 <?
 //---------------------------------Questionnaire Submit---------------------------------
-  $questions_arr = isset($_GET['questions_arr']) ? json_decode($_GET['questions_arr']) : array();
+  $questions_arr = isset($_POST['questions_arr']) ? json_decode($_POST['questions_arr']) : array();
   $competency_arr = isset($_POST['competency_arr']) ? json_decode($_POST['competency_arr']) : array();
   $competency_id_arr = array();
-  for($i=0; $i<count($competency_arr); $i++){
-    $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
-  }
+  $competency_statements_id_arr = array();
 
-  if(isset($_POST["a"]) && $_POST["a"] == "submitQuestionnaire"){
+  if(isset($_POST["a"]) && $_POST["a"] == "submitImportanceOfCompetencies"){
     //Importance of Competencies
-    $importance_of_competencies = $_POST['importanceofcompetencies'];
+    $importance_of_competencies = isset($_POST['importance_of_competencies']) ? $_POST['importance_of_competencies'] : array();
+    for($i=0; $i<count($competency_arr); $i++){
+      $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
+    }
     for($i=0;$i<count($competency_arr);$i++){ 
       $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
-      $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, $importance_of_competencies[$i]);
+      if(isset($importance_of_competencies[$i]) && !$importance_of_competencies[$i]){
+        continue;
+      };
+      if(isset($importance_of_competencies[$i])){
+        $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, $importance_of_competencies[$i]);
+      }
     }
-
+  }
+  if(isset($_POST["a"]) && $_POST["a"] == "submitCompetencyStatements"){
     //Competency Statements
+    $competency_statements = isset($_POST['competency_statements']) ? $_POST['competency_statements'] : array();
+    $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
     for($i=0;$i<count($questions_arr);$i++){ 
-      $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
-      $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $questions_arr[$i], NULL, $importance_of_competencies[$i]);
+      $question_id_arr[$i] = $questionsClass->getQuestionIdbyQuestion($questions_arr[$i]);
+      $competency_statements_id_arr[$i] = $questionsClass->getCompetencyIdbyQuestionId($question_id_arr[$i]);
+      if(isset($competency_statements[$i]) && !$competency_statements[$i]){
+        continue;
+      };
+      //if there is no answer for the question in the database yet, INSERT
+      if(isset($competency_statements[$i]) && (!$questionsClass->getBoolanswerByQuestionid($question_id_arr[$i]))){
+        $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
+      }
+      //if there is already an answer for the question, EDIT
+      else{
+        if(isset($competency_statements[$i]) && ($competency_statements[$i] != $questionsClass->getAnswerByQuestionid($question_id_arr[$i]))){
+          $id_tobe_edited = $questionsClass->getIdByData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
+          $questionsClass->editQuestionnaireData($companyId, $id_tobe_edited, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
+        }
+      }
     }
+  }
+  if(isset($_POST["a"]) && $_POST["a"] == "submitopenendquestion"){
+      $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
+      $openend_question_result = isset($_POST['openend_question_result']) ? $_POST['openend_question_result'] : NULL;
+      $questionnaire_yesno_discuss = isset($_POST['questionnaire_yesno_discuss']) ? (int)$_POST['questionnaire_yesno_discuss'] : NULL;
+      $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_OPEN_END_QUESTION, NULL, NULL, $openend_question_result);
+      $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_YESNO_DISCUSS, NULL, NULL, $questionnaire_yesno_discuss);
   }
   //-------------------------------------------------------------------------------------
 ?>

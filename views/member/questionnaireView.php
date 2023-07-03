@@ -199,39 +199,45 @@ $role = $role_arr[1];
                     </table>
                 </div>
                 <div id="competency-statements-pagination" style="display: flex; justify-content: center; margin-top: 20px;">
-                    <?php if ($total_pages > 1) : ?>
+                    <? if ($total_pages > 1) : ?>
                         <ul class="pagination">
-                            <li class="page-item <?php echo $page == 1 ? 'disabled' : ''; ?>">
-                                <a class="page-link" href="javascript:void(0);" data-page="<?php echo $page - 1; ?>">
-                                    <?php echo $language['questionnaire_pagination_previous']; ?>
+                            <li class="page-item <? echo $page == 1 ? 'disabled' : ''; ?>">
+                                <a class="page-link" href="javascript:void(0);" data-page="<? echo $page - 1; ?>">
+                                    <? echo $language['questionnaire_pagination_previous']; ?>
                                 </a>
+                                <? echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';?>
                             </li>
-                            <?php for ($i = 1; $i <= min(5, $total_pages); $i++) : ?>
+                            <? for ($i = 1; $i <= min(5, $total_pages); $i++) : ?>
                                 <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                                    <a class="page-link" href="javascript:void(0);" data-page="<?php echo $i; ?>">
-                                        <?php echo $i; ?>
+                                    <a class="page-link" href="javascript:void(0);" data-page="<? echo $i; ?>">
+                                        <? echo $i; ?>
                                     </a>
+                                    <? echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';?>
                                 </li>
-                            <?php endfor; ?>
+                            <? endfor; ?>
                             <li class="page-item <?php echo $page == $total_pages ? 'disabled' : ''; ?>">
-                                <a class="page-link" href="javascript:void(0);" data-page="<?php echo $page + 1; ?>">
-                                    <?php echo $language['questionnaire_pagination_next']; ?>
+                                <a class="page-link" href="javascript:void(0);" data-page="<? echo $page + 1; ?>">
+                                    <? echo $language['questionnaire_pagination_next']; ?>
                                 </a>
+                                <? echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';?>
                             </li>
                         </ul>
-                    <?php endif; ?>
+                    <? endif; ?>
                 </div>
             </div>
             <br>
             <?
             if ($role == "manager") {
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"], '</a></button>';
+                echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
             } elseif ($role == "focus") {
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"], '</a></button>';
-                echo '<input type="hidden" name="a" value="submitQuestionnaire"> ';
+                // echo '<input type="hidden" name="a" value="submitQuestionnaire"> ';
+                //TODO HERE
                 echo '<button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button">', $language["questionnaire_finish_button"], '</button>';
             } else {
+                echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
             }
             ?>
@@ -251,15 +257,15 @@ $role = $role_arr[1];
             <!-- --------------------------- YES/NO BUTTONS ----------------------------- -->
             <!--<div class="questionnaire_openendquestion_discuss_container" style="display:inline-block;">-->
             <?= $language["questionnaire_openendquestion_paragraph2"] ?>
-            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="yes"><?= $language["questionnaire_openendquestion_discuss_yes"] ?></label>
-            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="no"><?= $language["questionnaire_openendquestion_discuss_no"] ?></label>
+            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="1"><?= $language["questionnaire_openendquestion_discuss_yes"] ?></label>
+            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="0"><?= $language["questionnaire_openendquestion_discuss_no"] ?></label>
             <!--</div>-->
             <!-- ------------------------------------------------------------------------- -->
             <?= $language["questionnaire_openendquestion_finish"] ?>
             <button class="btn btn-primary btn-sm questionnaire-openendquestion-previous"><a style="color:white;" href="#competency-statements-page"><?= $language["questionnaire_previous_button"] ?></a></button>
-            <input type="hidden" name="a" value="submitQuestionnaire"> 
+            <input type="hidden" name="a" value="submitopenendquestion"> 
             <!-- <button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button"><?= $language["questionnaire_finish_button"] ?></button> -->
-            <input class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button" type="submit">
+            <input class="btn btn-success btn-sm addButton competency-add-btn questionnaire-openendquestion-finish" type="submit">
         </section> 
     </form>
 
