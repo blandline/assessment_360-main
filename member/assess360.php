@@ -477,7 +477,7 @@ if ($start < $total_questions) {
     for($i=0;$i<count($questions_arr);$i++){ 
       $question_id_arr[$i] = $questionsClass->getQuestionIdbyQuestion($questions_arr[$i]);
       $competency_statements_id_arr[$i] = $questionsClass->getCompetencyIdbyQuestionId($question_id_arr[$i]);
-      if(isset($competency_statements[$i]) && !$competency_statements[$i]){
+      if(!isset($competency_statements[$i])){
         continue;
       };
       //if there is no answer for the question in the database yet, INSERT
@@ -486,9 +486,10 @@ if ($start < $total_questions) {
       }
       //if there is already an answer for the question, EDIT
       else{
-        if(isset($competency_statements[$i]) && ($competency_statements[$i] != $questionsClass->getAnswerByQuestionid($question_id_arr[$i]))){
+        if(isset($competency_statements[$i]) && (intval($competency_statements[$i]) != intval($questionsClass->getAnswerByQuestionid($question_id_arr[$i])))){
           $id_tobe_edited = $questionsClass->getIdByData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
-          $questionsClass->editQuestionnaireData($companyId, $id_tobe_edited, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
+          //$questionsClass->editQuestionnaireData($companyId, $id_tobe_edited, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
+          $questionsClass->editQuestionnaireAnswerById($companyId, $id_tobe_edited, $competency_statements[$i]);
         }
       }
     }

@@ -12,8 +12,10 @@
 </head>
 
 <?
+//TEMP
 $role_arr = ["focus", "manager", "colleague", "direct report", "others"];
 $role = $role_arr[1];
+$rater_id = 0; //getrateridbypwd
 ?>
 
 <body class="questionnaire-body">
@@ -84,13 +86,20 @@ $role = $role_arr[1];
             </div>
             <!-- TODO list of competencies -->
             <?
-            //$focus_id = $listofratersClass->getFocusId($companyId);
+            //CHANGE LATER TO GET FOCUSID BY PWD
             $focus_id = 0;
             $competency_arr = $questionsClass->getCompetencyByFocusID($focus_id);
             // $temp_title = $questionsClass->getCompetencyForQuestionnaire();
             $competency_def_arr = array();
             for ($i = 0; $i < count($competency_arr); $i++) {
                 $competency_def_arr[$i] = $questionsClass->getEnDespByCompetency($competency_arr[$i]);
+            }
+            $importanceofcompetencies_previousanswers_assocarr = $questionsClass->getImportanceOfCompetenciesAnswer($companyId, $rater_id);
+            if(isset($importanceofcompetencies_previousanswers_assocarr)){
+                $importanceofcompetencies_previousanswers = array();
+                for($i=0; $i<count($competency_arr); $i++){
+                    $importanceofcompetencies_previousanswers[$i] = isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) ? $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] : '';
+                }
             }
             for ($i = 0; $i < count($competency_arr); $i++) {
                 echo
@@ -111,11 +120,11 @@ $role = $role_arr[1];
                             </tr>
                         </thead>" .
                         "<tr>
-                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='1'></td>
-                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='2'></td>
-                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='3'></td>
-                            <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='4'></td>
-                            <td style='border: 1px solid black; border-right: none; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='5'></td>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='1'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 1 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='2'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 2 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='3'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 3 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='4'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 4 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; border-right: none; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='5'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 5 ? ' checked' : '') . "></td>
                         </tr>" .
                     "</table>" .
                     "</div>" .

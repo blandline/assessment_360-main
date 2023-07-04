@@ -219,17 +219,6 @@ class QuestionsClass
         return $competencyid;
     }    
 
-    public function getCompetencyIdByQuestion($question){
-        require '../config/dbconnect.php';
-        $query = "SELECT id FROM competency WHERE competency.en_name = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("s", $competency);
-        $stmt->execute();
-        $stmt->bind_result($competencyid);
-        $stmt->fetch();
-        $stmt->close();
-    }
-
     public function getBoolAnswerByQuestionid($question_id){
         require '../config/dbconnect.php';
         if ($this->memberClass->isAdmin()) {
@@ -290,9 +279,9 @@ class QuestionsClass
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-    
+        
         $stmt = $conn->prepare("UPDATE " . $dbName . ".questionnaire_result SET rater_id = ?, question_type_id = ?, competency_id = ?, question_id = ?, answer = ? WHERE id = ?");
-        $stmt->bind_param("iiiisi", $rater_id, $question_type_id, $competency_id, $question_id, $answer, $id);
+        $stmt->bind_param("iiiisi", $rater_id, $question_type_id, $competency_id, $question_id, $answer_str, $id);
         $stmt->execute();
         $stmt->close();
     }
@@ -317,6 +306,41 @@ class QuestionsClass
         }
         $stmt->close();    
         return $id;        
+    }
+
+    public function editQuestionnaireAnswerById($companyId, $id, $answer) {
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+    
+        $stmt = $conn->prepare("UPDATE " . $dbName . ".questionnaire_result SET answer = ? WHERE id = ?");
+        $stmt->bind_param("si", $answer, $id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function getImportanceOfCompetenciesAnswer($companyId, $rater_id) {
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+    
+        $stmt = $conn->prepare("SELECT competency_id, answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 0");
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        $answers = array();
+        while ($row = $result->fetch_assoc()) {
+            $answers[$row['competency_id']] = $row['answer'];
+        }
+        return $answers;
     }
     //--------------------------------------------------------------------------    
 }
