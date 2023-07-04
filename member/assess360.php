@@ -403,10 +403,10 @@ if (isset($_POST['comp_arr'])) {
 <!-- ----------------------------Questionnaire Competency Statements--------------------------- -->
 <?
 // Get the page number from the query string
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$questions_per_page = isset($_GET['questions_per_page']) ? $_GET['questions_per_page'] : 5;
-$total_questions = isset($_GET['total_questions']) ? $_GET['total_questions'] : 0;
-$questions_arr = isset($_GET['questions_arr']) ? json_decode($_GET['questions_arr']) : array();
+$page = isset($_POST['page']) ? $_POST['page'] : 1;
+$questions_per_page = isset($_POST['questions_per_page']) ? $_POST['questions_per_page'] : 5;
+$total_questions = isset($_POST['total_questions']) ? $_POST['total_questions'] : 0;
+$questions_arr = isset($_POST['questions_arr']) ? json_decode($_POST['questions_arr']) : array();
 
 // Calculate the starting and ending index of the questions to display
 $start = ($page - 1) * $questions_per_page;

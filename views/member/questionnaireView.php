@@ -184,7 +184,7 @@ $rater_id = 0; //getrateridbypwd
                         $questions_per_page = 5;
                         $total_pages = ceil($total_questions / $questions_per_page);
 
-                        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+                        $page = isset($_POST['page']) ? $_POST['page'] : 1;
                         $start = ($page - 1) * $questions_per_page;
                         $end = $start + $questions_per_page - 1;
 
