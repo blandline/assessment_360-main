@@ -1,4 +1,5 @@
 <?
+ include 'Encryption.php';
 class listofratersClass
 {
 
@@ -430,50 +431,513 @@ class listofratersClass
     //     }
     // }
 
-    public function sendAutomatedEmail($companyId, $i){
+    // public function sendAutomatedEmail($companyId, $i){
+    //     require '../config/dbconnect.php';  
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    //     $current_date = date('Y-m-d');
+      
+        
+           
+           
+      
+    //         // Query the database for emails to send today
+    //         $stmt = $conn->prepare("SELECT email FROM " . $dbName . ".focus WHERE start_date = ?");
+    //         $stmt->bind_param("s", $current_date);
+    //         $stmt->execute();
+    //         $result = $stmt->get_result();
+    //         //$launchDate = $row['start_date'];
+      
+    //         // Send the emails
+    //         while ($row = $result->fetch_assoc()) {
+    //             $to = $_POST["rows"][$i]["email"];
+    //             $subject = "Automated Email";    
+      
+    //             $from = 'do-not-reply@performve.com';        
+    //             $headers = "From: Performve <" . $from . ">\r\n";
+    //             $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+    //             $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+    //             $headers .= "MIME-Version: 1.0\r\n";
+    //             $headers .= "Content-Type: text/html; charset=UTF-8\r\n";    
+    //             $body = "Dear User,\n\nThis is an automated email sent to $to on $current_date.\n\nBest regards,\nYour Name"." http://localhost/assessment_360-main/member/assess360?a=questionnaire";
+              
+    //             mail($to, $subject, $body, $headers, "-f " . $from);
+    //         }
+      
+    //         // Wait for 24 hours before checking again
+    //         //sleep(24 * 60 * 60);
+        
+      
+    //     // Close the database connection
+    //     $stmt->close();
+    //     $conn->close();
+    // }
+
+    
+    // public function sendEmail($companyId, $i){
+    //     require '../config/dbconnect.php';  
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    //     $current_date = date('Y-m-d');
+
+      
+    //     // Loop continuously
+        
+    //         // Get the current date
+           
+      
+    //         // Query the database for emails to send today
+    //         // $stmt = $conn->prepare("SELECT email,password FROM " . $dbName . ".rater_list WHERE start_date = ?");
+    //         $stmt = $conn->prepare("SELECT email,password FROM " . $dbName . ".rater_list");            
+    //         $stmt->execute();
+    //         $result = $stmt->get_result();
+
+
+    //         // Retrieve the rater's email and password from the `rater_list` table
+        
+    //         // $stmt->execute([$rater_id]);
+    //         // $row = $stmt->fetch();
+
+    //         // $email = $row['email'];
+    //         // $password = $row['password'];
+
+    //         // // Construct the link to the questionnaire
+    //         // $link = 'https://example.com/questionnaire?' . 'password=' . urlencode($password);
+
+
+
+
+      
+    //         // Send the emails
+    //         while ($row = $result->fetch_assoc()) {
+
+    //             $email = $row['email'];
+    //             $password = $row['password'];
+    
+    //             // Construct the link to the questionnaire
+    //             $link = 'https://example.com/questionnaire?' . 'password=' . urlencode($password);
+    
+    //             $to = $_POST["rows"][$i]["email"];
+    //             $subject = "Automated Email";    
+      
+    //             $from = 'do-not-reply@performve.com';        
+    //             $headers = "From: Performve <" . $from . ">\r\n";
+    //             $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+    //             $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+    //             $headers .= "MIME-Version: 1.0\r\n";
+    //             $headers .= "Content-Type: text/html; charset=UTF-8\r\n";    
+    //             $body = "Dear". $_POST["rows"][$i]["rater_first_name"] .",\n\nThis is an automated email sent to $to on $current_date.\n\nBest regards,\nYour Name"." http://localhost/assessment_360-main/member/assess360?a=questionnaire. Please click on the link below to access the questionnaire. You will need to enter the password provided below to access the questionnaire. Link:" . $link . "\r\n" .  "Password:" . $password . "\r\n";
+                 
+              
+    //             mail($to, $subject, $body, $headers, "-f " . $from);
+    //         }
+      
+    //         // Wait for 24 hours before checking again
+    //         //sleep(24 * 60 * 60);
+        
+      
+    //     // Close the database connection
+    //     $stmt->close();
+    //     $conn->close();
+    // }
+    // public function sendEmail($companyId, $i){
+    //     require '../config/dbconnect.php';  
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    
+    //     // Query the database for emails to send
+    //     $stmt = $conn->prepare("SELECT email,password FROM " . $dbName . ".rater_list");            
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    
+    //     // Send the emails
+    //     while ($row = $result->fetch_assoc()) {
+    //         $email = $row['email'];
+    //         $password = $row['password'];
+    
+    //         // Construct the link to the questionnaire
+    //         $link = 'https://example.com/questionnaire?' . 'password=' . urlencode($password);
+    
+    //         // Construct the email message
+    //         $to = $_POST["rows"][$i]["email"];
+    //         $subject = "Automated Email";    
+    //         $from = 'do-not-reply@performve.com';        
+    //         $headers = "From: Performve <" . $from . ">\r\n";
+    //         $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+    //         $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+    //         $headers .= "MIME-Version: 1.0\r\n";
+    //         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";    
+    //         $body = "Dear ". $_POST["rows"][$i]["rater_first_name"] .",\n\nThis is an automated email sent to $to.\n\nBest regards,\nYour Name"." http://localhost/assessment_360-main/member/assess360?a=questionnaire. Please click on the link below to access the questionnaire. You will need to enter the password provided below to access the questionnaire. Link:" . $link . "\r\n" .  "Password:" . $password . "\r\n";
+    
+    //         // Send the email
+    //         mail($to, $subject, $body, $headers, "-f " . $from);
+    //     }
+    
+    //     // Close the database connection
+    //     $stmt->close();
+    //     $conn->close();
+    // }
+    // public function sendEmail($companyId, $rater_email){
+    //     require '../config/dbconnect.php';  
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    
+    //     // Query the database for the rater's password
+    //     $stmt = $conn->prepare("SELECT password FROM " . $dbName . ".rater_list WHERE email = ?");            
+    //     $stmt->bind_param("s", $rater_email);
+    //     $stmt->execute();
+    //     $stmt->bind_result($password);
+    //     $stmt->fetch();
+    
+    //     if ($password) {
+    //         // Construct the link to the questionnaire
+    //         $link = 'https://example.com/questionnaire?' . 'password=' . urlencode($password);
+    
+    //         // Construct the email message
+    //         $to = $rater_email;
+    //         $subject = "Automated Email";    
+    //         $from = 'do-not-reply@performve.com';        
+    //         $headers = "From: Performve <" . $from . ">\r\n";
+    //         $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+    //         $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+    //         $headers .= "MIME-Version: 1.0\r\n";
+    //         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";    
+    //         $body = "Dear ". $rater_email .",\n\nThis is an automated email sent to $to.\n\nBest regards,\nYour Name"." http://localhost/assessment_360-main/member/assess360?a=questionnaire. Please click on the link below to access the questionnaire. You will need to enter the password provided below to access the questionnaire. Link:" . $link . "\r\n" .  "Password:" . $password . "\r\n";
+    
+    //         // Send the email
+    //         mail($to, $subject, $body, $headers, "-f " . $from);
+    //     }
+    
+    //     // Close the database connection
+    //     $stmt->close();
+    //     $conn->close();
+    // }
+
+    // public function sendEmail($companyId, $rater_email){
+    //     require '../config/dbconnect.php';  
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    
+    //     // Query the database for the rater's password
+    //     $stmt = $conn->prepare("SELECT password FROM " . $dbName . ".rater_list WHERE email = ? ORDER BY rater_id DESC LIMIT 1");            
+    //     $stmt->bind_param("s", $rater_email);
+    //     $stmt->execute();
+    //     $stmt->bind_result($password);
+    //     $stmt->fetch();
+    
+    //     if ($password) {
+    //         // Construct the link to the questionnaire
+    //         $link = 'http://localhost/assessment_360-main/member/assess360?a=questionnaire';
+    
+    //         // Construct the email message
+    //         $to = $rater_email;
+    //         $subject = "Automated Email";    
+    //         $from = 'do-not-reply@performve.com';        
+    //         $headers = "From: Performve <" . $from . ">\r\n";
+    //         $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+    //         $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+    //         $headers .= "MIME-Version: 1.0\r\n";
+    //         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";    
+    //         $body = "Dear ". $rater_email .",\n\nThis is an automated email sent to $to.\n\nBest regards,\nYour Name"." http://localhost/assessment_360-main/member/assess360?a=questionnaire.  Please click on the link below to access the questionnaire. You will need to enter the password provided below to access the questionnaire. Link:   " . $link . "\r\n" .  "    Password:   " . $password . "\r\n";
+    
+    //         // Send the email
+    //         mail($to, $subject, $body, $headers, "-f " . $from);
+    //     }
+    
+    //     // Close the database connection
+    //     $stmt->close();
+    //     $conn->close();
+    // }
+    public function sendEmail($companyId, $rater_email){
         require '../config/dbconnect.php';  
         if ($this->memberClass->isAdmin()) {
             $dbName = $this->memberClass->getCompanyDBById($companyId);
         } else {
             $dbName = $this->memberClass->getCompanyDB();
         }
-        $current_date = date('Y-m-d');
-      
-        // Loop continuously
-        
-            // Get the current date
-           
-      
-            // Query the database for emails to send today
-            $stmt = $conn->prepare("SELECT email FROM " . $dbName . ".focus WHERE start_date = ?");
-            $stmt->bind_param("s", $current_date);
-            $stmt->execute();
-            $result = $stmt->get_result();
-      
-            // Send the emails
-            while ($row = $result->fetch_assoc()) {
-                $to = $_POST["rows"][$i]["email"];
-                $subject = "Automated Email";    
-      
-                $from = 'do-not-reply@performve.com';        
-                $headers = "From: Performve <" . $from . ">\r\n";
-                $headers .= "Reply-To: Performve <" . $from . ">\r\n";
-                $headers .= "Return-Path: Performve <" . $from . ">\r\n";
-                $headers .= "MIME-Version: 1.0\r\n";
-                $headers .= "Content-Type: text/html; charset=UTF-8\r\n";    
-                $body = "Dear User,\n\nThis is an automated email sent to $to on $current_date.\n\nBest regards,\nYour Name";
-              
-                mail($to, $subject, $body, $headers, "-f " . $from);
-            }
-      
-            // Wait for 24 hours before checking again
-            //sleep(24 * 60 * 60);
-        
-      
+    
+        // Query the database for the rater's password
+        $stmt = $conn->prepare("SELECT password FROM " . $dbName . ".rater_list WHERE email = ? ORDER BY rater_id DESC LIMIT 1");            
+        $stmt->bind_param("s", $rater_email);
+        $stmt->execute();
+        $stmt->bind_result($password);
+        $stmt->fetch();
+    
+        if ($password) {
+            // Construct the link to the questionnaire
+            $link = 'http://localhost/assessment_360-main/member/assess360?a=questionnaire';
+    
+            // Construct the email message
+            $to = $rater_email;
+            $subject = "Automated Email";    
+            $from = 'do-not-reply@performve.com';        
+            $headers = "From: Performve <" . $from . ">\r\n";
+            $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+            $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";    
+            $body = "Dear ". $rater_email .",<br><br>This is an automated email sent to $to.<br><br>Best regards,<br>Your Name<br><br>Please click on the link below to access the questionnaire. You will need to enter the password provided below to access the questionnaire.<br><br><a href='" . $link . "'>" . $link . "</a><br><br>Password: " . $password;
+    
+            // Send the email
+            mail($to, $subject, $body, $headers, "-f " . $from);
+        }
+    
         // Close the database connection
         $stmt->close();
         $conn->close();
     }
+
+
+   
+
+
+
+    // public function generatePassword($companyId){
+    //     require '../config/dbconnect.php';  
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+
+    //             // Generate a random password for each rater in the `rater_list` table
+    //     $stmt = $conn->prepare("SELECT rater_id FROM ".$dbName. ".rater_list");
+    //     $stmt->execute();
+
+    //     while ($row = $stmt->fetch()) {
+    //         // Generate a random password
+    //         $password = bin2hex(random_bytes(8));
+
+    //         // Hash the password using the bcrypt algorith
+    //         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    //         // Update the `password` column in the `rater_list` table for the current rater
+    //         $stmt2 = $conn->prepare("UPDATE " .$dbName. ".rater_list SET password = ? WHERE rater_id = ?");
+    //         $stm2->bind_param("ss",$password,[$hashed_password, $row['rater_id']]);
+    //         $stmt2->execute();
+    //     }
+
+    //     $email = $_POST['email'];
+    //     $password = $_POST['password'];
+
+    //     // Connect to the database
+    //     //$pdo = new PDO('mysql:host=localhost;dbname=your_database_name', 'your_username', 'your_password');
+
+    //     // Retrieve the hashed password from the database for the given email
+    //     $stmt = $conn->prepare("SELECT password FROM " . $dbName . ".rater_list WHERE email = ?");
+    //     $stm2->bind_param("s",$password,$email);
+    //     $stmt->execute();
+    //     $row = $stmt->fetch();
+
+    //     // Verify the password
+    //     if (password_verify($password, $row['password'])) {
+    //         // Display the questionnaire
+    //         // ...
+    //         header("Location: questionnaireView.php");
+    //     } else {
+    //         // Display an error message
+    //         echo 'Invalid password.';
+    //     }
+    //     $stmt->close();
+    //     $conn->close();
+    // }
+
+    // public function generatePassword($companyId){
+    //     require '../config/dbconnect.php';  
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    
+    //     // Generate a random password for each rater in the `rater_list` table
+    //     $stmt = $conn->prepare("SELECT rater_id FROM ".$dbName. ".rater_list");
+    //     $stmt->execute();
+    
+    //     while ($row = $stmt->fetch()) {
+    //         // Generate a random password
+    //         $password = bin2hex(random_bytes(8));
+    
+    //         // Hash the password using the bcrypt algorithm
+    //         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    
+    //         // Update the `password` column in the `rater_list` table for the current rater
+    //         $stmt2 = $conn->prepare("UPDATE " .$dbName. ".rater_list SET password = ? WHERE rater_id = ?");
+    //         $stmt2->bind_param("ss", $hashed_password, $row['rater_id']);
+    //         $stmt2->execute();
+    //     }
+    
+    //     $email = $_POST['email'];
+    //     $password = $_POST['password'];
+    
+    //     // Connect to the database
+    //     //$pdo = new PDO('mysql:host=localhost;dbname=your_database_name', 'your_username', 'your_password');
+    
+    //     // Retrieve the hashed password from the database for the given email
+    //     $stmt = $conn->prepare("SELECT password FROM " . $dbName . ".rater_list WHERE email = ?");
+    //     $stmt->bind_param("s", $email);
+    //     $stmt->execute();
+    //     $row = $stmt->fetch_assoc();
+    
+    //     if ($row !== false) {
+    //         // Verify the password
+    //         if (password_verify($password, $row['password'])) {
+    //             // Display the questionnaire
+    //             // ...
+    //             header("Location: questionnaireView.php");
+    //         } else {
+    //             // Display an error message
+    //             echo 'Invalid password.';
+    //         }
+    //     } else {
+    //         // Display an error message
+    //         echo 'Email address not found.';
+    //     }
+    
+    //     $stmt->close();
+    //     $conn->close();
+    // }
+
+    // public function generatePassword($companyId) {
+    //     require '../config/dbconnect.php';  
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    
+    //     // Generate a random password for each rater in the `rater_list` table
+    //     $stmt = $conn->prepare("SELECT rater_id FROM ".$dbName. ".rater_list");
+    //     $stmt->execute();
+    
+    //     while ($row = $stmt->fetch()) {
+    //         // Generate a random password
+    //         $password = bin2hex(random_bytes(8));
+    
+    //         // Hash the password using the bcrypt algorithm
+    //         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    
+    //         // Update the `password` column in the `rater_list` table for the current rater
+    //         $stmt2 = $conn->prepare("UPDATE " .$dbName. ".rater_list SET password = ? WHERE rater_id = ?");
+    //         $stmt2->bind_param("ss", $hashed_password, $row['rater_id']);
+    //         $stmt2->execute();
+    //         $stmt2->close(); // Close the result set of the second prepared statement
+    //     }
+
+    //     $stmt->close();
+    //     $conn->close();
+    // }
+    // public function generatePassword($companyId) {
+        
+    //     require '../config/dbconnect.php';
+    // if ($this->memberClass->isAdmin()) {
+    //     $dbName = $this->memberClass->getCompanyDBById($companyId);
+    // } else {
+    //     $dbName = $this->memberClass->getCompanyDB();
+    // }
+
+  
+
+    // // Check for errors
+    // if ($conn->connect_error) {
+    //     die("Connection failed: " . $conn->connect_error);
+    // }
+
+    // // Prepare the SQL statement
+    // $stmt = $conn->prepare("SELECT rater_id FROM ".$dbName. ".rater_list");
+    // $stmt->execute();
+    // $result = $stmt->get_result();
+
+    // // Loop through the results and generate a random password for each rater
+    // while ($row = $result->fetch_assoc()) {
+    //     // Generate a random password
+    //     $password = bin2hex(random_bytes(8));
+
+    //     // Hash the password using the bcrypt algorithm
+    //     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    //     // Update the password for the current rater
+    //     $stmt2 = $conn->prepare("UPDATE " .$dbName. ".rater_list SET password=? WHERE rater_id=?");
+    //     $stmt2->bind_param("si", $hashed_password, $row['rater_id']);
+    //     $stmt2->execute();
+    //     $stmt2->close();
+    // }
+
+    // // Close the database connection
+    // $stmt->close();
+    // $conn->close();
+  
+       
+    // }
+
+    public function generatePassword($companyId) {
+        require '../config/dbconnect.php';
+        
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+      
+        // Check for errors
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+    
+        // Prepare the SQL statement
+        $stmt = $conn->prepare("SELECT rater_id FROM ".$dbName. ".rater_list");
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        // Loop through the results and generate a random password for each rater
+        while ($row = $result->fetch_assoc()) {
+            // Generate a random password
+            $random_chars = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 4);
+            $password = $random_chars . $dbName . $random_chars;
+    
+            // Hash the password using the bcrypt algorithm
+            //$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $hashed_password = encrypt($password);
+            
+
+    
+            // Update the password for the current rater
+            $stmt2 = $conn->prepare("UPDATE " .$dbName. ".rater_list SET password=? WHERE rater_id=?");
+            $stmt2->bind_param("si", $hashed_password, $row['rater_id']);
+            $stmt2->execute();
+            $stmt2->close();
+        }
+    
+        // Close the database connection
+        $stmt->close();
+        $conn->close();
+    }
+   
+       
+        
+    
+
+       
+
+
+   
+
+            
 
 
     // function printTable($companyId){

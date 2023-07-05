@@ -21,7 +21,7 @@ require("../classes/emailClass.php");
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
-$questionsClass = new QuestionsClass($login);
+$questionsClass = new QuestionsClass();
 //$emailClass = new emailClass($login);
 
 if ($login->isLoggedIn()) {
@@ -57,6 +57,16 @@ if ($login->isLoggedIn()) {
  
 
   if(isset($_POST["a"]) && $_POST["a"] == "activate"){
+    $listofratersClass->generatePassword($companyId);
+
+    
+  
+    
+    
+    
+
+   
+      
     
    
 
@@ -66,6 +76,12 @@ if ($login->isLoggedIn()) {
       
 
     for($i=0;$i<count($_POST["rows"]);$i++){ 
+      //$listofratersClass->sendEmail($companyId,$i); 
+      //$listofratersClass->sendAutomatedEmail($companyId,$i);
+      
+      
+      //$listofratersClass->generatePassword($companyId);
+      //$listofratersClass->setPassword($companyId);
 
 
     // $to = $_POST["rows"][$i]["email"];
@@ -80,6 +96,7 @@ if ($login->isLoggedIn()) {
     // mail($to, $subject, $body, $headers, "-f " . $from);
     //$listofratersClass->sendAutomatedEmail($companyId, $i);
       //$listofratersClass->sendAutomatedEmail($companyId, $i);
+   
     
 
 
@@ -88,19 +105,34 @@ if ($login->isLoggedIn()) {
     if($i == 0){
       $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
      
+     
+      $listofratersClass->generatePassword($companyId);  
+     
+     
+      
+    }
+    else{    
+        
+    
+
+       $listofratersClass->generatePassword($companyId);   
+
       
     }
 
       $focusID = $listofratersClass->getFocusId($companyId);
 
-
-
-      //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
+     
       $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
+     
 
-      //$listofratersClass-> insertFocusIdIntoRaterList($companyId);
-
+      
     }
+    $listofratersClass->generatePassword($companyId);
+    foreach ($_POST["rows"] as $row) {
+      $listofratersClass->sendEmail($companyId, $row["email"]);
+    }
+  
 
 
 
@@ -482,20 +514,31 @@ if ($login->isLoggedIn()) {
     $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY;
 
     include("../views/member/focuscompetencyView.php"); /////// you changed this from focuscompetencyView(serb)
-  } elseif (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
-    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
-      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
-    }
+  // } elseif (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
+  //   if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
+  //     $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+  //   }
 
-    $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
+  //   $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
-    include("../views/member/questionnaireView.php");
+  //   include("../views/member/questionnaireView.php");
   }
   //---------------------------------------------------------------------------------
 
   else {
-    $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
-    header('Location: ../login');
+    if (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
+      if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
+        $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+      }
+  
+      $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
+  
+      include("../views/member/questionnaireView.php");
+    }
+    else{
+      $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
+      header('Location: ../login');
+    }
   }
 }
 
