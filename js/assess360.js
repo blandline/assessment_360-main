@@ -1176,14 +1176,14 @@ $("body").on("click", ".test-btn", function () {
 
   // Create an array to store the data for each row
   var data_arr = [];
-
+  var comp_arr = [];
   // Loop through each row
   rows.forEach((row) => {
     // Get all the div elements with class "nowrap" within the row
     const divs = row.querySelectorAll("div.nowrap");
 
     // Create an array to store the text content of each div element in the row
-    var comp_arr = [];
+    
 
     // Loop through each div element and push its text content into the array
     divs.forEach((div) => {
@@ -1191,21 +1191,25 @@ $("body").on("click", ".test-btn", function () {
       if (!text.includes("Edit")) {
         text = text.substring(2);
         comp_arr.push(text);
+       
       }
     });
     
     // Push the array of text content into the data_arr array
-    data_arr.push(comp_arr);
+    
     
 
-    console.log(data_arr);
+    console.log(comp_arr);
+
+  
   });
+  var focusnumid = Number(focusCompId)
 
   // Create an AJAX request to send the array to the PHP file
       $.ajax({
         url: "assess360",
         data: { comp_arr: comp_arr,
-          focusCompId: focusCompId
+            focusCompId: focusnumid
         },
         type: "POST",
         dataType: "json",
@@ -1216,7 +1220,7 @@ $("body").on("click", ".test-btn", function () {
         // error: function(jqXHR, textStatus, errorThrown) {
         //     console.log(textStatus, errorThrown);
         // }
-      });
+      });  
 });
 
 ////////////////////////////////srb/////////////////////////////////

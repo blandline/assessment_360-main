@@ -7,7 +7,7 @@ require("../classes/Assess360Class.php");
 require("../vendor/autoload.php");
 require("../classes/listofratersClass.php");
 require("../classes/QuestionsClass.php");
-require("../classes/emailClass.php");
+
 // use Spipu\Html2Pdf\Html2Pdf;
 
 $login = new MemberClass();
@@ -411,14 +411,16 @@ if ($login->isLoggedIn()) {
 <!----------------------------------SARBULAND------------------------------------------------>
 <?
 // Get the company names from the AJAX request
-if (isset($_POST['comp_arr'])) {
+if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
   $comp_arr = $_POST['comp_arr'];
+  $focus_comp_add_id = $_POST['focusCompId'];
 
-  $result_arr = $questionsClass->getQuestions($comp_arr);
+ 
   // Loop through the company names and call the getquestion function on each one
   $questions = array();
   foreach ($comp_arr as $comp) {
-    $questionsClass->getsetQuestions($comp, $comp);
+    $string = print_r($comp,true);
+    $questionsClass->getsetQuestions($comp,$focus_comp_add_id);
     //$questions[] = $competency->getQuestions($companyId,$comp);
   }
 
@@ -613,24 +615,24 @@ else {
 
 <!----------------------------------SARBULAND------------------------------------------------>
 
-<?
-  // Get the company names from the AJAX request
-  if(isset($_POST['comp_arr'])){
-    $comp_arr = $_POST['comp_arr'];
-    $focus_comp_add_id = $_POST['focusCompId'];
+<!-- <?
+  // // Get the company names from the AJAX request
+  // if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
+  //   $comp_arr = $_POST['comp_arr'];
+  //   $focus_comp_add_id = $_POST['focusCompId'];
 
-    $result_arr = $questionsClass->getQuestions($comp_arr);
-    // Loop through the company names and call the getquestion function on each one
-    $questions = array();
-    foreach ($comp_arr as $comp) {
-      $questionsClass->getsetQuestions($comp,$focus_comp_add_id);
-      //$questions[] = $competency->getQuestions($companyId,$comp);
-    }
+  //   $result_arr = $questionsClass->getQuestions($comp_arr);
+  //   // Loop through the company names and call the getquestion function on each one
+  //   $questions = array();
+  //   foreach ($comp_arr as $comp) {
+  //     $questionsClass->getsetQuestions($comp,$focus_comp_add_id);
+  //     //$questions[] = $competency->getQuestions($companyId,$comp);
+  //   }
     
-    // Return the questions as a JSON response
-    // echo json_encode($questions);
-    echo json_encode($questions);
-  }
+  //   // Return the questions as a JSON response
+  //   // echo json_encode($questions);
+  //   echo json_encode($questions);
+  // } -->
   //-------------------------------------------------------------------------------
 
 ?>

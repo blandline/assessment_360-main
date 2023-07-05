@@ -73,7 +73,7 @@ class QuestionsClass
         }
     
         // Get focus information from the database
-        $focusQuery = "SELECT focus_first_name, focus_last_name, launch_date, end_date FROM `$dbName`.`focus` WHERE focus_id = ?";
+        $focusQuery = "SELECT focus_first_name, focus_last_name, start_date , end_date FROM `$dbName`.`focus` WHERE focus_id = ?";
         $stmt = $conn->prepare($focusQuery);
         $stmt->bind_param('i', $focus_id);
         $stmt->execute();
@@ -101,10 +101,10 @@ class QuestionsClass
         }
     
         // Insert questions and focus information into the database
-        $insertQuery = "INSERT INTO competency_questions (competency, question, focus_first_name, focus_last_name, launch_date, end_date) VALUES (?, ?, ?, ?, ?, ?)";
+        $insertQuery = "INSERT INTO competency_questions (competency, question, focus_first_name, focus_last_name, focus_id, launch_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insertQuery);
         for ($x = 0; $x < 3; $x++) {
-            $stmt->bind_param('ssssss', $arr_comp, $questions[$x], $focus_first_name, $focus_last_name, $start_date, $end_date);
+            $stmt->bind_param('ssssiss', $arr_comp, $questions[$x], $focus_first_name, $focus_last_name, $focus_id , $start_date, $end_date);
             $stmt->execute();
         }
         $stmt->close();
