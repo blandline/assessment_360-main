@@ -1,4 +1,6 @@
-<? include_once '../config/config.php'; ?>
+<?
+use Mpdf\Tag\IndexEntry;
+ include_once '../config/config.php'; ?>
 <? include_once '../member/header.php'; ?>
 
 <!DOCTYPE html>
@@ -89,18 +91,22 @@ $rater_id = 0; //getrateridbypwd
             //CHANGE LATER TO GET FOCUSID BY PWD
             $focus_id = 0;
             $competency_arr = $questionsClass->getCompetencyByFocusID($focus_id);
+            //$competency_id_arr = $questionsClass->getCompetencyIDByFocusID($focus_id);
             // $temp_title = $questionsClass->getCompetencyForQuestionnaire();
             $competency_def_arr = array();
+            $competency_id_arr = array();
             for ($i = 0; $i < count($competency_arr); $i++) {
                 $competency_def_arr[$i] = $questionsClass->getEnDespByCompetency($competency_arr[$i]);
+                $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
             }
-            $importanceofcompetencies_previousanswers_assocarr = $questionsClass->getImportanceOfCompetenciesAnswer($companyId, $rater_id);
-            if(isset($importanceofcompetencies_previousanswers_assocarr)){
-                $importanceofcompetencies_previousanswers = array();
+            $importanceofcompetencies_assocarr = $questionsClass->getImportanceOfCompetenciesAnswer($companyId, $rater_id);
+            $importanceofcompetencies_previousanswers = array();
+            if(isset($importanceofcompetencies_assocarr)){
                 for($i=0; $i<count($competency_arr); $i++){
-                    $importanceofcompetencies_previousanswers[$i] = isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) ? $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] : '';
+                    $importanceofcompetencies_previousanswers[$i] = isset($importanceofcompetencies_assocarr[$competency_id_arr[$i]]) ? $importanceofcompetencies_assocarr[$competency_id_arr[$i]] : "";
                 }
             }
+            //var_dump($importanceofcompetencies_previousanswers);
             for ($i = 0; $i < count($competency_arr); $i++) {
                 echo
                 "<div style='width: 100%; display: flex; justify-content: space-between;'>
@@ -120,11 +126,11 @@ $rater_id = 0; //getrateridbypwd
                             </tr>
                         </thead>" .
                         "<tr>
-                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='1'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 1 ? ' checked' : '') . "></td>
-                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='2'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 2 ? ' checked' : '') . "></td>
-                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='3'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 3 ? ' checked' : '') . "></td>
-                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='4'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 4 ? ' checked' : '') . "></td>
-                        <td style='border: 1px solid black; border-right: none; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='5'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 5 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='1'" . (isset($importanceofcompetencies_previousanswers[$i]) && $importanceofcompetencies_previousanswers[$i] == 1 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='2'" . (isset($importanceofcompetencies_previousanswers[$i]) && $importanceofcompetencies_previousanswers[$i] == 2 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='3'" . (isset($importanceofcompetencies_previousanswers[$i]) && $importanceofcompetencies_previousanswers[$i] == 3 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='4'" . (isset($importanceofcompetencies_previousanswers[$i]) && $importanceofcompetencies_previousanswers[$i] == 4 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; border-right: none; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='5'" . (isset($importanceofcompetencies_previousanswers[$i]) && $importanceofcompetencies_previousanswers[$i] == 5 ? ' checked' : '') . "></td>
                         </tr>" .
                     "</table>" .
                     "</div>" .

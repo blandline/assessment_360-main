@@ -1,11 +1,11 @@
 <?
 class QuestionsClass
 {
-    // private $memberClass;
+    private $memberClass;
 
-    public function __construct()
+    public function __construct($memberClass)
     {
-        // $this->memberClass = $memberClass;
+        $this->memberClass = $memberClass;
     }
     public function getQuestions($arr_comp)
     {
@@ -65,9 +65,15 @@ class QuestionsClass
     public function getsetQuestions($arr_comp, $focus_id)
     {
         require '../config/dbconnect.php';
+
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
     
         // Get focus information from the database
-        $focusQuery = "SELECT focus_first_name, focus_last_name, start_date, end_date FROM focuses WHERE focus_id = ?";
+        $focusQuery = "SELECT focus_first_name, focus_last_name, launch_date, end_date FROM `$dbName`.`focus` WHERE focus_id = ?";
         $stmt = $conn->prepare($focusQuery);
         $stmt->bind_param('i', $focus_id);
         $stmt->execute();
@@ -95,7 +101,7 @@ class QuestionsClass
         }
     
         // Insert questions and focus information into the database
-        $insertQuery = "INSERT INTO competency_questions (competency, question, focus_first_name, focus_last_name, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?)";
+        $insertQuery = "INSERT INTO competency_questions (competency, question, focus_first_name, focus_last_name, launch_date, end_date) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insertQuery);
         for ($x = 0; $x < 3; $x++) {
             $stmt->bind_param('ssssss', $arr_comp, $questions[$x], $focus_first_name, $focus_last_name, $start_date, $end_date);
@@ -247,6 +253,27 @@ class QuestionsClass
         $stmt->close();
         $conn->close();
         return $competencies;
+    }
+
+    public function getCompetencyIDByFocusID($focus_id){
+        require '../config/dbconnect.php';
+        $query = "SELECT DISTINCT question_base.comp_id 
+                    FROM competency_questions 
+                    JOIN question_base ON competency_questions.competency = question_base.sub_headings
+                    WHERE competency_questions.focus_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $focus_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $competenciesid_arr = array();
+        while ($row = $result->fetch_assoc()) {
+            $competenciesid_arr[] = $row['comp_id'];
+        }
+    
+        $stmt->close();
+        $conn->close();
+        return $competenciesid_arr;
     }
 
     public function getCompetencyIdByCompetency($competency){

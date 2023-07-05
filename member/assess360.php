@@ -14,7 +14,8 @@ require("../classes/emailClass.php");
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
-$questionsClass = new QuestionsClass();
+$questionsClass = new QuestionsClass($login);
+//$emailClass = new emailClass($login);
 
 if ($login->isLoggedIn()) {
   if ($login->isAdmin()) {
@@ -39,7 +40,6 @@ if ($login->isLoggedIn()) {
   //   header("Location: DataCenter.php");
   // }
   if(isset($_POST["a"]) && $_POST["a"] == "activate"){
-   // $listofratersClass->generatePassword($companyId);
     
    
 
@@ -51,27 +51,16 @@ if ($login->isLoggedIn()) {
     for($i=0;$i<count($_POST["rows"]);$i++){ 
 
 
-    if($i == 0){
-      $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-    
-      
-    }
-    
-    
-
+      if($i == 0){
+        $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+      }
       $focusID = $listofratersClass->getFocusId($companyId);
-
-     
+      //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
       $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
-      $listofratersClass->generatePassword($companyId);
      
 
       
     }
-
-    foreach ($_POST["rows"] as $row) {
-      $listofratersClass->sendEmail($companyId, $row["email"]);
-    };
 
 
 
@@ -80,7 +69,7 @@ if ($login->isLoggedIn()) {
 
 
     header("Location: welcome.php");
-    
+    // Data Center
   }
 
   // add/edit competency framework
@@ -409,7 +398,7 @@ if (isset($_POST['comp_arr'])) {
   // Loop through the company names and call the getquestion function on each one
   $questions = array();
   foreach ($comp_arr as $comp) {
-    $questionsClass->getsetQuestions($comp);
+    $questionsClass->getsetQuestions($comp,$comp);
     //$questions[] = $competency->getQuestions($companyId,$comp);
   }
 
@@ -476,16 +465,14 @@ if ($start < $total_questions) {
   if(isset($_POST["a"]) && $_POST["a"] == "submitImportanceOfCompetencies"){
     //Importance of Competencies
     $importance_of_competencies = isset($_POST['importance_of_competencies']) ? $_POST['importance_of_competencies'] : array();
-    for($i=0; $i<count($competency_arr); $i++){
-      $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
-    }
+    $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
     for($i=0;$i<count($competency_arr);$i++){ 
-      $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
-      if(isset($importance_of_competencies[$i]) && !$importance_of_competencies[$i]){
-        continue;
-      };
-      if(isset($importance_of_competencies[$i])){
+      $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
+      if(isset($importance_of_competencies[$i]) && $importance_of_competencies[$i] != ""){
         $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, $importance_of_competencies[$i]);
+      }
+      else{
+        $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, NULL);
       }
     }
   }
@@ -574,50 +561,13 @@ if ($start < $total_questions) {
 
     $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
-    include("../views/member/assess360questionnaireView.php");
+    include("../views/member/questionnaireView.php");
   }
   //---------------------------------------------------------------------------------
 
-  else {
-    $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
-    header('Location: ../login');
-  }
 }
-
-
-
-
-
-?>
-
-
-
-<!----------------------------------SARBULAND------------------------------------------------>
-
-<?
-  // Get the company names from the AJAX request
-  if(isset($_POST['comp_arr'])){
-    $comp_arr = $_POST['comp_arr'];
-    $focus_comp_add_id = $_POST['focusCompId'];
-
-    $result_arr = $questionsClass->getQuestions($comp_arr);
-    // Loop through the company names and call the getquestion function on each one
-    $questions = array();
-    foreach ($comp_arr as $comp) {
-      $questionsClass->getsetQuestions($comp);
-      //$questions[] = $competency->getQuestions($companyId,$comp);
-    }
-    
-    // Return the questions as a JSON response
-    // echo json_encode($questions);
-    echo json_encode($questions);
-  }
-  //-------------------------------------------------------------------------------
-
-?>
-
-
-
-<?
-  if(isset($_POST["a"]) && $_POST["a"] == "activate")
+else {
+  $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
+  header('Location: ../login');
+}
 ?>

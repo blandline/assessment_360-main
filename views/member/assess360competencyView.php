@@ -57,7 +57,7 @@ use Mpdf\Language\ScriptToLanguage;
             <? } ?>
           </div>
           <?
-            $focus_comp_id = $_GET['id'];
+            $focus_comp_id = isset($_GET['id'])?$_GET['id']:'';
             var_dump($focus_comp_id);
             
           ?>
