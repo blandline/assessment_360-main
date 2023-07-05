@@ -65,9 +65,15 @@ class QuestionsClass
     public function getsetQuestions($arr_comp, $focus_id)
     {
         require '../config/dbconnect.php';
+
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
     
         // Get focus information from the database
-        $focusQuery = "SELECT focus_first_name, focus_last_name, start_date, end_date FROM focuses WHERE focus_id = ?";
+        $focusQuery = "SELECT focus_first_name, focus_last_name, launch_date, end_date FROM `$dbName`.`focus` WHERE focus_id = ?";
         $stmt = $conn->prepare($focusQuery);
         $stmt->bind_param('i', $focus_id);
         $stmt->execute();
@@ -95,7 +101,7 @@ class QuestionsClass
         }
     
         // Insert questions and focus information into the database
-        $insertQuery = "INSERT INTO competency_questions (competency, question, focus_first_name, focus_last_name, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?)";
+        $insertQuery = "INSERT INTO competency_questions (competency, question, focus_first_name, focus_last_name, launch_date, end_date) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insertQuery);
         for ($x = 0; $x < 3; $x++) {
             $stmt->bind_param('ssssss', $arr_comp, $questions[$x], $focus_first_name, $focus_last_name, $start_date, $end_date);

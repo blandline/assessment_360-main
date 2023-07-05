@@ -577,7 +577,7 @@ else {
  }
 
  
-}
+
 
 
 
@@ -599,7 +599,7 @@ else {
     // Loop through the company names and call the getquestion function on each one
     $questions = array();
     foreach ($comp_arr as $comp) {
-      $questionsClass->getsetQuestions($comp);
+      $questionsClass->getsetQuestions($comp,$focus_comp_add_id);
       //$questions[] = $competency->getQuestions($companyId,$comp);
     }
     
