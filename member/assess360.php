@@ -484,15 +484,27 @@ if ($login->isLoggedIn()) {
 
     include("../views/member/questionnaireView.php");
   }
+  elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetencyselection") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION;
+
+    include("../views/member/focuscompetencyselectionView.php");
+  }
+
+  
   //---------------------------------------------------------------------------------
 
- else {
-  $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
-  header('Location: ../login');
- }
+ 
 
  
 }
+else {
+  $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
+  header('Location: ../login');
+ }
 
 
 
@@ -508,6 +520,7 @@ if ($login->isLoggedIn()) {
   // Get the company names from the AJAX request
   if(isset($_POST['comp_arr'])){
     $comp_arr = $_POST['comp_arr'];
+    $focus_comp_add_id = $_POST['focusCompId'];
 
     $result_arr = $questionsClass->getQuestions($comp_arr);
     // Loop through the company names and call the getquestion function on each one
@@ -523,4 +536,10 @@ if ($login->isLoggedIn()) {
   }
   //-------------------------------------------------------------------------------
 
+?>
+
+
+
+<?
+  if(isset($_POST["a"]) && $_POST["a"] == "activate")
 ?>

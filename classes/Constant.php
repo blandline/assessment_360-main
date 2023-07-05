@@ -284,6 +284,7 @@ $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER = "datacenter";
 $SESSION_PAGE_COMPETENCY_SELECTION = "selection";
 $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY = "focuscompetency";
 $SESSION_PAGE_QUESTIONNAIRE = "questionnaire";
+$SESSION_PAGE_FOCUS_COMPETENCY_SELECTION = "focuscompetencyselection";
 //------------------------------------------------------------------------
 
 // user setting

@@ -627,9 +627,9 @@ class listofratersClass
                 <td>' . $row["position"] . '</td>
                 <td>' . $row["start_date"] . '</td>
                 <td>' . $row["end_date"] . '</td>
-                <td><button class="btn btn-primary btn-sm goto-competency-selection" data-id="' . $row["focus_id"] . '">Competency Selection</button></td>
-                <td style="display:none">' . $row["focus_id"] . '</td>
+                <td><a class="btn btn-primary btn-sm goto-competency-selection" data_id="' . $row["focus_id"] . '" href="assess360?a=competency">Competency selection</a></td>
               </tr>';
+              
             }
         } else {
             echo '<tr><td colspan="7">No data available</td></tr>';

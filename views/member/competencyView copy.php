@@ -1,8 +1,4 @@
-<?
-
-use Mpdf\Language\ScriptToLanguage;
-
- include_once '../config/config.php'; ?>
+<? include_once '../config/config.php'; ?>
 <? include_once '../member/header.php'; ?>
 
 
@@ -56,14 +52,6 @@ use Mpdf\Language\ScriptToLanguage;
               </select>
             <? } ?>
           </div>
-          <?
-            $focus_comp_id = $_GET['id'];
-            var_dump($focus_comp_id);
-            
-          ?>
-          <script>
-            var focusCompId = <?php echo $focus_comp_id; ?>; 
-          </script>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>
@@ -77,7 +65,6 @@ use Mpdf\Language\ScriptToLanguage;
       <section id="competency-selection-page-button" class="competency-page">
       <div style="margin-top: 95px; position: absolute; right: 12px;">
         <button type="button" class="btn btn-primary test-btn"><?= $language["confirm_button"]; ?></button>
-        
       </div>
       </section>
       <div class="content search-competency-content">
@@ -88,7 +75,7 @@ use Mpdf\Language\ScriptToLanguage;
                 <div class="div-datatable-competency card-body table-responsive">
                   <section id="focus-selection-page" class="competency-page competency-page-active">
                     <form method="post" id="rateform" action="assess360">
-                    <!-- <? $listofratersClass->print_comp_selection_tb()?> -->
+                    <? $listofratersClass->print_comp_selection_tb()?>
                       <!-- <table id="raterlisttable" class="table table-hover" style="width:100%;">
                         <thead class="text-danger">
                           <tr>
@@ -227,10 +214,6 @@ use Mpdf\Language\ScriptToLanguage;
       </section>
     </div>
   </div>
-  <?
-    
-  ?>
- 
 
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
