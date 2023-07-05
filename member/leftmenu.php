@@ -30,6 +30,12 @@
         if ($isShowFocusCompetency) {
           $isViewFocusCompetency = isset($_SESSION[$session_page]) && $_SESSION[$session_page] == $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY;
         }
+
+        $isShowFocusCompetencySelection = !empty(@$_SESSION[$session_admin]) || (in_array($PACKAGE_ASSESS_360, $_SESSION[$session_package]) && $login->checkUserPermission($PERMISSION_ASSESS360_VIEW));
+        if ($isShowFocusCompetencySelection) {
+          $isViewFocusCompetencySelection = isset($_SESSION[$session_page]) && $_SESSION[$session_page] == $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION;
+        }
+        
       ?>
 
         <li class="nav-item">
@@ -75,6 +81,13 @@
                         <p><span style="font-weight:100;">•</span>&nbsp;&nbsp;&nbsp;<?= $language["leftmenu_competency_focus_competency"]; ?></p>
                       </a>
                     </div>
+                    <!--  -->
+                    <div class="bg-white py-2 collapse-inner rounded collapse-item-div sub-sub-nav">
+                      <a class="collapse-item <? if ($isViewFocusCompetencySelection) echo "leftMenuActive"; ?>" href="./assess360?a=focuscompetencyselection">
+                        <p><span style="font-weight:100;">•</span>&nbsp;&nbsp;&nbsp;Focus Selection</p>
+                      </a>
+                    </div>
+                    <!--  -->
                   </div>
                 </li>
               </ul>

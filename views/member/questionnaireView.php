@@ -12,8 +12,10 @@
 </head>
 
 <?
+//TEMP
 $role_arr = ["focus", "manager", "colleague", "direct report", "others"];
-$role = $role_arr[2];
+$role = $role_arr[1];
+$rater_id = 0; //getrateridbypwd
 ?>
 
 <body class="questionnaire-body">
@@ -36,7 +38,7 @@ $role = $role_arr[2];
             </div>
         </div>
     </div>
-    <form>
+    <form method="post" id="questionnaire_form" action="assess360">
         <section id="intro-page" class="questionnaire-page questionnaire-page-active">
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
@@ -84,39 +86,46 @@ $role = $role_arr[2];
             </div>
             <!-- TODO list of competencies -->
             <?
-            //$focus_id = $listofratersClass->getFocusId($companyId);
+            //CHANGE LATER TO GET FOCUSID BY PWD
             $focus_id = 0;
-            $temp_title = $questionsClass->getCompetencyByFocusID($focus_id);
+            $competency_arr = $questionsClass->getCompetencyByFocusID($focus_id);
             // $temp_title = $questionsClass->getCompetencyForQuestionnaire();
-            $temp_definition = array();
-            for ($i = 0; $i < count($temp_title); $i++) {
-                $temp_definition[$i] = $questionsClass->getEnDespByCompetency($temp_title[$i]);
+            $competency_def_arr = array();
+            for ($i = 0; $i < count($competency_arr); $i++) {
+                $competency_def_arr[$i] = $questionsClass->getEnDespByCompetency($competency_arr[$i]);
             }
-            for ($i = 0; $i < count($temp_title); $i++) {
+            $importanceofcompetencies_previousanswers_assocarr = $questionsClass->getImportanceOfCompetenciesAnswer($companyId, $rater_id);
+            if(isset($importanceofcompetencies_previousanswers_assocarr)){
+                $importanceofcompetencies_previousanswers = array();
+                for($i=0; $i<count($competency_arr); $i++){
+                    $importanceofcompetencies_previousanswers[$i] = isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) ? $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] : '';
+                }
+            }
+            for ($i = 0; $i < count($competency_arr); $i++) {
                 echo
                 "<div style='width: 100%; display: flex; justify-content: space-between;'>
                     <div class='questionnaire_importanceofcompetency_component' style=' width:80%; display: inline-block; vertical-align: middle; border: 1px solid black;'>" .
-                    "<div class='questionnaire_importanceofcompetency_title' style='font-family: `Calibri`; font-size: 14px; font-weight: bold; padding-left: 5px;'>" . $temp_title[$i] . "</div>" .
-                    "<div class='questionnaire_importanceofcompetency_definition' style='font-family: `Calibri`; font-size: 12px; padding-left: 5px;'>" . $temp_definition[$i] . "</div>" .
+                    "<div class='questionnaire_importanceofcompetency_title' style='font-family: `Calibri`; font-size: 14px; font-weight: bold; padding-left: 5px;'>" . $competency_arr[$i] . "</div>" .
+                    "<div class='questionnaire_importanceofcompetency_definition' style='font-family: `Calibri`; font-size: 12px; padding-left: 5px;'>" . $competency_def_arr[$i] . "</div>" .
                     "</div>" .
                     "<div class='questionnaire_importanceofcompetency_table' style='display: inline-block; vertical-align: middle; margin-left: 10px;'>" .
                     "<table style=' width:20%; border: 1px solid black;'>
-                                <thead>
-                                    <tr>
-                                        <th style='text-align: center;'>1</th>
-                                        <th style='text-align: center;'>2</th>
-                                        <th style='text-align: center;'>3</th>
-                                        <th style='text-align: center;'>4</th>
-                                        <th style='text-align: center;'>5</th>
-                                    </tr>
-                                </thead>" .
-                    "<tr>
-                                    <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='1'></td>
-                                    <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='2'></td>
-                                    <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='3'></td>
-                                    <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='4'></td>
-                                    <td style='border: 1px solid black; border-right: none; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='5'></td>
-                                </tr>" .
+                        <thead>
+                            <tr>
+                                <th style='text-align: center;'>1</th>
+                                <th style='text-align: center;'>2</th>
+                                <th style='text-align: center;'>3</th>
+                                <th style='text-align: center;'>4</th>
+                                <th style='text-align: center;'>5</th>
+                            </tr>
+                        </thead>" .
+                        "<tr>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='1'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 1 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='2'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 2 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='3'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 3 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='4'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 4 ? ' checked' : '') . "></td>
+                        <td style='border: 1px solid black; border-right: none; padding-right: 15px; padding-left: 15px;'><input type='radio' name='importanceofcompetencies[{$i}]' value='5'" . (isset($importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]]) && $importanceofcompetencies_previousanswers_assocarr[$competency_arr[$i]] == 5 ? ' checked' : '') . "></td>
+                        </tr>" .
                     "</table>" .
                     "</div>" .
                     "</div>";
@@ -170,13 +179,12 @@ $role = $role_arr[2];
                         </thead>
 
                         <?
-                        $result_arr = $questionsClass->getQuestionsForQuestionnaire();
-
-                        $total_questions = count($result_arr);
+                        $questions_arr = $questionsClass->getQuestionsForQuestionnaire();
+                        $total_questions = count($questions_arr);
                         $questions_per_page = 5;
                         $total_pages = ceil($total_questions / $questions_per_page);
 
-                        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+                        $page = isset($_POST['page']) ? $_POST['page'] : 1;
                         $start = ($page - 1) * $questions_per_page;
                         $end = $start + $questions_per_page - 1;
 
@@ -185,7 +193,7 @@ $role = $role_arr[2];
                         for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
                             $table .=
                                 "<tr style='font-size: 14px;'>
-                                <td style='border: 1px solid black; padding-left: 5px;'>{$result_arr[$i]}</td>
+                                <td style='border: 1px solid black; padding-left: 5px;'>{$questions_arr[$i]}</td>
                                 <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='1'></td>
                                 <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='2'></td>
                                 <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='3'></td>
@@ -202,17 +210,26 @@ $role = $role_arr[2];
                 <div id="competency-statements-pagination" style="display: flex; justify-content: center; margin-top: 20px;">
                     <? if ($total_pages > 1) : ?>
                         <ul class="pagination">
-                            <li class="page-item disabled"><a class="page-link" style="color:#2196f3;" onclick="changePage(<? echo $page - 1; ?>)"><? echo $language["questionnaire_pagination_previous"]; ?></a></li>
+                            <li class="page-item <? echo $page == 1 ? 'disabled' : ''; ?>">
+                                <a class="page-link" href="javascript:void(0);" data-page="<? echo $page - 1; ?>">
+                                    <? echo $language['questionnaire_pagination_previous']; ?>
+                                </a>
+                                <? echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';?>
+                            </li>
                             <? for ($i = 1; $i <= min(5, $total_pages); $i++) : ?>
-                                <? if ($i == $page) : ?>
-                                    <li class="page-item active"><a class="page-link"><? echo $i; ?></a></li>
-                                <? else : ?>
-                                    <li class="page-item"><a class="page-link"  style="color:#2196f3;" onclick="changePage(<? echo $i; ?>)"><? echo $i; ?></a></li>
-                                <? endif; ?>
+                                <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                                    <a class="page-link" href="javascript:void(0);" data-page="<? echo $i; ?>">
+                                        <? echo $i; ?>
+                                    </a>
+                                    <? echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';?>
+                                </li>
                             <? endfor; ?>
-                            <? if ($page < $total_pages) : ?>
-                                <li class="page-item"><a class="page-link" style="color:#2196f3;" onclick="changePage(<? echo $page + 1; ?>)"><? echo $language["questionnaire_pagination_next"]; ?></a></li>
-                            <? endif; ?>
+                            <li class="page-item <?php echo $page == $total_pages ? 'disabled' : ''; ?>">
+                                <a class="page-link" href="javascript:void(0);" data-page="<? echo $page + 1; ?>">
+                                    <? echo $language['questionnaire_pagination_next']; ?>
+                                </a>
+                                <? echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';?>
+                            </li>
                         </ul>
                     <? endif; ?>
                 </div>
@@ -221,80 +238,19 @@ $role = $role_arr[2];
             <?
             if ($role == "manager") {
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"], '</a></button>';
+                echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
             } elseif ($role == "focus") {
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"], '</a></button>';
+                // echo '<input type="hidden" name="a" value="submitQuestionnaire"> ';
+                //TODO HERE
                 echo '<button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button">', $language["questionnaire_finish_button"], '</button>';
             } else {
+                echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
             }
             ?>
         </section>
-
-        <script>
-            function changePage(page) {
-                $.ajax({
-                    url: 'assess360',
-                    type: 'GET',
-                    data: {
-                        page: page,
-                        questions_per_page: <?php echo $questions_per_page; ?>,
-                        total_questions: <?php echo $total_questions; ?>,
-                        result_arr: JSON.stringify(<?php echo json_encode($result_arr); ?>)
-                    },
-                    success: function(html) {
-                        $('#competency-statements-container').html(html);
-                        total_pages = <?php echo $total_pages; ?>;
-                        updatePaginationLinks(page);
-                    }
-                });
-            }
-
-            function updatePaginationLinks(currentPage) {
-                var paginationLinks = $('#competency-statements-pagination .pagination');
-                paginationLinks.empty();
-                if (total_pages > 1) {
-                    var prevLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);"><?php echo $language["questionnaire_pagination_previous"]; ?></a></li>');
-                    if (currentPage > 1) {
-                        prevLink.click(function() {
-                            changePage(currentPage - 1);
-                        });
-                    } else {
-                        prevLink.addClass('disabled');
-                    }
-                    paginationLinks.append(prevLink);
-                    var maxLinks = 5;
-                    var startLink = Math.max(1, currentPage - 2);
-                    var endLink = Math.min(total_pages, startLink + maxLinks - 1);
-                    startLink = Math.max(1, endLink - maxLinks + 1);
-                    for (var i = startLink; i <= endLink; i++) {
-                        var pageLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);">' + i + '</a></li>');
-                        if (i == currentPage) {
-                            pageLink.addClass('active');
-                        } else {
-                            pageLink.click(function() {
-                                currentPage = parseInt($(this).text()); // update the currentPage variable
-                                changePage($(this).text());
-                            });
-                        }
-                        paginationLinks.append(pageLink);
-                    }
-                    var nextLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);"><?php echo $language["questionnaire_pagination_next"]; ?></a></li>');
-                    if (currentPage < total_pages) {
-                        nextLink.click(function() {
-                            if (currentPage < total_pages) {
-                                currentPage++; // update the currentPage variable
-                                changePage(currentPage);
-                            }
-                        });
-                    } else {
-                        nextLink.addClass('disabled');
-                    }
-                    paginationLinks.append(nextLink);
-                }
-            }
-        </script>
-
         <section id="open-end-question-page" class="questionnaire-page">
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
@@ -310,14 +266,16 @@ $role = $role_arr[2];
             <!-- --------------------------- YES/NO BUTTONS ----------------------------- -->
             <!--<div class="questionnaire_openendquestion_discuss_container" style="display:inline-block;">-->
             <?= $language["questionnaire_openendquestion_paragraph2"] ?>
-            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="yes"><?= $language["questionnaire_openendquestion_discuss_yes"] ?></label>
-            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="no"><?= $language["questionnaire_openendquestion_discuss_no"] ?></label>
+            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="1"><?= $language["questionnaire_openendquestion_discuss_yes"] ?></label>
+            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="0"><?= $language["questionnaire_openendquestion_discuss_no"] ?></label>
             <!--</div>-->
             <!-- ------------------------------------------------------------------------- -->
             <?= $language["questionnaire_openendquestion_finish"] ?>
             <button class="btn btn-primary btn-sm questionnaire-openendquestion-previous"><a style="color:white;" href="#competency-statements-page"><?= $language["questionnaire_previous_button"] ?></a></button>
-            <button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button"><?= $language["questionnaire_finish_button"] ?></button>
-        </section>
+            <input type="hidden" name="a" value="submitopenendquestion"> 
+            <!-- <button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button"><?= $language["questionnaire_finish_button"] ?></button> -->
+            <input class="btn btn-success btn-sm addButton competency-add-btn questionnaire-openendquestion-finish" type="submit">
+        </section> 
     </form>
 
     <script src="../assets/js/core/jquery.min.js"></script>
@@ -343,7 +301,12 @@ $role = $role_arr[2];
     <script src="../lib/dataTables/js/dataTables.min.js"></script>
     <script src="../js/lang/<?= $_COOKIE['lang'] ?>.js?v=<?= $jsVersion; ?>"></script>
     <script src="../<?= $jspath; ?>/assess360.js?v=<?= $jsVersion; ?>"></script>
-    <script>
+    <script> 
+        competency_arr = <? echo json_encode($competency_arr) ?>;
+        questions_per_page = <? echo $questions_per_page?>;
+        total_questions = <? echo $total_questions?>;
+        total_pages = <? echo $total_pages; ?>;
+        questions_arr = <? echo json_encode($questions_arr) ?>;
         var Questionnaire = new Questionnaire();
     </script>
 </body>

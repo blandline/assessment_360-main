@@ -284,6 +284,7 @@ $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER = "datacenter";
 $SESSION_PAGE_COMPETENCY_SELECTION = "selection";
 $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY = "focuscompetency";
 $SESSION_PAGE_QUESTIONNAIRE = "questionnaire";
+$SESSION_PAGE_FOCUS_COMPETENCY_SELECTION = "focuscompetencyselection";
 //------------------------------------------------------------------------
 
 // user setting
@@ -498,3 +499,11 @@ $MPF_TYPE_EMPLOYER = 1;
 $CW_RECORD_STATUS_UNAPPROVE = 0;
 $CW_RECORD_STATUS_APPROVED = 1;
 $CW_RECORD_STATUS_PAID = 2;
+
+//----------------------------------NEW---------------------------------------
+//Questionnaire question type
+$QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY = 0;
+$QUESTIONNAIRE_COMPETENCY_STATEMENTS = 1;
+$QUESTIONNAIRE_OPEN_END_QUESTION = 2;
+$QUESTIONNAIRE_YESNO_DISCUSS = 3;
+//----------------------------------------------------------------------------
