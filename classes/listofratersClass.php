@@ -912,7 +912,7 @@ class listofratersClass
     
             // Hash the password using the bcrypt algorithm
             //$hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $hashed_password = encrypt($password);
+            $hashed_password = Mcrpty::_encrypt($password);
             
 
     

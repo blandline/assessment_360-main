@@ -61,6 +61,7 @@ if ($login->isLoggedIn()) {
       //$listofratersClass-> insertFocusIdIntoRaterList($companyId);
     }
     header("Location: welcome.php");
+    $listofratersClass->generatePassword($companyId);
     // Data Center
   }
 

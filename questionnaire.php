@@ -1,9 +1,11 @@
 <?
 use Mpdf\Tag\Br;
-require("classes/MemberClass.php");
-require("classes/QuestionsClass.php");
-require("vendor/autoload.php");
-require("lang/en.php");
+include_once("classes/MemberClass.php");
+include_once("classes/QuestionsClass.php");
+include_once("vendor/autoload.php");
+include_once("lang/en.php");
+include_once("classes/Constant.php");
+include_once("classes/Session.php");
 include_once ("classes/Encryption.php");
 // use Spipu\Html2Pdf\Html2Pdf;
 $login = new MemberClass();
@@ -127,15 +129,14 @@ if ($start < $total_questions) {
 ?>
 <?
   //------------------------------------NEW----------------------------------------
-  if (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
     }
 
     $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
-    include("../views/member/questionnaireView.php");
-  }
+    include("views/member/questionnaireView.php");
+
   //---------------------------------------------------------------------------------
 
 // }
