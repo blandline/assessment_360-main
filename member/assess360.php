@@ -390,7 +390,7 @@ if (isset($_POST['comp_arr'])) {
   // Loop through the company names and call the getquestion function on each one
   $questions = array();
   foreach ($comp_arr as $comp) {
-    $questionsClass->getsetQuestions($comp, $comp);
+    $questionsClass->getsetQuestions($comp,$comp);
     //$questions[] = $competency->getQuestions($companyId,$comp);
   }
 
@@ -554,16 +554,15 @@ if ($start < $total_questions) {
     $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
     include("../views/member/questionnaireView.php");
-
   }elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetencyselection") {
-    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION) {
-      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
-    }
-
-    $_SESSION[$session_page] = $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION;
-
-    include("../views/member/focuscompetencyselectionView.php");
+  if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION) {
+    $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
   }
+
+  $_SESSION[$session_page] = $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION;
+
+  include("../views/member/focuscompetencyselectionView.php");
+}
   //---------------------------------------------------------------------------------
 
 }
