@@ -584,13 +584,23 @@ if ($start < $total_questions) {
     $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
     include("../views/member/questionnaireView.php");
+
+  }elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetencyselection") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION;
+
+    include("../views/member/focuscompetencyselectionView.php");
   }
   //---------------------------------------------------------------------------------
 
-  else {
-    $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
-    header('Location: ../login');
-  }
+  
+}
+else {
+  $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
+  header('Location: ../login');
 }
 
 
@@ -628,5 +638,5 @@ if ($start < $total_questions) {
 
 
 <?
-  if(isset($_POST["a"]) && $_POST["a"] == "activate")
+  if(isset($_POST["a"]) && $_POST["a"] == "activate");
 ?>
