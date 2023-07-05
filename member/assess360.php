@@ -13,7 +13,7 @@ require("../classes/emailClass.php");
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
-$questionsClass = new QuestionsClass();
+$questionsClass = new QuestionsClass($login);
 //$emailClass = new emailClass($login);
 
 if ($login->isLoggedIn()) {
@@ -418,7 +418,7 @@ if (isset($_POST['comp_arr'])) {
   // Loop through the company names and call the getquestion function on each one
   $questions = array();
   foreach ($comp_arr as $comp) {
-    $questionsClass->getsetQuestions($comp);
+    $questionsClass->getsetQuestions($comp, $comp);
     //$questions[] = $competency->getQuestions($companyId,$comp);
   }
 
