@@ -1,12 +1,12 @@
 <?
 use Mpdf\Tag\Br;
-include_once("classes/MemberClass.php");
-include_once("classes/QuestionsClass.php");
-include_once("vendor/autoload.php");
-include_once("lang/en.php");
-include_once("classes/Constant.php");
-include_once("classes/Session.php");
-include_once ("classes/Encryption.php");
+include_once("../classes/MemberClass.php");
+include_once("../classes/QuestionsClass.php");
+include_once("../vendor/autoload.php");
+include_once("../lang/en.php");
+include_once("../classes/Constant.php");
+include_once("../classes/Session.php");
+include_once ("../classes/Encryption.php");
 // use Spipu\Html2Pdf\Html2Pdf;
 $login = new MemberClass();
 $questionsClass = new QuestionsClass($login);
@@ -81,16 +81,14 @@ if ($start < $total_questions) {
   if(isset($_POST["a"]) && $_POST["a"] == "submitImportanceOfCompetencies"){
     //Importance of Competencies
     $importance_of_competencies = isset($_POST['importance_of_competencies']) ? $_POST['importance_of_competencies'] : array();
-    for($i=0; $i<count($competency_arr); $i++){
-      $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
-    }
+    $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
     for($i=0;$i<count($competency_arr);$i++){ 
-      $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
-      if(isset($importance_of_competencies[$i]) && !$importance_of_competencies[$i]){
-        continue;
-      };
-      if(isset($importance_of_competencies[$i])){
+      $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
+      if(isset($importance_of_competencies[$i]) && $importance_of_competencies[$i] != ""){
         $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, $importance_of_competencies[$i]);
+      }
+      else{
+        $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, NULL);
       }
     }
   }
@@ -129,13 +127,7 @@ if ($start < $total_questions) {
 ?>
 <?
   //------------------------------------NEW----------------------------------------
-    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
-      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
-    }
-
-    $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
-
-    include("views/member/questionnaireView.php");
+    include("../views/member/questionnaireView.php");
 
   //---------------------------------------------------------------------------------
 
