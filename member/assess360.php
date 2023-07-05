@@ -13,7 +13,7 @@ require("../classes/emailClass.php");
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
-$questionsClass = new QuestionsClass($login);
+$questionsClass = new QuestionsClass();
 //$emailClass = new emailClass($login);
 
 if ($login->isLoggedIn()) {
@@ -39,27 +39,55 @@ if ($login->isLoggedIn()) {
   //   header("Location: DataCenter.php");
   // }
   if(isset($_POST["a"]) && $_POST["a"] == "activate"){
+    
+   
+
+    
+    
+  
+      
+
     for($i=0;$i<count($_POST["rows"]);$i++){ 
-      // $to = $_POST["rows"][$i]["email"];
-      // $subject = "Title";
-      // $from = 'do-not-reply@performve.com';
-      // $body = "Hi";
-      // $headers = "From: Performve <" . $from . ">\r\n";
-      // $headers .= "Reply-To: Performve <" . $from . ">\r\n";
-      // $headers .= "Return-Path: Performve <" . $from . ">\r\n";
-      // $headers .= "MIME-Version: 1.0\r\n";
-      // $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-      // mail($to, $subject, $body, $headers, "-f " . $from);
+
+
+    // $to = $_POST["rows"][$i]["email"];
+    // $subject = "Title";
+    // $from = 'do-not-reply@performve.com';
+    // $body = "Hi";
+    // $headers = "From: Performve <" . $from . ">\r\n";
+    // $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+    // $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+    // $headers .= "MIME-Version: 1.0\r\n";
+    // $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    // mail($to, $subject, $body, $headers, "-f " . $from);
+    //$listofratersClass->sendAutomatedEmail($companyId, $i);
       //$listofratersClass->sendAutomatedEmail($companyId, $i);
-        //$listofratersClass->sendAutomatedEmail($companyId, $i);
-      if($i == 0){
-        $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-      }
-      $focusID = $listofratersClass->getFocusId($companyId);
-      //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
-      $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
-      //$listofratersClass-> insertFocusIdIntoRaterList($companyId);
+    
+
+
+
+
+    if($i == 0){
+      $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+     
+      
     }
+
+      $focusID = $listofratersClass->getFocusId($companyId);
+
+     
+      $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
+     
+
+      
+    }
+
+
+
+
+
+
+
     header("Location: welcome.php");
     // Data Center
   }
@@ -557,27 +585,13 @@ if ($start < $total_questions) {
 
     include("../views/member/questionnaireView.php");
   }
-  elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetencyselection") {
-    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION) {
-      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
-    }
-
-    $_SESSION[$session_page] = $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION;
-
-    include("../views/member/focuscompetencyselectionView.php");
-  }
-
-  
   //---------------------------------------------------------------------------------
 
+  else {
+    $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
+    header('Location: ../login');
+  }
 }
-else {
-  $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
-  header('Location: ../login');
- }
-
- 
-
 
 
 

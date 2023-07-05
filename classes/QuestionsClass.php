@@ -1,11 +1,11 @@
 <?
 class QuestionsClass
 {
-    private $memberClass;
+    // private $memberClass;
 
-    public function __construct(MemberClass $memberClass)
+    public function __construct()
     {
-        $this->memberClass = $memberClass;
+        // $this->memberClass = $memberClass;
     }
     public function getQuestions($arr_comp)
     {
