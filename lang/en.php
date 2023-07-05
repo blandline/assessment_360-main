@@ -3181,6 +3181,8 @@ $language["questionnaire_competencystatements_paragraph0"] = "<p>Evaluate each s
 $language["questionnaire_competencystatements_paragraph1"] = "<p>1 : strong development needed <br>2 : development needed <br>3 : competent <br>4 : strength <br>5 : exceptional strength <br></p>";
 $language["questionnaire_competencystatements_paragraph2"] = "My observation on Focus";
 $language["questionnaire_competencystatements_paragraph3"] = "X : not enough observation";
+$language["questionnaire_pagination_previous"] = "Previous";
+$language["questionnaire_pagination_next"] = "Next";
 
 //Open-end Question page
 //$language["questionnaire_openendquestion"] = "OPEN-END QUESTION ON FOCUS";

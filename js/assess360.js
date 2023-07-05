@@ -763,8 +763,76 @@ var Raterlist = function () {
 };
 
 var Questionnaire = function () {
-  jQuery(document).ready(function ($) {
-    ac = $("#ac").length > 0 ? $("#ac").val() : -1;
+    function changePage(page, questions_per_page, total_questions, questions_arr, total_pages) {
+        $.ajax({
+            url: 'assess360',
+            // url: '../questionnaire',
+            type: 'POST',
+            data: {
+                page: page,
+                questions_per_page: questions_per_page,
+                total_questions: total_questions,
+                questions_arr: JSON.stringify(questions_arr)
+            },
+            success: function(html) {
+                $('#competency-statements-container').html(html);
+                updatePaginationLinks(page, total_pages);
+            }
+        });
+    }
+    
+    function onPageChange(page) {
+        changePage(page, questions_per_page, total_questions, questions_arr, total_pages);
+    }
+    
+    function updatePaginationLinks(currentPage, total_pages) {
+        var paginationLinks = $('#competency-statements-pagination .pagination');
+        paginationLinks.empty();
+        if (total_pages > 1) {
+            var prevLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);" data-page="' + (currentPage - 1) + '">' + lang["questionnaire_pagination_previous"] + '</a></li>');
+            if (currentPage > 1) {
+                prevLink.find('a').click(function(event) {
+                    event.preventDefault();
+                    onPageChange(currentPage - 1);
+                });
+            } else {
+                prevLink.addClass('disabled');
+            }
+            paginationLinks.append(prevLink);
+            var maxLinks = 5;
+            var startLink = Math.max(1, currentPage - 2);
+            var endLink = Math.min(total_pages, startLink + maxLinks - 1);
+            startLink = Math.max(1, endLink - maxLinks + 1);
+            for (var i = startLink; i <= endLink; i++) {
+                var pageLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);" data-page="' + i + '">' + i + '</a></li>');
+                if (i == currentPage) {
+                    pageLink.addClass('active');
+                } else {
+                    pageLink.find('a').click(function(event) {
+                        event.preventDefault();
+                        currentPage = parseInt($(this).data('page')); // update the currentPage variable
+                        onPageChange(currentPage);
+                    });
+                }
+                paginationLinks.append(pageLink);
+            }
+            var nextLink = $('<li class="page-item"><a class="page-link" href="javascript:void(0);" data-page="' + (currentPage + 1) + '">' + lang["questionnaire_pagination_next"] + '</a></li>');
+            if (currentPage < total_pages) {
+                nextLink.find('a').click(function(event) {
+                    event.preventDefault();
+                    if (currentPage < total_pages) {
+                        currentPage++; // update the currentPage variable
+                        onPageChange(currentPage);
+                    }
+                });
+            } else {
+                nextLink.addClass('disabled');
+            }
+            paginationLinks.append(nextLink);
+        }
+    }
+    jQuery(document).ready(function ($) {
+        ac = $("#ac").length > 0 ? $("#ac").val() : -1;
 
     $("#ac").change(function () {
       var form = document.createElement("form");
@@ -906,16 +974,145 @@ var Questionnaire = function () {
           // Set the value of the text area to the truncated string
           $(this).val(newValue);
 
-          // Disable the text area to prevent further input
-          alert("You have reached the maximum word limit of 100.");
-        } else {
-          // Enable the text area if the word limit is not reached
-          $(this).attr("disabled", false);
-        }
-      }
-    );
-  });
-};
+                    // Disable the text area to prevent further input
+                    alert("You have reached the maximum word limit of 100.");
+                } else {
+                    // Enable the text area if the word limit is not reached
+                    $(this).attr("disabled", false);
+                }
+        });
+
+        //-------------------------Competency Statements------------------------------------
+        $('a[href="javascript:void(0);"]').click(function (event) {
+            event.preventDefault();
+            var page = $(this).data('page');
+            onPageChange(page);
+        });
+        //----------------------------------------------------------------------------------
+        $("body").on("click", ".confirm-yes", function (event) {
+            event.preventDefault();
+            var selected_inputs = $('input[type=radio]:checked');
+            var importance_of_competencies = {};
+            selected_inputs.each(function(index, input) {
+                importance_of_competencies[index] = input.value;
+            });
+            $.ajax({
+                url: 'assess360',
+                // url: '../questionnaire',
+                data: {
+                    'importance_of_competencies': importance_of_competencies,
+                    'competency_arr': JSON.stringify(competency_arr),
+                    'a': 'submitImportanceOfCompetencies',
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                },
+            });
+        });
+        $("body").on("click", ".page-link", function (event) {
+            event.preventDefault();
+            var selected_inputs_competency_statements = $('input[type=radio]:checked');
+            var competency_statements = {};
+            selected_inputs_competency_statements.each(function(index, input) {
+                var name = input.name;
+                var matches = name.match(/\[(\d+)\]/);
+                if (matches && matches.length > 1) {
+                    var inputIndex = parseInt(matches[1]);
+                    competency_statements[inputIndex] = input.value;
+                }
+            });
+            $.ajax({
+                url: 'assess360',
+                // url: '../questionnaire',
+                data: {
+                    'competency_statements': competency_statements,
+                    'questions_arr': JSON.stringify(questions_arr),
+                    'a': 'submitCompetencyStatements',
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                },
+            });
+        });
+        $("body").on("click", ".questionnaire-competencystatement-next", function (event) {
+            event.preventDefault();
+            var selected_inputs_competency_statements = $('input[type=radio]:checked');
+            var competency_statements = {};
+            selected_inputs_competency_statements.each(function(index, input) {
+                var name = input.name;
+                var matches = name.match(/\[(\d+)\]/);
+                if (matches && matches.length > 1) {
+                    var inputIndex = parseInt(matches[1]);
+                    competency_statements[inputIndex] = input.value;
+                }
+            });
+            $.ajax({
+                url: 'assess360',
+                // url: '../questionnaire',
+                data: {
+                    'competency_statements': competency_statements,
+                    'questions_arr': JSON.stringify(questions_arr),
+                    'a': 'submitCompetencyStatements',
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                },
+            });
+        });
+        // FOR FINISH BUTTON IN THE COMPETENCY STATEMENTS
+        // $("body").on("click", ".questionnaire-competencystatement-next", function (event) {
+
+        // });
+        $("body").on("click", ".questionnaire-openendquestion-finish", function (event) {
+            event.preventDefault();
+            var openend_question_result = $('textarea[name="questionnaire_openendquestion"]').val();;
+            var selected_inputs = $('input[type=radio]:checked');
+            var questionnaire_yesno_discuss = selected_inputs.length > 0 ? parseInt(selected_inputs.val()) : null;
+            $.ajax({
+                url: 'assess360',
+                // url: '../questionnaire',
+                data: {
+                    'openend_question_result': openend_question_result,
+                    'questionnaire_yesno_discuss' :questionnaire_yesno_discuss,
+                    'a': 'submitopenendquestion',
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                },
+            });
+        });
+        $("body").on("click", ".questionnaire-finish-button", function (event) {
+            event.preventDefault();
+            var selected_inputs = $('input[type=radio]:checked');
+            var importance_of_competencies = {};
+            selected_inputs.each(function(index, input) {
+                importance_of_competencies[index] = input.value;
+            });
+            $.ajax({
+                url: 'assess360',
+                // url: '../questionnaire',
+                data: {
+                    'importance_of_competencies': importance_of_competencies,
+                    'competency_arr': JSON.stringify(competency_arr),
+                    'a': 'submitQuestionnaire',
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                },
+            });
+        });
+    });
+}
 
 var CompetencySelection = function () {
   jQuery(document).ready(function ($) {
