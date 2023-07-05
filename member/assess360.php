@@ -50,32 +50,11 @@ if ($login->isLoggedIn()) {
     for($i=0;$i<count($_POST["rows"]);$i++){ 
 
 
-    // $to = $_POST["rows"][$i]["email"];
-    // $subject = "Title";
-    // $from = 'do-not-reply@performve.com';
-    // $body = "Hi";
-    // $headers = "From: Performve <" . $from . ">\r\n";
-    // $headers .= "Reply-To: Performve <" . $from . ">\r\n";
-    // $headers .= "Return-Path: Performve <" . $from . ">\r\n";
-    // $headers .= "MIME-Version: 1.0\r\n";
-    // $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-    // mail($to, $subject, $body, $headers, "-f " . $from);
-    //$listofratersClass->sendAutomatedEmail($companyId, $i);
-      //$listofratersClass->sendAutomatedEmail($companyId, $i);
-    
-
-
-
-
-    if($i == 0){
-      $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-     
-      
-    }
-
+      if($i == 0){
+        $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+      }
       $focusID = $listofratersClass->getFocusId($companyId);
-
-     
+      //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
       $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
      
 
@@ -487,16 +466,14 @@ if ($start < $total_questions) {
   if(isset($_POST["a"]) && $_POST["a"] == "submitImportanceOfCompetencies"){
     //Importance of Competencies
     $importance_of_competencies = isset($_POST['importance_of_competencies']) ? $_POST['importance_of_competencies'] : array();
-    for($i=0; $i<count($competency_arr); $i++){
-      $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
-    }
+    $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
     for($i=0;$i<count($competency_arr);$i++){ 
-      $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
-      if(isset($importance_of_competencies[$i]) && !$importance_of_competencies[$i]){
-        continue;
-      };
-      if(isset($importance_of_competencies[$i])){
+      $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
+      if(isset($importance_of_competencies[$i]) && $importance_of_competencies[$i] != ""){
         $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, $importance_of_competencies[$i]);
+      }
+      else{
+        $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, NULL);
       }
     }
   }
@@ -542,7 +519,7 @@ if ($start < $total_questions) {
 
     $_SESSION[$session_page] = $SESSION_PAGE_LIST_OF_RATERS_RATERFORM;
 
-    include("../views/member/listofratersView.php");
+    include("../views/member/assess360listofratersView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "assess360") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_ASSESS_360) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
@@ -560,7 +537,7 @@ if ($start < $total_questions) {
     $_SESSION[$session_page] = $SESSION_PAGE_LIST_OF_RATERS_DATA_CENTER;
 
 
-    include("../views/member/datacenterView.php");
+    include("../views/member/assess360datacenterView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "competency") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY_SELECTION) {
 
@@ -569,7 +546,7 @@ if ($start < $total_questions) {
 
     $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_SELECTION;
 
-    include("../views/member/competencyView.php");
+    include("../views/member/assess360competencyView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetency") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
@@ -577,7 +554,7 @@ if ($start < $total_questions) {
 
     $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY;
 
-    include("../views/member/focuscompetencyView.php"); /////// you changed this from focuscompetencyView(serb)
+    include("../views/member/assess360focuscompetencyView.php"); /////// you changed this from focuscompetencyView(serb)
   } elseif (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
@@ -586,19 +563,9 @@ if ($start < $total_questions) {
     $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
     include("../views/member/questionnaireView.php");
-
-  }elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetencyselection") {
-    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION) {
-      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
-    }
-
-    $_SESSION[$session_page] = $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION;
-
-    include("../views/member/focuscompetencyselectionView.php");
   }
   //---------------------------------------------------------------------------------
 
-  
 }
 else {
   $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];

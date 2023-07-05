@@ -255,6 +255,27 @@ class QuestionsClass
         return $competencies;
     }
 
+    public function getCompetencyIDByFocusID($focus_id){
+        require '../config/dbconnect.php';
+        $query = "SELECT DISTINCT question_base.comp_id 
+                    FROM competency_questions 
+                    JOIN question_base ON competency_questions.competency = question_base.sub_headings
+                    WHERE competency_questions.focus_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $focus_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $competenciesid_arr = array();
+        while ($row = $result->fetch_assoc()) {
+            $competenciesid_arr[] = $row['comp_id'];
+        }
+    
+        $stmt->close();
+        $conn->close();
+        return $competenciesid_arr;
+    }
+
     public function getCompetencyIdByCompetency($competency){
         require '../config/dbconnect.php';
         $query = "SELECT id FROM competency WHERE competency.en_name = ?";
