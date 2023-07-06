@@ -16,7 +16,7 @@ use Mpdf\Tag\IndexEntry;
 <?
 //TEMP
 $role_arr = ["focus", "manager", "colleague", "direct report", "others"];
-$role = $role_arr[1];
+$role = $role_arr[3];
 $rater_id = 0; //getrateridbypwd
 ?>
 
@@ -106,7 +106,6 @@ $rater_id = 0; //getrateridbypwd
                     $importanceofcompetencies_previousanswers[$i] = isset($importanceofcompetencies_assocarr[$competency_id_arr[$i]]) ? $importanceofcompetencies_assocarr[$competency_id_arr[$i]] : "";
                 }
             }
-            //var_dump($importanceofcompetencies_previousanswers);
             for ($i = 0; $i < count($competency_arr); $i++) {
                 echo
                 "<div style='width: 100%; display: flex; justify-content: space-between;'>
@@ -194,18 +193,30 @@ $rater_id = 0; //getrateridbypwd
                         $start = ($page - 1) * $questions_per_page;
                         $end = $start + $questions_per_page - 1;
 
+                        for($i=0; $i<count($questions_arr); $i++){
+                            $question_id_arr[$i] = $questionsClass->getQuestionIdbyQuestion($questions_arr[$i]);
+                        }
+                        $competencystatements_assocarr = $questionsClass->getCompetencyStatementsAnswer($companyId, $rater_id);
+                        $competencystatements_previousanswers = array();
+                        if(isset($competencystatements_assocarr)){
+                            for($i=0; $i<count($questions_arr); $i++){
+                                $competencystatements_previousanswers[$i] = isset($competencystatements_assocarr[$question_id_arr[$i]]) ? $competencystatements_assocarr[$question_id_arr[$i]] : "";
+                            }
+                        }
+                        var_dump($competencystatements_assocarr);
+                        //var_dump($competencystatements_previousanswers);
                         // Output the competency statements for the current page
                         $table = '<tbody>';
                         for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
                             $table .=
                                 "<tr style='font-size: 14px;'>
                                 <td style='border: 1px solid black; padding-left: 5px;'>{$questions_arr[$i]}</td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='1'></td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='2'></td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='3'></td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='4'></td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='5'></td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;'><input type='radio' name='competencystatements[{$i}]' value='X'></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='1'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 1 ? ' checked' : '') . "></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='2'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 2 ? ' checked' : '') . "></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='3'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 3 ? ' checked' : '') . "></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='4'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 4 ? ' checked' : '') . "></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='5'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 5 ? ' checked' : '') . "></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;'><input type='radio' name='competencystatements[{$i}]' value='X'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 'X' ? ' checked' : '') . "></td>
                             </tr>";
                         }
                         $table .= '</tbody>';
@@ -250,7 +261,7 @@ $rater_id = 0; //getrateridbypwd
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"], '</a></button>';
                 // echo '<input type="hidden" name="a" value="submitQuestionnaire"> ';
                 //TODO HERE
-                echo '<button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button">', $language["questionnaire_finish_button"], '</button>';
+                echo '<button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-competencystatement-next">', $language["questionnaire_finish_button"], '</button>';
             } else {
                 echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
@@ -308,6 +319,7 @@ $rater_id = 0; //getrateridbypwd
     <script src="../js/lang/<?= $_COOKIE['lang'] ?>.js?v=<?= $jsVersion; ?>"></script>
     <script src="../<?= $jspath; ?>/assess360.js?v=<?= $jsVersion; ?>"></script>
     <script> 
+        rater_id = <? echo $rater_id?>;
         competency_arr = <? echo json_encode($competency_arr) ?>;
         questions_per_page = <? echo $questions_per_page?>;
         total_questions = <? echo $total_questions?>;
