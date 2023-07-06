@@ -53,8 +53,8 @@ class QuestionsClass
         foreach ($questions as $question) {
             $stmt->bind_param('ss', $arr_comp, $question);
             $stmt->execute();
-        }
         $stmt->close();
+    }
     }
 
     public function setQuestions($question){

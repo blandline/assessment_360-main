@@ -153,7 +153,7 @@
                 font-size: 1.8rem;
                 
                 cursor: pointer;
-                --s: 0.1em;   /* the thickness of the line */
+                --s: 0.1em;   /* the thickness of the line                                                      *                                                                                                                                                                                                                                                                                                                                                                                                                                /
                 --c: red; /* the color */
                 
                 color: #0000;

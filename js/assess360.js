@@ -1159,45 +1159,150 @@ var CompetencySelection = function(){
             "table.competency-frm-table tbody tr"
         );
 
-        // Create an array to store the data for each row
-        var data_arr = [];
+  // Create an array to store the data for each row
+  var data_arr = [];
+  var comp_arr = [];
+  // Loop through each row
+  rows.forEach((row) => {
+    // Get all the div elements with class "nowrap" within the row
+    const divs = row.querySelectorAll("div.nowrap");
 
-        // Loop through each row
-        rows.forEach((row) => {
-            // Get all the div elements with class "nowrap" within the row
-            const divs = row.querySelectorAll("div.nowrap");
+    // Create an array to store the text content of each div element in the row
+    
 
-            // Create an array to store the text content of each div element in the row
-            var comp_arr = [];
-
-            // Loop through each div element and push its text content into the array
-            divs.forEach((div) => {
-                var text = div.textContent.trim();
-                if (!text.includes("Edit")) {
-                    text = text.substring(2);
-                    comp_arr.push(text);
-                }
-            });
-
-            // Push the array of text content into the data_arr array
-            data_arr.push(comp_arr);
-
-            console.log(data_arr);
-        });
-
-        // Create an AJAX request to send the array to the PHP file
-        $.ajax({
-            url: 'assess360',
-            data: {'comp_arr': comp_arr},
-            type: 'POST',
-            dataType: 'json',
-            success: function(response) {
-                // Get the response from the PHP file
-                console.log(response);
-            },
-            // error: function(jqXHR, textStatus, errorThrown) {
-            //     console.log(textStatus, errorThrown);
-            // }
-        });
+    // Loop through each div element and push its text content into the array
+    divs.forEach((div) => {
+      var text = div.textContent.trim();
+      if (!text.includes("Edit")) {
+        text = text.substring(2);
+        comp_arr.push(text);
+       
+      }
     });
-//};
+    
+    // Push the array of text content into the data_arr array
+    
+    
+
+    console.log(comp_arr);
+
+  
+  });
+  var focusnumid = Number(focusCompId)
+
+      // Create an AJAX request to send the array to the PHP file
+      $.ajax({
+        url: "assess360",
+        data: { comp_arr: comp_arr,
+            focusCompId: focusnumid
+        },
+        type: "POST",
+        dataType: "json",
+        success: function (response) {
+          // Get the response from the PHP file
+          console.log(response);
+        },
+        // error: function(jqXHR, textStatus, errorThrown) {
+        //     console.log(textStatus, errorThrown);
+        // }
+      });  
+});
+
+////////////////////////////////srb/////////////////////////////////
+// $(document).ready(function() {
+//   // Attach a click event listener to the link with class "goto-competency-selection"
+//   $('.goto-competency-selection').click(function(event) {
+//     // Prevent the default behavior of the link
+//     event.preventDefault();
+//     // Get the data-id attribute value from the clicked button
+//     var dataId = $(this).data('data_id');
+//     // Send an AJAX request to the target URL with the data-id parameter
+//     $.ajax({
+//       url: 'assess360',
+//       data: { data_id: dataId },
+//       type: 'POST',
+//       dataType: 'json',
+//       success: function(response) {
+//         // Handle the AJAX response here
+//         console.log(response);
+//       },
+//       // error: function(xhr, status, error) {
+//       //   // Handle AJAX errors here
+//       //   console.error(xhr.responseText);
+//       // }
+//     });
+//   });
+// });
+
+// $(document).ready(function() {
+//   // Attach a click event listener to all links with class "btn"
+//   $('a.goto-competency-selection').click(function(event) {
+//     // Prevent the default behavior of the link
+//     event.preventDefault();
+//     // Get the data-id attribute value from the clicked button
+//     var dataId = $(this).attr('data_id');
+//     console.log(dataId);
+
+//   });
+//   $.ajax({
+//     url: 'competencyView.php',
+//     data: { dataid: dataId },
+//     type: 'POST',
+//     dataType: 'json',
+//     success: function(response) {
+//       // Handle the AJAX response here
+//       console.log(response);
+//     },
+//     // error: function(xhr, status, error) {
+//     //   // Handle AJAX errors here
+//     //   console.error(xhr.responseText);
+//     // }
+//   });
+// });
+
+
+
+// $(document).ready(function() {
+//   // Attach a click event listener to all links with class "btn"
+//   $('a.goto-competency-selection').click(function(event) {
+//     // Prevent the default behavior of the link
+//     // event.preventDefault();
+//     // Get the data-id attribute value from the clicked button
+//     var dataId = $(this).attr('data_id');
+//     console.log(dataId);
+
+//     $.ajax({
+//       url: 'assess360',
+//       data: { dataid: dataId },
+//       type: 'POST',
+//       dataType: 'json',
+//       success: function(response) {
+//         // Handle the AJAX response here
+//         console.log(response);
+//       },
+//       // error: function(xhr, status, error) {
+//       //   // Handle AJAX errors here
+//       //   console.error(xhr.responseText);
+//       // }
+//     });
+//   });
+// });
+
+
+$(document).ready(function() {
+  // Attach a click event listener to all links with class "btn"
+  $('a.goto-competency-selection').click(function(event) {
+    // Get the data-id attribute value from the clicked button
+    var dataId = $(this).attr('data_id');
+
+    if (dataId) {
+      // Prevent the default behavior of the link
+      event.preventDefault();
+
+      // Store the href value in a variable
+      var linkHref = $(this).attr('href');
+
+      window.location.href = "assess360?a=competency&id="+dataId;
+    }
+  });
+});
