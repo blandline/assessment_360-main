@@ -601,7 +601,7 @@ if ($start < $total_questions) {
 
     $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
-    include("../views/member/questionnaireView.php");
+    include("../views/member/assess360questionnaireView.php");
   }
   //---------------------------------------------------------------------------------
 
