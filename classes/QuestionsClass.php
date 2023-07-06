@@ -304,6 +304,24 @@ class QuestionsClass
         return $result;
     }
 
+    public function getCompetencystatementsAnswer($companyId, $rater_id, $question_type_id, $competency_id, $question_id){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+    
+        $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND competency_id = ? AND question_type_id = ? AND question_id =?");
+        $stmt->bind_param("iiii", $rater_id, $competency_id, $question_type_id, $question_id);
+        $stmt->execute();
+        $stmt->bind_result($result);
+        $stmt->fetch();
+        $stmt->close();
+    
+        return $result;
+    }
+
     public function getAnswerByQuestionid($question_id){
         require '../config/dbconnect.php';
         if ($this->memberClass->isAdmin()) {
@@ -410,7 +428,7 @@ class QuestionsClass
         $stmt->close();
     }
 
-    public function getImportanceOfCompetenciesAnswer($companyId, $rater_id) {
+    public function getImportanceOfCompetenciesAnswer_arr($companyId, $rater_id) {
         require '../config/dbconnect.php';
         if ($this->memberClass->isAdmin()) {
             $dbName = $this->memberClass->getCompanyDBById($companyId);
@@ -431,7 +449,7 @@ class QuestionsClass
         return $answers;
     }
 
-    public function getCompetencyStatementsAnswer($companyId, $raterId) {
+    public function getCompetencyStatementsAnswer_arr($companyId, $raterId) {
         require '../config/dbconnect.php';
         if ($this->memberClass->isAdmin()) {
             $dbName = $this->memberClass->getCompanyDBById($companyId);

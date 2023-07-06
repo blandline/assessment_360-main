@@ -436,7 +436,7 @@ $end = $start + $questions_per_page - 1;
 for($i=0; $i<count($questions_arr); $i++){
   $question_id_arr[$i] = $questionsClass->getQuestionIdbyQuestion($questions_arr[$i]);
 }
-$competencystatements_assocarr = $questionsClass->getCompetencyStatementsAnswer($companyId, $rater_id);
+$competencystatements_assocarr = $questionsClass->getCompetencyStatementsAnswer_arr($companyId, $rater_id);
 $competencystatements_previousanswers = array();
 if(isset($competencystatements_assocarr)){
   for($i=0; $i<count($questions_arr); $i++){
@@ -504,9 +504,9 @@ if ($start < $total_questions) {
       //if there is already an answer for the question, EDIT
       else{
         // $temp_id = 315;
-        $prev_answer = $questionsClass->getImportanceOfCompetencyAnswer($companyId, $rater_id, $competency_id_arr[$i], $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY);
-        if(isset($importance_of_competencies[$i]) && ($importance_of_competencies[$i] != $prev_answer)){
-          $questionsClass->editQuestionnaireData($companyId, $questionsClass->getImportanceOfCompetencyIdByData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], $prev_answer),  $importance_of_competencies[$i]);
+        $prev_importanceofcompetencies_answer = $questionsClass->getImportanceOfCompetencyAnswer($companyId, $rater_id, $competency_id_arr[$i], $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY);
+        if(isset($importance_of_competencies[$i]) && ($importance_of_competencies[$i] != $prev_importanceofcompetencies_answer)){
+          $questionsClass->editQuestionnaireData($companyId, $questionsClass->getImportanceOfCompetencyIdByData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], $prev_importanceofcompetencies_answer),  $importance_of_competencies[$i]);
         }
       }
     }
@@ -532,8 +532,9 @@ if ($start < $total_questions) {
       }
       //if there is already an answer for the question, EDIT
       else{
-        if(isset($competency_statements[$i]) && (intval($competency_statements[$i]) != intval($questionsClass->getAnswerByQuestionid($question_id_arr[$i])))){
-          $id_tobe_edited = $questionsClass->getIdByData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
+        $prev_competencystatements_answer = $questionsClass->getCompetencystatementsAnswer($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i],  $question_id_arr[$i]);
+        if(isset($competency_statements[$i]) && ($competency_statements[$i] != $prev_competencystatements_answer)){
+          $id_tobe_edited = $questionsClass->getIdByData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $prev_competencystatements_answer);
           //$questionsClass->editQuestionnaireData($companyId, $id_tobe_edited, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
           $questionsClass->editQuestionnaireAnswerById($companyId, $id_tobe_edited, $competency_statements[$i]);
         }

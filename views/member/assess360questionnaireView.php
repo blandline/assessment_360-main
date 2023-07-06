@@ -99,7 +99,7 @@ $rater_id = 0; //getrateridbypwd
                 $competency_def_arr[$i] = $questionsClass->getEnDespByCompetency($competency_arr[$i]);
                 $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
             }
-            $importanceofcompetencies_assocarr = $questionsClass->getImportanceOfCompetenciesAnswer($companyId, $rater_id);
+            $importanceofcompetencies_assocarr = $questionsClass->getImportanceOfCompetenciesAnswer_arr($companyId, $rater_id);
             $importanceofcompetencies_previousanswers = array();
             if(isset($importanceofcompetencies_assocarr)){
                 for($i=0; $i<count($competency_arr); $i++){
@@ -196,7 +196,7 @@ $rater_id = 0; //getrateridbypwd
                         for($i=0; $i<count($questions_arr); $i++){
                             $question_id_arr[$i] = $questionsClass->getQuestionIdbyQuestion($questions_arr[$i]);
                         }
-                        $competencystatements_assocarr = $questionsClass->getCompetencyStatementsAnswer($companyId, $rater_id);
+                        $competencystatements_assocarr = $questionsClass->getCompetencyStatementsAnswer_arr($companyId, $rater_id);
                         $competencystatements_previousanswers = array();
                         if(isset($competencystatements_assocarr)){
                             for($i=0; $i<count($questions_arr); $i++){
