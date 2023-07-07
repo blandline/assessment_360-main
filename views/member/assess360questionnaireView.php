@@ -203,9 +203,6 @@ $rater_id = 0; //getrateridbypwd
                                 $competencystatements_previousanswers[$i] = isset($competencystatements_assocarr[$question_id_arr[$i]]) ? $competencystatements_assocarr[$question_id_arr[$i]] : "";
                             }
                         }
-                        var_dump($competencystatements_assocarr);
-                        //var_dump($competencystatements_previousanswers);
-                        // Output the competency statements for the current page
                         $table = '<tbody>';
                         for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
                             $table .=
@@ -279,14 +276,14 @@ $rater_id = 0; //getrateridbypwd
             }
             ?>
             <?= $language["questionnaire_openendquestion_paragraph1"] ?>
-            <textarea class="questionnaire_openendquestion_text-input" name="questionnaire_openendquestion" placeholder="(Maximum 100 words)" rows="6"></textarea>
-            <!-- --------------------------- YES/NO BUTTONS ----------------------------- -->
-            <!--<div class="questionnaire_openendquestion_discuss_container" style="display:inline-block;">-->
+            <?
+            $openendquestion_previousanswer = $questionsClass->getOpenEndAnswer($companyId, $rater_id);
+            $openendquestion_yesno_previousanswer = $questionsClass->getYesNoDiscussAnswer($companyId, $rater_id);
+            ?>
+            <textarea class="questionnaire_openendquestion_text-input" name="questionnaire_openendquestion" placeholder="(Maximum 100 words)" rows="6"><? if(isset($openendquestion_previousanswer)) { echo $openendquestion_previousanswer; } ?></textarea>
             <?= $language["questionnaire_openendquestion_paragraph2"] ?>
-            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="1"><?= $language["questionnaire_openendquestion_discuss_yes"] ?></label>
-            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="0"><?= $language["questionnaire_openendquestion_discuss_no"] ?></label>
-            <!--</div>-->
-            <!-- ------------------------------------------------------------------------- -->
+            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="1" <?= (isset($openendquestion_yesno_previousanswer) && $openendquestion_yesno_previousanswer == 1 ? 'checked' : '') ?>><?= $language["questionnaire_openendquestion_discuss_yes"] ?></label>
+            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="0" <?= (isset($openendquestion_yesno_previousanswer) && $openendquestion_yesno_previousanswer == 0 ? 'checked' : '') ?>><?= $language["questionnaire_openendquestion_discuss_no"] ?></label>
             <?= $language["questionnaire_openendquestion_finish"] ?>
             <button class="btn btn-primary btn-sm questionnaire-openendquestion-previous"><a style="color:white;" href="#competency-statements-page"><?= $language["questionnaire_previous_button"] ?></a></button>
             <input type="hidden" name="a" value="submitopenendquestion"> 

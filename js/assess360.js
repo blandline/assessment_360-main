@@ -989,12 +989,6 @@ var Competency = function () {
         });
         $("body").on("click", ".page-link", function (event) {
             event.preventDefault();
-            // var competency_statements = {};
-            // $('input[type=radio]:checked').each(function(index, input) {
-            //     var value = input.value;
-            //     var inputName = input.name;
-            //     var inputIndex = inputName.match(/competencystatements\[(\d+)\]/)[1];
-            //     competency_statements[inputIndex] = value;
             var selected_inputs_competency_statements = $('input[type=radio]:checked');
             var competency_statements = {};
             selected_inputs_competency_statements.each(function(index, input) {
@@ -1054,9 +1048,9 @@ var Competency = function () {
         // });
         $("body").on("click", ".questionnaire-openendquestion-finish", function (event) {
             event.preventDefault();
-            var openend_question_result = $('textarea[name="questionnaire_openendquestion"]').val();;
-            var selected_inputs = $('input[type=radio]:checked');
-            var questionnaire_yesno_discuss = selected_inputs.length > 0 ? parseInt(selected_inputs.val()) : null;
+            var openend_question_result = $('textarea[name="questionnaire_openendquestion"]').val();
+            var selected_radio_button = $('input[name="questionnaire_yesno_discuss"]:checked');
+            var questionnaire_yesno_discuss = selected_radio_button.length > 0 ? parseFloat(selected_radio_button.val()) : null;
             $.ajax({
                 url: 'assess360',
                 // url: '../questionnaire',

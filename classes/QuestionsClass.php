@@ -469,5 +469,69 @@ class QuestionsClass
         }
         return $answers;
     }
+
+    public function getOpenEndAnswer($companyId, $raterId){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+
+        $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 2");
+        $stmt->bind_param("i", $raterId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $row = $result->fetch_assoc();
+        if ($row === null) {
+            return null;
+        } else {
+            return $row['answer'];
+        }
+    }
+
+    public function getYesNoDiscussAnswer($companyId, $raterId){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+
+        $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 3");
+        $stmt->bind_param("i", $raterId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $row = $result->fetch_assoc();
+        if ($row === null) {
+            return null;
+        } else {
+            return $row['answer'];
+        }
+    }
+
+    public function getOpenEndIdByData($companyId, $rater_id, $question_type_id, $answer) {
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+        $stmt = $conn->prepare("SELECT id FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = ?  AND answer = ?");
+        $stmt->bind_param("iis", $rater_id, $question_type_id, $answer);
+        $stmt->execute();
+        $stmt->store_result();
+        
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($id);
+            $stmt->fetch();
+        } else {
+            $id = false;
+        }
+        $stmt->close();    
+        return $id;        
+    }    
     //--------------------------------------------------------------------------    
 }
