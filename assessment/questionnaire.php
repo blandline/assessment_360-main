@@ -127,15 +127,8 @@ if ($start < $total_questions) {
 ?>
 <?
   //------------------------------------NEW----------------------------------------
-  if (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
-    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
-      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
-    }
+    include("../views/member/assess360questionnaireView.php");
 
-    $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
-
-    include("../views/member/questionnaireView.php");
-  }
   //---------------------------------------------------------------------------------
 
 // }
