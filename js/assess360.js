@@ -854,6 +854,8 @@ var Competency = function () {
             $("#importance-of-competency-page").show();
             $("#competency-statements-page").hide();
             $("#open-end-question-page").hide();
+            $("#continue-later-page").hide();
+            $("#finish-page").hide()
         });
 
         $('a[href="#competency-statements-page"]').click(function (event) {
@@ -864,6 +866,8 @@ var Competency = function () {
             $("#importance-of-competency-page").hide();
             $("#competency-statements-page").show();
             $("#open-end-question-page").hide();
+            $("#continue-later-page").hide();
+            $("#finish-page").hide()
         });
 
         if (window.history.replaceState) {
@@ -877,6 +881,8 @@ var Competency = function () {
                 $("#importance-of-competency-page").hide();
                 $("#competency-statements-page").show();
                 $("#open-end-question-page").hide();
+                $("#continue-later-page").hide();
+                $("#finish-page").hide()
         });
 
         $("body").on("click", ".questionnaire-importanceofcompetency-previous", function (event) {
@@ -887,6 +893,8 @@ var Competency = function () {
                 $("#importance-of-competency-page").hide();
                 $("#competency-statements-page").hide();
                 $("#open-end-question-page").hide();
+                $("#continue-later-page").hide();
+                $("#finish-page").hide()
             }
         );
 
@@ -898,6 +906,8 @@ var Competency = function () {
             $("#importance-of-competency-page").hide();
             $("#competency-statements-page").show();
             $("#open-end-question-page").hide();
+            $("#continue-later-page").hide();
+            $("#finish-page").hide()
         });
 
         $("body").on("click", ".questionnaire-competencystatement-previous", function (event) {
@@ -908,6 +918,8 @@ var Competency = function () {
             $("#importance-of-competency-page").show();
             $("#competency-statements-page").hide();
             $("#open-end-question-page").hide();
+            $("#continue-later-page").hide();
+            $("#finish-page").hide()
         });
 
         $("body").on("click", ".questionnaire-competencystatement-next", function (event) {
@@ -918,6 +930,8 @@ var Competency = function () {
             $("#importance-of-competency-page").hide();
             $("#competency-statements-page").hide();
             $("#open-end-question-page").show();
+            $("#continue-later-page").hide();
+            $("#finish-page").hide()
         });
 
         $("body").on("click",".questionnaire-openendquestion-previous",function (event) {
@@ -928,6 +942,8 @@ var Competency = function () {
             $("#importance-of-competency-page").hide();
             $("#competency-statements-page").show();
             $("#open-end-question-page").hide();
+            $("#continue-later-page").hide();
+            $("#finish-page").hide()
         });
 
         $("body").on("keyup", ".questionnaire_openendquestion_text-input", function () {
@@ -955,7 +971,28 @@ var Competency = function () {
                     $(this).attr("disabled", false);
                 }
         });
+        $("body").on("click",".continuelater-btn",function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
 
+            // hide the current page and show the target page
+            $("#intro-page").hide();
+            $("#importance-of-competency-page").hide();
+            $("#competency-statements-page").hide();
+            $("#open-end-question-page").hide();
+            $("#continue-later-page").show();
+            $("#finish-page").hide();
+        });
+        $("body").on("click",".finish-btn",function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+
+            // hide the current page and show the target page
+            $("#intro-page").hide();
+            $("#importance-of-competency-page").hide();
+            $("#competency-statements-page").hide();
+            $("#open-end-question-page").hide();
+            $("#continue-later-page").hide();
+            $("#finish-page").show();
+        });
         //-------------------------Competency Statements------------------------------------
         $('a[href="javascript:void(0);"]').click(function (event) {
             event.preventDefault();
@@ -964,6 +1001,30 @@ var Competency = function () {
         });
         //----------------------------------------------------------------------------------
         $("body").on("click", ".confirm-yes", function (event) {
+            event.preventDefault();
+            var importance_of_competencies = {};
+            $('input[type=radio]:checked').each(function(index, input) {
+                var value = input.value;
+                var inputName = input.name;
+                var inputIndex = inputName.match(/importanceofcompetencies\[(\d+)\]/)[1];
+                importance_of_competencies[inputIndex] = value;
+            });
+            $.ajax({
+                url: 'assess360',
+                // url: '../questionnaire',
+                data: {
+                    'importance_of_competencies': importance_of_competencies,
+                    'competency_arr': JSON.stringify(competency_arr),
+                    'a': 'submitImportanceOfCompetencies',
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                },
+            });
+        });
+        $("body").on("click", ".questionnaire-importanceofcompetencies-continuelater", function (event) {
             event.preventDefault();
             var importance_of_competencies = {};
             $('input[type=radio]:checked').each(function(index, input) {
@@ -1043,9 +1104,110 @@ var Competency = function () {
                 },
             });
         });
-        // $("body").on("click", ".questionnaire-competencystatement-previous", function (event) {
-
-        // });
+        $("body").on("click", ".questionnaire-competencystatement-previous", function (event) {
+            event.preventDefault();
+            var selected_inputs_competency_statements = $('input[type=radio]:checked');
+            var competency_statements = {};
+            selected_inputs_competency_statements.each(function(index, input) {
+                var name = input.name;
+                var matches = name.match(/\[(\d+)\]/);
+                if (matches && matches.length > 1) {
+                    var inputIndex = parseInt(matches[1]);
+                    competency_statements[inputIndex] = input.value;
+                }
+            });
+            $.ajax({
+                url: 'assess360',
+                // url: '../questionnaire',
+                data: {
+                    'rater_id': rater_id,
+                    'competency_statements': competency_statements,
+                    'questions_arr': JSON.stringify(questions_arr),
+                    'a': 'submitCompetencyStatements',
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                },
+            });
+        });
+        $("body").on("click", ".questionnaire-competencystatement-finish", function (event) {
+            event.preventDefault();
+            var selected_inputs_competency_statements = $('input[type=radio]:checked');
+            var competency_statements = {};
+            selected_inputs_competency_statements.each(function(index, input) {
+                var name = input.name;
+                var matches = name.match(/\[(\d+)\]/);
+                if (matches && matches.length > 1) {
+                    var inputIndex = parseInt(matches[1]);
+                    competency_statements[inputIndex] = input.value;
+                }
+            });
+            $.ajax({
+                url: 'assess360',
+                // url: '../questionnaire',
+                data: {
+                    'rater_id': rater_id,
+                    'competency_statements': competency_statements,
+                    'questions_arr': JSON.stringify(questions_arr),
+                    'a': 'submitCompetencyStatements',
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                },
+            });
+        });
+        $("body").on("click", ".questionnaire-competencystatement-finish", function (event) {
+            event.preventDefault();
+            var selected_inputs_competency_statements = $('input[type=radio]:checked');
+            var competency_statements = {};
+            selected_inputs_competency_statements.each(function(index, input) {
+                var name = input.name;
+                var matches = name.match(/\[(\d+)\]/);
+                if (matches && matches.length > 1) {
+                    var inputIndex = parseInt(matches[1]);
+                    competency_statements[inputIndex] = input.value;
+                }
+            });
+            $.ajax({
+                url: 'assess360',
+                // url: '../questionnaire',
+                data: {
+                    'rater_id': rater_id,
+                    'competency_statements': competency_statements,
+                    'questions_arr': JSON.stringify(questions_arr),
+                    'a': 'submitCompetencyStatements',
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                },
+            });
+        });
+        $("body").on("click", ".questionnaire-openendquestion-previous", function (event) {
+            event.preventDefault();
+            var openend_question_result = $('textarea[name="questionnaire_openendquestion"]').val();
+            var selected_radio_button = $('input[name="questionnaire_yesno_discuss"]:checked');
+            var questionnaire_yesno_discuss = selected_radio_button.length > 0 ? parseFloat(selected_radio_button.val()) : null;
+            $.ajax({
+                url: 'assess360',
+                // url: '../questionnaire',
+                data: {
+                    'openend_question_result': openend_question_result,
+                    'questionnaire_yesno_discuss' :questionnaire_yesno_discuss,
+                    'a': 'submitopenendquestion',
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                },
+            });
+        });
         $("body").on("click", ".questionnaire-openendquestion-finish", function (event) {
             event.preventDefault();
             var openend_question_result = $('textarea[name="questionnaire_openendquestion"]').val();
@@ -1066,28 +1228,6 @@ var Competency = function () {
                 },
             });
         });
-        //   $("body").on("click", ".questionnaire-finish-button", function (event) {
-        //       event.preventDefault();
-        //       var selected_inputs = $('input[type=radio]:checked');
-        //       var importance_of_competencies = {};
-        //       selected_inputs.each(function(index, input) {
-        //           importance_of_competencies[index] = input.value;
-        //       });
-        //       $.ajax({
-        //           url: 'assess360',
-        //           // url: '../questionnaire',
-        //           data: {
-        //               'importance_of_competencies': importance_of_competencies,
-        //               'competency_arr': JSON.stringify(competency_arr),
-        //               'a': 'submitQuestionnaire',
-        //           },
-        //           type: 'POST',
-        //           dataType: 'json',
-        //           success: function(response) {
-        //               console.log(response);
-        //           },
-        //       });
-        //   });
     });
 }
 

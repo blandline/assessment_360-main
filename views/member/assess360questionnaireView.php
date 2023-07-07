@@ -20,7 +20,7 @@ use Mpdf\Tag\IndexEntry;
 <?
 //TEMP
 $role_arr = ["focus", "manager", "colleague", "direct report", "others"];
-$role = $role_arr[3];
+$role = $role_arr[1];
 $rater_id = 0; //getrateridbypwd
 ?>
 
@@ -142,12 +142,11 @@ $rater_id = 0; //getrateridbypwd
             ?>
             <br>
             <?= $language["questionnaire_importanceofcompetency_paragraph2"] ?>
-            <button type="button" class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button" data-toggle="modal" data-target="#deleteModal" style="margin-left: 0px !important;"><?= $language["questionnaire_confirm_button"] ?></button>
+            <div style="display:inline-block">
+                <button type="button" class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button" data-toggle="modal" data-target="#deleteModal" style="margin-left: 0px !important;"><?= $language["questionnaire_confirm_button"] ?></button>
+                <button type="button" class="btn btn-primary btn-sm addButton competency-add-btn continuelater-btn questionnaire-importanceofcompetencies-continuelater"  style="position:absolute; right:4rem;"><?= $language["questionnaire_continue_later"] ?></button>
+            </div>
             <br>
-            <!--
-            <button class="btn btn-primary btn-sm questionnaire-importanceofcompetency-previous"><?= $language["questionnaire_previous_button"] ?></button>
-            <button class="btn btn-primary btn-sm questionnaire-importanceofcompetency-next"><?= $language["questionnaire_next_button"] ?></button>
-            -->
         </section>
         <section id="competency-statements-page" class="questionnaire-page">
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
@@ -260,13 +259,12 @@ $rater_id = 0; //getrateridbypwd
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
             } elseif ($role == "focus") {
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"], '</a></button>';
-                // echo '<input type="hidden" name="a" value="submitQuestionnaire"> ';
-                //TODO HERE
-                echo '<button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-competencystatement-next">', $language["questionnaire_finish_button"], '</button>';
+                echo '<button class="btn btn-success btn-sm addButton competency-add-btn finish-btn questionnaire-competencystatement-finish">', $language["questionnaire_finish_button"], '</button>';
             } else {
                 echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
             }
+            echo '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn continuelater-btn questionnaire-competencystatement-finish"  style="position:absolute; right:4rem;">', $language["questionnaire_continue_later"] , '</button>';
             ?>
         </section>
         <section id="open-end-question-page" class="questionnaire-page">
@@ -292,8 +290,16 @@ $rater_id = 0; //getrateridbypwd
             <button class="btn btn-primary btn-sm questionnaire-openendquestion-previous"><a style="color:white;" href="#competency-statements-page"><?= $language["questionnaire_previous_button"] ?></a></button>
             <input type="hidden" name="a" value="submitopenendquestion"> 
             <!-- <button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button"><?= $language["questionnaire_finish_button"] ?></button> -->
-            <input class="btn btn-success btn-sm addButton competency-add-btn questionnaire-openendquestion-finish" type="submit">
+            <input class="btn btn-success btn-sm addButton competency-add-btn finish-btn questionnaire-openendquestion-finish" type="submit">
+            <button type="button" class="btn btn-primary btn-sm addButton competency-add-btn continuelater-btn questionnaire-openendquestion-finish"  style="position:absolute; right:4rem;"><?= $language["questionnaire_continue_later"] ?></button>
         </section> 
+        <section id="continue-later-page" class="questionnaire-page">
+            Thank you for filling the questionnaire, please finish the questionnaire before the end date.
+        </section>
+        <section id="finish-page" class="questionnaire-page">
+            <div style="font-size 16px;"><?= $language["questionnaire_finish_thankyou"]?></div>
+            <div style="font-size 12px;"><?= $language["questionnaire_finish_paragraph"]?></div>
+        </section>
     </form>
 
     <script src="../assets/js/core/jquery.min.js"></script>

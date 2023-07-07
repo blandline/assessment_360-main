@@ -554,7 +554,7 @@ if ($start < $total_questions) {
       $openend_question_result = isset($_POST['openend_question_result']) ? $_POST['openend_question_result'] : NULL;
       $questionnaire_yesno_discuss = isset($_POST['questionnaire_yesno_discuss']) ? $_POST['questionnaire_yesno_discuss'] : NULL;
       $prev_openend_answer = ($questionsClass->getOpenEndAnswer($companyId, $rater_id))? $questionsClass->getOpenEndAnswer($companyId, $rater_id) : "";
-      if(isset($openend_question_result)){
+      if($openend_question_result != NULL){
         if(!$prev_openend_answer){
           $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_OPEN_END_QUESTION, NULL, NULL, $openend_question_result);
         }
@@ -566,7 +566,7 @@ if ($start < $total_questions) {
         }
       }
       $prev_yesno_discuss = $questionsClass->getYesNoDiscussAnswer($companyId, $rater_id)? $questionsClass->getYesNoDiscussAnswer($companyId, $rater_id): "";
-      if(isset($questionnaire_yesno_discuss)){
+      if($questionnaire_yesno_discuss != NULL){
         if(!$prev_yesno_discuss){
           $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_YESNO_DISCUSS, NULL, NULL, $questionnaire_yesno_discuss);
         }
