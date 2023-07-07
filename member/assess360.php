@@ -35,41 +35,49 @@ if ($login->isLoggedIn()) {
     $companyId = $login->getCompanyId();
   }
 
-  /* raters*/
-  // if(isset($_POST["a"]) && $_POST["a"] == "DataCenter"){
-  //   header("Location: DataCenter.php");
-  // }
+ 
   if(isset($_POST["a"]) && $_POST["a"] == "activate"){
     
-   
-
-    
-    
-  
+ 
+ 
+ 
+     for($i=0;$i<count($_POST["rows"]);$i++){ 
+ 
+ 
+ 
+ 
+ 
+ 
+     if($i == 0){
+       $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
       
+ 
+ 
+     }
 
-    for($i=0;$i<count($_POST["rows"]);$i++){ 
-
-
-      if($i == 0){
-        $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-      }
-      $focusID = $listofratersClass->getFocusId($companyId);
-      //$listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"],  $_POST["rows"][$i]["Rater-last-name"], $_POST["rows[$i][Roles]"],$position = $_POST["rows[$i][Genders]"],$gender = $_POST["rows[$i][position]"],$email = $_POST["rows[$i][email]"]);
-      $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
      
+ 
+ 
+ 
+       $focusID = $listofratersClass->getFocusId($companyId);
+ 
+ 
+       $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
+       $listofratersClass->generatePassword($companyId);
+ 
+ 
+ 
+     
+     
+ 
+   }
 
-      
-    }
 
+   foreach ($_POST["rows"] as $row) {
+    $listofratersClass->sendEmail($companyId, $row["email"]);
+  };
+  header("Location: welcome.php");
 
-
-
-
-
-
-    header("Location: welcome.php");
-    // Data Center
   }
 
   // add/edit competency framework
@@ -561,7 +569,7 @@ if ($start < $total_questions) {
 
     $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
-    include("../views/member/questionnaireView.php");
+    include("../views/member/assess360questionnaireView.php");
   }
   //---------------------------------------------------------------------------------
 

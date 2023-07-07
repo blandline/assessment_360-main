@@ -664,7 +664,123 @@ class listofratersClass
     //     $stmt->close();
     //     $conn->close();
     // }
-    public function sendEmail($companyId, $rater_email){
+    // public function sendEmail($companyId, $rater_email){
+    //     require '../config/dbconnect.php';  
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    
+    //     // Query the database for the rater's password
+    //     $stmt = $conn->prepare("SELECT password FROM " . $dbName . ".rater_list WHERE email = ? ORDER BY rater_id DESC LIMIT 1");            
+    //     $stmt->bind_param("s", $rater_email);
+    //     $stmt->execute();
+    //     $stmt->bind_result($password);
+    //     $stmt->fetch();
+    
+    //     if ($password) {
+    //         // Construct the link to the questionnaire
+    //         $link = 'http://localhost/assessment_360-main/assessment/questionnaire';
+    
+    //         // Construct the email message
+    //         $to = $rater_email;
+    //         $subject = "Automated Email";    
+    //         $from = 'do-not-reply@performve.com';        
+    //         $headers = "From: Performve <" . $from . ">\r\n";
+    //         $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+    //         $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+    //         $headers .= "MIME-Version: 1.0\r\n";
+    //         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";    
+    //         $body = "Dear ". $rater_email .",<br><br>This is an automated email sent to $to.<br><br>Best regards,<br>Your Name<br><br>Please click on the link below to access the questionnaire. You will need to enter the password provided below to access the questionnaire.<br><br><a href='" . $link . "'>" . $link . "</a><br><br>Password: " . $password;
+    
+    //         // Send the email
+    //         mail($to, $subject, $body, $headers, "-f " . $from);
+    //     }
+    
+    //     // Close the database connection
+    //     $stmt->close();
+    //     $conn->close();
+    // }
+
+    // public function sendEmail($companyId, $rater_email){
+    //     require '../config/dbconnect.php';  
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    
+    //     // Query the database for the rater's password
+    //     $stmt = $conn->prepare("SELECT password FROM " . $dbName . ".rater_list WHERE email = ? ORDER BY rater_id DESC LIMIT 1");            
+    //     $stmt->bind_param("s", $rater_email);
+    //     $stmt->execute();
+    //     $stmt->bind_result($password);
+    //     $stmt->fetch();
+    
+    //     if ($password) {
+    //         // Construct the link to the password-protected page
+    //         //$password_link = 'http://localhost/assessment_360-main/assessment/classes/password_protected.php?email=' . urlencode($rater_email);
+    //         $password_link = 'http://localhost/assessment_360-main/assessment/password_protected.php' . urlencode($rater_email);
+    //         // Construct the email message
+    //         $to = $rater_email;
+    //         $subject = "Automated Email";    
+    //         $from = 'do-not-reply@performve.com';        
+    //         $headers = "From: Performve <" . $from . ">\r\n";
+    //         $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+    //         $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+    //         $headers .= "MIME-Version: 1.0\r\n";
+    //         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";    
+    //         $body = "Dear ". $rater_email .",<br><br>This is an automated email sent to $to.<br><br>Best regards,<br>Your Name<br><br>Please click on the link below to access the questionnaire. You will need to enter your password to access the questionnaire.<br><br><a href='" . $password_link . "'>" . $password_link . "</a>";
+    
+    //         // Send the email
+    //         mail($to, $subject, $body, $headers, "-f " . $from);
+    //     }
+    
+    //     // Close the database connection
+    //     $stmt->close();
+    //     $conn->close();
+    // }
+
+    // public function sendEmail($companyId, $rater_email){
+    //     require '../config/dbconnect.php';  
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    
+    //     // Query the database for the rater's password
+    //     $stmt = $conn->prepare("SELECT password FROM " . $dbName . ".rater_list WHERE email = ? ORDER BY rater_id DESC LIMIT 1");            
+    //     $stmt->bind_param("s", $rater_email);
+    //     $stmt->execute();
+    //     $stmt->bind_result($password);
+    //     $stmt->fetch();
+    
+    //     if ($password) {
+    //         //$password_link = 'http://localhost/assessment_360-main/assessment/password_protected.php' . urlencode($rater_email);
+    //         $password_link = 'http://localhost/assessment_360-main/assessment/questionnaire?'.'id='. $row['rater_id'].'password=' .$password;
+    //         // Construct the email message
+    //         $to = $rater_email;
+    //         $subject = "Automated Email";    
+    //         $from = 'do-not-reply@performve.com';        
+    //         $headers = "From: Performve <" . $from . ">\r\n";
+    //         $headers .= "Reply-To: Performve <" . $from . ">\r\n";
+    //         $headers .= "Return-Path: Performve <" . $from . ">\r\n";
+    //         $headers .= "MIME-Version: 1.0\r\n";
+    //         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";    
+    //         $body = "Dear ". $rater_email .",<br><br>This is an automated email sent to $to.<br><br>Best regards,<br>Your Name<br><br>Please click on the link below to access the questionnaire. You will need to enter your password to access the questionnaire.<br><br><a href='" . $password_link . "'>" . $password_link . "</a>.";
+            
+    //         // Send the email
+    //         mail($to, $subject, $body, $headers, "-f " . $from);
+    //     }
+    
+    //     // Close the database connection
+    //     $stmt->close();
+    //     $conn->close();
+    // }
+
+    function sendEmail($companyId, $rater_email){
         require '../config/dbconnect.php';  
         if ($this->memberClass->isAdmin()) {
             $dbName = $this->memberClass->getCompanyDBById($companyId);
@@ -672,17 +788,15 @@ class listofratersClass
             $dbName = $this->memberClass->getCompanyDB();
         }
     
-        // Query the database for the rater's password
-        $stmt = $conn->prepare("SELECT password FROM " . $dbName . ".rater_list WHERE email = ? ORDER BY rater_id DESC LIMIT 1");            
+        // Query the database for the rater's password and ID
+        $stmt = $conn->prepare("SELECT rater_id, password FROM " . $dbName . ".rater_list WHERE email = ? ORDER BY rater_id DESC LIMIT 1");            
         $stmt->bind_param("s", $rater_email);
         $stmt->execute();
-        $stmt->bind_result($password);
+        $stmt->bind_result($rater_id, $password);
         $stmt->fetch();
     
         if ($password) {
-            // Construct the link to the questionnaire
-            $link = 'http://localhost/assessment_360-main/member/assess360?a=questionnaire';
-    
+            $password_link = 'http://localhost/assessment_360-main/assessment/questionnaire.php?' . 'id=' . $rater_id . '&password=' . $password;
             // Construct the email message
             $to = $rater_email;
             $subject = "Automated Email";    
@@ -692,8 +806,8 @@ class listofratersClass
             $headers .= "Return-Path: Performve <" . $from . ">\r\n";
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html; charset=UTF-8\r\n";    
-            $body = "Dear ". $rater_email .",<br><br>This is an automated email sent to $to.<br><br>Best regards,<br>Your Name<br><br>Please click on the link below to access the questionnaire. You will need to enter the password provided below to access the questionnaire.<br><br><a href='" . $link . "'>" . $link . "</a><br><br>Password: " . $password;
-    
+            $body = "Dear ". $rater_email .",<br><br>This is an automated email sent to $to.<br><br>Best regards,<br>Your Name<br><br>Please click on the link below to access the questionnaire. You will need to enter your password to access the questionnaire.<br><br><a href='" . $password_link . "'>" . $password_link . "</a>.";
+            
             // Send the email
             mail($to, $subject, $body, $headers, "-f " . $from);
         }

@@ -127,7 +127,7 @@ if ($start < $total_questions) {
 ?>
 <?
   //------------------------------------NEW----------------------------------------
-    include("../views/member/questionnaireView.php");
+    include("../views/member/assess360questionnaireView.php");
 
   //---------------------------------------------------------------------------------
 
