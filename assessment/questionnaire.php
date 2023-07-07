@@ -1,12 +1,10 @@
 <?
 use Mpdf\Tag\Br;
-include_once("../classes/MemberClass.php");
-include_once("../classes/QuestionsClass.php");
-include_once("../vendor/autoload.php");
-include_once("../lang/en.php");
-include_once("../classes/Constant.php");
-include_once("../classes/Session.php");
-include_once ("../classes/Encryption.php");
+require("classes/MemberClass.php");
+require("classes/QuestionsClass.php");
+require("vendor/autoload.php");
+require("lang/en.php");
+include_once ("classes/Encryption.php");
 // use Spipu\Html2Pdf\Html2Pdf;
 $login = new MemberClass();
 $questionsClass = new QuestionsClass($login);
@@ -81,14 +79,16 @@ if ($start < $total_questions) {
   if(isset($_POST["a"]) && $_POST["a"] == "submitImportanceOfCompetencies"){
     //Importance of Competencies
     $importance_of_competencies = isset($_POST['importance_of_competencies']) ? $_POST['importance_of_competencies'] : array();
-    $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
-    for($i=0;$i<count($competency_arr);$i++){ 
+    for($i=0; $i<count($competency_arr); $i++){
       $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
-      if(isset($importance_of_competencies[$i]) && $importance_of_competencies[$i] != ""){
+    }
+    for($i=0;$i<count($competency_arr);$i++){ 
+      $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
+      if(isset($importance_of_competencies[$i]) && !$importance_of_competencies[$i]){
+        continue;
+      };
+      if(isset($importance_of_competencies[$i])){
         $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, $importance_of_competencies[$i]);
-      }
-      else{
-        $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, NULL);
       }
     }
   }
@@ -103,7 +103,7 @@ if ($start < $total_questions) {
         continue;
       };
       //if there is no answer for the question in the database yet, INSERT
-      if(isset($competency_statements[$i]) && (!$questionsClass->getBoolanswerByQuestionid($question_id_arr[$i]))){
+      if(isset($competency_statements[$i]) && (!$questionsClass->getBoolanswerByQuestionid($rater_id, $question_id_arr[$i]))){
         $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
       }
       //if there is already an answer for the question, EDIT

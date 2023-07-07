@@ -7,8 +7,6 @@ require("../classes/Assess360Class.php");
 require("../vendor/autoload.php");
 require("../classes/listofratersClass.php");
 require("../classes/QuestionsClass.php");
-require("../classes/emailClass.php");
-
 // use Spipu\Html2Pdf\Html2Pdf;
 
 $login = new MemberClass();
@@ -399,20 +397,34 @@ if ($login->isLoggedIn()) {
 <!----------------------------------SARBULAND------------------------------------------------>
 <?
 // Get the company names from the AJAX request
-if (isset($_POST['comp_arr'])) {
+if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
   $comp_arr = $_POST['comp_arr'];
+  // $focus_comp_add_id = $_POST['focusCompId'];
 
-  $result_arr = $questionsClass->getQuestions($comp_arr);
+ 
   // Loop through the company names and call the getquestion function on each one
-  $questions = array();
-  foreach ($comp_arr as $comp) {
-    $questionsClass->getsetQuestions($comp,$comp);
-    //$questions[] = $competency->getQuestions($companyId,$comp);
-  }
+  // $questions = array();
+  // foreach ($comp_arr as $comp) {
+  //   $string = print_r($comp,true);
+  //   $questionsClass->getsetQuestions($comp,$focus_comp_add_id);
+  //   //$questions[] = $competency->getQuestions($companyId,$comp);
+  // }
 
-  // Return the questions as a JSON response
+  // // Return the questions as a JSON response
+  // // echo json_encode($questions);
   // echo json_encode($questions);
-  echo json_encode($questions);
+
+  $questions_temp_arr = array();
+  foreach($comp_arr as $comp){
+      $temp_arr = $questionsClass->getQuestions($comp);
+      for($i=0; $i<3; $i++){
+          $questions_temp_arr[] = $temp_arr[$i];
+      }
+  }
+  shuffle($questions_temp_arr);
+  foreach($questions_temp_arr as $question){
+      $questionsClass->setQuestions($question);
+  }
 }
 ?>
 <!------------------------------------------------------------------------------------------->
@@ -423,11 +435,22 @@ $page = isset($_POST['page']) ? $_POST['page'] : 1;
 $questions_per_page = isset($_POST['questions_per_page']) ? $_POST['questions_per_page'] : 5;
 $total_questions = isset($_POST['total_questions']) ? $_POST['total_questions'] : 0;
 $questions_arr = isset($_POST['questions_arr']) ? json_decode($_POST['questions_arr']) : array();
+$rater_id = isset($_POST['rater_id'])? $_POST['rater_id']: '';
 
 // Calculate the starting and ending index of the questions to display
 $start = ($page - 1) * $questions_per_page;
 $end = $start + $questions_per_page - 1;
 
+for($i=0; $i<count($questions_arr); $i++){
+  $question_id_arr[$i] = $questionsClass->getQuestionIdbyQuestion($questions_arr[$i]);
+}
+$competencystatements_assocarr = $questionsClass->getCompetencyStatementsAnswer_arr($companyId, $rater_id);
+$competencystatements_previousanswers = array();
+if(isset($competencystatements_assocarr)){
+  for($i=0; $i<count($questions_arr); $i++){
+      $competencystatements_previousanswers[$i] = isset($competencystatements_assocarr[$question_id_arr[$i]]) ? $competencystatements_assocarr[$question_id_arr[$i]] : "";
+  }
+}
 // Check if there are any competency statements to display on the current page
 if ($start < $total_questions) {
   // Build the competency statements table HTML
@@ -445,15 +468,16 @@ if ($start < $total_questions) {
             </thead>';
   $table .= '<tbody>';
   for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
-    $table .= '<tr style="font-size: 14px;">
-                  <td style="border: 1px solid black; padding-left: 5px;">' . $questions_arr[$i] . '</td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . $i . ']" value="1"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . $i . ']" value="2"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . $i . ']" value="3"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . $i . ']" value="4"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px;"><input type="radio" name="competencystatements[' . $i . ']" value="5"></td>
-                  <td style="border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;"><input type="radio" name="competencystatements[' . $i . ']" value="X"></td>
-              </tr>';
+    $table .=
+    "<tr style='font-size: 14px;'>
+        <td style='border: 1px solid black; padding-left: 5px;'>{$questions_arr[$i]}</td>
+        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='1'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 1 ? ' checked' : '') . "></td>
+        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='2'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 2 ? ' checked' : '') . "></td>
+        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='3'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 3 ? ' checked' : '') . "></td>
+        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='4'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 4 ? ' checked' : '') . "></td>
+        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='5'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 5 ? ' checked' : '') . "></td>
+        <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;'><input type='radio' name='competencystatements[{$i}]' value='X'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 'X' ? ' checked' : '') . "></td>
+    </tr>";
   }
   $table .= '</tbody>';
   $table .= '</table>';
@@ -476,11 +500,22 @@ if ($start < $total_questions) {
     $rater_id = 0; //TEMP, LATER CHANGE THIS TO GETRATERIDBYPWD
     for($i=0;$i<count($competency_arr);$i++){ 
       $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
-      if(isset($importance_of_competencies[$i]) && $importance_of_competencies[$i] != ""){
-        $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, $importance_of_competencies[$i]);
+      //if there is no answer for the question in the database yet, INSERT
+      if(isset($importance_of_competencies[$i]) && (!$questionsClass->getBoolAnswerImportanceOfCompetency($companyId, $rater_id, $competency_id_arr[$i], $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY))){
+        if(isset($importance_of_competencies[$i]) && $importance_of_competencies[$i] != ""){
+          $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, $importance_of_competencies[$i]);
+        }
+        else{
+          $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, NULL);
+        }
       }
+      //if there is already an answer for the question, EDIT
       else{
-        $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], NULL, NULL);
+        // $temp_id = 315;
+        $prev_importanceofcompetencies_answer = $questionsClass->getImportanceOfCompetencyAnswer($companyId, $rater_id, $competency_id_arr[$i], $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY);
+        if(isset($importance_of_competencies[$i]) && ($importance_of_competencies[$i] != $prev_importanceofcompetencies_answer)){
+          $questionsClass->editQuestionnaireData($companyId, $questionsClass->getImportanceOfCompetencyIdByData($companyId, $rater_id, $QUESTIONNAIRE_IMPORTANCE_OF_COMPETENCY, $competency_id_arr[$i], $prev_importanceofcompetencies_answer),  $importance_of_competencies[$i]);
+        }
       }
     }
   }
@@ -495,13 +530,19 @@ if ($start < $total_questions) {
         continue;
       };
       //if there is no answer for the question in the database yet, INSERT
-      if(isset($competency_statements[$i]) && (!$questionsClass->getBoolanswerByQuestionid($question_id_arr[$i]))){
-        $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
+      if(isset($competency_statements[$i]) && (!$questionsClass->getBoolanswerByQuestionid($rater_id, $question_id_arr[$i]))){
+        if(isset($competency_statements[$i]) && $competency_statements[$i] != ""){
+          $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
+        }
+        else{
+          $questionsClass->addQuestionnaireData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], NULL);
+        }
       }
       //if there is already an answer for the question, EDIT
       else{
-        if(isset($competency_statements[$i]) && (intval($competency_statements[$i]) != intval($questionsClass->getAnswerByQuestionid($question_id_arr[$i])))){
-          $id_tobe_edited = $questionsClass->getIdByData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
+        $prev_competencystatements_answer = $questionsClass->getCompetencystatementsAnswer($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i],  $question_id_arr[$i]);
+        if(isset($competency_statements[$i]) && ($competency_statements[$i] != $prev_competencystatements_answer)){
+          $id_tobe_edited = $questionsClass->getIdByData($companyId, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $prev_competencystatements_answer);
           //$questionsClass->editQuestionnaireData($companyId, $id_tobe_edited, $rater_id, $QUESTIONNAIRE_COMPETENCY_STATEMENTS, $competency_statements_id_arr[$i], $question_id_arr[$i], $competency_statements[$i]);
           $questionsClass->editQuestionnaireAnswerById($companyId, $id_tobe_edited, $competency_statements[$i]);
         }
@@ -578,4 +619,41 @@ else {
   $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];
   header('Location: ../login');
 }
+
+
+
+
+
+?>
+
+
+
+<!----------------------------------SARBULAND------------------------------------------------>
+
+<!-- <?
+  // // Get the company names from the AJAX request
+  // if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
+  //   $comp_arr = $_POST['comp_arr'];
+  //   $focus_comp_add_id = $_POST['focusCompId'];
+
+  //   $result_arr = $questionsClass->getQuestions($comp_arr);
+  //   // Loop through the company names and call the getquestion function on each one
+  //   $questions = array();
+  //   foreach ($comp_arr as $comp) {
+  //     $questionsClass->getsetQuestions($comp,$focus_comp_add_id);
+  //     //$questions[] = $competency->getQuestions($companyId,$comp);
+  //   }
+    
+  //   // Return the questions as a JSON response
+  //   // echo json_encode($questions);
+  //   echo json_encode($questions);
+  // } -->
+  //-------------------------------------------------------------------------------
+
+?>
+
+
+
+<?
+  if(isset($_POST["a"]) && $_POST["a"] == "activate");
 ?>
