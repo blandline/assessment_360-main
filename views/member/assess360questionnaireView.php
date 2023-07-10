@@ -37,13 +37,13 @@ use Mpdf\Tag\IndexEntry;
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
             <div class="questionnaire-paragraph-title"><?= $language["questionnaire_intropage_introduction"] ?></div><br>
-            <div>
+            <div style="line-height:normal;">
                 <?= $language["questionnaire_intropage_introduction_paragraph1"] ?>
                 <?= $language["questionnaire_intropage_introduction_paragraph2"] ?>
             </div>
-
+            <br>
             <div class="questionnaire-paragraph-title"><?= $language["questionnaire_intropage_instruction"] ?></div><br>
-            <div>
+            <div style="line-height:normal;">
                 <?= $language["questionnaire_intropage_instruction_paragraph1"] ?>
                 <?= $language["questionnaire_intropage_instruction_paragraph2"] ?>
                 <?= $language["questionnaire_intropage_instruction_paragraph3"] ?>
