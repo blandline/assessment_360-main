@@ -12,13 +12,6 @@ use Mpdf\Tag\IndexEntry;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questionnaire</title>
 </head>
-<?
-//TEMP
-$role_arr = ["focus", "manager", "colleague", "direct report", "others"];
-$role = $role_arr[3];
-$rater_id = 0; //getrateridbypwd
-?>
-
 <body class="questionnaire-body">
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -58,9 +51,9 @@ $rater_id = 0; //getrateridbypwd
                 <?= $language["questionnaire_intropage_instruction_paragraph5"] ?>
                 <?= $language["questionnaire_intropage_instruction_paragraph6"] ?>
                 <?
-                if ($role == "manager" or $role == "focus") {
+                if ($role == "Manager" or $role == "FOCUS") {
                     echo '<a href="#importance-of-competency-page">', $language["questionnaire_intropage_instruction_paragraph7"], '</a>';
-                } elseif ($role != "manager" and $role != "focus") {
+                } elseif ($role != "Manager" and $role != "FOCUS") {
                     echo '<a href="#competency-statements-page">', $language["questionnaire_intropage_instruction_paragraph7"], '</a>';
                 }
                 ?>
@@ -88,7 +81,6 @@ $rater_id = 0; //getrateridbypwd
             <!-- TODO list of competencies -->
             <?
             //CHANGE LATER TO GET FOCUSID BY PWD
-            $focus_id = 0;
             $competency_arr = $questionsClass->getCompetencyByFocusID($focus_id);
             //$competency_id_arr = $questionsClass->getCompetencyIDByFocusID($focus_id);
             // $temp_title = $questionsClass->getCompetencyForQuestionnaire();
@@ -148,9 +140,9 @@ $rater_id = 0; //getrateridbypwd
             <br>
             <div class="questionnaire-paragraph-title">
                 <?
-                if ($role == "manager" or $role == "focus") {
+                if ($role == "Manager" or $role == "FOCUS") {
                     echo $language["questionnaire_competencystatements_title_for_focus_manager"];
-                } elseif ($role != "manager" and $role != "focus") {
+                } elseif ($role != "Manager" and $role != "FOCUS") {
                     echo $language["questionnaire_competencystatements_title_for_others"];
                 }
                 ?>
@@ -249,11 +241,11 @@ $rater_id = 0; //getrateridbypwd
             </div>
             <br>
             <?
-            if ($role == "manager") {
+            if ($role == "Manager") {
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"], '</a></button>';
                 echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
-            } elseif ($role == "focus") {
+            } elseif ($role == "FOCUS") {
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"], '</a></button>';
                 echo '<button class="btn btn-success btn-sm addButton competency-add-btn finish-btn questionnaire-competencystatement-finish">', $language["questionnaire_finish_button"], '</button>';
             } else {
@@ -267,9 +259,9 @@ $rater_id = 0; //getrateridbypwd
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
             <?
-            if ($role == "manager") {
+            if ($role == "Manager") {
                 echo $language["questionnaire_openendquestion_title_for_manager"];
-            } elseif ($role != "manager") {
+            } elseif ($role != "Manager") {
                 echo $language["questionnaire_openendquestion_title_for_others"];
             }
             ?>
@@ -295,6 +287,9 @@ $rater_id = 0; //getrateridbypwd
         <section id="finish-page" class="questionnaire-page">
             <div style="font-size 16px;"><?= $language["questionnaire_finish_thankyou"]?></div>
             <div style="font-size 12px;"><?= $language["questionnaire_finish_paragraph"]?></div>
+        </section>
+        <section id="before-launchdate-page" class="questionnaire-page">
+            You can't access the page before the launch date
         </section>
     </form>
 

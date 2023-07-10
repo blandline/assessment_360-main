@@ -315,6 +315,42 @@ class QuestionsClass
         return $result;
     }
 
+    public function getRoleByRaterId($dbName, $rater_id){
+        require '../config/dbconnect.php';
+        
+        $query = "SELECT roles FROM " . $dbName . ".rater_list WHERE rater_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+        
+        $data = "";
+        if ($row) {
+            $data = $row["roles"];
+        }
+        return $data;
+    }
+
+    public function getFocusIdbyRaterId($dbName, $rater_id){
+        require '../config/dbconnect.php';
+        
+        $query = "SELECT focus_id FROM " . $dbName . ".rater_list WHERE rater_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+        
+        $data = "";
+        if ($row) {
+            $data = $row["focus_id"];
+        }
+        return $data;
+    }
+
     //--------------------------QUESTIONNAIRE DATABASE--------------------------
     public function addQuestionnaireData($dbName, $rater_id, $question_type_id, $competency_id, $question_id, $answer)
     {

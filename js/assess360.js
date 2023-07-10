@@ -858,6 +858,7 @@ var Questionnaire = function () {
             $("#open-end-question-page").hide();
             $("#continue-later-page").hide();
             $("#finish-page").hide()
+            $("#before-launchdate-page").hide()
         });
 
         $('a[href="#competency-statements-page"]').click(function (event) {
@@ -870,6 +871,7 @@ var Questionnaire = function () {
             $("#open-end-question-page").hide();
             $("#continue-later-page").hide();
             $("#finish-page").hide()
+            $("#before-launchdate-page").hide()
         });
 
         // if (window.history.replaceState) {
@@ -879,26 +881,27 @@ var Questionnaire = function () {
         $("#deleteModal").on("click", ".confirm-yes", function (event) {
             event.preventDefault();
 
-                $("#intro-page").hide();
-                $("#importance-of-competency-page").hide();
-                $("#competency-statements-page").show();
-                $("#open-end-question-page").hide();
-                $("#continue-later-page").hide();
-                $("#finish-page").hide()
+            $("#intro-page").hide();
+            $("#importance-of-competency-page").hide();
+            $("#competency-statements-page").show();
+            $("#open-end-question-page").hide();
+            $("#continue-later-page").hide();
+            $("#finish-page").hide()
+            $("#before-launchdate-page").hide()
         });
 
         $("body").on("click", ".questionnaire-importanceofcompetency-previous", function (event) {
-                event.preventDefault(); // prevent the link from navigating to the target
+            event.preventDefault(); // prevent the link from navigating to the target
 
-                // hide the current page and show the target page
-                $("#intro-page").show();
-                $("#importance-of-competency-page").hide();
-                $("#competency-statements-page").hide();
-                $("#open-end-question-page").hide();
-                $("#continue-later-page").hide();
-                $("#finish-page").hide()
-            }
-        );
+            // hide the current page and show the target page
+            $("#intro-page").show();
+            $("#importance-of-competency-page").hide();
+            $("#competency-statements-page").hide();
+            $("#open-end-question-page").hide();
+            $("#continue-later-page").hide();
+            $("#finish-page").hide()
+            $("#before-launchdate-page").hide()
+        });
 
         $("body").on("click", ".questionnaire-importanceofcompetency-next", function (event) {
             event.preventDefault(); // prevent the link from navigating to the target
@@ -910,6 +913,7 @@ var Questionnaire = function () {
             $("#open-end-question-page").hide();
             $("#continue-later-page").hide();
             $("#finish-page").hide()
+            $("#before-launchdate-page").hide()
         });
 
         $("body").on("click", ".questionnaire-competencystatement-previous", function (event) {
@@ -922,6 +926,7 @@ var Questionnaire = function () {
             $("#open-end-question-page").hide();
             $("#continue-later-page").hide();
             $("#finish-page").hide()
+            $("#before-launchdate-page").hide()
         });
 
         $("body").on("click", ".questionnaire-competencystatement-next", function (event) {
@@ -934,6 +939,7 @@ var Questionnaire = function () {
             $("#open-end-question-page").show();
             $("#continue-later-page").hide();
             $("#finish-page").hide()
+            $("#before-launchdate-page").hide()
         });
 
         $("body").on("click",".questionnaire-openendquestion-previous",function (event) {
@@ -946,6 +952,7 @@ var Questionnaire = function () {
             $("#open-end-question-page").hide();
             $("#continue-later-page").hide();
             $("#finish-page").hide()
+            $("#before-launchdate-page").hide()
         });
 
         $("body").on("keyup", ".questionnaire_openendquestion_text-input", function () {
@@ -983,6 +990,7 @@ var Questionnaire = function () {
             $("#open-end-question-page").hide();
             $("#continue-later-page").show();
             $("#finish-page").hide();
+            $("#before-launchdate-page").hide()
         });
         $("body").on("click",".finish-btn",function (event) {
             event.preventDefault(); // prevent the link from navigating to the target
@@ -994,6 +1002,7 @@ var Questionnaire = function () {
             $("#open-end-question-page").hide();
             $("#continue-later-page").hide();
             $("#finish-page").show();
+            $("#before-launchdate-page").hide()
         });
         //-------------------------Competency Statements------------------------------------
         $('a[href="javascript:void(0);"]').click(function (event) {
