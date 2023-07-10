@@ -1,11 +1,11 @@
 <?
 class QuestionsClass
 {
-    private $memberClass;
+    // private $memberClass;
 
-    public function __construct($memberClass)
+    public function __construct()
     {
-        $this->memberClass = $memberClass;
+        // $this->memberClass = $memberClass;
     }
     public function getQuestions($arr_comp)
     {
@@ -250,13 +250,8 @@ class QuestionsClass
         return $competencyid;
     }    
 
-    public function getBoolAnswerByQuestionid($rater_id, $question_id){
+    public function getBoolAnswerByQuestionid($dbName, $rater_id, $question_id){
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
 
         $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_id = ?");
         $stmt->bind_param("ss", $rater_id, $question_id);
@@ -268,13 +263,8 @@ class QuestionsClass
         return ($result !== null);
     }
 
-    public function getBoolAnswerImportanceOfCompetency($companyId, $rater_id, $competency_id, $question_type_id){
+    public function getBoolAnswerImportanceOfCompetency($dbName, $rater_id, $competency_id, $question_type_id){
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
     
         $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND competency_id = ? AND question_type_id = ?");
         $stmt->bind_param("iii", $rater_id, $competency_id, $question_type_id);
@@ -286,13 +276,8 @@ class QuestionsClass
         return $result;
     }
 
-    public function getImportanceOfCompetencyAnswer($companyId, $rater_id, $competency_id, $question_type_id){
+    public function getImportanceOfCompetencyAnswer($dbName, $rater_id, $competency_id, $question_type_id){
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
     
         $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND competency_id = ? AND question_type_id = ?");
         $stmt->bind_param("iii", $rater_id, $competency_id, $question_type_id);
@@ -304,13 +289,8 @@ class QuestionsClass
         return $result;
     }
 
-    public function getCompetencystatementsAnswer($companyId, $rater_id, $question_type_id, $competency_id, $question_id){
+    public function getCompetencystatementsAnswer($dbName, $rater_id, $question_type_id, $competency_id, $question_id){
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
     
         $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND competency_id = ? AND question_type_id = ? AND question_id =?");
         $stmt->bind_param("iiii", $rater_id, $competency_id, $question_type_id, $question_id);
@@ -322,13 +302,8 @@ class QuestionsClass
         return $result;
     }
 
-    public function getAnswerByQuestionid($question_id){
+    public function getAnswerByQuestionid($dbName, $question_id){
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
 
         $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE question_id = ?");
         $stmt->bind_param("s", $question_id);
@@ -341,14 +316,9 @@ class QuestionsClass
     }
 
     //--------------------------QUESTIONNAIRE DATABASE--------------------------
-    public function addQuestionnaireData($companyId, $rater_id, $question_type_id, $competency_id, $question_id, $answer)
+    public function addQuestionnaireData($dbName, $rater_id, $question_type_id, $competency_id, $question_id, $answer)
     {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
 
         $stmt = $conn->prepare("INSERT INTO " . $dbName . ".questionnaire_result (rater_id, question_type_id, competency_id, question_id, answer) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("iiiis", $rater_id, $question_type_id, $competency_id, $question_id, $answer);
@@ -356,13 +326,8 @@ class QuestionsClass
         $stmt->close();
     }
 
-    public function editQuestionnaireData($companyId, $id, $answer) {
+    public function editQuestionnaireData($dbName, $id, $answer) {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
         
         $stmt = $conn->prepare("UPDATE " . $dbName . ".questionnaire_result SET answer = ? WHERE id = ?");
         $stmt->bind_param("si", $answer, $id);
@@ -370,13 +335,9 @@ class QuestionsClass
         $stmt->close();
     }
 
-    public function getIdByData($companyId, $rater_id, $question_type_id, $competency_id, $question_id, $answer) {
+    public function getIdByData($dbName, $rater_id, $question_type_id, $competency_id, $question_id, $answer) {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
+
         $stmt = $conn->prepare("SELECT id FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = ? AND competency_id = ? AND question_id = ? AND answer = ?");
         $stmt->bind_param("iiiis", $rater_id, $question_type_id, $competency_id, $question_id, $answer);
         $stmt->execute();
@@ -392,13 +353,9 @@ class QuestionsClass
         return $id;        
     }
 
-    public function getImportanceOfCompetencyIdByData($companyId, $rater_id, $question_type_id, $competency_id, $answer) {
+    public function getImportanceOfCompetencyIdByData($dbName, $rater_id, $question_type_id, $competency_id, $answer) {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
+
         $stmt = $conn->prepare("SELECT id FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = ? AND competency_id = ? AND answer = ?");
         $stmt->bind_param("iiis", $rater_id, $question_type_id, $competency_id, $answer);
         $stmt->execute();
@@ -414,13 +371,8 @@ class QuestionsClass
         return $id;        
     }
 
-    public function editQuestionnaireAnswerById($companyId, $id, $answer) {
+    public function editQuestionnaireAnswerById($dbName, $id, $answer) {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
     
         $stmt = $conn->prepare("UPDATE " . $dbName . ".questionnaire_result SET answer = ? WHERE id = ?");
         $stmt->bind_param("si", $answer, $id);
@@ -428,13 +380,8 @@ class QuestionsClass
         $stmt->close();
     }
 
-    public function getImportanceOfCompetenciesAnswer_arr($companyId, $rater_id) {
+    public function getImportanceOfCompetenciesAnswer_arr($dbName, $rater_id) {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
     
         $stmt = $conn->prepare("SELECT competency_id, answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 0");
         $stmt->bind_param("i", $rater_id);
@@ -449,13 +396,8 @@ class QuestionsClass
         return $answers;
     }
 
-    public function getCompetencyStatementsAnswer_arr($companyId, $raterId) {
+    public function getCompetencyStatementsAnswer_arr($dbName, $raterId) {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
     
         $stmt = $conn->prepare("SELECT question_id, answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 1");
         $stmt->bind_param("i", $raterId);
@@ -470,13 +412,8 @@ class QuestionsClass
         return $answers;
     }
 
-    public function getOpenEndAnswer($companyId, $raterId){
+    public function getOpenEndAnswer($dbName, $raterId){
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
 
         $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 2");
         $stmt->bind_param("i", $raterId);
@@ -491,13 +428,8 @@ class QuestionsClass
         }
     }
 
-    public function getYesNoDiscussAnswer($companyId, $raterId){
+    public function getYesNoDiscussAnswer($dbName, $raterId){
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
 
         $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 3");
         $stmt->bind_param("i", $raterId);
@@ -512,13 +444,9 @@ class QuestionsClass
         }
     }
 
-    public function getOpenEndIdByData($companyId, $rater_id, $question_type_id, $answer) {
+    public function getOpenEndIdByData($dbName, $rater_id, $question_type_id, $answer) {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
+
         $stmt = $conn->prepare("SELECT id FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = ?  AND answer = ?");
         $stmt->bind_param("iis", $rater_id, $question_type_id, $answer);
         $stmt->execute();

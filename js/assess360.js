@@ -758,20 +758,22 @@ var Competency = function () {
     });
     };
 
-    var Questionnaire = function () {
+var Questionnaire = function () {
     function changePage(page, questions_per_page, total_questions, questions_arr, total_pages) {
         $.ajax({
-            url: 'assess360',
-            // url: '../questionnaire',
+            // url: 'assess360',
+            url: 'questionnaire' + window.location.search,
             type: 'POST',
             data: {
                 page: page,
                 questions_per_page: questions_per_page,
                 total_questions: total_questions,
-                questions_arr: JSON.stringify(questions_arr)
+                questions_arr: JSON.stringify(questions_arr),
+                'a' : "changePage"
             },
-            success: function(html) {
-                $('#competency-statements-container').html(html);
+            success: function(response) {
+                var tableHtml = $(response).find('#competency-statements-container').html();
+                $('#competency-statements-container').html(tableHtml);
                 updatePaginationLinks(page, total_pages);
             }
         });
@@ -870,9 +872,9 @@ var Competency = function () {
             $("#finish-page").hide()
         });
 
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
-        }
+        // if (window.history.replaceState) {
+        //     window.history.replaceState(null, null, window.location.href);
+        // }
 
         $("#deleteModal").on("click", ".confirm-yes", function (event) {
             event.preventDefault();
@@ -1006,12 +1008,16 @@ var Competency = function () {
             $('input[type=radio]:checked').each(function(index, input) {
                 var value = input.value;
                 var inputName = input.name;
+                console.log(value);
+                console.log(inputName);
                 var inputIndex = inputName.match(/importanceofcompetencies\[(\d+)\]/)[1];
-                importance_of_competencies[inputIndex] = value;
+                if(inputIndex){
+                    importance_of_competencies[inputIndex] = value;
+                }
             });
             $.ajax({
-                url: 'assess360',
-                // url: '../questionnaire',
+                // url: 'assess360',
+                url: 'questionnaire'+ window.location.search,
                 data: {
                     'importance_of_competencies': importance_of_competencies,
                     'competency_arr': JSON.stringify(competency_arr),
@@ -1034,8 +1040,8 @@ var Competency = function () {
                 importance_of_competencies[inputIndex] = value;
             });
             $.ajax({
-                url: 'assess360',
-                // url: '../questionnaire',
+                // url: 'assess360',
+                url: 'questionnaire' + window.location.search,
                 data: {
                     'importance_of_competencies': importance_of_competencies,
                     'competency_arr': JSON.stringify(competency_arr),
@@ -1059,12 +1065,11 @@ var Competency = function () {
                     var inputIndex = parseInt(matches[1]);
                     competency_statements[inputIndex] = input.value;
                 }
-            });
+            });           
             $.ajax({
-                url: 'assess360',
-                // url: '../questionnaire',
+                // url: 'assess360',
+                url: 'questionnaire' + window.location.search,
                 data: {
-                    'rater_id': rater_id,
                     'competency_statements': competency_statements,
                     'questions_arr': JSON.stringify(questions_arr),
                     'a': 'submitCompetencyStatements',
@@ -1089,10 +1094,9 @@ var Competency = function () {
                 }
             });
             $.ajax({
-                url: 'assess360',
-                // url: '../questionnaire',
+                // url: 'assess360',
+                url: 'questionnaire',
                 data: {
-                    'rater_id': rater_id,
                     'competency_statements': competency_statements,
                     'questions_arr': JSON.stringify(questions_arr),
                     'a': 'submitCompetencyStatements',
@@ -1117,10 +1121,9 @@ var Competency = function () {
                 }
             });
             $.ajax({
-                url: 'assess360',
-                // url: '../questionnaire',
+                // url: 'assess360',
+                url: 'questionnaire' + window.location.search,
                 data: {
-                    'rater_id': rater_id,
                     'competency_statements': competency_statements,
                     'questions_arr': JSON.stringify(questions_arr),
                     'a': 'submitCompetencyStatements',
@@ -1145,10 +1148,9 @@ var Competency = function () {
                 }
             });
             $.ajax({
-                url: 'assess360',
-                // url: '../questionnaire',
+                // url: 'assess360',
+                url: 'questionnaire' + window.location.search,
                 data: {
-                    'rater_id': rater_id,
                     'competency_statements': competency_statements,
                     'questions_arr': JSON.stringify(questions_arr),
                     'a': 'submitCompetencyStatements',
@@ -1173,10 +1175,9 @@ var Competency = function () {
                 }
             });
             $.ajax({
-                url: 'assess360',
-                // url: '../questionnaire',
+                // url: 'assess360',
+                url: 'questionnaire' + window.location.search,
                 data: {
-                    'rater_id': rater_id,
                     'competency_statements': competency_statements,
                     'questions_arr': JSON.stringify(questions_arr),
                     'a': 'submitCompetencyStatements',
@@ -1194,8 +1195,8 @@ var Competency = function () {
             var selected_radio_button = $('input[name="questionnaire_yesno_discuss"]:checked');
             var questionnaire_yesno_discuss = selected_radio_button.length > 0 ? parseFloat(selected_radio_button.val()) : null;
             $.ajax({
-                url: 'assess360',
-                // url: '../questionnaire',
+                // url: 'assess360',
+                url: 'questionnaire' + window.location.search,
                 data: {
                     'openend_question_result': openend_question_result,
                     'questionnaire_yesno_discuss' :questionnaire_yesno_discuss,
@@ -1214,8 +1215,8 @@ var Competency = function () {
             var selected_radio_button = $('input[name="questionnaire_yesno_discuss"]:checked');
             var questionnaire_yesno_discuss = selected_radio_button.length > 0 ? parseFloat(selected_radio_button.val()) : null;
             $.ajax({
-                url: 'assess360',
-                // url: '../questionnaire',
+                // url: 'assess360',
+                url: 'questionnaire' + window.location.search,
                 data: {
                     'openend_question_result': openend_question_result,
                     'questionnaire_yesno_discuss' :questionnaire_yesno_discuss,

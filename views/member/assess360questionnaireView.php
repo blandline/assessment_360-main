@@ -12,15 +12,10 @@ use Mpdf\Tag\IndexEntry;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questionnaire</title>
 </head>
-
-
-
-
-
 <?
 //TEMP
 $role_arr = ["focus", "manager", "colleague", "direct report", "others"];
-$role = $role_arr[1];
+$role = $role_arr[3];
 $rater_id = 0; //getrateridbypwd
 ?>
 
@@ -103,7 +98,7 @@ $rater_id = 0; //getrateridbypwd
                 $competency_def_arr[$i] = $questionsClass->getEnDespByCompetency($competency_arr[$i]);
                 $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
             }
-            $importanceofcompetencies_assocarr = $questionsClass->getImportanceOfCompetenciesAnswer_arr($companyId, $rater_id);
+            $importanceofcompetencies_assocarr = $questionsClass->getImportanceOfCompetenciesAnswer_arr($dbName, $rater_id);
             $importanceofcompetencies_previousanswers = array();
             if(isset($importanceofcompetencies_assocarr)){
                 for($i=0; $i<count($competency_arr); $i++){
@@ -173,7 +168,7 @@ $rater_id = 0; //getrateridbypwd
                 <?= $language["questionnaire_competencystatements_paragraph2"] ?>
                 <!-- TODO competency statements -->
                 <div id="competency-statements-container">
-                    <table style="border: 1px solid black; width: 100%;">
+                    <table id="competency-statements-table" style="border: 1px solid black; width: 100%;">
                         <thead style="text-align:center; background-color: #59A5CB; color:white; font-size: 14px;">
                             <tr>
                                 <th style="width:80%"><?= $language["questionnaire_questions"] ?></th>
@@ -199,7 +194,7 @@ $rater_id = 0; //getrateridbypwd
                         for($i=0; $i<count($questions_arr); $i++){
                             $question_id_arr[$i] = $questionsClass->getQuestionIdbyQuestion($questions_arr[$i]);
                         }
-                        $competencystatements_assocarr = $questionsClass->getCompetencyStatementsAnswer_arr($companyId, $rater_id);
+                        $competencystatements_assocarr = $questionsClass->getCompetencyStatementsAnswer_arr($dbName, $rater_id);
                         $competencystatements_previousanswers = array();
                         if(isset($competencystatements_assocarr)){
                             for($i=0; $i<count($questions_arr); $i++){
@@ -220,6 +215,7 @@ $rater_id = 0; //getrateridbypwd
                             </tr>";
                         }
                         $table .= '</tbody>';
+                        $table .= '</table>';
                         echo $table;
                         ?>
                     </table>
@@ -279,8 +275,8 @@ $rater_id = 0; //getrateridbypwd
             ?>
             <?= $language["questionnaire_openendquestion_paragraph1"] ?>
             <?
-            $openendquestion_previousanswer = $questionsClass->getOpenEndAnswer($companyId, $rater_id);
-            $openendquestion_yesno_previousanswer = $questionsClass->getYesNoDiscussAnswer($companyId, $rater_id);
+            $openendquestion_previousanswer = $questionsClass->getOpenEndAnswer($dbName, $rater_id);
+            $openendquestion_yesno_previousanswer = $questionsClass->getYesNoDiscussAnswer($dbName, $rater_id);
             ?>
             <textarea class="questionnaire_openendquestion_text-input" name="questionnaire_openendquestion" placeholder="(Maximum 100 words)" rows="6"><? if(isset($openendquestion_previousanswer)) { echo $openendquestion_previousanswer; } ?></textarea>
             <?= $language["questionnaire_openendquestion_paragraph2"] ?>
