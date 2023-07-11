@@ -20,6 +20,8 @@ if (isset($_GET["id"]) && isset($_GET["password"])) {
   $focus_id = $questionsClass->getFocusIdbyRaterId($dbName, $rater_id);
   $launch_date = $questionsClass->getLaunchDatebyFocusId($dbName, $focus_id);
   $current_date = date('Y-m-d');
+
+  $focus_full_name = $questionsClass->getFocusNameByFocusId($dbName, $focus_id);
 ?>
   <script>
     window["currentLang"] = '<?= $_COOKIE['lang'] ?>';

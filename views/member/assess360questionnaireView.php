@@ -36,7 +36,7 @@ include_once '../config/config.php'; ?>
     </div>
     <form method="post" id="questionnaire_form" action="assess360">
         <section id="intro-page" class="questionnaire-page questionnaire-page-active">
-            <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
+            <div class="questionnaire-header"><?= $language["questionnaire_header_title"] . " (" . $focus_full_name . ")"?></div>
             <br>
             <div class="questionnaire-paragraph-title"><?= $language["questionnaire_intropage_introduction"] ?></div><br>
             <div style="line-height:normal;">
@@ -63,7 +63,7 @@ include_once '../config/config.php'; ?>
             </div>
         </section>
         <section id="importance-of-competency-page" class="questionnaire-page">
-            <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
+            <div class="questionnaire-header"><?= $language["questionnaire_header_title"] . " (" . $focus_full_name . ")"?></div>
             <br>
             <?= $language["questionnaire_importanceofcompetency_title"] ?>
             <br>
@@ -153,7 +153,7 @@ include_once '../config/config.php'; ?>
             <br>
         </section>
         <section id="competency-statements-page" class="questionnaire-page">
-            <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
+            <div class="questionnaire-header"><?= $language["questionnaire_header_title"] . " (" . $focus_full_name . ")"?></div>
             <br>
             <div class="questionnaire-paragraph-title">
                 <?
@@ -273,7 +273,7 @@ include_once '../config/config.php'; ?>
             ?>
         </section>
         <section id="open-end-question-page" class="questionnaire-page">
-            <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
+            <div class="questionnaire-header"><?= $language["questionnaire_header_title"] . " (" . $focus_full_name . ")"?></div>
             <br>
             <?
             if ($role == "Manager") {

@@ -180,11 +180,11 @@ public function getsetQuestions($comp_arr, $focus_id)
 {
     require '../config/dbconnect.php';
 
-    if ($this->memberClass->isAdmin()) {
-        $dbName = $this->memberClass->getCompanyDBById($companyId);
-    } else {
-        $dbName = $this->memberClass->getCompanyDB();
-    }
+    // if ($this->memberClass->isAdmin()) {
+    //     $dbName = $this->memberClass->getCompanyDBById($companyId);
+    // } else {
+    //     $dbName = $this->memberClass->getCompanyDB();
+    // }
 
     // Check if data for this focus_id already exists in the competency_questions table
     $checkQuery = "SELECT id FROM competency_questions WHERE focus_id = ?";
@@ -242,6 +242,7 @@ public function getsetQuestions($comp_arr, $focus_id)
         $stmt->close();
     }
     }
+}
 
     public function setQuestions($question){
         require '../config/dbconnect.php';
@@ -578,6 +579,24 @@ public function getsetQuestions($comp_arr, $focus_id)
         $data = "";
         if ($row) {
             $data = isset($row["start_date"])?$row["start_date"]:"";
+        }
+        return $data;
+    }
+
+    public function getFocusNameByFocusId($dbName, $focus_id){
+        require '../config/dbconnect.php';
+
+        $query = "SELECT focus_first_name, focus_last_name FROM " . $dbName . ".focus WHERE focus_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $focus_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+
+        $data = "";
+        if ($row) {
+            $data = (isset($row["focus_first_name"]) && isset($row["focus_last_name"])) ? $row["focus_first_name"] . " " . $row["focus_last_name"]:"";
         }
         return $data;
     }

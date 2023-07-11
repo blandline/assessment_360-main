@@ -3201,4 +3201,29 @@ $language["questionnaire_openendquestion_discuss_no"]= "NO";
 $language["questionnaire_finish_thankyou"]= "Thank You";
 $language["questionnaire_finish_paragraph"]= "Your objective and truthful feedback are valuable and appreciated";
 //---------------------------------------------------------------------
+
+//--------------------------------Assessment report------------------------------------
+$language["report_cover_title"] = "PERSONAL <br> ASSESSMENT <br> REPORT";
+$language["report_header_title"] = "PERSONAL COMPETENCY REPORT";
+
+//intro page
+$language["report_introduction_title"] = "1. Introduction";
+$language["report_introduction_paragraph1"] = "<p>Constructive feedback is widely acknowledged as a crucial element for improving managerial effectiveness </p>";
+$language["report_introduction_paragraph2"] = "<p>360 Feedback Assessment provides the opportunity for the person (the Focus) receiving feedback from various sources, 
+                                                including FOCUS himself/herself, his/her manager, and if participating, direct reports, direct reports, colleagues,
+                                                and others in a safe, anonymous, and constructive manner. By gaining feedback from multiple perspectives, FOCUS will be
+                                                able to increase self-awareness, learn, and improve or develop new skills and behaviours for enhancement of
+                                                effectiveness in the workplace. </p>";
+$language["report_introduction_paragraph3"] = "<p>The following report offers an in-depth evaluation of your skills, abilities, personal attributes, and other job relevant
+                                                characteristics that are pertinent to your job as seen from multiple perspectives, as outlined in Part 3 (Respondent Overview) of the report. </p>";
+$language["report_introduction_paragraph4"] = "<p>While reviewing the report, it's important to note that the perception of you by a group of individuals at a particular moment in time is not an
+                                                absolute and unchanging assessment.</p>";
+$language["report_introduction_paragraph5"] = "<p>The results in this report are not intended for evaluation or selection but to provide a very useful input to outline an individual (the FOCUS) development track.</p>";
+
+//competencies page
+$language["report_competencies_title"] = "2. Competencies";
+$language["report_competencies_paragraph"] = "In this part of the report, it lists out the competencies with their definitions that have been used in the questionnaire. It is helpful for you to understand
+                                                the definitions when you go through the result in this report.";
+//-------------------------------------------------------------------------------------
+
 ?>

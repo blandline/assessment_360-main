@@ -7,12 +7,14 @@ require("../classes/Assess360Class.php");
 require("../vendor/autoload.php");
 require("../classes/listofratersClass.php");
 require("../classes/QuestionsClass.php");
+require("../classes/ReportClass.php");
 // use Spipu\Html2Pdf\Html2Pdf;
 
 $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
 $questionsClass = new QuestionsClass();
+$reportClass = new ReportClass($login);
 //$emailClass = new emailClass($login);
 
 if ($login->isLoggedIn()) {
@@ -479,14 +481,6 @@ if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
     $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
     include("../views/member/questionnaireView.php");
-  }elseif (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
-    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
-      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
-    }
-
-    $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
-
-    include("../views/member/questionnaireView.php");
   }elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetencyselection") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);  
@@ -495,9 +489,16 @@ if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
     $_SESSION[$session_page] = $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION;
 
     include("../views/member/focuscompetencyselectionView.php");
+  }elseif (isset($_GET["a"]) && $_GET["a"] == "report") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_ASSESSMENT_REPORT) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);  
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_ASSESSMENT_REPORT;
+
+    include("../views/member/assess360reportView.php");
   }
   //---------------------------------------------------------------------------------
-
 }
 else {
   $_SESSION[$session_login_page] = $_SERVER["REQUEST_URI"];

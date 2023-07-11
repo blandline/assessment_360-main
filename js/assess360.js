@@ -677,7 +677,7 @@ var Competency = function () {
    $(".competency-add-table").hide();
 };
 
-    var Raterlist = function () {
+var Raterlist = function () {
     var rowcounter = 1;
 
   $("body").on("click", ".raterlist-add-btn", function () {
@@ -1452,3 +1452,46 @@ $(document).ready(function () {
     }
   });
 });
+
+var AssessmentReport = function () {
+    jQuery(document).ready(function ($) {
+        ac = $("#ac").length > 0 ? $("#ac").val() : -1;
+    
+        $("#ac").change(function () {
+          var form = document.createElement("form");
+          form.style.visibility = "hidden";
+          form.method = "POST";
+          form.action = "competency";
+    
+          var typeInput = document.createElement("input");
+          typeInput.name = "ac";
+          typeInput.value = $("#ac").val();
+          form.appendChild(typeInput);
+    
+          document.body.appendChild(form);
+          form.submit();
+        });
+    
+        if (window.history.replaceState) {
+          window.history.replaceState(null, null, window.location.href);
+        }
+
+        $(".report-page:not(:first)").hide();
+
+        $('a[href="#report-intro-page"]').click(function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+            // hide the current page and show the target page
+            $("#report-cover-page").hide();
+            $("#report-intro-page").show();
+            $("#report-competencies-page").hide();
+        });
+
+        $('a[href="#report-competencies-page"]').click(function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+            // hide the current page and show the target page
+            $("#report-cover-page").hide();
+            $("#report-intro-page").hide();
+            $("#report-competencies-page").show();
+        });
+      });
+}
