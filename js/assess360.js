@@ -172,12 +172,12 @@ var Competency = function () {
         }
     }
 
-    function updateFrameworkTable() {
-        var data = [];
+  function updateFrameworkTable() {
+    var data = [];
 
-        if (frameworkTableColCount == 0) {
-            frameworkTableColCount = $(".competency-frm-table tr:first th").length;
-        }
+    if (frameworkTableColCount == 0) {
+      frameworkTableColCount = $(".competency-frm-table tr:first th").length;
+    }
 
         for (var i = 0; i < frameworkTableObj.length; i++) {
             var tmp = [];
@@ -269,494 +269,525 @@ var Competency = function () {
             tmp.push(-1);
             data.push(tmp);
         }
+    if (editRowID < 0) {
+      var tmp = [];
+      for (var i = 0; i < frameworkTableColCount - 2; i++) {
+        //---------------------------------- EDIT ---------------------------------
+        // if (i == 1 && editRowID >= 0) {
+        //     var textfield = '<input type="text" class="positionName">';
+        //     tmp.push(textfield);
+        // } else {
+        tmp.push("");
+        // }
+        //-------------------------------------------------------------------------
+      }
+      var button = "";
+      if (editRowID >= 0) {
+        button =
+          "";
+      } else {
+        button =
+          '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' +
+          lang["competency_framework_add"] +
+          "</button>";
+      }
+      tmp.push(button);
+      tmp.push(-1);
+      data.push(tmp);
+    }
 
-        if (frameworkTable == null) {
-            var array = [];
-            for (var i = 0; i < frameworkTableColCount - 1; i++) {
-                if (i == 0) {
-                    array[i] = { orderable: true, targets: i, visible: false };
-                } else if (i == frameworkTableColCount - 2) {
-                    array[i] = { className: "text-center", targets: i };
-                } else {
-                    array[i] = { className: "text-left", targets: i };
-                }
-            }
-            array[frameworkTableColCount - 1] = {
-                className: "hideRowId",
-                targets: frameworkTableColCount - 1,
-            };
-            array[frameworkTableColCount] = { orderable: false, targets: "_all" };
-
-            frameworkTable = $(".competency-frm-table").DataTable({
-                data: data,
-                searching: false,
-                info: false,
-                scrollX: "100%",
-                scrollY: "50vh",
-                scrollCollapse: true,
-                iDisplayLength: -1,
-                rowReorder: false,
-                columnDefs: array,
-                language: {
-                    sEmptyTable: lang["general_table_no_data"],
-                },
-            });
+    if (frameworkTable == null) {
+      var array = [];
+      for (var i = 0; i < frameworkTableColCount - 1; i++) {
+        if (i == 0) {
+          array[i] = { orderable: true, targets: i, visible: false };
+        } else if (i == frameworkTableColCount - 2) {
+          array[i] = { className: "text-center", targets: i };
         } else {
-            frameworkTable.clear();
-            frameworkTable.rows.add(data);
-            frameworkTable.draw();
-            frameworkTable.columns.adjust();
+          array[i] = { className: "text-left", targets: i };
         }
+      }
+      array[frameworkTableColCount - 1] = {
+        className: "hideRowId",
+        targets: frameworkTableColCount - 1,
+      };
+      array[frameworkTableColCount] = { orderable: false, targets: "_all" };
+
+      frameworkTable = $(".competency-frm-table").DataTable({
+        data: data,
+        searching: false,
+        info: false,
+        scrollX: "100%",
+        scrollY: "50vh",
+        scrollCollapse: true,
+        iDisplayLength: -1,
+        rowReorder: false,
+        columnDefs: array,
+        language: {
+          sEmptyTable: lang["general_table_no_data"],
+        },
+      });
+    } else {
+      frameworkTable.clear();
+      frameworkTable.rows.add(data);
+      frameworkTable.draw();
+      frameworkTable.columns.adjust();
     }
+  }
 
-    function getFrameworkTableData() {
-        $.ajax({
-            url: "assess360",
-            data: {
-                ac: ac,
-                a: "getFramework",
-            },
-            method: "POST",
-            success: function (response) {
-                if (response.indexOf("<script>") >= 0) {
-                    alert(lang["general_time_out"]);
-                    window.location = "logout";
-                    return;
-                }
-
-                frameworkTableObj = JSON.parse(response);
-                updateFrameworkTable();
-            },
-        });
-    }
-
-    jQuery(document).ready(function ($) {
-        ac = $("#ac").length > 0 ? $("#ac").val() : -1;
-
-        getFrameworkTableData();
-
-        if (typeof competencyObj !== "undefined") {
-            var data = [];
-            var title = [];
-            for (var id in competencyObj) {
-                if (competencyObj.hasOwnProperty(id)) {
-                    var competency = competencyObj[id];
-                    var keyName = currentLang + "_name";
-                    var name = decodeURIComponent(competency[keyName]);
-                    var keyDefine = currentLang + "_desp";
-                    var define = "";
-                    if (typeof competency[keyDefine] !== "undefined") {
-                        define = decodeURIComponent(competency[keyDefine]);
-                    }
-                    if (name != "") {
-                        // group table
-                        if (competency["parent"] == -1) {
-                            $(".dropdown-competency-group-menu").append(
-                                '<li><a id="' + id + '">' + name + "</a></li>"
-                            );
-                            data.push([
-                                competency["order_id"],
-                                name + "<span>" + define + "</span>",
-                                id,
-                            ]);
-                            title[id] = define;
-
-                            if (selectedGroupID == -1 && competency["order_id"] == 0) {
-                                selectedGroupID = id;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (data.length > 0) {
-                $(".competency-table-group-div").show();
-            }
-
-            var groupTable = $(".competency-table-group").DataTable({
-                data: data,
-                searching: false,
-                info: false,
-                scrollX: "100%",
-                scrollY: "50vh",
-                scrollCollapse: true,
-                iDisplayLength: -1,
-                rowReorder: false,
-                columnDefs: [
-                    { orderable: true, targets: 0, visible: false },
-                    { className: "competency-name name", targets: 1 },
-                    { className: "hideRowId", targets: 2 },
-                    { orderable: false, targets: "_all" },
-                ],
-                language: {
-                    sEmptyTable: lang["general_table_no_data"],
-                },
-            });
-
-            if (selectedGroupID > -1) {
-                $(".competency-table-group tbody tr")
-                    .find("td")
-                    .each(function () {
-                        if (
-                            $(this).hasClass("hideRowId") &&
-                            $(this).html() == selectedGroupID
-                        ) {
-                            $(this).parent().addClass("table-row-highlight");
-                            return false;
-                        }
-                    });
-            }
-
-            changeCompetencyTable();
+  function getFrameworkTableData() {
+    $.ajax({
+      url: "assess360",
+      data: {
+        ac: ac,
+        a: "getFramework",
+      },
+      method: "POST",
+      success: function (response) {
+        if (response.indexOf("<script>") >= 0) {
+          alert(lang["general_time_out"]);
+          window.location = "logout";
+          return;
         }
 
-        $(".competency-table-group tr").click(function () {
-            if ($(this).parent("tbody").is("tbody")) {
-                $(".competency-table-group")
-                    .find("tr")
-                    .each(function () {
-                        $(this).removeClass("table-row-highlight");
-                    });
-                $(this).addClass("table-row-highlight");
+        frameworkTableObj = JSON.parse(response);
+        updateFrameworkTable();
+      },
+    });
+  }
 
-                selectedGroupID = $(this)[0].lastChild.innerHTML;
-                selectedCompetencyID = -1;
-                changeCompetencyTable();
+  jQuery(document).ready(function ($) {
+    ac = $("#ac").length > 0 ? $("#ac").val() : -1;
+
+    getFrameworkTableData();
+
+    if (typeof competencyObj !== "undefined") {
+      var data = [];
+      var title = [];
+      for (var id in competencyObj) {
+        if (competencyObj.hasOwnProperty(id)) {
+          var competency = competencyObj[id];
+          var keyName = currentLang + "_name";
+          var name = decodeURIComponent(competency[keyName]);
+          var keyDefine = currentLang + "_desp";
+          var define = "";
+          if (typeof competency[keyDefine] !== "undefined") {
+            define = decodeURIComponent(competency[keyDefine]);
+          }
+          if (name != "") {
+            // group table
+            if (competency["parent"] == -1) {
+              $(".dropdown-competency-group-menu").append(
+                '<li><a id="' + id + '">' + name + "</a></li>"
+              );
+              data.push([
+                competency["order_id"],
+                name + "<span>" + define + "</span>",
+                id,
+              ]);
+              title[id] = define;
+
+              if (selectedGroupID == -1 && competency["order_id"] == 0) {
+                selectedGroupID = id;
+              }
             }
-        });
+          }
+        }
+      }
 
-        $(".div-datatable-competency").on(
-            "click",
-            ".competency-table-competency tr",
-            function () {
-                if ($(this).parent("tbody").is("tbody")) {
-                    $(".competency-table-competency")
-                        .find("tr")
-                        .each(function () {
-                            $(this).removeClass("table-row-highlight");
-                        });
-                    $(this).addClass("table-row-highlight");
+      if (data.length > 0) {
+        $(".competency-table-group-div").show();
+      }
 
-                    selectedCompetencyID = $(this)[0].lastChild.innerHTML;
-                    changeComponentTable();
-                }
+      var groupTable = $(".competency-table-group").DataTable({
+        data: data,
+        searching: false,
+        info: false,
+        scrollX: "100%",
+        scrollY: "50vh",
+        scrollCollapse: true,
+        iDisplayLength: -1,
+        rowReorder: false,
+        columnDefs: [
+          { orderable: true, targets: 0, visible: false },
+          { className: "competency-name name", targets: 1 },
+          { className: "hideRowId", targets: 2 },
+          { orderable: false, targets: "_all" },
+        ],
+        language: {
+          sEmptyTable: lang["general_table_no_data"],
+        },
+      });
+
+      if (selectedGroupID > -1) {
+        $(".competency-table-group tbody tr")
+          .find("td")
+          .each(function () {
+            if (
+              $(this).hasClass("hideRowId") &&
+              $(this).html() == selectedGroupID
+            ) {
+              $(this).parent().addClass("table-row-highlight");
+              return false;
             }
-        );
+          });
+      }
 
-        $("body").on("click", ".competency-add-btn", function () {
-            editRowID = $(this).parent().parent()[0].rowIndex -1;
-            if (!frameworkTableObj[editRowID]) {
-                frameworkTableObj[editRowID] = [];
-            }
-            updateFrameworkTable();
-            $(".competency-add-table").show();
-        });
+      changeCompetencyTable();
+    }
 
-        $("body").on("click", ".competency-edit-btn", function () {
-            editRowID = $(this).parent().parent().parent()[0].rowIndex - 1;
-            if (!frameworkTableObj[editRowID]) {
-                frameworkTableObj[editRowID] = [];
-            }
-            updateFrameworkTable();
-            $(".competency-add-table").show();
-        });
+    $(".competency-table-group tr").click(function () {
+      if ($(this).parent("tbody").is("tbody")) {
+        $(".competency-table-group")
+          .find("tr")
+          .each(function () {
+            $(this).removeClass("table-row-highlight");
+          });
+        $(this).addClass("table-row-highlight");
 
-        $("body").on("click", ".competency-cancel-btn", function () {
-            editRowID = -1;
-            getFrameworkTableData();
-            $(".competency-add-table").hide();
-        });
-
-        $("body").on("click", ".deleteButton", function () {
-            if (editRowID >= 0 && frameworkTableObj[editRowID]) {
-                var id = $(this).attr("id");
-                for (var i = 1; i < frameworkTableColCount - 3; i++) {
-                    if (frameworkTableObj[editRowID][i]) {
-                        var index = frameworkTableObj[editRowID][i].indexOf(id);
-                        if (index >= 0) {
-                            frameworkTableObj[editRowID][i].splice(index, 1);
-                            break;
-                        }
-                    }
-                }
-                updateFrameworkTable();
-            }
-        });
-
-        $("body").on("click", ".competency-save-btn", function () {
-            $(".competency-add-table").hide();
-
-            if (editRowID >= 0 && frameworkTableObj[editRowID]) {
-                var id = $(this).parent().parent().parent().find(".hideRowId").html();
-                var obj = frameworkTableObj[editRowID];
-                $.ajax({
-                    url: "assess360",
-                    data: {
-                        ac: ac,
-                        a: "addFramework",
-                        id: id,
-                        value: JSON.stringify(obj),
-                    },
-                    method: "POST",
-                    success: function (response) {
-                        if (response.indexOf("<script>") >= 0) {
-                            alert(lang["general_time_out"]);
-                            window.location = "logout";
-                            return;
-                        }
-
-                        editRowID = -1;
-                        getFrameworkTableData();
-                    },
-                });
-            }
-        });
-
-        $("body").on("click",".competency-table-competency .addButton",function () {
-            if (editRowID >= 0) {
-                $(this)
-                    .parent()
-                    .parent()
-                    .find("td")
-                    .each(function () {
-                        if ($(this).hasClass("hideRowId")) {
-                            var id = $(this).html();
-                            if (!frameworkTableObj[editRowID]) {
-                                frameworkTableObj[editRowID] = [];
-                            }
-                            var i = 0;
-                            $(".competency-frm-table tr:first th").each(function () {
-                                var keyName = currentLang + "_name";
-                                var name = decodeURIComponent(
-                                    competencyObj[selectedGroupID][keyName]
-                                );
-                                if ($(this).html() == name) {
-                                    if (!frameworkTableObj[editRowID][i]) {
-                                        frameworkTableObj[editRowID][i] = [];
-                                    }
-                                    if (!frameworkTableObj[editRowID][i].includes(id)) {
-                                        frameworkTableObj[editRowID][i].push(id);
-                                    }
-                                }
-                                i++;
-                            });
-                        }
-                    });
-                updateFrameworkTable();
-            }
-        });
-
-        $("body").on("change paste keyup", ".positionName", function () {
-            if (editRowID >= 0) {
-                if (!frameworkTableObj[editRowID]) {
-                    frameworkTableObj[editRowID] = [];
-                }
-                frameworkTableObj[editRowID][0] = [$(this).val()];
-            }
-        });
-
-        $("body").on("click", ".competency-delete-btn", function () {
-            deleteRowId = $(this)
-                .parent()
-                .parent()
-                .parent()
-                .find(".hideRowId")
-                .html();
-        });
-
-        $("#deleteModal").on("click", ".confirm-delete", function () {
-            if (deleteRowId >= 0) {
-                $.ajax({
-                    url: "assess360",
-                    data: {
-                        ac: ac,
-                        a: "deleteFramework",
-                        id: deleteRowId,
-                    },
-                    method: "POST",
-
-                    success: function (response) {
-                        if (response.indexOf("<script>") >= 0) {
-                            alert(lang["general_time_out"]);
-                            window.location = "logout";
-                            return;
-                        }
-
-                        getFrameworkTableData();
-                        deleteRowId = -1;
-                    },
-                });
-            }
-        });
-
-        $("body").on("click", ".excel", function () {
-            if (!excelForm) {
-                excelForm = document.createElement("form");
-                excelForm.style.visibility = "hidden";
-                excelForm.method = "POST";
-                excelForm.action = "competency";
-
-                var typeInput = document.createElement("input");
-                typeInput.name = "a";
-                typeInput.value = "excel";
-                excelForm.appendChild(typeInput);
-
-                document.body.appendChild(excelForm);
-            }
-            excelForm.submit();
-        });
-
-        $("body").on("click", ".export", function () {
-            if (!exportForm) {
-                exportForm = document.createElement("form");
-                exportForm.style.visibility = "hidden";
-                exportForm.method = "POST";
-                exportForm.action = "competency";
-
-                var typeInput = document.createElement("input");
-                typeInput.name = "a";
-                typeInput.value = "pdf";
-                exportForm.appendChild(typeInput);
-
-                document.body.appendChild(exportForm);
-            }
-            exportForm.submit();
-        });
-
-        $("#ac").change(function () {
-            var form = document.createElement("form");
-            form.style.visibility = "hidden";
-            form.method = "POST";
-            form.action = "competency";
-
-            var typeInput = document.createElement("input");
-            typeInput.name = "ac";
-            typeInput.value = $("#ac").val();
-            form.appendChild(typeInput);
-
-            document.body.appendChild(form);
-            form.submit();
-        });
+        selectedGroupID = $(this)[0].lastChild.innerHTML;
+        selectedCompetencyID = -1;
+        changeCompetencyTable();
+      }
     });
 
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
+    $(".div-datatable-competency").on(
+      "click",
+      ".competency-table-competency tr",
+      function () {
+        if ($(this).parent("tbody").is("tbody")) {
+          $(".competency-table-competency")
+            .find("tr")
+            .each(function () {
+              $(this).removeClass("table-row-highlight");
+            });
+          $(this).addClass("table-row-highlight");
 
-    $(".competency-add-table").hide();
-    };
+          selectedCompetencyID = $(this)[0].lastChild.innerHTML;
+          changeComponentTable();
+        }
+      }
+    );
+
+    $("body").on("click", ".competency-add-btn", function () {
+      editRowID = $(this).parent().parent()[0].rowIndex -1;
+      if (!frameworkTableObj[editRowID]) {
+        frameworkTableObj[editRowID] = [];
+      }
+      updateFrameworkTable();
+      $(".competency-add-table").show();
+    });
+
+    $("body").on("click", ".competency-edit-btn", function () {
+      editRowID = $(this).parent().parent().parent()[0].rowIndex-1;
+      if (!frameworkTableObj[editRowID]) {
+        frameworkTableObj[editRowID] = [];
+      }
+      updateFrameworkTable();
+       $(".competency-add-table").show();
+    });
+
+    $("body").on("click", ".competency-cancel-btn", function () {
+      editRowID = -1;
+      getFrameworkTableData();
+      $(".competency-add-table").hide();
+    });
+
+    $("body").on("click", ".deleteButton", function () {
+      if (editRowID >= 0 && frameworkTableObj[editRowID]) {
+        var id = $(this).attr("id");
+        for (var i = 1; i < frameworkTableColCount - 3; i++) {
+          if (frameworkTableObj[editRowID][i]) {
+            var index = frameworkTableObj[editRowID][i].indexOf(id);
+            if (index >= 0) {
+              frameworkTableObj[editRowID][i].splice(index, 1);
+              break;
+            }
+          }
+        }
+        updateFrameworkTable();
+      }
+    });
+
+    $("body").on("click", ".competency-save-btn", function () {
+      $(".competency-add-table").hide();
+
+      if (editRowID >= 0 && frameworkTableObj[editRowID]) {
+        var id = $(this).parent().parent().parent().find(".hideRowId").html();
+        var obj = frameworkTableObj[editRowID];
+        $.ajax({
+          url: "assess360",
+          data: {
+            ac: ac,
+            a: "addFramework",
+            id: id,
+            value: JSON.stringify(obj),
+          },
+          method: "POST",
+          success: function (response) {
+            if (response.indexOf("<script>") >= 0) {
+              alert(lang["general_time_out"]);
+              window.location = "logout";
+              return;
+            }
+
+            editRowID = 1;
+            getFrameworkTableData();
+          },
+        });
+      }
+    });
+
+    $("body").on(
+      "click",
+      ".competency-table-competency .addButton",
+      function () {
+        if (editRowID >= 0) {
+          $(this)
+            .parent()
+            .parent()
+            .find("td")
+            .each(function () {
+              if ($(this).hasClass("hideRowId")) {
+                var id = $(this).html();
+                if (!frameworkTableObj[editRowID]) {
+                  frameworkTableObj[editRowID] = [];
+                }
+                var i = 0;
+                $(".competency-frm-table tr:first th").each(function () {
+                  var keyName = currentLang + "_name";
+                  var name = decodeURIComponent(
+                    competencyObj[selectedGroupID][keyName]
+                  );
+                  if ($(this).html() == name) {
+                    if (!frameworkTableObj[editRowID][i]) {
+                      frameworkTableObj[editRowID][i] = [];
+                    }
+                    if (!frameworkTableObj[editRowID][i].includes(id)) {
+                      frameworkTableObj[editRowID][i].push(id);
+                    }
+                  }
+                  i++;
+                });
+              }
+            });
+          updateFrameworkTable();
+        }
+      }
+    );
+
+    $("body").on("change paste keyup", ".positionName", function () {
+      if (editRowID >= 0) {
+        if (!frameworkTableObj[editRowID]) {
+          frameworkTableObj[editRowID] = [];
+        }
+        frameworkTableObj[editRowID][0] = [$(this).val()];
+      }
+    });
+
+    $("body").on("click", ".competency-delete-btn", function () {
+         deleteRowId = $(this)
+        .parent()
+        .parent()
+        .parent()
+        .find(".hideRowId")
+        .html();
+        editRowID=-1;
+    });
+
+    $("#deleteModal").on("click", ".confirm-delete", function () {
+      if (deleteRowId >= 0) {
+        $.ajax({
+          url: "assess360",
+          data: {
+            ac: ac,
+            a: "deleteFramework",
+            id: deleteRowId,
+          },
+          method: "POST",
+
+          success: function (response) {
+            if (response.indexOf("<script>") >= 0) {
+              alert(lang["general_time_out"]);
+              window.location = "logout";
+              return;
+            }
+
+            getFrameworkTableData();
+            deleteRowId = -1;
+          },
+        });
+      }
+    });
+
+    $("body").on("click", ".excel", function () {
+      if (!excelForm) {
+        excelForm = document.createElement("form");
+        excelForm.style.visibility = "hidden";
+        excelForm.method = "POST";
+        excelForm.action = "competency";
+
+        var typeInput = document.createElement("input");
+        typeInput.name = "a";
+        typeInput.value = "excel";
+        excelForm.appendChild(typeInput);
+
+        document.body.appendChild(excelForm);
+      }
+      excelForm.submit();
+    });
+
+    $("body").on("click", ".export", function () {
+      if (!exportForm) {
+        exportForm = document.createElement("form");
+        exportForm.style.visibility = "hidden";
+        exportForm.method = "POST";
+        exportForm.action = "competency";
+
+        var typeInput = document.createElement("input");
+        typeInput.name = "a";
+        typeInput.value = "pdf";
+        exportForm.appendChild(typeInput);
+
+        document.body.appendChild(exportForm);
+      }
+      exportForm.submit();
+    });
+
+    $("#ac").change(function () {
+      var form = document.createElement("form");
+      form.style.visibility = "hidden";
+      form.method = "POST";
+      form.action = "competency";
+
+      var typeInput = document.createElement("input");
+      typeInput.name = "ac";
+      typeInput.value = $("#ac").val();
+      form.appendChild(typeInput);
+
+      document.body.appendChild(form);
+      form.submit();
+    });
+  });
+
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
+
+   $(".competency-add-table").hide();
+};
 
     var Raterlist = function () {
     var rowcounter = 1;
 
-    $("body").on("click", ".raterlist-add-btn", function () {
-        var table = document.getElementById("raterlisttable");
-        var row = table.insertRow(-1);
-        var cell1 = row.insertCell(0);
+  $("body").on("click", ".raterlist-add-btn", function () {
+    var table = document.getElementById("raterlisttable");
+    var row = table.insertRow(-1);
+    var cell1 = row.insertCell(0);
 
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        cell3.colSpan = "2"; //adjust the size of columns to fit the table
-        var cell4 = row.insertCell(3);
-        cell4.colSpan = "2";
-        var cell5 = row.insertCell(4);
-        var cell6 = row.insertCell(5);
-        var cell7 = row.insertCell(6);
-        var cell8 = row.insertCell(7);
-        var cell9 = row.insertCell(8);
-        var cell10 = row.insertCell(9);
-        var cell11 = row.insertCell(10);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    cell3.colSpan = "2"; //adjust the size of columns to fit the table
+    var cell4 = row.insertCell(3);
+    cell4.colSpan = "2";
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+    var cell8 = row.insertCell(7);
+    var cell9 = row.insertCell(8);
+    var cell10 = row.insertCell(9);
+    var cell11 = row.insertCell(10);
 
-        cell1.innerHTML = ""; // row counter is added to give every column a unique name to assist in the php form handling
-        cell2.innerHTML = "";
-        cell3.innerHTML = "";
-        cell4.innerHTML = "";
-        cell5.innerHTML =
-            "<input type='text' name='rows[" +
-            rowcounter +
-            "][Rater-first-name]' style='width: 75px;'>";
-        cell6.innerHTML =
-            "<input type='text' name='rows[" +
-            rowcounter +
-            "][Rater-last-name]' style='width: 75px;'>";
-        cell7.innerHTML =
-            "<select name='rows[" +
-            rowcounter +
-            "][Roles]' id='roles' style='width: 95px; -webkit-appearance: menulist;'><option value='Focus' name='focus_role'>" +
-            lang["listofraters_role_focus"] +
-            "</option><option value='manager' name='manager_role'>" +
-            lang["listofraters_role_manager"] +
-            "</option><option value='colleague' name='colleague_role'>" +
-            lang["listofraters_role_colleague"] +
-            "</option><option value='direct-report' name='direct_report_role'>" +
-            lang["listofraters_role_directreport"] +
-            "</option><option value='Other' name='other_role'>" +
-            lang["listofraters_role_other"] +
-            "</option></select>";
-        cell8.innerHTML =
-            "<select name='rows[" +
-            rowcounter +
-            "][Genders]' id='genders' style='width: 80px; -webkit-appearance: menulist;'><option value='Male' name='male_gender'>" +
-            lang["listofraters_gender_male"] +
-            "</option><option value='Female' name='female_gender'>" +
-            lang["listofraters_gender_female"] +
-            "</option><option value='Other Gender' name='other_gender'>" +
-            lang["listofraters_gender_other"] +
-            "</option></select>";
-        cell9.innerHTML =
-            "<input type='text' name='rows[" +
-            rowcounter +
-            "][position]' style='width: 75px;'>";
-        cell10.innerHTML =
-            "<input type='text' name='rows[" +
-            rowcounter +
-            "][email]' style='width: 80px;'>";
-        cell11.innerHTML =
-            "<button class='btn btn-dark btn-sm addButton raterlist-delete-btn'>" +
-            lang["listofraters_delete_button"] +
-            "</button>";
-        rowcounter++;
-    });
+    cell1.innerHTML = ""; // row counter is added to give every column a unique name to assist in the php form handling
+    cell2.innerHTML = "";
+    cell3.innerHTML = "";
+    cell4.innerHTML = "";
+    cell5.innerHTML =
+      "<input type='text' name='rows[" +
+      rowcounter +
+      "][Rater-first-name]' style='width: 75px;'>";
+    cell6.innerHTML =
+      "<input type='text' name='rows[" +
+      rowcounter +
+      "][Rater-last-name]' style='width: 75px;'>";
+    cell7.innerHTML =
+      "<select name='rows[" +
+      rowcounter +
+      "][Roles]' id='roles' style='width: 95px; -webkit-appearance: menulist;'><option value='Focus' name='focus_role'>" +
+      lang["listofraters_role_focus"] +
+      "</option><option value='manager' name='manager_role'>" +
+      lang["listofraters_role_manager"] +
+      "</option><option value='colleague' name='colleague_role'>" +
+      lang["listofraters_role_colleague"] +
+      "</option><option value='direct-report' name='direct_report_role'>" +
+      lang["listofraters_role_directreport"] +
+      "</option><option value='Other' name='other_role'>" +
+      lang["listofraters_role_other"] +
+      "</option></select>";
+    cell8.innerHTML =
+      "<select name='rows[" +
+      rowcounter +
+      "][Genders]' id='genders' style='width: 80px; -webkit-appearance: menulist;'><option value='Male' name='male_gender'>" +
+      lang["listofraters_gender_male"] +
+      "</option><option value='Female' name='female_gender'>" +
+      lang["listofraters_gender_female"] +
+      "</option><option value='Other Gender' name='other_gender'>" +
+      lang["listofraters_gender_other"] +
+      "</option></select>";
+    cell9.innerHTML =
+      "<input type='text' name='rows[" +
+      rowcounter +
+      "][position]' style='width: 75px;'>";
+    cell10.innerHTML =
+      "<input type='text' name='rows[" +
+      rowcounter +
+      "][email]' style='width: 80px;'>";
+    cell11.innerHTML =
+      "<button class='btn btn-dark btn-sm addButton raterlist-delete-btn'>" +
+      lang["listofraters_delete_button"] +
+      "</button>";
+    rowcounter++;
+  });
 
-    $("body").on("click", ".raterlist-delete-btn", function () {
-        // get the parent row of the clicked button
-        var row = $(this).closest("tr");
+  $("body").on("click", ".raterlist-delete-btn", function () {
+    // get the parent row of the clicked button
+    var row = $(this).closest("tr");
 
-        // check if the row is not the first row
-        if (!row.is(":first-child")) {
-            // delete the row
-            row.remove();
-        }
-    });
+    // check if the row is not the first row
+    if (!row.is(":first-child")) {
+      // delete the row
+      row.remove();
+    }
+  });
 
     /*
             function activate_button(){
                 confirm("Are you sure");
             }*/
 
-    jQuery(document).ready(function ($) {
-        ac = $("#ac").length > 0 ? $("#ac").val() : -1;
+  jQuery(document).ready(function ($) {
+    ac = $("#ac").length > 0 ? $("#ac").val() : -1;
 
-        $("#ac").change(function () {
-            var form = document.createElement("form");
-            form.style.visibility = "hidden";
-            form.method = "POST";
-            form.action = "competency";
+    $("#ac").change(function () {
+      var form = document.createElement("form");
+      form.style.visibility = "hidden";
+      form.method = "POST";
+      form.action = "competency";
 
-            var typeInput = document.createElement("input");
-            typeInput.name = "ac";
-            typeInput.value = $("#ac").val();
-            form.appendChild(typeInput);
+      var typeInput = document.createElement("input");
+      typeInput.name = "ac";
+      typeInput.value = $("#ac").val();
+      form.appendChild(typeInput);
 
-            document.body.appendChild(form);
-            form.submit();
-        });
-
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
-        }
+      document.body.appendChild(form);
+      form.submit();
     });
-    };
+
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+  });
+};
 
 var Questionnaire = function () {
     function changePage(page, questions_per_page, total_questions, questions_arr, total_pages) {
@@ -1241,67 +1272,49 @@ var Questionnaire = function () {
     });
 }
 
-var CompetencySelection = function(){
-    jQuery(document).ready(function ($) {
-        ac = $("#ac").length > 0 ? $("#ac").val() : -1;
+var CompetencySelection = function () {
+  jQuery(document).ready(function ($) {
+    ac = $("#ac").length > 0 ? $("#ac").val() : -1;
 
-        $("#ac").change(function () {
-            var form = document.createElement("form");
-            form.style.visibility = "hidden";
-            form.method = "POST";
-            form.action = "competency";
+    $("#ac").change(function () {
+      var form = document.createElement("form");
+      form.style.visibility = "hidden";
+      form.method = "POST";
+      form.action = "competency";
 
-            var typeInput = document.createElement("input");
-            typeInput.name = "ac";
-            typeInput.value = $("#ac").val();
-            form.appendChild(typeInput);
+      var typeInput = document.createElement("input");
+      typeInput.name = "ac";
+      typeInput.value = $("#ac").val();
+      form.appendChild(typeInput);
 
-            document.body.appendChild(form);
-            form.submit();
-        });
-
-        //---------------------------------- NEW ------------------------------------
-        $("#focus-selection-page").show();
-        $("#competency-selection-page").hide();
-        $("#competency-selection-page-button").hide();
-
-        $("body").on("click",".goto-competency-selection",function (event) {
-            event.preventDefault(); // prevent the link from navigating to the target
-
-            // hide the current page and show the target page
-            $("#focus-selection-page").hide();
-            $("#competency-selection-page").show();
-            $("#competency-selection-page-button").show();
-        });
-        //---------------------------------------------------------------------------
-    });
-}
-
-    /////////////////////////////////////////////////Serb//////////////////////////////////////
-    var comp_arr = [];
-    $("body").on("click", ".test-btn", function () {
-        // Get all the div elements with class "nowrap" using querySelectorAll
-        const divs = document.querySelectorAll("div.nowrap");
-
-        // Loop through the div elements and read their text content
-        divs.forEach((div) => {
-        var text = div.textContent.trim();
-        if (!text.includes("Edit")) {
-            text = text.substring(2);
-            comp_arr.push(text);
-        }
-        // Print the text content to the console
-        });
-        console.log(comp_arr);
-
+      document.body.appendChild(form);
+      form.submit();
     });
 
-    ////////////////////////////////////////////test new func//////////////////////////
-    $("body").on("click", ".test-btn", function () {
-        // Get all the rows in the table
-        const rows = document.querySelectorAll(
-            "table.competency-frm-table tbody tr"
-        );
+    //---------------------------------- NEW ------------------------------------
+    // //   $("#focus-selection-page").show();
+    //   $("#competency-selection-page").show();
+    //   $("#competency-selection-page-button").show();
+
+    //   $("body").on("click",".goto-competency-selection",function (event) {
+    //       event.preventDefault(); // prevent the link from navigating to the target
+
+    //       // hide the current page and show the target page
+    //       $("#focus-selection-page").hide();
+    //       $("#competency-selection-page").show();
+    //       $("#competency-selection-page-button").show();
+    //   });
+    //---------------------------------------------------------------------------
+  });
+};
+
+/////////////////////////////////////////////////Serb//////////////////////////////////////
+
+
+////////////////////////////////////////////test new func//////////////////////////
+$("body").on("click", ".test-btn", function () {
+  // Get all the rows in the table
+  const rows = document.querySelectorAll("table.competency-frm-table tbody tr");
 
   // Create an array to store the data for each row
   var data_arr = [];
@@ -1312,7 +1325,6 @@ var CompetencySelection = function(){
     const divs = row.querySelectorAll("div.nowrap");
 
     // Create an array to store the text content of each div element in the row
-    
 
     // Loop through each div element and push its text content into the array
     divs.forEach((div) => {
@@ -1320,36 +1332,29 @@ var CompetencySelection = function(){
       if (!text.includes("Edit")) {
         text = text.substring(2);
         comp_arr.push(text);
-       
       }
     });
-    
+
     // Push the array of text content into the data_arr array
-    
-    
 
     console.log(comp_arr);
-
-  
   });
-  var focusnumid = Number(focusCompId)
+  var focusnumid = Number(focusCompId);
 
-      // Create an AJAX request to send the array to the PHP file
-      $.ajax({
-        url: "assess360",
-        data: { comp_arr: comp_arr,
-            focusCompId: focusnumid
-        },
-        type: "POST",
-        dataType: "json",
-        success: function (response) {
-          // Get the response from the PHP file
-          console.log(response);
-        },
-        // error: function(jqXHR, textStatus, errorThrown) {
-        //     console.log(textStatus, errorThrown);
-        // }
-      });  
+  // Create an AJAX request to send the array to the PHP file
+  $.ajax({
+    url: "assess360",
+    data: { comp_arr: comp_arr, focusCompId: focusnumid },
+    type: "POST",
+    dataType: "json",
+    success: function (response) {
+      // Get the response from the PHP file
+      console.log(response);
+    },
+    // error: function(jqXHR, textStatus, errorThrown) {
+    //     console.log(textStatus, errorThrown);
+    // }
+  });
 });
 
 ////////////////////////////////srb/////////////////////////////////
@@ -1404,8 +1409,6 @@ var CompetencySelection = function(){
 //   });
 // });
 
-
-
 // $(document).ready(function() {
 //   // Attach a click event listener to all links with class "btn"
 //   $('a.goto-competency-selection').click(function(event) {
@@ -1432,21 +1435,20 @@ var CompetencySelection = function(){
 //   });
 // });
 
-
-$(document).ready(function() {
+$(document).ready(function () {
   // Attach a click event listener to all links with class "btn"
-  $('a.goto-competency-selection').click(function(event) {
+  $("a.goto-competency-selection").click(function (event) {
     // Get the data-id attribute value from the clicked button
-    var dataId = $(this).attr('data_id');
+    var dataId = $(this).attr("data_id");
 
     if (dataId) {
       // Prevent the default behavior of the link
       event.preventDefault();
 
       // Store the href value in a variable
-      var linkHref = $(this).attr('href');
+      var linkHref = $(this).attr("href");
 
-      window.location.href = "assess360?a=competency&id="+dataId;
+      window.location.href = "assess360?a=competency&id=" + dataId;
     }
   });
 });
