@@ -235,6 +235,8 @@ $language["leftmenu_list_of_raters_rater_form"] = "Rater Form";
 $language["leftmenu_list_of_raters_data_center"] = "Data Center";
 $language["leftmenu_competency_selection"] = "Selection";
 $language["leftmenu_competency_focus_competency"] = "Focus Competency";
+$language["leftmenu_competencies"] = "Competencies";
+$language["leftmenu_focus_competency_selection"] = "focus competency selection";
 //-------------------------------------------------------------
 
 // users
@@ -3150,6 +3152,7 @@ $language["questionnaire_areyousure_confirm"] = "Are you sure?";
 $language["questionnaire_areyousure_yes"] = "Yes";
 $language["questionnaire_areyousure_no"] = "No";
 $language["questionnaire_questions"] = "Questions";
+$language["questionnaire_continue_later"] = "Continue Later";
 
 //Questionnaire intro page
 $language["questionnaire_intropage_introduction"] = "INTRODUCTION";
@@ -3193,7 +3196,9 @@ $language["questionnaire_openendquestion_paragraph2"] = "Are you willing to disc
 $language["questionnaire_openendquestion_finish"] = "<p>END OF COMPETENCY AUDIT</p>";
 $language["questionnaire_openendquestion_discuss_yes"]= "YES";
 $language["questionnaire_openendquestion_discuss_no"]= "NO";
-$language["leftmenu_competencies"] = "Competencies";
-$language["leftmenu_focus_competency_selection"] = "focus competency selection";
+
+//Finish-page
+$language["questionnaire_finish_thankyou"]= "Thank You";
+$language["questionnaire_finish_paragraph"]= "Your objective and truthful feedback are valuable and appreciated";
 //---------------------------------------------------------------------
 ?>

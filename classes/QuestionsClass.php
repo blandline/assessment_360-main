@@ -1,11 +1,11 @@
 <?
 class QuestionsClass
 {
-    private $memberClass;
+    // private $memberClass;
 
-    public function __construct($memberClass)
+    public function __construct()
     {
-        $this->memberClass = $memberClass;
+        // $this->memberClass = $memberClass;
     }
     public function getQuestions($arr_comp)
     {
@@ -15,7 +15,7 @@ class QuestionsClass
         // } else {
         //     $dbName = $this->memberClass->getCompanyDB();
         // }
-        $query = "SELECT Questions FROM question_base WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
+        $query = "SELECT DISTINCT Questions FROM question_base WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('s', $arr_comp);
         $stmt->execute();
@@ -227,6 +227,7 @@ public function getsetQuestions($comp_arr, $focus_id)
         $result = $stmt->get_result();
         $stmt->close();
 
+
         $questions = array();
         while ($row = $result->fetch_assoc()) {
             array_push($questions, $row['Questions']);
@@ -238,14 +239,29 @@ public function getsetQuestions($comp_arr, $focus_id)
         for ($x = 0; $x < 3; $x++) {
             $stmt->bind_param('ssssiss', $comp, $questions[$x], $focus_first_name, $focus_last_name, $focus_id , $start_date, $end_date);
             $stmt->execute();
-        }
         $stmt->close();
     }
-}
+    }
+
+    public function setQuestions($question){
+        require '../config/dbconnect.php';
+        $stmt = $conn->prepare("SELECT sub_headings FROM question_base WHERE Questions = ?");
+        $stmt->bind_param('s', $question);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+    
+        $insertQuery = "INSERT INTO competency_questions (competency, question) VALUES (?, ?)";
+        $stmt = $conn->prepare($insertQuery);
+        $stmt->bind_param('ss', $result['sub_headings'], $question);
+        $stmt->execute();
+        $stmt->close();
+    }
+
     public function getQuestionsForQuestionnaire()
     {
         require '../config/dbconnect.php';
-        $query = "SELECT question FROM competency_questions ORDER BY RAND()";
+        $query = "SELECT question FROM competency_questions";
         $stmt = $conn->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -447,34 +463,62 @@ public function getsetQuestions($comp_arr, $focus_id)
         return $competencyid;
     }    
 
-    public function getBoolAnswerByQuestionid($question_id){
+    public function getBoolAnswerByQuestionid($dbName, $rater_id, $question_id){
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
 
-        $query = "SELECT answer FROM $dbName.questionnaire_result WHERE questionnaire_result.question_id = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("s", $question_id);
+        $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_id = ?");
+        $stmt->bind_param("ss", $rater_id, $question_id);
         $stmt->execute();
         $stmt->bind_result($result);
         $stmt->fetch();
         $stmt->close();
 
-        return ($result !== null && ($result > 0 && $result <= 5));
+        return ($result !== null);
     }
 
-    public function getAnswerByQuestionid($question_id){
+    public function getBoolAnswerImportanceOfCompetency($dbName, $rater_id, $competency_id, $question_type_id){
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
+    
+        $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND competency_id = ? AND question_type_id = ?");
+        $stmt->bind_param("iii", $rater_id, $competency_id, $question_type_id);
+        $stmt->execute();
+        $stmt->bind_result($result);
+        $stmt->fetch();
+        $stmt->close();
+    
+        return $result;
+    }
 
-        $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE questionnaire_result.question_id = ?");
+    public function getImportanceOfCompetencyAnswer($dbName, $rater_id, $competency_id, $question_type_id){
+        require '../config/dbconnect.php';
+    
+        $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND competency_id = ? AND question_type_id = ?");
+        $stmt->bind_param("iii", $rater_id, $competency_id, $question_type_id);
+        $stmt->execute();
+        $stmt->bind_result($result);
+        $stmt->fetch();
+        $stmt->close();
+    
+        return $result;
+    }
+
+    public function getCompetencystatementsAnswer($dbName, $rater_id, $question_type_id, $competency_id, $question_id){
+        require '../config/dbconnect.php';
+    
+        $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND competency_id = ? AND question_type_id = ? AND question_id =?");
+        $stmt->bind_param("iiii", $rater_id, $competency_id, $question_type_id, $question_id);
+        $stmt->execute();
+        $stmt->bind_result($result);
+        $stmt->fetch();
+        $stmt->close();
+    
+        return $result;
+    }
+
+    public function getAnswerByQuestionid($dbName, $question_id){
+        require '../config/dbconnect.php';
+
+        $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE question_id = ?");
         $stmt->bind_param("s", $question_id);
         $stmt->execute();
         $stmt->bind_result($result);
@@ -484,15 +528,46 @@ public function getsetQuestions($comp_arr, $focus_id)
         return $result;
     }
 
+    public function getRoleByRaterId($dbName, $rater_id){
+        require '../config/dbconnect.php';
+        
+        $query = "SELECT roles FROM " . $dbName . ".rater_list WHERE rater_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+        
+        $data = "";
+        if ($row) {
+            $data = $row["roles"];
+        }
+        return $data;
+    }
+
+    public function getFocusIdbyRaterId($dbName, $rater_id){
+        require '../config/dbconnect.php';
+        
+        $query = "SELECT focus_id FROM " . $dbName . ".rater_list WHERE rater_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+        
+        $data = "";
+        if ($row) {
+            $data = $row["focus_id"];
+        }
+        return $data;
+    }
+
     //--------------------------QUESTIONNAIRE DATABASE--------------------------
-    public function addQuestionnaireData($companyId, $rater_id, $question_type_id, $competency_id, $question_id, $answer)
+    public function addQuestionnaireData($dbName, $rater_id, $question_type_id, $competency_id, $question_id, $answer)
     {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
 
         $stmt = $conn->prepare("INSERT INTO " . $dbName . ".questionnaire_result (rater_id, question_type_id, competency_id, question_id, answer) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("iiiis", $rater_id, $question_type_id, $competency_id, $question_id, $answer);
@@ -500,27 +575,18 @@ public function getsetQuestions($comp_arr, $focus_id)
         $stmt->close();
     }
 
-    public function editQuestionnaireData($companyId, $id, $rater_id, $question_type_id, $competency_id, $question_id, $answer) {
+    public function editQuestionnaireData($dbName, $id, $answer) {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
         
-        $stmt = $conn->prepare("UPDATE " . $dbName . ".questionnaire_result SET rater_id = ?, question_type_id = ?, competency_id = ?, question_id = ?, answer = ? WHERE id = ?");
-        $stmt->bind_param("iiiisi", $rater_id, $question_type_id, $competency_id, $question_id, $answer_str, $id);
+        $stmt = $conn->prepare("UPDATE " . $dbName . ".questionnaire_result SET answer = ? WHERE id = ?");
+        $stmt->bind_param("si", $answer, $id);
         $stmt->execute();
         $stmt->close();
     }
 
-    public function getIdByData($companyId, $rater_id, $question_type_id, $competency_id, $question_id, $answer) {
+    public function getIdByData($dbName, $rater_id, $question_type_id, $competency_id, $question_id, $answer) {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
+
         $stmt = $conn->prepare("SELECT id FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = ? AND competency_id = ? AND question_id = ? AND answer = ?");
         $stmt->bind_param("iiiis", $rater_id, $question_type_id, $competency_id, $question_id, $answer);
         $stmt->execute();
@@ -536,13 +602,26 @@ public function getsetQuestions($comp_arr, $focus_id)
         return $id;        
     }
 
-    public function editQuestionnaireAnswerById($companyId, $id, $answer) {
+    public function getImportanceOfCompetencyIdByData($dbName, $rater_id, $question_type_id, $competency_id, $answer) {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
+
+        $stmt = $conn->prepare("SELECT id FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = ? AND competency_id = ? AND answer = ?");
+        $stmt->bind_param("iiis", $rater_id, $question_type_id, $competency_id, $answer);
+        $stmt->execute();
+        $stmt->store_result();
+        
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($id);
+            $stmt->fetch();
         } else {
-            $dbName = $this->memberClass->getCompanyDB();
+            $id = false;
         }
+        $stmt->close();    
+        return $id;        
+    }
+
+    public function editQuestionnaireAnswerById($dbName, $id, $answer) {
+        require '../config/dbconnect.php';
     
         $stmt = $conn->prepare("UPDATE " . $dbName . ".questionnaire_result SET answer = ? WHERE id = ?");
         $stmt->bind_param("si", $answer, $id);
@@ -550,13 +629,8 @@ public function getsetQuestions($comp_arr, $focus_id)
         $stmt->close();
     }
 
-    public function getImportanceOfCompetenciesAnswer($companyId, $rater_id) {
+    public function getImportanceOfCompetenciesAnswer_arr($dbName, $rater_id) {
         require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
     
         $stmt = $conn->prepare("SELECT competency_id, answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 0");
         $stmt->bind_param("i", $rater_id);
@@ -570,5 +644,71 @@ public function getsetQuestions($comp_arr, $focus_id)
         }
         return $answers;
     }
+
+    public function getCompetencyStatementsAnswer_arr($dbName, $raterId) {
+        require '../config/dbconnect.php';
+    
+        $stmt = $conn->prepare("SELECT question_id, answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 1");
+        $stmt->bind_param("i", $raterId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+    
+        $answers = array();
+        while ($row = $result->fetch_assoc()) {
+            $answers[$row['question_id']] = $row['answer'];
+        }
+        return $answers;
+    }
+
+    public function getOpenEndAnswer($dbName, $raterId){
+        require '../config/dbconnect.php';
+
+        $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 2");
+        $stmt->bind_param("i", $raterId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $row = $result->fetch_assoc();
+        if ($row === null) {
+            return null;
+        } else {
+            return $row['answer'];
+        }
+    }
+
+    public function getYesNoDiscussAnswer($dbName, $raterId){
+        require '../config/dbconnect.php';
+
+        $stmt = $conn->prepare("SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 3");
+        $stmt->bind_param("i", $raterId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $row = $result->fetch_assoc();
+        if ($row === null) {
+            return null;
+        } else {
+            return $row['answer'];
+        }
+    }
+
+    public function getOpenEndIdByData($dbName, $rater_id, $question_type_id, $answer) {
+        require '../config/dbconnect.php';
+
+        $stmt = $conn->prepare("SELECT id FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = ?  AND answer = ?");
+        $stmt->bind_param("iis", $rater_id, $question_type_id, $answer);
+        $stmt->execute();
+        $stmt->store_result();
+        
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($id);
+            $stmt->fetch();
+        } else {
+            $id = false;
+        }
+        $stmt->close();    
+        return $id;        
+    }    
     //--------------------------------------------------------------------------    
 }

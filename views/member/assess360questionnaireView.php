@@ -12,14 +12,6 @@ use Mpdf\Tag\IndexEntry;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questionnaire</title>
 </head>
-
-<?
-//TEMP
-$role_arr = ["focus", "manager", "colleague", "direct report", "others"];
-$role = $role_arr[1];
-$rater_id = 0; //getrateridbypwd
-?>
-
 <body class="questionnaire-body">
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -45,13 +37,13 @@ $rater_id = 0; //getrateridbypwd
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
             <div class="questionnaire-paragraph-title"><?= $language["questionnaire_intropage_introduction"] ?></div><br>
-            <div>
+            <div style="line-height:normal;">
                 <?= $language["questionnaire_intropage_introduction_paragraph1"] ?>
                 <?= $language["questionnaire_intropage_introduction_paragraph2"] ?>
             </div>
-
+            <br>
             <div class="questionnaire-paragraph-title"><?= $language["questionnaire_intropage_instruction"] ?></div><br>
-            <div>
+            <div style="line-height:normal;">
                 <?= $language["questionnaire_intropage_instruction_paragraph1"] ?>
                 <?= $language["questionnaire_intropage_instruction_paragraph2"] ?>
                 <?= $language["questionnaire_intropage_instruction_paragraph3"] ?>
@@ -59,9 +51,9 @@ $rater_id = 0; //getrateridbypwd
                 <?= $language["questionnaire_intropage_instruction_paragraph5"] ?>
                 <?= $language["questionnaire_intropage_instruction_paragraph6"] ?>
                 <?
-                if ($role == "manager" or $role == "focus") {
+                if ($role == "Manager" or $role == "FOCUS") {
                     echo '<a href="#importance-of-competency-page">', $language["questionnaire_intropage_instruction_paragraph7"], '</a>';
-                } elseif ($role != "manager" and $role != "focus") {
+                } elseif ($role != "Manager" and $role != "FOCUS") {
                     echo '<a href="#competency-statements-page">', $language["questionnaire_intropage_instruction_paragraph7"], '</a>';
                 }
                 ?>
@@ -89,7 +81,6 @@ $rater_id = 0; //getrateridbypwd
             <!-- TODO list of competencies -->
             <?
             //CHANGE LATER TO GET FOCUSID BY PWD
-            $focus_id = 0;
             $competency_arr = $questionsClass->getCompetencyByFocusID($focus_id);
             //$competency_id_arr = $questionsClass->getCompetencyIDByFocusID($focus_id);
             // $temp_title = $questionsClass->getCompetencyForQuestionnaire();
@@ -99,14 +90,13 @@ $rater_id = 0; //getrateridbypwd
                 $competency_def_arr[$i] = $questionsClass->getEnDespByCompetency($competency_arr[$i]);
                 $competency_id_arr[$i] = $questionsClass->getCompetencyIdByCompetency($competency_arr[$i]);
             }
-            $importanceofcompetencies_assocarr = $questionsClass->getImportanceOfCompetenciesAnswer($companyId, $rater_id);
+            $importanceofcompetencies_assocarr = $questionsClass->getImportanceOfCompetenciesAnswer_arr($dbName, $rater_id);
             $importanceofcompetencies_previousanswers = array();
             if(isset($importanceofcompetencies_assocarr)){
                 for($i=0; $i<count($competency_arr); $i++){
                     $importanceofcompetencies_previousanswers[$i] = isset($importanceofcompetencies_assocarr[$competency_id_arr[$i]]) ? $importanceofcompetencies_assocarr[$competency_id_arr[$i]] : "";
                 }
             }
-            //var_dump($importanceofcompetencies_previousanswers);
             for ($i = 0; $i < count($competency_arr); $i++) {
                 echo
                 "<div style='width: 100%; display: flex; justify-content: space-between;'>
@@ -139,21 +129,20 @@ $rater_id = 0; //getrateridbypwd
             ?>
             <br>
             <?= $language["questionnaire_importanceofcompetency_paragraph2"] ?>
-            <button type="button" class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button" data-toggle="modal" data-target="#deleteModal" style="margin-left: 0px !important;"><?= $language["questionnaire_confirm_button"] ?></button>
+            <div style="display:inline-block">
+                <button type="button" class="btn btn-success btn-sm addButton competency-add-btn questionnaire-confirm-button" data-toggle="modal" data-target="#deleteModal" style="margin-left: 0px !important;"><?= $language["questionnaire_confirm_button"] ?></button>
+                <button type="button" class="btn btn-primary btn-sm addButton competency-add-btn continuelater-btn questionnaire-importanceofcompetencies-continuelater"  style="position:absolute; right:4rem;"><?= $language["questionnaire_continue_later"] ?></button>
+            </div>
             <br>
-            <!--
-            <button class="btn btn-primary btn-sm questionnaire-importanceofcompetency-previous"><?= $language["questionnaire_previous_button"] ?></button>
-            <button class="btn btn-primary btn-sm questionnaire-importanceofcompetency-next"><?= $language["questionnaire_next_button"] ?></button>
-            -->
         </section>
         <section id="competency-statements-page" class="questionnaire-page">
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
             <div class="questionnaire-paragraph-title">
                 <?
-                if ($role == "manager" or $role == "focus") {
+                if ($role == "Manager" or $role == "FOCUS") {
                     echo $language["questionnaire_competencystatements_title_for_focus_manager"];
-                } elseif ($role != "manager" and $role != "focus") {
+                } elseif ($role != "Manager" and $role != "FOCUS") {
                     echo $language["questionnaire_competencystatements_title_for_others"];
                 }
                 ?>
@@ -171,7 +160,7 @@ $rater_id = 0; //getrateridbypwd
                 <?= $language["questionnaire_competencystatements_paragraph2"] ?>
                 <!-- TODO competency statements -->
                 <div id="competency-statements-container">
-                    <table style="border: 1px solid black; width: 100%;">
+                    <table id="competency-statements-table" style="border: 1px solid black; width: 100%;">
                         <thead style="text-align:center; background-color: #59A5CB; color:white; font-size: 14px;">
                             <tr>
                                 <th style="width:80%"><?= $language["questionnaire_questions"] ?></th>
@@ -194,21 +183,31 @@ $rater_id = 0; //getrateridbypwd
                         $start = ($page - 1) * $questions_per_page;
                         $end = $start + $questions_per_page - 1;
 
-                        // Output the competency statements for the current page
+                        for($i=0; $i<count($questions_arr); $i++){
+                            $question_id_arr[$i] = $questionsClass->getQuestionIdbyQuestion($questions_arr[$i]);
+                        }
+                        $competencystatements_assocarr = $questionsClass->getCompetencyStatementsAnswer_arr($dbName, $rater_id);
+                        $competencystatements_previousanswers = array();
+                        if(isset($competencystatements_assocarr)){
+                            for($i=0; $i<count($questions_arr); $i++){
+                                $competencystatements_previousanswers[$i] = isset($competencystatements_assocarr[$question_id_arr[$i]]) ? $competencystatements_assocarr[$question_id_arr[$i]] : "";
+                            }
+                        }
                         $table = '<tbody>';
                         for ($i = $start; $i <= $end && $i < $total_questions; $i++) {
                             $table .=
                                 "<tr style='font-size: 14px;'>
                                 <td style='border: 1px solid black; padding-left: 5px;'>{$questions_arr[$i]}</td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='1'></td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='2'></td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='3'></td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='4'></td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='5'></td>
-                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;'><input type='radio' name='competencystatements[{$i}]' value='X'></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='1'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 1 ? ' checked' : '') . "></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='2'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 2 ? ' checked' : '') . "></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='3'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 3 ? ' checked' : '') . "></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='4'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 4 ? ' checked' : '') . "></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px;'><input type='radio' name='competencystatements[{$i}]' value='5'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 5 ? ' checked' : '') . "></td>
+                                <td style='border: 1px solid black; padding-right: 15px; padding-left: 15px; margin-left:10px;'><input type='radio' name='competencystatements[{$i}]' value='X'" . (isset($competencystatements_previousanswers[$i]) && $competencystatements_previousanswers[$i] == 'X' ? ' checked' : '') . "></td>
                             </tr>";
                         }
                         $table .= '</tbody>';
+                        $table .= '</table>';
                         echo $table;
                         ?>
                     </table>
@@ -242,46 +241,56 @@ $rater_id = 0; //getrateridbypwd
             </div>
             <br>
             <?
-            if ($role == "manager") {
+            if ($role == "Manager") {
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"], '</a></button>';
                 echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
-            } elseif ($role == "focus") {
+            } elseif ($role == "FOCUS") {
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-previous">', $language["questionnaire_previous_button"], '</a></button>';
-                // echo '<input type="hidden" name="a" value="submitQuestionnaire"> ';
-                //TODO HERE
-                echo '<button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button">', $language["questionnaire_finish_button"], '</button>';
+                echo '<button class="btn btn-success btn-sm addButton competency-add-btn finish-btn questionnaire-competencystatement-finish">', $language["questionnaire_finish_button"], '</button>';
             } else {
                 echo '<input type="hidden" name="a" value="submitCompetencyStatements"> ';
                 echo '<button class="btn btn-primary btn-sm questionnaire-competencystatement-next">', $language["questionnaire_next_button"], '</a></button>';
             }
+            echo '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn continuelater-btn questionnaire-competencystatement-finish"  style="position:absolute; right:4rem;">', $language["questionnaire_continue_later"] , '</button>';
             ?>
         </section>
         <section id="open-end-question-page" class="questionnaire-page">
             <div class="questionnaire-header"><?= $language["questionnaire_header_title"] ?></div>
             <br>
             <?
-            if ($role == "manager") {
+            if ($role == "Manager") {
                 echo $language["questionnaire_openendquestion_title_for_manager"];
-            } elseif ($role != "manager") {
+            } elseif ($role != "Manager") {
                 echo $language["questionnaire_openendquestion_title_for_others"];
             }
             ?>
             <?= $language["questionnaire_openendquestion_paragraph1"] ?>
-            <textarea class="questionnaire_openendquestion_text-input" name="questionnaire_openendquestion" placeholder="(Maximum 100 words)" rows="6"></textarea>
-            <!-- --------------------------- YES/NO BUTTONS ----------------------------- -->
-            <!--<div class="questionnaire_openendquestion_discuss_container" style="display:inline-block;">-->
+            <?
+            $openendquestion_previousanswer = $questionsClass->getOpenEndAnswer($dbName, $rater_id);
+            $openendquestion_yesno_previousanswer = $questionsClass->getYesNoDiscussAnswer($dbName, $rater_id);
+            ?>
+            <textarea class="questionnaire_openendquestion_text-input" name="questionnaire_openendquestion" placeholder="(Maximum 100 words)" rows="6"><? if(isset($openendquestion_previousanswer)) { echo $openendquestion_previousanswer; } ?></textarea>
             <?= $language["questionnaire_openendquestion_paragraph2"] ?>
-            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="1"><?= $language["questionnaire_openendquestion_discuss_yes"] ?></label>
-            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="0"><?= $language["questionnaire_openendquestion_discuss_no"] ?></label>
-            <!--</div>-->
-            <!-- ------------------------------------------------------------------------- -->
+            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="1" <?= (isset($openendquestion_yesno_previousanswer) && $openendquestion_yesno_previousanswer == 1 ? 'checked' : '') ?>><?= $language["questionnaire_openendquestion_discuss_yes"] ?></label>
+            <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="0" <?= (isset($openendquestion_yesno_previousanswer) && $openendquestion_yesno_previousanswer == 0 ? 'checked' : '') ?>><?= $language["questionnaire_openendquestion_discuss_no"] ?></label>
             <?= $language["questionnaire_openendquestion_finish"] ?>
             <button class="btn btn-primary btn-sm questionnaire-openendquestion-previous"><a style="color:white;" href="#competency-statements-page"><?= $language["questionnaire_previous_button"] ?></a></button>
             <input type="hidden" name="a" value="submitopenendquestion"> 
             <!-- <button class="btn btn-success btn-sm addButton competency-add-btn questionnaire-finish-button"><?= $language["questionnaire_finish_button"] ?></button> -->
-            <input class="btn btn-success btn-sm addButton competency-add-btn questionnaire-openendquestion-finish" type="submit">
+            <input class="btn btn-success btn-sm addButton competency-add-btn finish-btn questionnaire-openendquestion-finish" type="submit">
+            <button type="button" class="btn btn-primary btn-sm addButton competency-add-btn continuelater-btn questionnaire-openendquestion-finish"  style="position:absolute; right:4rem;"><?= $language["questionnaire_continue_later"] ?></button>
         </section> 
+        <section id="continue-later-page" class="questionnaire-page">
+            Thank you for filling the questionnaire, please finish the questionnaire before the end date.
+        </section>
+        <section id="finish-page" class="questionnaire-page">
+            <div style="font-size 16px;"><?= $language["questionnaire_finish_thankyou"]?></div>
+            <div style="font-size 12px;"><?= $language["questionnaire_finish_paragraph"]?></div>
+        </section>
+        <section id="before-launchdate-page" class="questionnaire-page">
+            You can't access the page before the launch date
+        </section>
     </form>
 
     <script src="../assets/js/core/jquery.min.js"></script>
@@ -308,6 +317,7 @@ $rater_id = 0; //getrateridbypwd
     <script src="../js/lang/<?= $_COOKIE['lang'] ?>.js?v=<?= $jsVersion; ?>"></script>
     <script src="../<?= $jspath; ?>/assess360.js?v=<?= $jsVersion; ?>"></script>
     <script> 
+        rater_id = <? echo $rater_id?>;
         competency_arr = <? echo json_encode($competency_arr) ?>;
         questions_per_page = <? echo $questions_per_page?>;
         total_questions = <? echo $total_questions?>;
