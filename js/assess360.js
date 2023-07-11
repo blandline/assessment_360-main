@@ -847,7 +847,7 @@ var Questionnaire = function () {
             form.submit();
         });
         // hide all pages except the first one
-        $(".questionnaire-page:not(:first)").hide();
+        // $(".questionnaire-page:not(:first)").hide();
 
         $('a[href="#importance-of-competency-page"]').click(function (event) {
             event.preventDefault(); // prevent the link from navigating to the target
@@ -1017,9 +1017,7 @@ var Questionnaire = function () {
             $('input[type=radio]:checked').each(function(index, input) {
                 var value = input.value;
                 var inputName = input.name;
-                console.log(value);
-                console.log(inputName);
-                var inputIndex = inputName.match(/importanceofcompetencies\[(\d+)\]/)[1];
+                var inputIndex = (inputName.match(/importanceofcompetencies\[(\d+)\]/))? inputName.match(/importanceofcompetencies\[(\d+)\]/)[1] : "";
                 if(inputIndex){
                     importance_of_competencies[inputIndex] = value;
                 }
@@ -1045,8 +1043,10 @@ var Questionnaire = function () {
             $('input[type=radio]:checked').each(function(index, input) {
                 var value = input.value;
                 var inputName = input.name;
-                var inputIndex = inputName.match(/importanceofcompetencies\[(\d+)\]/)[1];
-                importance_of_competencies[inputIndex] = value;
+                var inputIndex = (inputName.match(/importanceofcompetencies\[(\d+)\]/))? inputName.match(/importanceofcompetencies\[(\d+)\]/)[1] : "";
+                if(inputIndex){
+                    importance_of_competencies[inputIndex] = value;
+                }
             });
             $.ajax({
                 // url: 'assess360',
@@ -1104,7 +1104,7 @@ var Questionnaire = function () {
             });
             $.ajax({
                 // url: 'assess360',
-                url: 'questionnaire',
+                url: 'questionnaire' + window.location.search,
                 data: {
                     'competency_statements': competency_statements,
                     'questions_arr': JSON.stringify(questions_arr),

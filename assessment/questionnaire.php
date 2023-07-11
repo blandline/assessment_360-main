@@ -18,6 +18,8 @@ if (isset($_GET["id"]) && isset($_GET["password"])) {
   
   $role = $questionsClass->getRoleByRaterId($dbName, $rater_id);
   $focus_id = $questionsClass->getFocusIdbyRaterId($dbName, $rater_id);
+  $launch_date = $questionsClass->getLaunchDatebyFocusId($dbName, $focus_id);
+  $current_date = date('Y-m-d');
 ?>
   <script>
     window["currentLang"] = '<?= $_COOKIE['lang'] ?>';
@@ -91,11 +93,6 @@ if(isset($_POST["a"]) && $_POST["a"] == "changePage"){
 <!-- ------------------------------------------------------------------------------------------ -->
 <?
 //---------------------------------Questionnaire Submit---------------------------------
-  // $questions_arr = isset($_POST['questions_arr']) ? json_decode($_POST['questions_arr']) : array();
-  // $competency_arr = isset($_POST['competency_arr']) ? json_decode($_POST['competency_arr']) : array();
-  // $competency_id_arr = array();
-  // $competency_statements_id_arr = array();
-
   if(isset($_POST["a"]) && $_POST["a"] == "submitImportanceOfCompetencies"){
     //Importance of Competencies
     $competency_arr = isset($_POST['competency_arr']) ? json_decode($_POST['competency_arr']) : array();
