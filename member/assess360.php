@@ -397,12 +397,12 @@ if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
  
   // Loop through the company names and call the getquestion function on each one
   $questions = array();
-  foreach ($comp_arr as $comp) {
-    $string = print_r($comp,true);
-    $questionsClass->getsetQuestions($comp,$focus_comp_add_id);
-    //$questions[] = $competency->getQuestions($companyId,$comp);
-  }
-
+  // foreach ($comp_arr as $comp) {
+  //   $string = print_r($comp,true);
+    
+  //   //$questions[] = $competency->getQuestions($companyId,$comp);
+  // }
+  $questionsClass->getsetQuestions($comp_arr,$focus_comp_add_id);
   // Return the questions as a JSON response
   // echo json_encode($questions);
   echo json_encode($questions);
@@ -563,6 +563,22 @@ if ($start < $total_questions) {
     $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
 
     include("../views/member/questionnaireView.php");
+  }elseif (isset($_GET["a"]) && $_GET["a"] == "questionnaire") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_QUESTIONNAIRE) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_QUESTIONNAIRE;
+
+    include("../views/member/questionnaireView.php");
+  }elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetencyselection") {
+    if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION) {
+      $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);  
+    }
+
+    $_SESSION[$session_page] = $SESSION_PAGE_FOCUS_COMPETENCY_SELECTION;
+
+    include("../views/member/focuscompetencyselectionView.php");
   }
   //---------------------------------------------------------------------------------
 

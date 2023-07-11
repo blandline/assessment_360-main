@@ -89,8 +89,33 @@ use Mpdf\Language\ScriptToLanguage;
                   <section id="focus-selection-page" class="competency-page competency-page-active">
                     <form method="post" id="rateform" action="assess360">
                     <!-- <? $listofratersClass->print_comp_selection_tb()?> -->
-                      
-                            
+                      <!-- <table id="raterlisttable" class="table table-hover" style="width:100%;">
+                        <thead class="text-danger">
+                          <tr>
+                            <th><?= $language["competency_focus_selection_firstname"]?></th>
+                            <th><?= $language["competency_focus_selection_lastname"]?></th>
+                            <th><?= $language["competency_focus_selection_position"]?></th>
+                            <th><?= $language["competency_focus_selection_launchdate"]?></th>
+                            <th><?= $language["competency_focus_selection_enddate"]?></th>
+                            <th><?= $language["competency_focus_selection_action"]?></th>
+                            <th style="display:none"><?= $language["competency_focus_selection_focusid"]?></th>
+                          </tr>
+                        </thead>
+                        <tbody> -->
+                          <!-- ------------------SHOW THE FOCUS SELECTION TABLE HERE------------- -->
+                            <?
+                            // for($i=0; $i<2; $i++){
+                            // echo '
+                            // <tr>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td><button class="btn btn-primary btn-sm goto-competency-selection">Competency Selection</button></td>
+                            // </tr>';
+                            // }
+                            ?>
                           <!-- ------------------------------------------------------------------ -->
                         <!-- </tbody>
                       </table>  -->
@@ -194,15 +219,12 @@ use Mpdf\Language\ScriptToLanguage;
             </div>
             <br><br><br>
           </div>
-          
           <p><a class="nav-link" href="./assess360?a=questionnaire">Questionnaire temp</a></p>
           <!-- ---------------------------------------------------------------- -->
-          <!-- <? $questionsClass->SelectedComps($focus_comp_id)?> -->
           <? include_once '../member/footer.php'; ?>
         </div>
       </div>
       </section>
-      
     </div>
   </div>
   <?

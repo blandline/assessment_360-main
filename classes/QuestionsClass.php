@@ -62,16 +62,148 @@ class QuestionsClass
     //     $stmt->close();
     // }
 
-    public function getsetQuestions($arr_comp, $focus_id)
-    {
-        require '../config/dbconnect.php';
+    // public function getsetQuestions($arr_comp, $focus_id)
+    // {
+    //     require '../config/dbconnect.php';
 
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
     
+    //     // Get focus information from the database
+    //     $focusQuery = "SELECT focus_first_name, focus_last_name, start_date , end_date FROM `$dbName`.`focus` WHERE focus_id = ?";
+    //     $stmt = $conn->prepare($focusQuery);
+    //     $stmt->bind_param('i', $focus_id);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+    
+    //     // Get focus information from the first row of the result set
+    //     $focusInfo = $result->fetch_assoc();
+    //     $focus_first_name = $focusInfo['focus_first_name'];
+    //     $focus_last_name = $focusInfo['focus_last_name'];
+    //     $start_date = $focusInfo['start_date'];
+    //     $end_date = $focusInfo['end_date'];
+    
+    //     // Get questions from the database
+    //     $query = "SELECT Questions FROM question_base WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->bind_param('s', $arr_comp);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+    
+    //     $questions = array();
+    //     while ($row = $result->fetch_assoc()) {
+    //         array_push($questions, $row['Questions']);
+    //     }
+    
+    //     // Insert questions and focus information into the database
+    //     $insertQuery = "INSERT INTO competency_questions (competency, question, focus_first_name, focus_last_name, focus_id, launch_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    //     $stmt = $conn->prepare($insertQuery);
+    //     for ($x = 0; $x < 3; $x++) {
+    //         $stmt->bind_param('ssssiss', $arr_comp, $questions[$x], $focus_first_name, $focus_last_name, $focus_id , $start_date, $end_date);
+    //         $stmt->execute();
+    //     }
+    //     $stmt->close();
+    // }
+
+//     public function getsetQuestions($arr_comp, $focus_id)
+// {
+//     require '../config/dbconnect.php';
+
+//     if ($this->memberClass->isAdmin()) {
+//         $dbName = $this->memberClass->getCompanyDBById($companyId);
+//     } else {
+//         $dbName = $this->memberClass->getCompanyDB();
+//     }
+
+//     // Check if data for this focus_id already exists in the competency_questions table
+//     $checkQuery = "SELECT id FROM competency_questions WHERE focus_id = ?";
+//     $stmt = $conn->prepare($checkQuery);
+//     $stmt->bind_param('i', $focus_id);
+//     $stmt->execute();
+//     $result = $stmt->get_result();
+//     $stmt->close();
+
+//     if ($result->num_rows > 0) {
+//         // Data for this focus_id already exists, so delete the existing data before inserting the new data
+//         $deleteQuery = "DELETE FROM competency_questions WHERE focus_id = ?";
+//         $stmt = $conn->prepare($deleteQuery);
+//         $stmt->bind_param('i', $focus_id);
+//         $stmt->execute();
+//         $stmt->close();
+//     }
+
+//     // Get focus information from the database
+//     $focusQuery = "SELECT focus_first_name, focus_last_name, start_date , end_date FROM `$dbName`.`focus` WHERE focus_id = ?";
+//     $stmt = $conn->prepare($focusQuery);
+//     $stmt->bind_param('i', $focus_id);
+//     $stmt->execute();
+//     $result = $stmt->get_result();
+//     $stmt->close();
+
+//     // Get focus information from the first row of the result set
+//     $focusInfo = $result->fetch_assoc();
+//     $focus_first_name = $focusInfo['focus_first_name'];
+//     $focus_last_name = $focusInfo['focus_last_name'];
+//     $start_date = $focusInfo['start_date'];
+//     $end_date = $focusInfo['end_date'];
+
+//     // Get questions from the database
+//     $query = "SELECT Questions FROM question_base WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
+//     $stmt = $conn->prepare($query);
+//     $stmt->bind_param('s', $arr_comp);
+//     $stmt->execute();
+//     $result = $stmt->get_result();
+//     $stmt->close();
+
+//     $questions = array();
+//     while ($row = $result->fetch_assoc()) {
+//         array_push($questions, $row['Questions']);
+//     }
+
+//     // Insert questions and focus information into the database
+//     $insertQuery = "INSERT INTO competency_questions (competency, question, focus_first_name, focus_last_name, focus_id, launch_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+//     $stmt = $conn->prepare($insertQuery);
+//     for ($x = 0; $x < 3; $x++) {
+//         $stmt->bind_param('ssssiss', $arr_comp, $questions[$x], $focus_first_name, $focus_last_name, $focus_id , $start_date, $end_date);
+//         $stmt->execute();
+//     }
+//     $stmt->close();
+// }
+
+
+public function getsetQuestions($comp_arr, $focus_id)
+{
+    require '../config/dbconnect.php';
+
+    if ($this->memberClass->isAdmin()) {
+        $dbName = $this->memberClass->getCompanyDBById($companyId);
+    } else {
+        $dbName = $this->memberClass->getCompanyDB();
+    }
+
+    // Check if data for this focus_id already exists in the competency_questions table
+    $checkQuery = "SELECT id FROM competency_questions WHERE focus_id = ?";
+    $stmt = $conn->prepare($checkQuery);
+    $stmt->bind_param('i', $focus_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+
+    if ($result->num_rows > 0) {
+        // Data for this focus_id already exists, so delete the existing data before inserting the new data
+        $deleteQuery = "DELETE FROM competency_questions WHERE focus_id = ?";
+        $stmt = $conn->prepare($deleteQuery);
+        $stmt->bind_param('i', $focus_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    foreach ($comp_arr as $comp) {
         // Get focus information from the database
         $focusQuery = "SELECT focus_first_name, focus_last_name, start_date , end_date FROM `$dbName`.`focus` WHERE focus_id = ?";
         $stmt = $conn->prepare($focusQuery);
@@ -79,38 +211,37 @@ class QuestionsClass
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-    
+
         // Get focus information from the first row of the result set
         $focusInfo = $result->fetch_assoc();
         $focus_first_name = $focusInfo['focus_first_name'];
         $focus_last_name = $focusInfo['focus_last_name'];
         $start_date = $focusInfo['start_date'];
         $end_date = $focusInfo['end_date'];
-    
+
         // Get questions from the database
-        $query = "SELECT Questions FROM question_base WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
+        $query = "SELECT DISTINCT Questions FROM question_base WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('s', $arr_comp);
+        $stmt->bind_param('s', $comp);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-    
+
         $questions = array();
         while ($row = $result->fetch_assoc()) {
             array_push($questions, $row['Questions']);
         }
-    
+        shuffle($questions);
         // Insert questions and focus information into the database
         $insertQuery = "INSERT INTO competency_questions (competency, question, focus_first_name, focus_last_name, focus_id, launch_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insertQuery);
         for ($x = 0; $x < 3; $x++) {
-            $stmt->bind_param('ssssiss', $arr_comp, $questions[$x], $focus_first_name, $focus_last_name, $focus_id , $start_date, $end_date);
+            $stmt->bind_param('ssssiss', $comp, $questions[$x], $focus_first_name, $focus_last_name, $focus_id , $start_date, $end_date);
             $stmt->execute();
         }
         $stmt->close();
     }
-
-
+}
     public function getQuestionsForQuestionnaire()
     {
         require '../config/dbconnect.php';
@@ -233,6 +364,33 @@ class QuestionsClass
         // Close database connection
         $conn->close();
     }
+
+
+
+    public function SelectedComps($focus_id)
+{
+    require '../config/dbconnect.php';
+    // Retrieve data from table for the specified focus_id
+    $stmt = $conn->prepare("SELECT focus_first_name ,focus_last_name, launch_date, end_date, GROUP_CONCAT(DISTINCT competency SEPARATOR ', ') AS competencies FROM competency_questions WHERE focus_id = ? GROUP BY focus_id");
+    $stmt->bind_param('i', $focus_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Generate HTML table code
+    if ($result->num_rows > 0) {
+        echo "<table class='competency-frm-table table table-hover' style='width:100%;'><thead class='text-danger'><tr><th>Focus First Name</th><th>Focus Last Name</th><th>Launch Date</th><th>End Date</th><th>Competencies</th></tr></thead><tbody>";
+        while($row = $result->fetch_assoc()) {
+            echo "<tr><td>".$row["focus_first_name"]."</td><td>".$row["focus_last_name"]."</td><td>".$row["launch_date"]."</td><td>".$row["end_date"]."</td><td>".$row["competencies"]."</td></tr>";
+        }
+        echo "</tbody></table>";
+    } else {
+        echo "0 results";
+    }
+
+    // Close database connection
+    $stmt->close();
+    $conn->close();
+}
 
     public function getCompetencyByFocusID($focus_id){
         require '../config/dbconnect.php';
