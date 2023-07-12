@@ -399,7 +399,7 @@ if ($login->isLoggedIn()) {
 // Get the company names from the AJAX request
 if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
   $comp_arr = $_POST['comp_arr'];
-  // $focus_comp_add_id = $_POST['focusCompId'];
+  $focus_comp_add_id = $_POST['focusCompId'];
 
  
   // Loop through the company names and call the getquestion function on each one
@@ -409,21 +409,11 @@ if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
     
   //   //$questions[] = $competency->getQuestions($companyId,$comp);
   // }
-  $questionsClass->getsetQuestions($comp_arr,$focus_comp_add_id);
+  $competency->getsetQuestions($comp_arr,$focus_comp_add_id);
   // Return the questions as a JSON response
   // echo json_encode($questions);
 
-  $questions_temp_arr = array();
-  foreach($comp_arr as $comp){
-      $temp_arr = $questionsClass->getQuestions($comp);
-      for($i=0; $i<3; $i++){
-          $questions_temp_arr[] = $temp_arr[$i];
-      }
-  }
-  shuffle($questions_temp_arr);
-  foreach($questions_temp_arr as $question){
-      $questionsClass->setQuestions($question);
-  }
+ 
 }
 ?>
 <?

@@ -256,9 +256,7 @@ var Competency = function () {
             var button = "";
             if (editRowID >= 0) {
                 button =
-                    '<button type="button" class="btn btn-success btn-sm addButton competency-add-btn">' +
-                    lang["competency_framework_save"] +
-                    "</button>";
+                    "";
             } else {
                 button =
                     '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' +
@@ -287,9 +285,7 @@ var Competency = function () {
           "";
       } else {
         button =
-          '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' +
-          lang["competency_framework_add"] +
-          "</button>";
+          "";
       }
       tmp.push(button);
       tmp.push(-1);
