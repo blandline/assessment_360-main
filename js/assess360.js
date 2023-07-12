@@ -673,7 +673,7 @@ var Competency = function () {
    $(".competency-add-table").hide();
 };
 
-    var Raterlist = function () {
+var Raterlist = function () {
     var rowcounter = 1;
 
   $("body").on("click", ".raterlist-add-btn", function () {
@@ -874,7 +874,7 @@ var Questionnaire = function () {
             form.submit();
         });
         // hide all pages except the first one
-        $(".questionnaire-page:not(:first)").hide();
+        // $(".questionnaire-page:not(:first)").hide();
 
         $('a[href="#importance-of-competency-page"]').click(function (event) {
             event.preventDefault(); // prevent the link from navigating to the target
@@ -1044,9 +1044,7 @@ var Questionnaire = function () {
             $('input[type=radio]:checked').each(function(index, input) {
                 var value = input.value;
                 var inputName = input.name;
-                console.log(value);
-                console.log(inputName);
-                var inputIndex = inputName.match(/importanceofcompetencies\[(\d+)\]/)[1];
+                var inputIndex = (inputName.match(/importanceofcompetencies\[(\d+)\]/))? inputName.match(/importanceofcompetencies\[(\d+)\]/)[1] : "";
                 if(inputIndex){
                     importance_of_competencies[inputIndex] = value;
                 }
@@ -1072,8 +1070,10 @@ var Questionnaire = function () {
             $('input[type=radio]:checked').each(function(index, input) {
                 var value = input.value;
                 var inputName = input.name;
-                var inputIndex = inputName.match(/importanceofcompetencies\[(\d+)\]/)[1];
-                importance_of_competencies[inputIndex] = value;
+                var inputIndex = (inputName.match(/importanceofcompetencies\[(\d+)\]/))? inputName.match(/importanceofcompetencies\[(\d+)\]/)[1] : "";
+                if(inputIndex){
+                    importance_of_competencies[inputIndex] = value;
+                }
             });
             $.ajax({
                 // url: 'assess360',
@@ -1131,7 +1131,7 @@ var Questionnaire = function () {
             });
             $.ajax({
                 // url: 'assess360',
-                url: 'questionnaire',
+                url: 'questionnaire' + window.location.search,
                 data: {
                     'competency_statements': competency_statements,
                     'questions_arr': JSON.stringify(questions_arr),
@@ -1448,3 +1448,46 @@ $(document).ready(function () {
     }
   });
 });
+
+var AssessmentReport = function () {
+    jQuery(document).ready(function ($) {
+        ac = $("#ac").length > 0 ? $("#ac").val() : -1;
+    
+        $("#ac").change(function () {
+          var form = document.createElement("form");
+          form.style.visibility = "hidden";
+          form.method = "POST";
+          form.action = "competency";
+    
+          var typeInput = document.createElement("input");
+          typeInput.name = "ac";
+          typeInput.value = $("#ac").val();
+          form.appendChild(typeInput);
+    
+          document.body.appendChild(form);
+          form.submit();
+        });
+    
+        if (window.history.replaceState) {
+          window.history.replaceState(null, null, window.location.href);
+        }
+
+        $(".report-page:not(:first)").hide();
+
+        $('a[href="#report-intro-page"]').click(function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+            // hide the current page and show the target page
+            $("#report-cover-page").hide();
+            $("#report-intro-page").show();
+            $("#report-competencies-page").hide();
+        });
+
+        $('a[href="#report-competencies-page"]').click(function (event) {
+            event.preventDefault(); // prevent the link from navigating to the target
+            // hide the current page and show the target page
+            $("#report-cover-page").hide();
+            $("#report-intro-page").hide();
+            $("#report-competencies-page").show();
+        });
+      });
+}
