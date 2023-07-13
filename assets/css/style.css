@@ -7552,16 +7552,28 @@ box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     font-size: 12px;
 }
 
-.label {
+.report-respondent-label {
     display: inline-block;
 }
-.colon {
+.report-respondent-colon {
     display: inline-block;
     width: 1ch;
     text-align: center;
 }
-.count {
+.report-respondent-count {
     display: inline-block;
     width: 2ch;
     text-align: right;
+}
+
+.report-overall-result-comp-title{
+    width: 100%;
+    border-bottom: 1px solid black;
+    font-weight: bold;
+}
+
+.report-overall-result-comp-def{
+    width:40%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }

@@ -174,7 +174,7 @@ class ReportClass
             $dbName = $this->memberClass->getCompanyDB();
         }
 
-        $query = "SELECT competency_id, answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ?";
+        $query = "SELECT competency_id, answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 0";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("i", $rater_id);
         $stmt->execute();
@@ -238,6 +238,27 @@ class ReportClass
         $row = $result->fetch_assoc();
         $role = $row['roles'];
         return $role;
+    }
+
+    public function getCompetencyStatementsAnswerByRaterIdAndCompId($rater_id, $comp_id){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+
+        $query = "SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND competency_id = ? AND question_type_id = 1";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ii", $rater_id, $comp_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $result_arr = array();
+        while ($row = $result->fetch_assoc()) {
+            $result_arr[] = $row['answer'];
+        }
+        return $result_arr;
     }
 }
 

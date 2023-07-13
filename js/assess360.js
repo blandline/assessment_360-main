@@ -1607,3 +1607,75 @@ var ImportanceOfCompetenciesGraph = function () {
 
   option && myChart.setOption(option);
 }
+
+function render_overall_result_Chart(graphId, seriesData) {
+  var chartDom = document.getElementById(graphId);
+  var myChart = echarts.init(chartDom);
+  var option;
+
+  const seriesLabel = {
+    show: true
+  };
+
+  const colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de']; // Define an array of colors
+
+  option = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    grid: {
+      left: 100
+    },
+    toolbox: {
+      show: true,
+      feature: {
+        saveAsImage: {}
+      }
+    },
+    xAxis: {
+      type: 'value',
+      axisLabel: {
+        formatter: function(value) {
+          return value;
+        }
+      },
+      axisTick: {
+        interval: 1 
+      },
+      min: 0, 
+      max: 5 
+    },
+    yAxis: {
+      type: 'category',
+      inverse: true,
+      data: ['Self', 'Manager(s)', 'Colleagues', 'Direct reports', 'Others'],
+      axisLabel: {
+        margin: 20,
+        rich: {
+          value: {
+            lineHeight: 30,
+            align: 'center'
+          }
+        }
+      }
+    },
+    series: [
+      {
+        name: 'test',
+        type: 'bar',
+        label: seriesLabel,
+        itemStyle: {
+          color: function(params) {
+            return colors[params.dataIndex];
+          }
+        },
+        data: seriesData
+      }
+    ]
+  };
+
+  option && myChart.setOption(option);
+}

@@ -20,6 +20,31 @@ include_once '../config/config.php'; ?>
     $focus_full_name = $reportClass->getFocusNameByFocusId($companyId, $focus_id);
     $report_date = $reportClass->getReportDateByFocusId($companyId, $focus_id);
 ?>
+<script src="../assets/js/core/jquery.min.js"></script>
+<script src="../assets/js/core/popper.min.js"></script>
+<script src="../assets/js/core/bootstrap-material-design.min.js"></script>
+<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="../assets/js/plugins/moment.min.js"></script>
+<script src="../assets/js/plugins/sweetalert2.js"></script>
+<script src="../assets/js/plugins/jquery.validate.min.js"></script>
+<script src="../assets/js/plugins/jquery.bootstrap-wizard.js"></script>
+<script src="../assets/js/plugins/bootstrap-selectpicker.js"></script>
+<script src="../assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
+<script src="../assets/js/plugins/bootstrap-datetimepicker-zh.js"></script>
+<script src="../assets/js/plugins/bootstrap-tagsinput.js"></script>
+<script src="../assets/js/plugins/jasny-bootstrap.min.js"></script>
+<script src="../assets/js/plugins/fullcalendar.min.js"></script>
+<script src="../assets/js/plugins/jquery-jvectormap.js"></script>
+<script src="../assets/js/plugins/nouislider.min.js"></script>
+<script src="../assets/js/plugins/arrive.min.js"></script>
+<script src="../assets/js/plugins/chartist.min.js"></script>
+<script src="../assets/js/plugins/bootstrap-notify.js"></script>
+<script src="../assets/js/material-dashboard.js?v=2.1.1"></script>
+<script src="../lib/dataTables/js/dataTables.min.js"></script>
+<script src="../js/lang/<?= $_COOKIE['lang'] ?>.js?v=<?= $jsVersion; ?>"></script>
+<script src="../<?= $jspath; ?>/assess360.js?v=<?= $jsVersion; ?>"></script>
+<script src="../echarts/echarts.min.js"></script>
+
 <body class="report-body">
     <section id="report-cover-page" class="report-page report-page-active">
         <div class= "report-header">
@@ -31,7 +56,7 @@ include_once '../config/config.php'; ?>
             <div class= "report-cover-focusname"><?= $focus_full_name ?></div>
             <div class = "report-cover-date"><?= $report_date ?></div>
             <a href="#report-intro-page">Next</a>
-            <a href="#report-important-of-competencies-page">TEMP</a>
+            <a href="#report-overall-result-page">TEMP</a>
         </div>
     </section>
     <section id="report-intro-page" class="report-page">
@@ -99,11 +124,11 @@ include_once '../config/config.php'; ?>
             strlen($language["report_respondent_others"])
         );
 
-        echo "<span class='label' style='width:" . $max_label_length ."ch;'>" . $language["report_respondent_self"] . "</span><span class='colon'>:</span><span class='count'>" . (array_key_exists("FOCUS", $counted_respondent_arr) ? $counted_respondent_arr["FOCUS"] : "0") . "</span><br>";
-        echo "<span class='label' style='width:" . $max_label_length ."ch;'>" . $language["report_respondent_managers"] . "</span><span class='colon'>:</span><span class='count'>" . (array_key_exists("Manager", $counted_respondent_arr) ? $counted_respondent_arr["Manager"] : "0") . "</span><br>";
-        echo "<span class='label' style='width:" . $max_label_length ."ch;'>" . $language["report_respondent_colleagues"] . "</span><span class='colon'>:</span><span class='count'>" . (array_key_exists("Colleague", $counted_respondent_arr) ? $counted_respondent_arr["Colleague"] : "0") . "</span><br>";
-        echo "<span class='label' style='width:" . $max_label_length ."ch;'>" . $language["report_respondent_directreports"] . "</span><span class='colon'>:</span><span class='count'>" . (array_key_exists("Direct report", $counted_respondent_arr) ? $counted_respondent_arr["Direct report"] : "0") . "</span><br>";
-        echo "<span class='label' style='width:" . $max_label_length ."ch;'>" . $language["report_respondent_others"] . "</span><span class='colon'>:</span><span class='count'>" . (array_key_exists("Other", $counted_respondent_arr) ? $counted_respondent_arr["Other"] : "0") . "</span><br>";
+        echo "<span class='report-respondent-label' style='width:" . $max_label_length ."ch;'>" . $language["report_respondent_self"] . "</span><span class='report-respondent-colon'>:</span><span class='report-respondent-count'>" . (array_key_exists("FOCUS", $counted_respondent_arr) ? $counted_respondent_arr["FOCUS"] : "0") . "</span><br>";
+        echo "<span class='report-respondent-label' style='width:" . $max_label_length ."ch;'>" . $language["report_respondent_managers"] . "</span><span class='report-respondent-colon'>:</span><span class='report-respondent-count'>" . (array_key_exists("Manager", $counted_respondent_arr) ? $counted_respondent_arr["Manager"] : "0") . "</span><br>";
+        echo "<span class='report-respondent-label' style='width:" . $max_label_length ."ch;'>" . $language["report_respondent_colleagues"] . "</span><span class='report-respondent-colon'>:</span><span class='report-respondent-count'>" . (array_key_exists("Colleague", $counted_respondent_arr) ? $counted_respondent_arr["Colleague"] : "0") . "</span><br>";
+        echo "<span class='report-respondent-label' style='width:" . $max_label_length ."ch;'>" . $language["report_respondent_directreports"] . "</span><span class='report-respondent-colon'>:</span><span class='report-respondent-count'>" . (array_key_exists("Direct report", $counted_respondent_arr) ? $counted_respondent_arr["Direct report"] : "0") . "</span><br>";
+        echo "<span class='report-respondent-label' style='width:" . $max_label_length ."ch;'>" . $language["report_respondent_others"] . "</span><span class='report-respondent-colon'>:</span><span class='report-respondent-count'>" . (array_key_exists("Other", $counted_respondent_arr) ? $counted_respondent_arr["Other"] : "0") . "</span><br>";
         ?>
         <br>
         <?= $language["report_respondent_paragraph2"] ?>
@@ -172,6 +197,61 @@ include_once '../config/config.php'; ?>
         <?= $language["report_overall_result_paragraph1"] ?>
         <?= $language["report_overall_result_paragraph2"] ?>
         <?= $language["report_overall_result_paragraph3"] ?>
+        <?
+        $roles_arr = array("FOCUS", "Manager", "Colleague", "Direct report", "Other");
+        $seriesdata = array_fill_keys($roles_arr, 0);
+        foreach($report_competency_id_arr as $comp_id) {
+            $competency = $reportClass->getCompetencyByCompetencyId($comp_id);
+            $competencyDef = $reportClass->getEnDespByCompetency($competency);
+            $graph_id = "report_overall_result_graph_" . $comp_id;
+            $seriesdata = array();
+        
+            // Group the raters by role
+            $raters_by_role = array();
+            foreach($rater_id_arr as $rater_id) {
+                $rater_role = $reportClass->getRoleByRaterId($rater_id);
+                if (!isset($raters_by_role[$rater_role])) {
+                    $raters_by_role[$rater_role] = array();
+                }
+                $raters_by_role[$rater_role][] = $rater_id;
+            }
+        
+            // Calculate the average rating for each role
+            foreach($roles_arr as $role) {
+                if (isset($raters_by_role[$role])) {
+                    $role_ratings = array();
+                    foreach ($raters_by_role[$role] as $rater_id) {
+                        $comp_answer_arr = $reportClass->getCompetencyStatementsAnswerByRaterIdAndCompId($rater_id, $comp_id);
+                        $answer_count = 0;
+                        $final_answer = 0;
+                        for ($i = 0; $i < count($comp_answer_arr); $i++) {
+                            if ($comp_answer_arr[$i] != 'X') {
+                                $final_answer += $comp_answer_arr[$i];
+                                $answer_count++;
+                            }
+                        }
+                        if ($final_answer != 0) {
+                            $final_answer = floatval($final_answer) / $answer_count;
+                            $final_answer = number_format($final_answer, 2);
+                        }
+                        $role_ratings[] = $final_answer;
+                    }
+        
+                    // Calculate the average rating for the role
+                    $role_rating_avg = array_sum($role_ratings) / count($role_ratings);
+                    $seriesdata[$role] = $role_rating_avg;
+                }
+            }
+        
+            //Render the table
+            echo "<div class='report-overall-result-comp-title'>". $competency ."</div>".
+                 "<div style='display:flex; width:100%'>".
+                 "<div class='report-overall-result-comp-def'>". $competencyDef ."</div>".
+                 "<div id='". $graph_id ."' style='width:60%; height: 200px'></div>".
+                 "</div><br>";
+            echo "<script>render_overall_result_Chart('". $graph_id ."', ". json_encode(array_values($seriesdata)) .");</script>";
+        }
+        ?>
         <a href="#report-important-of-competencies-page">Previous</a>
         <a href="#report-ranking-statements-page">Next</a>
     </section>
@@ -184,31 +264,6 @@ include_once '../config/config.php'; ?>
         <div class="report-pages-title"><?= $language["report_overall_result_title"] ?></div>
         <br>
     </section>
-
-    <script src="../assets/js/core/jquery.min.js"></script>
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
-    <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../assets/js/plugins/moment.min.js"></script>
-    <script src="../assets/js/plugins/sweetalert2.js"></script>
-    <script src="../assets/js/plugins/jquery.validate.min.js"></script>
-    <script src="../assets/js/plugins/jquery.bootstrap-wizard.js"></script>
-    <script src="../assets/js/plugins/bootstrap-selectpicker.js"></script>
-    <script src="../assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
-    <script src="../assets/js/plugins/bootstrap-datetimepicker-zh.js"></script>
-    <script src="../assets/js/plugins/bootstrap-tagsinput.js"></script>
-    <script src="../assets/js/plugins/jasny-bootstrap.min.js"></script>
-    <script src="../assets/js/plugins/fullcalendar.min.js"></script>
-    <script src="../assets/js/plugins/jquery-jvectormap.js"></script>
-    <script src="../assets/js/plugins/nouislider.min.js"></script>
-    <script src="../assets/js/plugins/arrive.min.js"></script>
-    <script src="../assets/js/plugins/chartist.min.js"></script>
-    <script src="../assets/js/plugins/bootstrap-notify.js"></script>
-    <script src="../assets/js/material-dashboard.js?v=2.1.1"></script>
-    <script src="../lib/dataTables/js/dataTables.min.js"></script>
-    <script src="../js/lang/<?= $_COOKIE['lang'] ?>.js?v=<?= $jsVersion; ?>"></script>
-    <script src="../<?= $jspath; ?>/assess360.js?v=<?= $jsVersion; ?>"></script>
-    <script src="../echarts/echarts.min.js"></script>
     <script>
         var AssessmentReport = new AssessmentReport();
     </script>
@@ -218,6 +273,11 @@ include_once '../config/config.php'; ?>
         var manager_answers_arr = <? echo json_encode($manager_answers_arr) ?>;
         var ImportanceOfCompetenciesGraph = new ImportanceOfCompetenciesGraph();
     </script>
+    <!-- <script>
+        var seriesdata = <? echo json_encode($seriesdata) ?>;
+        var graph_id = <? echo $graph_id ?>;
+        var OverallResultGraph = new OverallResultGraph();
+    </script> -->
 </body>
 
 </html>
