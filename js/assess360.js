@@ -1464,12 +1464,28 @@ var AssessmentReport = function () {
 
         $(".report-page:not(:first)").hide();
 
+        $('a[href="#report-cover-page"]').click(function (event) {
+          event.preventDefault(); // prevent the link from navigating to the target
+          // hide the current page and show the target page
+          $("#report-cover-page").show();
+          $("#report-intro-page").hide();
+          $("#report-competencies-page").hide();
+          $("#report-respondent-overview-page").hide();
+          $("#report-important-of-competencies-page").hide();
+          $("#report-overall-result-page").hide();
+          $("#report-ranking-statements-page").hide();
+      });
+
         $('a[href="#report-intro-page"]').click(function (event) {
             event.preventDefault(); // prevent the link from navigating to the target
             // hide the current page and show the target page
             $("#report-cover-page").hide();
             $("#report-intro-page").show();
             $("#report-competencies-page").hide();
+            $("#report-respondent-overview-page").hide();
+            $("#report-important-of-competencies-page").hide();
+            $("#report-overall-result-page").hide();
+            $("#report-ranking-statements-page").hide();
         });
 
         $('a[href="#report-competencies-page"]').click(function (event) {
@@ -1478,6 +1494,199 @@ var AssessmentReport = function () {
             $("#report-cover-page").hide();
             $("#report-intro-page").hide();
             $("#report-competencies-page").show();
+            $("#report-respondent-overview-page").hide();
+            $("#report-important-of-competencies-page").hide();
+            $("#report-overall-result-page").hide();
+            $("#report-ranking-statements-page").hide();
         });
-      });
+
+        $('a[href="#report-respondent-overview-page"]').click(function (event) {
+          event.preventDefault(); // prevent the link from navigating to the target
+          // hide the current page and show the target page
+          $("#report-cover-page").hide();
+          $("#report-intro-page").hide();
+          $("#report-competencies-page").hide();
+          $("#report-respondent-overview-page").show();
+          $("#report-important-of-competencies-page").hide();
+          $("#report-overall-result-page").hide();
+          $("#report-ranking-statements-page").hide();
+        });
+
+        $('a[href="#report-important-of-competencies-page"]').click(function (event) {
+          event.preventDefault(); // prevent the link from navigating to the target
+          // hide the current page and show the target page
+          $("#report-cover-page").hide();
+          $("#report-intro-page").hide();
+          $("#report-competencies-page").hide();
+          $("#report-respondent-overview-page").hide();
+          $("#report-important-of-competencies-page").show();
+          $("#report-overall-result-page").hide();
+          $("#report-ranking-statements-page").hide();
+        });
+        
+        $('a[href="#report-overall-result-page"]').click(function (event) {
+          event.preventDefault(); // prevent the link from navigating to the target
+          // hide the current page and show the target page
+          $("#report-cover-page").hide();
+          $("#report-intro-page").hide();
+          $("#report-competencies-page").hide();
+          $("#report-respondent-overview-page").hide();
+          $("#report-important-of-competencies-page").hide();
+          $("#report-overall-result-page").show();
+          $("#report-ranking-statements-page").hide();
+        });
+
+        $('a[href="#report-ranking-statements-page"]').click(function (event) {
+          event.preventDefault(); // prevent the link from navigating to the target
+          // hide the current page and show the target page
+          $("#report-cover-page").hide();
+          $("#report-intro-page").hide();
+          $("#report-competencies-page").hide();
+          $("#report-respondent-overview-page").hide();
+          $("#report-important-of-competencies-page").hide();
+          $("#report-overall-result-page").hide();
+          $("#report-ranking-statements-page").show();
+        });
+    });
+}
+
+var ImportanceOfCompetenciesGraph = function () {
+  var chartDom = document.getElementById('report-importanceofcompetencies-graph');
+  var myChart = echarts.init(chartDom);
+  var option;
+
+  const seriesLabel = {
+  show: true
+  };
+  option = {
+  tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+      type: 'shadow'
+      }
+  },
+  legend: {
+      data: ['Focus', 'Manager']
+  },
+  grid: {
+      left: 100
+  },
+  toolbox: {
+      show: true,
+      feature: {
+      saveAsImage: {}
+      }
+  },
+  xAxis: {
+      type: 'value',
+      axisLabel: {
+      formatter: '{value}'
+      }
+  },
+  yAxis: {
+      type: 'category',
+      inverse: true,
+      data: report_competency_arr,
+      axisLabel: {
+      margin: 20,
+      rich: {
+          value: {
+          lineHeight: 30,
+          align: 'center'
+          }
+      }
+      }
+  },
+  series: [
+      {
+      name: 'Focus',
+      type: 'bar',
+      label: seriesLabel,
+      data: focus_answers_arr
+      },
+      {
+      name: 'Manager',
+      type: 'bar',
+      label: seriesLabel,
+      data: manager_answers_arr
+      }
+  ]
+  };
+
+  option && myChart.setOption(option);
+}
+
+function render_overall_result_Chart(graphId, seriesData, average_score) {
+  var chartDom = document.getElementById(graphId);
+  var myChart = echarts.init(chartDom);
+  var option;
+
+  const seriesLabel = {
+    show: true
+  };
+
+  const colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de']; // Define an array of colors
+
+  option = {
+    title: {
+      text: `Average score: ${average_score}`
+    },
+    tooltip: {
+      trigger: 'axis', 
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    grid: {
+      left: 100
+    },
+    toolbox: {
+      show: true,
+      feature: {
+        saveAsImage: {}
+      }
+    },
+    xAxis: {
+      type: 'value',
+      axisLabel: {
+        formatter: function(value) {
+          return value;
+        }
+      },
+      axisTick: {
+        interval: 1 
+      },
+      min: 0, 
+      max: 5 
+    },
+    yAxis: {
+      type: 'category',
+      inverse: true,
+      data: ['Self', 'Manager(s)', 'Colleagues', 'Direct reports', 'Others'],
+      axisLabel: {
+        margin: 20,
+        rich: {
+          value: {
+            lineHeight: 30,
+            align: 'center'
+          }
+        }
+      }
+    },
+    series: [
+      {
+        name: 'test',
+        type: 'bar',
+        label: seriesLabel,
+        itemStyle: {
+          color: function(params) {
+            return colors[params.dataIndex];
+          }
+        },
+        data: seriesData
+      }
+    ]
+  };
+
+  option && myChart.setOption(option);
 }

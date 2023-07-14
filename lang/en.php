@@ -3224,6 +3224,42 @@ $language["report_introduction_paragraph5"] = "<p>The results in this report are
 $language["report_competencies_title"] = "2. Competencies";
 $language["report_competencies_paragraph"] = "In this part of the report, it lists out the competencies with their definitions that have been used in the questionnaire. It is helpful for you to understand
                                                 the definitions when you go through the result in this report.";
+
+//respondent overview page
+$language["report_respondent_title"] = "3. Respondent Overview";
+$language["report_respondent_paragraph1"] = "<p>The result of this Report has been generated from the feedback provided by:</p>";
+$language["report_respondent_self"] = "Self";
+$language["report_respondent_managers"] = "Manager(s)";
+$language["report_respondent_colleagues"] = "Colleagues";
+$language["report_respondent_directreports"] = "Direct reports";
+$language["report_respondent_others"] = "Others";
+$language["report_respondent_paragraph2"] = "<p>who have been invited to  join the Feedback Questionnaire and the respondent group to which they have been allocated.</p>";
+
+//importance of competencies page
+$language["report_importance_of_competencies_title"] = "4. Importance of competencies";
+$language["report_importance_of_competencies_paragraph"] = "<p>This section of the report shows the ratings that you and your manager have given for the importance of each competency for success in your job. By comparing 
+                                                            your own ratings (indicated in the first bar from the top) with your manager's ratings (indicated in the second bar), you can identify any potential differences 
+                                                            in perspective or expectations regarding responsibilities and behaviour. All differences are relevant and should be considered when discussing development priorities 
+                                                            with your manager. Addressing these differences can help establish a more aligned understanding of what is required for success in your role. By prioritizing areas for 
+                                                            development together, you can work towards achieving your goals and advancing your career.</p>";
+
+//overall result page
+$language["report_overall_result_title"] = "5. Overall Result";
+$language["report_overall_result_paragraph1"] = "<p>In this part of report, it presents an overview of your competencies through a series of graphs that display how you have been rated by different raters or groups on each competency.
+                                                 The scale used in the graphs ranges from high to low, with the high-end indicating areas of strength and the low-end indicating areas that require further development. By comparing your 
+                                                 self-perception with how others perceive you, you can quickly identify areas that may require further exploration and improvement. The graphs can serve as a useful tool for prioritizing
+                                                  which competencies to focus on developing further and can provide valuable objective insights into your overall skillset.</p>";
+$language["report_overall_result_paragraph2"] = "<p>The result of competency score is the average of the ratings on the individual questions which make up a given competency. The average rating for any question is based on the ratings 
+                                                given by the raters (excluding FOCUS) who gave their feedback in that group.</p>";
+$language["report_overall_result_paragraph3"] = "<p>The scale used in the questionnaire<br>1. strong development needed<br>2. development needed<br>3. competent<br>4. strength<br>5. exceptional strength</p>";
+
+//ranking of the statements page
+$language["report_statement_ranking_title"] = "6. Ranking of the statements";
+$language["report_statement_ranking_paragraph1"] = "<p>The tables provided in this section list the behaviours associated with each competency that have received the highest and lowest scores, on average, from other respondents who participated in the questionnaire.</p>";
+$language["report_statement_ranking_paragraph2"] = "<p>In addition to the average score given by other respondents, these tables also display your own evaluation of these statements. By reviewing and analysing the data presented in these tables, you can gain insights into 
+                                                    how your self-perception compares with the perceptions of others and use this information to improve your performance and achieve your career goals.</p>";
+$language["report_statement_ranking_highest_scores"] = "HIGHEST SCORES";
+$language["report_statement_ranking_lowest_scores"] = "LOWEST SCORES";
 //-------------------------------------------------------------------------------------
 
 ?>

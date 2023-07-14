@@ -261,11 +261,12 @@ class QuestionsClass
         $stmt->close();
     }
 
-    public function getQuestionsForQuestionnaire()
+    public function getQuestionsForQuestionnaire($focus_id)
     {
         require '../config/dbconnect.php';
-        $query = "SELECT question FROM competency_questions";
+        $query = "SELECT question FROM competency_questions WHERE focus_id = ?";
         $stmt = $conn->prepare($query);
+        $stmt->bind_param('i', $focus_id);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
