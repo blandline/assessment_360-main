@@ -56,7 +56,7 @@ include_once '../config/config.php'; ?>
             <div class= "report-cover-focusname"><?= $focus_full_name ?></div>
             <div class = "report-cover-date"><?= $report_date ?></div>
             <a href="#report-intro-page">Next</a>
-            <a href="#report-overall-result-page">TEMP</a>
+            <a href="#report-ranking-statements-page">TEMP</a>
         </div>
     </section>
     <section id="report-intro-page" class="report-page">
@@ -206,7 +206,6 @@ include_once '../config/config.php'; ?>
             $graph_id = "report_overall_result_graph_" . $comp_id;
             $seriesdata = array();
         
-            // Group the raters by role
             $raters_by_role = array();
             foreach($rater_id_arr as $rater_id) {
                 $rater_role = $reportClass->getRoleByRaterId($rater_id);
@@ -216,7 +215,6 @@ include_once '../config/config.php'; ?>
                 $raters_by_role[$rater_role][] = $rater_id;
             }
         
-            // Calculate the average rating for each role
             foreach($roles_arr as $role) {
                 if (isset($raters_by_role[$role])) {
                     $role_ratings = array();
@@ -237,19 +235,32 @@ include_once '../config/config.php'; ?>
                         $role_ratings[] = $final_answer;
                     }
         
-                    // Calculate the average rating for the role
                     $role_rating_avg = array_sum($role_ratings) / count($role_ratings);
                     $seriesdata[$role] = $role_rating_avg;
                 }
             }
-        
+            $average_score_count = 0;
+            $total_score = 0;
+            foreach($roles_arr as $role) {
+                if($role === "FOCUS"){
+                    continue;
+                }
+                $average_score_count++;
+                $total_score += $seriesdata[$role];
+            }
+            $average_score = 0; //
+            if($total_score != 0) {
+                $average_score = floatval($total_score) / $average_score_count;
+                $average_score = number_format($average_score, 2);
+            }
+
             //Render the table
             echo "<div class='report-overall-result-comp-title'>". $competency ."</div>".
                  "<div style='display:flex; width:100%'>".
                  "<div class='report-overall-result-comp-def'>". $competencyDef ."</div>".
                  "<div id='". $graph_id ."' style='width:60%; height: 200px'></div>".
                  "</div><br>";
-            echo "<script>render_overall_result_Chart('". $graph_id ."', ". json_encode(array_values($seriesdata)) .");</script>";
+            echo "<script>render_overall_result_Chart('". $graph_id ."', ". json_encode(array_values($seriesdata)) . ",". $average_score .");</script>";
         }
         ?>
         <a href="#report-important-of-competencies-page">Previous</a>
@@ -261,8 +272,95 @@ include_once '../config/config.php'; ?>
             <div class= "report-header-line"></div>
             <?= $focus_full_name ?>
         </div>
-        <div class="report-pages-title"><?= $language["report_overall_result_title"] ?></div>
+        <div class="report-pages-title"><?= $language["report_statement_ranking_title"] ?></div>
         <br>
+        <?= $language["report_statement_ranking_paragraph1"] ?>
+        <?= $language["report_statement_ranking_paragraph2"] ?>
+        <?
+        $focus_score_assoc_arr = array();
+        $questions_arr = $reportClass->getAllQuestionId($focus_id);
+        $average_score_assoc_arr = array_fill_keys($questions_arr, 0);
+        foreach($rater_id_arr as $rater_id){
+            $rater_role = $reportClass->getRoleByRaterId($rater_id);
+            if($rater_role == "FOCUS"){
+                $focus_score_assoc_arr = $reportClass->getQuestionAnswersByRaterId($rater_id);
+            }
+            else{
+                $temp_assoc_arr = $reportClass->getQuestionAnswersByRaterId($rater_id);
+                foreach(array_keys($temp_assoc_arr) as $question_id){
+                    if($temp_assoc_arr[$question_id] == "X"){
+                        continue;
+                    }
+                    $average_score_assoc_arr[$question_id] += intval($temp_assoc_arr[$question_id]);
+                }
+            }
+        }
+        foreach(array_keys($average_score_assoc_arr) as $question_id){
+            $other_than_focus_count = $reportClass->getNumberOfRatersOtherThanFocusByQuestionId($question_id);
+            $average_score_assoc_arr[$question_id] = floatval($average_score_assoc_arr[$question_id]) / $other_than_focus_count;
+        }
+        $highest_score_assoc_arr = $average_score_assoc_arr;
+        arsort($highest_score_assoc_arr);
+        $lowest_score_assoc_arr = $average_score_assoc_arr;
+        asort($lowest_score_assoc_arr);
+        //HIGHEST SCORES TABLE
+        echo "<table id = 'report-overall-result-highest-table'>
+                <tr>
+                <th colspan=5 style='border-bottom: 1px solid black; width:100%'>". $language["report_statement_ranking_highest_scores"]. "</th>
+                </tr>
+                <tr>
+                    <td>No.</td>
+                    <td>Statement</td>
+                    <td>Competency</td>
+                    <td>Average Score</td>
+                    <td>Focus Score</td>
+                </tr>";
+        for($i=0; $i<5; $i++){
+            $highest_table_competency = $reportClass->getCompetencyByCompetencyId($reportClass->getCompetencyIdByQuestionId(array_keys($highest_score_assoc_arr)[$i]));
+            $highest_table_avg_score = array_values($highest_score_assoc_arr)[$i];
+            $highest_table_avg_score = number_format($highest_table_avg_score, 2);
+            $highest_table_focus_score = $focus_score_assoc_arr[array_keys($highest_score_assoc_arr)[$i]];
+            $highest_table_question_statement = $reportClass->getQuestionByRaterId(array_keys($highest_score_assoc_arr)[$i]);
+            echo "<tr>
+                    <td>". $i + 1 ."</td>
+                    <td style='text-align:left;'>". $highest_table_question_statement ."</td>
+                    <td style='text-align:left;'>". $highest_table_competency ."</td>
+                    <td>". $highest_table_avg_score ."</td>
+                    <td>". $highest_table_focus_score ."</td>
+                </tr>";
+        }
+        echo "</table>";
+        echo "<br>";
+        //LOWEST SCORES TABLE
+        echo "<table id = 'report-overall-result-lowest-table'>
+                <tr>
+                <th colspan=5 style='border-bottom: 1px solid black; width:100%'>". $language["report_statement_ranking_highest_scores"]. "</th>
+                </tr>
+                <tr>
+                    <td>No.</td>
+                    <td>Statement</td>
+                    <td>Competency</td>
+                    <td>Average Score</td>
+                    <td>Focus Score</td>
+                </tr>";
+        for($i=0; $i<5; $i++){
+            $lowest_table_competency = $reportClass->getCompetencyByCompetencyId($reportClass->getCompetencyIdByQuestionId(array_keys($lowest_score_assoc_arr)[$i]));
+            $lowest_table_avg_score = array_values($lowest_score_assoc_arr)[$i];
+            $lowest_table_avg_score = number_format($lowest_table_avg_score, 2);
+            $lowest_table_focus_score = $focus_score_assoc_arr[array_keys($lowest_score_assoc_arr)[$i]];
+            $lowest_table_question_statement = $reportClass->getQuestionByRaterId(array_keys($lowest_score_assoc_arr)[$i]);
+            echo "<tr>
+                    <td>". $i + 1 ."</td>
+                    <td style='text-align:left;'>". $lowest_table_question_statement ."</td>
+                    <td style='text-align:left;'>". $lowest_table_competency ."</td>
+                    <td>". $lowest_table_avg_score ."</td>
+                    <td>". $lowest_table_focus_score ."</td>
+                </tr>";
+        }
+        echo "</table>";
+        ?>
+        <a href="#report-overall-result-page">Previous</a>
+        <a>Next</a>
     </section>
     <script>
         var AssessmentReport = new AssessmentReport();
@@ -273,11 +371,6 @@ include_once '../config/config.php'; ?>
         var manager_answers_arr = <? echo json_encode($manager_answers_arr) ?>;
         var ImportanceOfCompetenciesGraph = new ImportanceOfCompetenciesGraph();
     </script>
-    <!-- <script>
-        var seriesdata = <? echo json_encode($seriesdata) ?>;
-        var graph_id = <? echo $graph_id ?>;
-        var OverallResultGraph = new OverallResultGraph();
-    </script> -->
 </body>
 
 </html>

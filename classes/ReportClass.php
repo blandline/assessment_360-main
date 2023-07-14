@@ -260,6 +260,119 @@ class ReportClass
         }
         return $result_arr;
     }
+
+    public function getQuestionAnswersByRaterId($rater_id){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+    
+        $query = "SELECT question_id, answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 1";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $assoc_arr = array();
+        while ($row = $result->fetch_assoc()) {
+            $assoc_arr[$row["question_id"]] = $row['answer'];
+        }
+        return $assoc_arr;
+    }
+
+    public function getAllQuestionId($focus_id){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+
+        $query = "SELECT question_id FROM question_base JOIN competency_questions on question_base.Questions = competency_questions.question WHERE competency_questions.focus_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('i', $focus_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        $question_id_array = array();
+        while ($row = $result->fetch_assoc()) {
+            $question_id_array[] = $row['question_id'];
+        }
+
+        return $question_id_array;
+    }
+
+    public function getNumberOfRatersOtherThanFocusByQuestionId($question_id){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+    
+        $query = "SELECT rater_id, answer FROM " . $dbName . ".questionnaire_result WHERE question_id = ? AND question_type_id = 1";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $question_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $count = 0;
+        while ($row = $result->fetch_assoc()) {
+            $rater_id = $row['rater_id'];
+            $answer = $row['answer'];
+
+            $query2 = "SELECT roles FROM " . $dbName . ".rater_list WHERE rater_id = ?";
+            $stmt2 = $conn->prepare($query2);
+            $stmt2->bind_param("i", $rater_id);
+            $stmt2->execute();
+            $result2 = $stmt2->get_result();
+
+            $row2 = $result2->fetch_assoc();
+            $role = $row2['roles'];
+
+            if ($role == "FOCUS" || $answer == "X") {
+                continue;
+            }
+            $count++;
+        }
+        return $count;
+    }
+
+    public function getCompetencyIdByQuestionId($question_id){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+    
+        $query = "SELECT competency_id FROM " . $dbName . ".questionnaire_result WHERE question_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $question_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $row = $result->fetch_assoc();
+        $role = $row['competency_id'];
+        return $role;
+    }
+
+    public function getQuestionByRaterId($rater_id){
+        require '../config/dbconnect.php';
+    
+        $query = "SELECT questions FROM question_base WHERE question_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $row = $result->fetch_assoc();
+        $question = $row['questions'];
+        return $question;
+    }
 }
 
 

@@ -191,7 +191,7 @@ include_once '../config/config.php'; ?>
                         </thead>
 
                         <?
-                        $questions_arr = $questionsClass->getQuestionsForQuestionnaire();
+                        $questions_arr = $questionsClass->getQuestionsForQuestionnaire($focus_id);
                         $total_questions = count($questions_arr);
                         $questions_per_page = 5;
                         $total_pages = ceil($total_questions / $questions_per_page);

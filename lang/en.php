@@ -3251,7 +3251,15 @@ $language["report_overall_result_paragraph1"] = "<p>In this part of report, it p
                                                   which competencies to focus on developing further and can provide valuable objective insights into your overall skillset.</p>";
 $language["report_overall_result_paragraph2"] = "<p>The result of competency score is the average of the ratings on the individual questions which make up a given competency. The average rating for any question is based on the ratings 
                                                 given by the raters (excluding FOCUS) who gave their feedback in that group.</p>";
-$language["report_overall_result_paragraph3"] = "<p>The scale used in the questionnaire<br>1. strong development needed<br>2. development needed<br>3. competent<br>4. strength<br>5. exceptional strength</p>"
+$language["report_overall_result_paragraph3"] = "<p>The scale used in the questionnaire<br>1. strong development needed<br>2. development needed<br>3. competent<br>4. strength<br>5. exceptional strength</p>";
+
+//ranking of the statements page
+$language["report_statement_ranking_title"] = "6. Ranking of the statements";
+$language["report_statement_ranking_paragraph1"] = "<p>The tables provided in this section list the behaviours associated with each competency that have received the highest and lowest scores, on average, from other respondents who participated in the questionnaire.</p>";
+$language["report_statement_ranking_paragraph2"] = "<p>In addition to the average score given by other respondents, these tables also display your own evaluation of these statements. By reviewing and analysing the data presented in these tables, you can gain insights into 
+                                                    how your self-perception compares with the perceptions of others and use this information to improve your performance and achieve your career goals.</p>";
+$language["report_statement_ranking_highest_scores"] = "HIGHEST SCORES";
+$language["report_statement_ranking_lowest_scores"] = "LOWEST SCORES";
 //-------------------------------------------------------------------------------------
 
 ?>

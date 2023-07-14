@@ -1483,6 +1483,7 @@ var AssessmentReport = function () {
           $("#report-respondent-overview-page").hide();
           $("#report-important-of-competencies-page").hide();
           $("#report-overall-result-page").hide();
+          $("#report-ranking-statements-page").hide();
       });
 
         $('a[href="#report-intro-page"]').click(function (event) {
@@ -1494,6 +1495,7 @@ var AssessmentReport = function () {
             $("#report-respondent-overview-page").hide();
             $("#report-important-of-competencies-page").hide();
             $("#report-overall-result-page").hide();
+            $("#report-ranking-statements-page").hide();
         });
 
         $('a[href="#report-competencies-page"]').click(function (event) {
@@ -1505,6 +1507,7 @@ var AssessmentReport = function () {
             $("#report-respondent-overview-page").hide();
             $("#report-important-of-competencies-page").hide();
             $("#report-overall-result-page").hide();
+            $("#report-ranking-statements-page").hide();
         });
 
         $('a[href="#report-respondent-overview-page"]').click(function (event) {
@@ -1516,6 +1519,7 @@ var AssessmentReport = function () {
           $("#report-respondent-overview-page").show();
           $("#report-important-of-competencies-page").hide();
           $("#report-overall-result-page").hide();
+          $("#report-ranking-statements-page").hide();
         });
 
         $('a[href="#report-important-of-competencies-page"]').click(function (event) {
@@ -1527,6 +1531,7 @@ var AssessmentReport = function () {
           $("#report-respondent-overview-page").hide();
           $("#report-important-of-competencies-page").show();
           $("#report-overall-result-page").hide();
+          $("#report-ranking-statements-page").hide();
         });
         
         $('a[href="#report-overall-result-page"]').click(function (event) {
@@ -1538,6 +1543,19 @@ var AssessmentReport = function () {
           $("#report-respondent-overview-page").hide();
           $("#report-important-of-competencies-page").hide();
           $("#report-overall-result-page").show();
+          $("#report-ranking-statements-page").hide();
+        });
+
+        $('a[href="#report-ranking-statements-page"]').click(function (event) {
+          event.preventDefault(); // prevent the link from navigating to the target
+          // hide the current page and show the target page
+          $("#report-cover-page").hide();
+          $("#report-intro-page").hide();
+          $("#report-competencies-page").hide();
+          $("#report-respondent-overview-page").hide();
+          $("#report-important-of-competencies-page").hide();
+          $("#report-overall-result-page").hide();
+          $("#report-ranking-statements-page").show();
         });
     });
 }
@@ -1608,7 +1626,7 @@ var ImportanceOfCompetenciesGraph = function () {
   option && myChart.setOption(option);
 }
 
-function render_overall_result_Chart(graphId, seriesData) {
+function render_overall_result_Chart(graphId, seriesData, average_score) {
   var chartDom = document.getElementById(graphId);
   var myChart = echarts.init(chartDom);
   var option;
@@ -1620,8 +1638,11 @@ function render_overall_result_Chart(graphId, seriesData) {
   const colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de']; // Define an array of colors
 
   option = {
+    title: {
+      text: `Average score: ${average_score}`
+    },
     tooltip: {
-      trigger: 'axis',
+      trigger: 'axis', 
       axisPointer: {
         type: 'shadow'
       }

@@ -7577,3 +7577,35 @@ box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+
+#report-overall-result-highest-table{
+    width: 100%;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 14px;
+}
+
+#report-overall-result-highest-table th{
+    background-color: #3C4858;
+    color: white;
+}
+
+#report-overall-result-highest-table td{
+    border: 1px solid black;
+}
+
+#report-overall-result-lowest-table{
+    width: 100%;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 14px;
+}
+
+#report-overall-result-lowest-table th{
+    background-color: #3C4858;
+    color: white;
+}
+
+#report-overall-result-lowest-table td{
+    border: 1px solid black;
+}
