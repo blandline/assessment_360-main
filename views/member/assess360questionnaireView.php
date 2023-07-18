@@ -301,14 +301,21 @@ include_once '../config/config.php'; ?>
             <button type="button" class="btn btn-primary btn-sm addButton competency-add-btn continuelater-btn questionnaire-openendquestion-finish" style="position:absolute; right:4rem;"><?= $language["questionnaire_continue_later"] ?></button>
         </section>
         <section id="continue-later-page" class="questionnaire-page">
-            Thank you for filling the questionnaire, please finish the questionnaire before the end date.
+            <div style="margin-top:3em">
+            <div style="font-size: 20px; font-weight:bold;"><?= $language["questionnaire_continue_later_thankyou"] ?></div>
+            <br>
+            <div style="font-size: 16px;"><?= $language["questionnaire_continue_later_paragraph"] ?></div>
+            </div>
         </section>
         <section id="finish-page" class="questionnaire-page">
-            <div style="font-size 16px;"><?= $language["questionnaire_finish_thankyou"] ?></div>
-            <div style="font-size 12px;"><?= $language["questionnaire_finish_paragraph"] ?></div>
+            <div style="margin-top:3em">
+            <div style="font-size: 20px; font-weight:bold;"><?= $language["questionnaire_finish_thankyou"] ?></div>
+            <br>
+            <div style="font-size: 16px;"><?= $language["questionnaire_finish_paragraph"] ?></div>
+            </div>
         </section>
         <section id="before-launchdate-page" class="questionnaire-page">
-            You can't access the page before the start date
+            <?= $language["questionnaire_before_launch_date_text"] ?>
         </section>
     </form>
 

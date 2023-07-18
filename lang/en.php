@@ -3200,6 +3200,13 @@ $language["questionnaire_openendquestion_discuss_no"]= "NO";
 //Finish-page
 $language["questionnaire_finish_thankyou"]= "Thank You";
 $language["questionnaire_finish_paragraph"]= "Your objective and truthful feedback are valuable and appreciated";
+
+//Continue-later-page
+$language["questionnaire_continue_later_thankyou"]= "Thank You";
+$language["questionnaire_continue_later_paragraph"]= "Please finish the questionnaire before the deadline.";
+
+//before-launch-date-page
+$language["questionnaire_before_launch_date_text"]= "You can't access the questionnaire before the start date";
 //---------------------------------------------------------------------
 
 //--------------------------------Assessment report------------------------------------
