@@ -213,19 +213,11 @@ var Competency = function () {
 
             if (editRowID == i) {
                 var button =
-                    '<div class="nowrap"><button type="button" class="btn btn-success btn-sm addButton competency-save-btn">' +
-                    lang["competency_framework_save"] +
-                    '</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-dark btn-sm addButton competency-cancel-btn">' +
-                    lang["competency_framework_cancel"] +
-                    "</button></div>";
+                '<div class="nowrap"><button type="button" class="btn btn-success btn-sm addButton competency-save-btn">' + lang['competency_framework_save'] + '</button></div>';
                 tmp.push(button);
             } else {
                 var button =
-                    '<div class="nowrap"><button type="button" class="btn btn-primary btn-sm addButton competency-edit-btn">' +
-                    lang["competency_framework_edit"] +
-                    '</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-dark btn-sm addButton competency-delete-btn" data-toggle="modal" data-target="#deleteModal">' +
-                    lang["competency_framework_delete"] +
-                    "</button></div>";
+                '<div class="nowrap"><button type="button" class="btn btn-primary btn-sm addButton competency-edit-btn">' + lang['competency_framework_edit'] + '</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-dark btn-sm addButton competency-delete-btn" data-toggle="modal" data-target="#deleteModal">' + lang['competency_framework_delete'] + '</button></div>';
                 tmp.push(button);
             }
 
@@ -256,12 +248,10 @@ var Competency = function () {
             var button = "";
             if (editRowID >= 0) {
                 button =
-                    "";
+                '<div class="nowrap"><button type="button" class="btn btn-success btn-sm addButton competency-save-btn">' + lang['competency_framework_save'] + '</button></div>';
             } else {
                 button =
-                    '<button type="button" class="btn btn-primary btn-sm addButton competency-add-btn">' +
-                    lang["competency_framework_add"] +
-                    "</button>";
+                '<div class="nowrap"><button type="button" class="btn btn-primary btn-sm addButton competency-edit-btn">' + lang['competency_framework_edit'] + '</button></div>';
             }
             tmp.push(button);
             tmp.push(-1);
@@ -670,7 +660,7 @@ var Competency = function () {
     window.history.replaceState(null, null, window.location.href);
   }
 
-   $(".competency-add-table").hide();
+   $(".competency-add-table").show();
 };
 
 var Raterlist = function () {
