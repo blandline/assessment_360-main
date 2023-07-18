@@ -373,6 +373,149 @@ class ReportClass
         $question = $row['questions'];
         return $question;
     }
+
+    public function getOpenEndAnswerByRaterId($rater_id){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+    
+        $query = "SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 2";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $row = $result->fetch_assoc();
+        if ($row) {
+            $result = $row['answer'];
+            return $result;
+        } else {
+            return null;
+        }
+        return $result;
+    }
+
+    public function getYesNoDiscussByRaterId($rater_id){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+    
+        $query = "SELECT answer FROM " . $dbName . ".questionnaire_result WHERE rater_id = ? AND question_type_id = 3";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $row = $result->fetch_assoc();
+        if ($row) {
+            $result = $row['answer'];
+            return $result;
+        } else {
+            return null;
+        }
+    }
+
+    public function getEmailByRaterId($rater_id){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+    
+        $query = "SELECT email FROM " . $dbName . ".rater_list WHERE rater_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $row = $result->fetch_assoc();
+        if ($row) {
+            $result = $row['email'];
+            return $result;
+        } else {
+            return null;
+        }
+    }
+
+    public function getStaffNameByRaterId($rater_id){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+    
+        $query = "SELECT rater_first_name, rater_last_name FROM " . $dbName . ".rater_list WHERE rater_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $row = $result->fetch_assoc();
+        if ($row) {
+            $result = $row['rater_first_name'] . " " . $row['rater_last_name'];
+            return $result;
+        } else {
+            return null;
+        }
+    }
+
+    // public function getDepartmentByRaterId($rater_id){
+    //     require '../config/dbconnect.php';
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    
+    //     $query = "SELECT department FROM " . $dbName . ".rater_list WHERE rater_id = ?";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->bind_param("i", $rater_id);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    
+    //     $row = $result->fetch_assoc();
+    //     if ($row) {
+    //         $result = $row['department'];
+    //         return $result;
+    //     } else {
+    //         return null;
+    //     }
+    // }
+
+    public function getStaffInfoByRaterId($rater_id){
+        require '../config/dbconnect.php';
+        if ($this->memberClass->isAdmin()) {
+            $dbName = $this->memberClass->getCompanyDBById($companyId);
+        } else {
+            $dbName = $this->memberClass->getCompanyDB();
+        }
+        
+        //department not yet selected
+        $query = "SELECT rater_first_name, rater_last_name, department, position, email FROM " . $dbName . ".rater_list WHERE rater_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $rater_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $row = $result->fetch_assoc();
+        if ($row) {
+            $staff_info['name'] = $this->getStaffNameByRaterId($rater_id);
+            $staff_info['department'] = $row['department'];
+            $staff_info['email'] = $row['email'];
+            $staff_info['position'] = $row['position'];
+            return $staff_info;
+        } else {
+            return null;
+        }
+    }
 }
 
 

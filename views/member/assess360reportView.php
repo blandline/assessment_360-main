@@ -55,9 +55,9 @@ include_once '../config/config.php'; ?>
             <br><br>
             <div class= "report-cover-focusname"><?= $focus_full_name ?></div>
             <div class = "report-cover-date"><?= $report_date ?></div>
-            <a href="#report-intro-page">Next</a>
-            <a href="#report-ranking-statements-page">TEMP</a>
+            <!-- <button class="btn btn-primary to-report-intro-page"><?=$language["report_text_next"]?></button> -->
         </div>
+        <button class="btn btn-primary to-report-intro-page"><?=$language["report_text_next"]?></button>
     </section>
     <section id="report-intro-page" class="report-page">
         <div class= "report-header">
@@ -74,8 +74,10 @@ include_once '../config/config.php'; ?>
             <?= $language["report_introduction_paragraph4"] ?>
             <?= $language["report_introduction_paragraph5"] ?>
         </div>
-        <a href="#report-cover-page">Previous</a>
-        <a href="#report-competencies-page">Next</a>
+        <div style="display: flex; justify-content: space-between;">
+            <button class="btn btn-primary to-report-cover-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary to-report-competencies-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+        </div>
     </section>
     <section id="report-competencies-page" class="report-page">
         <div class= "report-header">
@@ -101,8 +103,10 @@ include_once '../config/config.php'; ?>
                 echo "</table><br>";
             }
         ?>
-        <a href="#report-intro-page">Previous</a>
-        <a href="#report-respondent-overview-page">Next</a>
+        <div style="display: flex; justify-content: space-between;">
+            <button class="btn btn-primary to-report-intro-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary to-report-respondent-overview-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+        </div>
     </section>
     <section id="report-respondent-overview-page" class="report-page">
         <div class= "report-header">
@@ -132,8 +136,10 @@ include_once '../config/config.php'; ?>
         ?>
         <br>
         <?= $language["report_respondent_paragraph2"] ?>
-        <a href="#report-competencies-page">Previous</a>
-        <a href="#report-important-of-competencies-page">Next</a>
+        <div style="display: flex; justify-content: space-between;">
+            <button class="btn btn-primary to-report-competencies-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary to-report-important-of-competencies-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+        </div>
     </section>
     <section id="report-important-of-competencies-page" class="report-page">
         <div class= "report-header">
@@ -183,8 +189,10 @@ include_once '../config/config.php'; ?>
         }
         ?>
         <div id="report-importanceofcompetencies-graph" style="width: 50%; height: 400px; margin: 0 auto;"></div>
-        <a href="#report-respondent-overview-page">Previous</a>
-        <a href="#report-overall-result-page">Next</a>
+        <div style="display: flex; justify-content: space-between;">
+            <button class="btn btn-primary to-report-respondent-overview-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary to-report-overall-result-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+        </div>
     </section>
     <section id="report-overall-result-page" class="report-page">
         <div class= "report-header">
@@ -248,11 +256,12 @@ include_once '../config/config.php'; ?>
                 $average_score_count++;
                 $total_score += $seriesdata[$role];
             }
-            $average_score = 0; //
+            $average_score = 0; 
             if($total_score != 0) {
                 $average_score = floatval($total_score) / $average_score_count;
                 $average_score = number_format($average_score, 2);
             }
+            $summary_average_score_assoc_arr[$comp_id] = $average_score; //TO BE USED LATER IN SUMMARY
 
             //Render the table
             echo "<div class='report-overall-result-comp-title'>". $competency ."</div>".
@@ -263,8 +272,10 @@ include_once '../config/config.php'; ?>
             echo "<script>render_overall_result_Chart('". $graph_id ."', ". json_encode(array_values($seriesdata)) . ",". $average_score .");</script>";
         }
         ?>
-        <a href="#report-important-of-competencies-page">Previous</a>
-        <a href="#report-ranking-statements-page">Next</a>
+        <div style="display: flex; justify-content: space-between;">
+            <button class="btn btn-primary to-report-important-of-competencies-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary to-ranking-statements-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+        </div>
     </section>
     <section id="report-ranking-statements-page" class="report-page">
         <div class= "report-header">
@@ -359,8 +370,200 @@ include_once '../config/config.php'; ?>
         }
         echo "</table>";
         ?>
-        <a href="#report-overall-result-page">Previous</a>
-        <a>Next</a>
+        <div style="display: flex; justify-content: space-between;">
+            <button class="btn btn-primary to-report-overall-result-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary to-report-summary-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+        </div>
+    </section>
+    <section id="report-summary-page" class="report-page">
+        <div class= "report-header">
+            <?=$language["report_header_title"]?>
+            <div class= "report-header-line"></div>
+            <?= $focus_full_name ?>
+        </div>
+        <div class="report-pages-title"><?= $language["report_summary_title"] ?></div>
+        <br>
+        <?= $language["report_summary_paragraph1"] ?>
+        <?= $language["report_summary_paragraph2"] ?>
+        <?
+        // print_r($summary_average_score_assoc_arr); echo "<br>";
+        $degree_of_importance_arr = array_fill_keys($report_competency_id_arr, 0);
+        for ($i = 0; $i < count($report_competency_id_arr); $i++) {
+            $degree_of_importance_arr[$report_competency_id_arr[$i]] = (float) $focus_answers_arr[$i] + $manager_answers_arr[$i];
+        }
+        // print_r($degree_of_importance_arr);
+
+        $unused_strength_arr = array();
+        $competent_high_arr = array();
+        $strength_arr = array();
+        $opportunity_arr = array();
+        $competent_average_arr = array();
+        $development_need_average_arr = array();
+        $latent_need_arr = array();
+        $development_need_low = array();
+        $critical_need_arr = array();
+
+        foreach($report_competency_id_arr as $comp_id){
+            $temp_score = floatval($summary_average_score_assoc_arr[$comp_id]);
+            $temp_importance_score = $degree_of_importance_arr[$comp_id];
+            if($temp_score >= 3.6 &&  $temp_importance_score < 5){
+                $unused_strength_arr[] = $comp_id;
+            }
+            else if($temp_score >= 3.6 &&  $temp_importance_score >= 5 && $temp_importance_score < 7){
+                $competent_high_arr[] = $comp_id;
+            }
+            else if($temp_score >= 3.6 && $temp_importance_score >= 7){
+                $strength_arr[] = $comp_id;
+            }
+            else if($temp_score > 2.9 && $temp_score < 3.6 && $temp_importance_score < 5){
+                $opportunity_arr[] = $comp_id;
+            }
+            else if($temp_score > 2.9 && $temp_score < 3.6 && $temp_importance_score >= 5 && $temp_importance_score < 7){
+                $competent_average_arr[] = $comp_id;
+            }
+            else if($temp_score > 2.9 && $temp_score < 3.6 && $temp_importance_score >= 7){
+                $development_need_average_arr[] = $comp_id;
+            }
+            else if($temp_score <= 2.9 && $temp_importance_score < 5){
+                $latent_need_arr[] = $comp_id;
+            }
+            else if($temp_score <= 2.9 && $temp_importance_score >= 5 && $temp_importance_score < 7){
+                $development_need_low[] = $comp_id;
+            }
+            else if($temp_score <= 2.9 && $temp_importance_score < 5){
+                $critical_need_arr[] = $comp_id;
+            }
+        }
+        echo "<table id='report-summary-table'>
+                <tr>
+                    <th rowspan= 3>". $language["report_table_scores"] ."</th>
+                    <td style='font-weight:bold;'>". $language["report_table_high"] ."</td>
+                    <td>" . $language["report_table_unused_strength"];
+                    foreach($unused_strength_arr as $comp_id){
+                        echo "<div class='report_summary_table_answer'>" . $reportClass->getCompetencyByCompetencyId($comp_id) . "</div>";
+                    }
+        echo        "</td>
+                    <td>". $language["report_table_competent"];
+                    foreach($competent_high_arr as $comp_id){
+                        echo "<div class='report_summary_table_answer'>" . $reportClass->getCompetencyByCompetencyId($comp_id) . "</div>";
+                    }
+        echo        "</td>
+                    <td>". $language["report_table_strength"];
+                    foreach($strength_arr as $comp_id){
+                        echo "<div class='report_summary_table_answer'>" . $reportClass->getCompetencyByCompetencyId($comp_id) . "</div>";
+                    }
+        echo        "</td>
+                </tr>
+                <tr>
+                    <td style='font-weight:bold;'>". $language["report_table_average"] ."</td>
+                    <td>". $language["report_table_opportunity"];
+                    foreach($opportunity_arr as $comp_id){
+                        echo "<div class='report_summary_table_answer'>" . $reportClass->getCompetencyByCompetencyId($comp_id) . "</div>";
+                    }
+        echo        "</td>
+                    <td>". $language["report_table_competent"];
+                    foreach($competent_average_arr as $comp_id){
+                        echo "<div class='report_summary_table_answer'>" . $reportClass->getCompetencyByCompetencyId($comp_id) . "</div>";
+                    }
+        echo        "</td>
+                    <td>". $language["report_table_development_need"];
+                    foreach($development_need_average_arr as $comp_id){
+                        echo "<div class='report_summary_table_answer'>" . $reportClass->getCompetencyByCompetencyId($comp_id) . "</div>";
+                    }
+        echo        "</td>
+                </tr>
+                <tr>
+                    <td style='font-weight:bold;'>". $language["report_table_low"] ."</td>
+                    <td>". $language["report_table_latent_need"];
+                    foreach($latent_need_arr as $comp_id){
+                        echo "<div class='report_summary_table_answer'>" . $reportClass->getCompetencyByCompetencyId($comp_id) . "</div>";
+                    }
+        echo        "</td>
+                    <td>". $language["report_table_development_need"];
+                    foreach($development_need_low as $comp_id){
+                        echo "<div class='report_summary_table_answer'>" . $reportClass->getCompetencyByCompetencyId($comp_id) . "</div>";
+                    }
+        echo        "</td>
+                    <td>". $language["report_table_critical_need"];
+                    foreach($critical_need_arr as $comp_id){
+                        echo "<div class='report_summary_table_answer'>" . $reportClass->getCompetencyByCompetencyId($comp_id) . "</div>";
+                    }
+        echo        "</td>
+                </tr>
+                <tr>
+                    <td colspan=2; type='hidden'></td>
+                    <td style='font-weight:bold;'>". $language["report_table_low_importance"] ."</td>
+                    <td style='font-weight:bold;'>". $language["report_table_important"] ."</td>
+                    <td style='font-weight:bold;'>". $language["report_table_very_important"] ."</td>
+                </tr>
+                <tr>
+                    <td colspan= 2; type='hidden'></td>
+                    <th colspan= 3; rowspan=2>". $language["report_table_degree_of_importance"] ."</</td>
+                </tr>
+            </table>";
+        ?>
+        <div style="display: flex; justify-content: space-between;">
+            <button class="btn btn-primary to-ranking-statements-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary to-feedback-openend-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+        </div>
+    </section>
+    <section id="report-feedback-openend-page" class="report-page">
+        <!-- DIALOG BOX -->
+        <div class="modal fade" id="staffinfobox" tabindex="-1" role="dialog" aria-labelledby="addEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="staffinfoboxlabel"><?= $language["report_feedback-openend_staffinfobox_label"]; ?></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <?= $language["report_feedback-openend_staffinfobox_number"]; ?><br>
+                    <?= $language["report_feedback-openend_staffinfobox_name"]; ?><br>
+                    <?= $language["report_feedback-openend_staffinfobox_department"]; ?><br>
+                    <?= $language["report_feedback-openend_staffinfobox_email"]; ?><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><?= $language["company_cancel"]; ?></button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- ----------- -->
+        <div class= "report-header">
+            <?=$language["report_header_title"]?>
+            <div class= "report-header-line"></div>
+            <?= $focus_full_name ?>
+        </div>
+        <div class="report-pages-title"><?= $language["report_feedback-openend_title"] ?></div>
+        <br>
+        <?
+        echo "<table id='report-feedback-openend-table'>
+                <tr>
+                    <th>No.</th>
+                    <th>Additional Feedback</th>
+                    <th>Need to discuss</th>
+                    <th>Staff info</th>
+                </tr>";
+        $temp_index = 1;
+        for($i=0; $i<count($rater_id_arr); $i++){
+            $open_end_answers = $reportClass->getOpenEndAnswerByRaterId($rater_id_arr[$i]);
+            $yes_no_discuss = $reportClass->getYesNoDiscussByRaterId($rater_id_arr[$i]);
+            if(isset($open_end_answers)){
+                echo "<tr>
+                        <td style='text-align:center;'>". $temp_index ."</td>
+                        <td>". $open_end_answers ."</td>
+                        <td style='text-align:center;'>". ($yes_no_discuss ? "✓" : "✗") ."</td>";
+                        $report_staff_name = $reportClass->getStaffNameByRaterId($rater_id_arr[$i]);
+                echo    "<td style='text-align:center;'>". ($yes_no_discuss ? '<button id="report-staffinfo['. $rater_id_arr[$i] .']" class ="btn btn-primary report-staffinfo" data-toggle="modal" data-target="#staffinfobox" style="padding:0;"><i class="material-icons">perm_identity</i></button>' : "") ."</td>
+                    </tr>";
+                $temp_index++;
+            }
+         }
+        echo "</table>";
+        ?>
+        <button class="btn btn-primary to-report-summary-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
     </section>
     <script>
         var AssessmentReport = new AssessmentReport();

@@ -3205,6 +3205,8 @@ $language["questionnaire_finish_paragraph"]= "Your objective and truthful feedba
 //--------------------------------Assessment report------------------------------------
 $language["report_cover_title"] = "PERSONAL <br> ASSESSMENT <br> REPORT";
 $language["report_header_title"] = "PERSONAL COMPETENCY REPORT";
+$language["report_text_previous"] = "Previous";
+$language["report_text_next"] = "Next";
 
 //intro page
 $language["report_introduction_title"] = "1. Introduction";
@@ -3260,6 +3262,36 @@ $language["report_statement_ranking_paragraph2"] = "<p>In addition to the averag
                                                     how your self-perception compares with the perceptions of others and use this information to improve your performance and achieve your career goals.</p>";
 $language["report_statement_ranking_highest_scores"] = "HIGHEST SCORES";
 $language["report_statement_ranking_lowest_scores"] = "LOWEST SCORES";
+
+//summary of needs of competencies page
+$language["report_summary_title"] = "7. Summary of Needs of Competencies";
+$language["report_summary_paragraph1"] = "<p>Taking into consideration the level of importance rated by both you and your manager on competencies for job success, as well as the average ratings of all groups except for your own,
+                                         it comes up with a view of your development needs.</p>";
+$language["report_summary_paragraph2"] = "<p>This information can be valuable in helping you prioritize your development goals and create a plan for achieving them. With a clear understanding of your development needs, you can
+                                         take steps to enchance your skills, knowledge, and abilities, and ultimately achieve greater success in your role.</p>";
+$language["report_table_scores"] = "SCORES";
+$language["report_table_high"] = "High";
+$language["report_table_average"] = "Average";
+$language["report_table_low"] = "Low";
+$language["report_table_unused_strength"] = "Unused Strength";
+$language["report_table_competent"] = "Competent";
+$language["report_table_strength"] = "Strength";
+$language["report_table_opportunity"] = "Opportunity";
+$language["report_table_development_need"] = "Development Need";
+$language["report_table_latent_need"] = "Latent Need";
+$language["report_table_critical_need"] = "Critical Need";
+$language["report_table_low_importance"] = "Low Importance";
+$language["report_table_important"] = "Important";
+$language["report_table_very_important"] = "Very Important";
+$language["report_table_degree_of_importance"] = "DEGREE OF IMPORTANCE";
+
+//summary of feedback from Open-end Question
+$language["report_feedback-openend_title"] = "8. Summary of Feedback from Open-end Question";
+$language["report_feedback-openend_staffinfobox_label"] = "Staff Info";
+$language["report_feedback-openend_staffinfobox_position"] = "Staff Position: ";
+$language["report_feedback-openend_staffinfobox_name"] = "Staff Name: ";
+$language["report_feedback-openend_staffinfobox_department"] = "Department: ";
+$language["report_feedback-openend_staffinfobox_email"] = "Email: ";
 //-------------------------------------------------------------------------------------
 
 ?>
