@@ -57,7 +57,7 @@ include_once '../config/config.php'; ?>
             <div class = "report-cover-date"><?= $report_date ?></div>
             <!-- <button class="btn btn-primary to-report-intro-page"><?=$language["report_text_next"]?></button> -->
         </div>
-        <button class="btn btn-primary to-report-intro-page"><?=$language["report_text_next"]?></button>
+        <button class="btn btn-primary btn-sm to-report-intro-page"><?=$language["report_text_next"]?></button>
     </section>
     <section id="report-intro-page" class="report-page">
         <div class= "report-header">
@@ -75,8 +75,8 @@ include_once '../config/config.php'; ?>
             <?= $language["report_introduction_paragraph5"] ?>
         </div>
         <div style="display: flex; justify-content: space-between;">
-            <button class="btn btn-primary to-report-cover-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
-            <button class="btn btn-primary to-report-competencies-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+            <button class="btn btn-primary btn-sm to-report-cover-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary btn-sm to-report-competencies-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
         </div>
     </section>
     <section id="report-competencies-page" class="report-page">
@@ -104,8 +104,8 @@ include_once '../config/config.php'; ?>
             }
         ?>
         <div style="display: flex; justify-content: space-between;">
-            <button class="btn btn-primary to-report-intro-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
-            <button class="btn btn-primary to-report-respondent-overview-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+            <button class="btn btn-primary btn-sm to-report-intro-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary btn-sm to-report-respondent-overview-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
         </div>
     </section>
     <section id="report-respondent-overview-page" class="report-page">
@@ -137,8 +137,8 @@ include_once '../config/config.php'; ?>
         <br>
         <?= $language["report_respondent_paragraph2"] ?>
         <div style="display: flex; justify-content: space-between;">
-            <button class="btn btn-primary to-report-competencies-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
-            <button class="btn btn-primary to-report-important-of-competencies-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+            <button class="btn btn-primary btn-sm to-report-competencies-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary btn-sm to-report-important-of-competencies-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
         </div>
     </section>
     <section id="report-important-of-competencies-page" class="report-page">
@@ -190,8 +190,8 @@ include_once '../config/config.php'; ?>
         ?>
         <div id="report-importanceofcompetencies-graph" style="width: 50%; height: 400px; margin: 0 auto;"></div>
         <div style="display: flex; justify-content: space-between;">
-            <button class="btn btn-primary to-report-respondent-overview-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
-            <button class="btn btn-primary to-report-overall-result-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+            <button class="btn btn-primary btn-sm to-report-respondent-overview-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary btn-sm to-report-overall-result-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
         </div>
     </section>
     <section id="report-overall-result-page" class="report-page">
@@ -273,8 +273,8 @@ include_once '../config/config.php'; ?>
         }
         ?>
         <div style="display: flex; justify-content: space-between;">
-            <button class="btn btn-primary to-report-important-of-competencies-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
-            <button class="btn btn-primary to-ranking-statements-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+            <button class="btn btn-primary btn-sm to-report-important-of-competencies-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary btn-sm to-ranking-statements-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
         </div>
     </section>
     <section id="report-ranking-statements-page" class="report-page">
@@ -345,7 +345,7 @@ include_once '../config/config.php'; ?>
         //LOWEST SCORES TABLE
         echo "<table id = 'report-overall-result-lowest-table'>
                 <tr>
-                <th colspan=5 style='border-bottom: 1px solid black; width:100%'>". $language["report_statement_ranking_highest_scores"]. "</th>
+                <th colspan=5 style='border-bottom: 1px solid black; width:100%'>". $language["report_statement_ranking_lowest_scores"]. "</th>
                 </tr>
                 <tr>
                     <td>No.</td>
@@ -371,8 +371,8 @@ include_once '../config/config.php'; ?>
         echo "</table>";
         ?>
         <div style="display: flex; justify-content: space-between;">
-            <button class="btn btn-primary to-report-overall-result-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
-            <button class="btn btn-primary to-report-summary-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+            <button class="btn btn-primary btn-sm to-report-overall-result-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary btn-sm to-report-summary-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
         </div>
     </section>
     <section id="report-summary-page" class="report-page">
@@ -503,8 +503,8 @@ include_once '../config/config.php'; ?>
             </table>";
         ?>
         <div style="display: flex; justify-content: space-between;">
-            <button class="btn btn-primary to-ranking-statements-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
-            <button class="btn btn-primary to-feedback-openend-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
+            <button class="btn btn-primary btn-sm to-ranking-statements-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+            <button class="btn btn-primary btn-sm to-feedback-openend-page" style="margin-left: auto;"><?=$language["report_text_next"]?></button>
         </div>
     </section>
     <section id="report-feedback-openend-page" class="report-page">
@@ -525,7 +525,7 @@ include_once '../config/config.php'; ?>
                     <?= $language["report_feedback-openend_staffinfobox_email"]; ?><br>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"><?= $language["company_cancel"]; ?></button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"><?= $language["company_cancel"]; ?></button>
                 </div>
                 </div>
             </div>
@@ -563,7 +563,7 @@ include_once '../config/config.php'; ?>
          }
         echo "</table>";
         ?>
-        <button class="btn btn-primary to-report-summary-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
+        <button class="btn btn-primary btn-sm to-report-summary-page" style="margin-right: auto;"><?=$language["report_text_previous"]?></button>
     </section>
     <script>
         var AssessmentReport = new AssessmentReport();

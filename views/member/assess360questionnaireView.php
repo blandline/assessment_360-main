@@ -287,9 +287,7 @@ include_once '../config/config.php'; ?>
             $openendquestion_previousanswer = $questionsClass->getOpenEndAnswer($dbName, $rater_id);
             $openendquestion_yesno_previousanswer = $questionsClass->getYesNoDiscussAnswer($dbName, $rater_id);
             ?>
-            <textarea class="questionnaire_openendquestion_text-input" name="questionnaire_openendquestion" placeholder="(Maximum 100 words)" rows="6"><? if (isset($openendquestion_previousanswer)) {
-                                                                                                                                                            echo $openendquestion_previousanswer;
-                                                                                                                                                        } ?></textarea>
+            <textarea class="questionnaire_openendquestion_text-input" name="questionnaire_openendquestion" placeholder="(Maximum 100 words)" rows="6"><? if (isset($openendquestion_previousanswer)) {echo $openendquestion_previousanswer;} ?></textarea>
             <?= $language["questionnaire_openendquestion_paragraph2"] ?>
             <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="1" <?= (isset($openendquestion_yesno_previousanswer) && $openendquestion_yesno_previousanswer == 1 ? 'checked' : '') ?>><?= $language["questionnaire_openendquestion_discuss_yes"] ?></label>
             <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="0" <?= (isset($openendquestion_yesno_previousanswer) && $openendquestion_yesno_previousanswer == 0 ? 'checked' : '') ?>><?= $language["questionnaire_openendquestion_discuss_no"] ?></label>
@@ -315,7 +313,7 @@ include_once '../config/config.php'; ?>
             </div>
         </section>
         <section id="before-launchdate-page" class="questionnaire-page">
-            <?= $language["questionnaire_before_launch_date_text"] ?>
+            <div style="font-size: 16px;"><?= $language["questionnaire_before_launch_date_text"] ?></div>
         </section>
     </form>
 
