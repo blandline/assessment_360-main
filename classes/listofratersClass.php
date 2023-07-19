@@ -1303,15 +1303,20 @@ class listofratersClass
             $button_class = 'btn btn-primary btn-sm goto-competency-selection';
             if ($data_exists) {
                 $button_class = 'btn btn-success btn-sm goto-competency-selection';
+                $button_text = 'Done';
+            } else {
+                $button_class = 'btn btn-primary btn-sm goto-competency-selection';
+                $button_text = 'Select Competency';
             }
+            
             echo '<tr>
-            <td>' . $row["focus_first_name"] . '</td>
-            <td>' . $row["focus_last_name"] . '</td>
-            <td>' . $row["position"] . '</td>
-            <td>' . $row["start_date"] . '</td>
-            <td>' . $row["end_date"] . '</td>
-            <td><a class="' . $button_class . '" data_id="' . $data_id . '" href="assess360?a=competency">Competency selection</a></td>
-          </tr>';
+                <td>' . $row["focus_first_name"] . '</td>
+                <td>' . $row["focus_last_name"] . '</td>
+                <td>' . $row["position"] . '</td>
+                <td>' . $row["start_date"] . '</td>
+                <td>' . $row["end_date"] . '</td>
+                <td><a class="' . $button_class . '" data_id="' . $data_id . '" href="assess360?a=competency">' . $button_text . '</a></td>
+            </tr>';
         }
     } else {
         echo '<tr><td colspan="7">No data available</td></tr>';

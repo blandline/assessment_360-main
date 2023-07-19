@@ -16,7 +16,7 @@ var Competency = function () {
     var frameworkTableColCount = 0;
     var frameworkTable = null;
     var frameworkTableObj = [];
-    var editRowID = -1;
+    var editRowID = 0;
     var deleteRowId = -1;
     var exportForm = null;
     var excelForm = null;
@@ -1341,6 +1341,7 @@ $("body").on("click", ".test-btn", function () {
     //     console.log(textStatus, errorThrown);
     // }
   });
+  window.location.href = "assess360?a=focuscompetency";
 });
 
 ////////////////////////////////srb/////////////////////////////////
