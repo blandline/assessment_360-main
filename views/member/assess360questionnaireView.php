@@ -287,9 +287,7 @@ include_once '../config/config.php'; ?>
             $openendquestion_previousanswer = $questionsClass->getOpenEndAnswer($dbName, $rater_id);
             $openendquestion_yesno_previousanswer = $questionsClass->getYesNoDiscussAnswer($dbName, $rater_id);
             ?>
-            <textarea class="questionnaire_openendquestion_text-input" name="questionnaire_openendquestion" placeholder="(Maximum 100 words)" rows="6"><? if (isset($openendquestion_previousanswer)) {
-                                                                                                                                                            echo $openendquestion_previousanswer;
-                                                                                                                                                        } ?></textarea>
+            <textarea class="questionnaire_openendquestion_text-input" name="questionnaire_openendquestion" placeholder="(Maximum 100 words)" rows="6"><? if (isset($openendquestion_previousanswer)) {echo $openendquestion_previousanswer;} ?></textarea>
             <?= $language["questionnaire_openendquestion_paragraph2"] ?>
             <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="1" <?= (isset($openendquestion_yesno_previousanswer) && $openendquestion_yesno_previousanswer == 1 ? 'checked' : '') ?>><?= $language["questionnaire_openendquestion_discuss_yes"] ?></label>
             <label style="margin-left: 20px; color:#3C4858;"><input type="radio" name="questionnaire_yesno_discuss" value="0" <?= (isset($openendquestion_yesno_previousanswer) && $openendquestion_yesno_previousanswer == 0 ? 'checked' : '') ?>><?= $language["questionnaire_openendquestion_discuss_no"] ?></label>
@@ -301,14 +299,21 @@ include_once '../config/config.php'; ?>
             <button type="button" class="btn btn-primary btn-sm addButton competency-add-btn continuelater-btn questionnaire-openendquestion-finish" style="position:absolute; right:4rem;"><?= $language["questionnaire_continue_later"] ?></button>
         </section>
         <section id="continue-later-page" class="questionnaire-page">
-            Thank you for filling the questionnaire, please finish the questionnaire before the end date.
+            <div style="margin-top:3em">
+            <div style="font-size: 20px; font-weight:bold;"><?= $language["questionnaire_continue_later_thankyou"] ?></div>
+            <br>
+            <div style="font-size: 16px;"><?= $language["questionnaire_continue_later_paragraph"] ?></div>
+            </div>
         </section>
         <section id="finish-page" class="questionnaire-page">
-            <div style="font-size 16px;"><?= $language["questionnaire_finish_thankyou"] ?></div>
-            <div style="font-size 12px;"><?= $language["questionnaire_finish_paragraph"] ?></div>
+            <div style="margin-top:3em">
+            <div style="font-size: 20px; font-weight:bold;"><?= $language["questionnaire_finish_thankyou"] ?></div>
+            <br>
+            <div style="font-size: 16px;"><?= $language["questionnaire_finish_paragraph"] ?></div>
+            </div>
         </section>
         <section id="before-launchdate-page" class="questionnaire-page">
-            You can't access the page before the start date
+            <div style="font-size: 16px;"><?= $language["questionnaire_before_launch_date_text"] ?></div>
         </section>
     </form>
 

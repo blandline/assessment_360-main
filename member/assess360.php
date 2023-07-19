@@ -386,6 +386,22 @@ if ($login->isLoggedIn()) {
   }
   $competencyJSON = json_encode($competencyArr);
 ?>
+<?
+if(isset($_POST["a"]) && $_POST["a"] == "changestaffinfobox"){
+  // Retrieve the staff information based on the rater ID
+  $rater_id = isset($_POST['rater_id'])?$_POST['rater_id']:"";
+  $staff_info = $reportClass->getStaffInfoByRaterId($rater_id);
+
+  // Generate HTML to display the staff information
+  $staffinfo_dialogbox =  $language["report_feedback-openend_staffinfobox_name"] . $staff_info["name"] .'<br>'.
+                          $language["report_feedback-openend_staffinfobox_department"] . $staff_info["department"] .'<br>'.
+                          $language["report_feedback-openend_staffinfobox_position"] . $staff_info["position"] .'<br>'.
+                          $language["report_feedback-openend_staffinfobox_email"]. $staff_info["email"] .'<br>';
+
+  // Return the HTML as a response
+  echo $staffinfo_dialogbox;
+}
+?>
   <script>
     window["currentLang"] = '<?= $_COOKIE['lang'] ?>';
     window["competencyObj"] = JSON.parse('<?= $competencyJSON; ?>');

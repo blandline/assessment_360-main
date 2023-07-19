@@ -7507,7 +7507,7 @@ box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     flex-direction: column;
     justify-content: center;
     text-align: left;
-    height: 100%
+    height: 80%;
 }
 
 .report-cover-focusname{
@@ -7607,5 +7607,49 @@ box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
 }
 
 #report-overall-result-lowest-table td{
+    border: 1px solid black;
+}
+
+#report-summary-table{
+    width: 100%;
+    height:50%;
+    text-align: center;
+    font-size: 14px;
+}
+
+#report-summary-table th{
+    border: 1px solid black;
+    background-color: #3C4858;
+    color: white;
+}
+
+#report-summary-table td{
+    border: 1px solid black;
+}
+
+#report-summary-table td[type="hidden"]:empty {
+    border: none;
+  }
+
+#report-summary-table .report_summary_table_answer{
+    color:#003399;
+}
+
+#report-feedback-openend-table{
+    border: 1px solid black;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+
+#report-feedback-openend-table th{
+    border: 1px solid black;
+    background-color: #3C4858;
+    color: white;
+}
+
+
+#report-feedback-openend-table td{
+    text-align:  left;
     border: 1px solid black;
 }

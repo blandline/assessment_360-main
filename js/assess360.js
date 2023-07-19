@@ -1465,9 +1465,9 @@ var AssessmentReport = function () {
 
         $(".report-page:not(:first)").hide();
 
-        $('a[href="#report-cover-page"]').click(function (event) {
-          event.preventDefault(); // prevent the link from navigating to the target
-          // hide the current page and show the target page
+        $('.to-report-cover-page').click(function (event) {
+          event.preventDefault(); 
+
           $("#report-cover-page").show();
           $("#report-intro-page").hide();
           $("#report-competencies-page").hide();
@@ -1475,11 +1475,13 @@ var AssessmentReport = function () {
           $("#report-important-of-competencies-page").hide();
           $("#report-overall-result-page").hide();
           $("#report-ranking-statements-page").hide();
-      });
+          $("#report-summary-page").hide();
+          $("#report-feedback-openend-page").hide();
+        });
 
-        $('a[href="#report-intro-page"]').click(function (event) {
-            event.preventDefault(); // prevent the link from navigating to the target
-            // hide the current page and show the target page
+        $('.to-report-intro-page').click(function (event) {
+            event.preventDefault(); 
+
             $("#report-cover-page").hide();
             $("#report-intro-page").show();
             $("#report-competencies-page").hide();
@@ -1487,11 +1489,13 @@ var AssessmentReport = function () {
             $("#report-important-of-competencies-page").hide();
             $("#report-overall-result-page").hide();
             $("#report-ranking-statements-page").hide();
+            $("#report-summary-page").hide();
+            $("#report-feedback-openend-page").hide();
         });
 
-        $('a[href="#report-competencies-page"]').click(function (event) {
-            event.preventDefault(); // prevent the link from navigating to the target
-            // hide the current page and show the target page
+        $('.to-report-competencies-page').click(function (event) {
+            event.preventDefault(); 
+
             $("#report-cover-page").hide();
             $("#report-intro-page").hide();
             $("#report-competencies-page").show();
@@ -1499,11 +1503,13 @@ var AssessmentReport = function () {
             $("#report-important-of-competencies-page").hide();
             $("#report-overall-result-page").hide();
             $("#report-ranking-statements-page").hide();
+            $("#report-summary-page").hide();
+            $("#report-feedback-openend-page").hide();
         });
 
-        $('a[href="#report-respondent-overview-page"]').click(function (event) {
-          event.preventDefault(); // prevent the link from navigating to the target
-          // hide the current page and show the target page
+        $('.to-report-respondent-overview-page').click(function (event) {
+          event.preventDefault(); 
+
           $("#report-cover-page").hide();
           $("#report-intro-page").hide();
           $("#report-competencies-page").hide();
@@ -1511,11 +1517,13 @@ var AssessmentReport = function () {
           $("#report-important-of-competencies-page").hide();
           $("#report-overall-result-page").hide();
           $("#report-ranking-statements-page").hide();
+          $("#report-summary-page").hide();
+          $("#report-feedback-openend-page").hide();
         });
 
-        $('a[href="#report-important-of-competencies-page"]').click(function (event) {
-          event.preventDefault(); // prevent the link from navigating to the target
-          // hide the current page and show the target page
+        $('.to-report-important-of-competencies-page').click(function (event) {
+          event.preventDefault(); 
+
           $("#report-cover-page").hide();
           $("#report-intro-page").hide();
           $("#report-competencies-page").hide();
@@ -1523,11 +1531,13 @@ var AssessmentReport = function () {
           $("#report-important-of-competencies-page").show();
           $("#report-overall-result-page").hide();
           $("#report-ranking-statements-page").hide();
+          $("#report-summary-page").hide();
+          $("#report-feedback-openend-page").hide();
         });
         
-        $('a[href="#report-overall-result-page"]').click(function (event) {
-          event.preventDefault(); // prevent the link from navigating to the target
-          // hide the current page and show the target page
+        $('.to-report-overall-result-page').click(function (event) {
+          event.preventDefault(); 
+
           $("#report-cover-page").hide();
           $("#report-intro-page").hide();
           $("#report-competencies-page").hide();
@@ -1535,11 +1545,13 @@ var AssessmentReport = function () {
           $("#report-important-of-competencies-page").hide();
           $("#report-overall-result-page").show();
           $("#report-ranking-statements-page").hide();
+          $("#report-summary-page").hide();
+          $("#report-feedback-openend-page").hide();
         });
 
-        $('a[href="#report-ranking-statements-page"]').click(function (event) {
-          event.preventDefault(); // prevent the link from navigating to the target
-          // hide the current page and show the target page
+        $('.to-ranking-statements-page').click(function (event) {
+          event.preventDefault(); 
+
           $("#report-cover-page").hide();
           $("#report-intro-page").hide();
           $("#report-competencies-page").hide();
@@ -1547,8 +1559,54 @@ var AssessmentReport = function () {
           $("#report-important-of-competencies-page").hide();
           $("#report-overall-result-page").hide();
           $("#report-ranking-statements-page").show();
+          $("#report-summary-page").hide();
+          $("#report-feedback-openend-page").hide();
+        });
+
+        $('.to-report-summary-page').click(function (event) {
+          event.preventDefault(); 
+
+          $("#report-cover-page").hide();
+          $("#report-intro-page").hide();
+          $("#report-competencies-page").hide();
+          $("#report-respondent-overview-page").hide();
+          $("#report-important-of-competencies-page").hide();
+          $("#report-overall-result-page").hide();
+          $("#report-ranking-statements-page").hide();
+          $("#report-summary-page").show();
+          $("#report-feedback-openend-page").hide();
+        });
+
+        $('.to-feedback-openend-page').click(function (event) {
+          event.preventDefault(); 
+
+          $("#report-cover-page").hide();
+          $("#report-intro-page").hide();
+          $("#report-competencies-page").hide();
+          $("#report-respondent-overview-page").hide();
+          $("#report-important-of-competencies-page").hide();
+          $("#report-overall-result-page").hide();
+          $("#report-ranking-statements-page").hide();
+          $("#report-summary-page").hide();
+          $("#report-feedback-openend-page").show();
         });
     });
+
+    $("body").on("click", ".report-staffinfo", function (event) {
+      event.preventDefault();
+      var rater_id = $(this).attr('id').match(/\[(\d+)\]/)[1];
+      $.ajax({
+          url: 'assess360',
+          type: 'POST',
+          data: { 
+              rater_id: rater_id,
+              'a': 'changestaffinfobox',
+          },
+          success: function(response) {
+              $('#staffinfobox .modal-body').html(response);
+          }
+      });
+  });
 }
 
 var ImportanceOfCompetenciesGraph = function () {
@@ -1570,7 +1628,7 @@ var ImportanceOfCompetenciesGraph = function () {
       data: ['Focus', 'Manager']
   },
   grid: {
-      left: 100
+      left: 200
   },
   toolbox: {
       show: true,
