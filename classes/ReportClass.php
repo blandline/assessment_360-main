@@ -356,8 +356,13 @@ class ReportClass
         $result = $stmt->get_result();
     
         $row = $result->fetch_assoc();
-        $role = $row['competency_id'];
-        return $role;
+        if ($row) {
+            $result = $row['competency_id'];
+            return $result;
+        } else {
+            return null;
+        }
+        return $result;
     }
 
     public function getQuestionByRaterId($rater_id){

@@ -755,10 +755,11 @@ var Raterlist = function () {
     }
   });
 
-    /*
-            function activate_button(){
-                confirm("Are you sure");
-            }*/
+  $("body").on("click", ".assess360-viewreport", function (event) {
+    event.preventDefault();
+    var focus_id = $(this).attr('id').match(/\[(\d+)\]/)[1];
+          window.location.href = "assess360?a=report&id=" + focus_id;
+  });
 
   jQuery(document).ready(function ($) {
     ac = $("#ac").length > 0 ? $("#ac").val() : -1;
