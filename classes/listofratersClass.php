@@ -1320,6 +1320,53 @@ public function printTabletwo($companyId){
 
 
 
+public function printTableByRaterName($companyId, $raterName) {
+
+    require '../config/dbconnect.php';
+    if ($this->memberClass->isAdmin()) {
+        $dbName = $this->memberClass->getCompanyDBById($companyId);
+    } else {
+        $dbName = $this->memberClass->getCompanyDB();
+    }
+
+    // Separate the inputted rater name into first and last name
+    $raterNameArr = explode(" ", $raterName);
+    $raterFirstName = isset($raterNameArr[0]) ? trim($raterNameArr[0]) : '';
+    $raterLastName = isset($raterNameArr[1]) ? trim($raterNameArr[1]) : '';
+
+    // Construct the SQL query to get the data
+    $query = "SELECT *
+              FROM " . $dbName . ".focus f
+              JOIN " . $dbName . ".rater_list rl ON f.focus_id = rl.focus_id
+              WHERE rl.roles = 'FOCUS' AND rl.rater_first_name LIKE '%" . $raterFirstName . "%' AND rl.rater_last_name LIKE '%" . $raterLastName . "%'
+              ORDER BY f.focus_id";
+    $result = $conn->query($query);
+    if ($result->num_rows > 0) {
+        $currentFocusId = null;
+        echo "<table style='border-collapse: collapse;'>";
+        while ($row = $result->fetch_assoc()) {
+            if ($currentFocusId !== $row['focus_id']) {
+                // Start new table for different focus_id value
+                if ($currentFocusId !== null) {
+                    echo "</table><br><br>";
+                }
+                $currentFocusId = $row['focus_id'];
+                echo "<table style='border-collapse: collapse; width:100%'>";
+                echo "<tr style='background-color: white; color: #f44336;'><th style='padding: 10px;'>Role</th><th style='padding: 10px;'>Start Date</th><th style='padding: 10px;'>End Date</th><th style='padding: 10px;'>Rater First Name</th><th style='padding: 10px;'>Rater Last Name</th><th style='padding: 10px;'>Gender</th><th style='padding: 10px;'>Position</th><th style='padding: 10px;'>Email</th></tr>";
+            }
+            echo "<tr style='background-color: white; color: Black; font-weight: bold;'>";
+            echo "<td style='padding: 10px;'>" . $row["roles"] . "</td><td style='padding: 10px;'>" . $row["start_date"] . "</td><td style='padding: 10px;'>" . $row["end_date"] . "</td><td style='padding: 10px;'>" . $row["rater_first_name"] . "</td><td style='padding: 10px;'>" . $row["rater_last_name"] . "</td><td style='padding: 10px;'>" . $row["gender"] . "</td><td style='padding: 10px;'>" . $row["position"] . "</td><td style='padding: 10px;'>" . $row["email"] . "</td></tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "No data found in the table.";
+    }
+
+    // Close the database connection
+    $conn->close();
+}
+
+
 
 
 
