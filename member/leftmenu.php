@@ -71,9 +71,14 @@
                   </a>
 
                   <div id="collapseCompetency" class="collapse <?= ($isViewCompetencySelection || $isViewFocusCompetency) ? 'show' : ''; ?>">
-                    <div class="bg-white py-2 collapse-inner rounded collapse-item-div sub-sub-nav">
+                    <!-- <div class="bg-white py-2 collapse-inner rounded collapse-item-div sub-sub-nav">
                       <a class="collapse-item <? if ($isViewCompetencySelection) echo "leftMenuActive"; ?>" href="./assess360?a=competency">
                         <p><span style="font-weight:100;">•</span>&nbsp;&nbsp;&nbsp;<?= $language["leftmenu_competency_selection"]; ?></p>
+                      </a>
+                    </div> -->
+                    <div class="bg-white py-2 collapse-inner rounded collapse-item-div sub-sub-nav">
+                      <a class="collapse-item <? if ($isViewFocusCompetencySelection) echo "leftMenuActive"; ?>" href="./assess360?a=focuscompetencyselection">
+                        <p><span style="font-weight:100;">•</span>&nbsp;&nbsp;&nbsp;Competency <br> &nbsp;&nbsp;&nbsp; Selection</p>
                       </a>
                     </div>
                     <div class="bg-white py-2 collapse-inner rounded collapse-item-div sub-sub-nav">
@@ -82,11 +87,7 @@
                       </a>
                     </div>
                     <!--  -->
-                    <div class="bg-white py-2 collapse-inner rounded collapse-item-div sub-sub-nav">
-                      <a class="collapse-item <? if ($isViewFocusCompetencySelection) echo "leftMenuActive"; ?>" href="./assess360?a=focuscompetencyselection">
-                        <p><span style="font-weight:100;">•</span>&nbsp;&nbsp;&nbsp;Focus Selection</p>
-                      </a>
-                    </div>
+                    
                     <!--  -->
                   </div>
                 </li>

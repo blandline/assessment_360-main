@@ -235,6 +235,8 @@ $language["leftmenu_list_of_raters_rater_form"] = "Rater Form";
 $language["leftmenu_list_of_raters_data_center"] = "Data Center";
 $language["leftmenu_competency_selection"] = "Selection";
 $language["leftmenu_competency_focus_competency"] = "Focus Competency";
+$language["leftmenu_competencies"] = "Competencies";
+$language["leftmenu_focus_competency_selection"] = "focus competency selection";
 //-------------------------------------------------------------
 
 // users
@@ -3151,6 +3153,7 @@ $language["questionnaire_areyousure_confirm"] = "Are you sure?";
 $language["questionnaire_areyousure_yes"] = "Yes";
 $language["questionnaire_areyousure_no"] = "No";
 $language["questionnaire_questions"] = "Questions";
+$language["questionnaire_continue_later"] = "Continue Later";
 
 //Questionnaire intro page
 $language["questionnaire_intropage_introduction"] = "INTRODUCTION";
@@ -3194,7 +3197,109 @@ $language["questionnaire_openendquestion_paragraph2"] = "Are you willing to disc
 $language["questionnaire_openendquestion_finish"] = "<p>END OF COMPETENCY AUDIT</p>";
 $language["questionnaire_openendquestion_discuss_yes"]= "YES";
 $language["questionnaire_openendquestion_discuss_no"]= "NO";
-$language["leftmenu_competencies"] = "Competencies";
-$language["leftmenu_focus_competency_selection"] = "focus competency selection";
+
+//Finish-page
+$language["questionnaire_finish_thankyou"]= "Thank You";
+$language["questionnaire_finish_paragraph"]= "Your objective and truthful feedback are valuable and appreciated";
+
+//Continue-later-page
+$language["questionnaire_continue_later_thankyou"]= "Thank You";
+$language["questionnaire_continue_later_paragraph"]= "Please finish the questionnaire before the deadline.";
+
+//before-launch-date-page
+$language["questionnaire_before_launch_date_text"]= "You can't access the questionnaire before the start date";
 //---------------------------------------------------------------------
+
+//--------------------------------Assessment report------------------------------------
+$language["report_cover_title"] = "PERSONAL <br> ASSESSMENT <br> REPORT";
+$language["report_header_title"] = "PERSONAL COMPETENCY REPORT";
+$language["report_text_previous"] = "Previous";
+$language["report_text_next"] = "Next";
+
+//intro page
+$language["report_introduction_title"] = "1. Introduction";
+$language["report_introduction_paragraph1"] = "<p>Constructive feedback is widely acknowledged as a crucial element for improving managerial effectiveness </p>";
+$language["report_introduction_paragraph2"] = "<p>360 Feedback Assessment provides the opportunity for the person (the Focus) receiving feedback from various sources, 
+                                                including FOCUS himself/herself, his/her manager, and if participating, direct reports, direct reports, colleagues,
+                                                and others in a safe, anonymous, and constructive manner. By gaining feedback from multiple perspectives, FOCUS will be
+                                                able to increase self-awareness, learn, and improve or develop new skills and behaviours for enhancement of
+                                                effectiveness in the workplace. </p>";
+$language["report_introduction_paragraph3"] = "<p>The following report offers an in-depth evaluation of your skills, abilities, personal attributes, and other job relevant
+                                                characteristics that are pertinent to your job as seen from multiple perspectives, as outlined in Part 3 (Respondent Overview) of the report. </p>";
+$language["report_introduction_paragraph4"] = "<p>While reviewing the report, it's important to note that the perception of you by a group of individuals at a particular moment in time is not an
+                                                absolute and unchanging assessment.</p>";
+$language["report_introduction_paragraph5"] = "<p>The results in this report are not intended for evaluation or selection but to provide a very useful input to outline an individual (the FOCUS) development track.</p>";
+
+//competencies page
+$language["report_competencies_title"] = "2. Competencies";
+$language["report_competencies_paragraph"] = "In this part of the report, it lists out the competencies with their definitions that have been used in the questionnaire. It is helpful for you to understand
+                                                the definitions when you go through the result in this report.";
+
+//respondent overview page
+$language["report_respondent_title"] = "3. Respondent Overview";
+$language["report_respondent_paragraph1"] = "<p>The result of this Report has been generated from the feedback provided by:</p>";
+$language["report_respondent_self"] = "Self";
+$language["report_respondent_managers"] = "Manager(s)";
+$language["report_respondent_colleagues"] = "Colleagues";
+$language["report_respondent_directreports"] = "Direct reports";
+$language["report_respondent_others"] = "Others";
+$language["report_respondent_paragraph2"] = "<p>who have been invited to  join the Feedback Questionnaire and the respondent group to which they have been allocated.</p>";
+
+//importance of competencies page
+$language["report_importance_of_competencies_title"] = "4. Importance of competencies";
+$language["report_importance_of_competencies_paragraph"] = "<p>This section of the report shows the ratings that you and your manager have given for the importance of each competency for success in your job. By comparing 
+                                                            your own ratings (indicated in the first bar from the top) with your manager's ratings (indicated in the second bar), you can identify any potential differences 
+                                                            in perspective or expectations regarding responsibilities and behaviour. All differences are relevant and should be considered when discussing development priorities 
+                                                            with your manager. Addressing these differences can help establish a more aligned understanding of what is required for success in your role. By prioritizing areas for 
+                                                            development together, you can work towards achieving your goals and advancing your career.</p>";
+
+//overall result page
+$language["report_overall_result_title"] = "5. Overall Result";
+$language["report_overall_result_paragraph1"] = "<p>In this part of report, it presents an overview of your competencies through a series of graphs that display how you have been rated by different raters or groups on each competency.
+                                                 The scale used in the graphs ranges from high to low, with the high-end indicating areas of strength and the low-end indicating areas that require further development. By comparing your 
+                                                 self-perception with how others perceive you, you can quickly identify areas that may require further exploration and improvement. The graphs can serve as a useful tool for prioritizing
+                                                  which competencies to focus on developing further and can provide valuable objective insights into your overall skillset.</p>";
+$language["report_overall_result_paragraph2"] = "<p>The result of competency score is the average of the ratings on the individual questions which make up a given competency. The average rating for any question is based on the ratings 
+                                                given by the raters (excluding FOCUS) who gave their feedback in that group.</p>";
+$language["report_overall_result_paragraph3"] = "<p>The scale used in the questionnaire<br>1. strong development needed<br>2. development needed<br>3. competent<br>4. strength<br>5. exceptional strength</p>";
+
+//ranking of the statements page
+$language["report_statement_ranking_title"] = "6. Ranking of the statements";
+$language["report_statement_ranking_paragraph1"] = "<p>The tables provided in this section list the behaviours associated with each competency that have received the highest and lowest scores, on average, from other respondents who participated in the questionnaire.</p>";
+$language["report_statement_ranking_paragraph2"] = "<p>In addition to the average score given by other respondents, these tables also display your own evaluation of these statements. By reviewing and analysing the data presented in these tables, you can gain insights into 
+                                                    how your self-perception compares with the perceptions of others and use this information to improve your performance and achieve your career goals.</p>";
+$language["report_statement_ranking_highest_scores"] = "HIGHEST SCORES";
+$language["report_statement_ranking_lowest_scores"] = "LOWEST SCORES";
+
+//summary of needs of competencies page
+$language["report_summary_title"] = "7. Summary of Needs of Competencies";
+$language["report_summary_paragraph1"] = "<p>Taking into consideration the level of importance rated by both you and your manager on competencies for job success, as well as the average ratings of all groups except for your own,
+                                         it comes up with a view of your development needs.</p>";
+$language["report_summary_paragraph2"] = "<p>This information can be valuable in helping you prioritize your development goals and create a plan for achieving them. With a clear understanding of your development needs, you can
+                                         take steps to enchance your skills, knowledge, and abilities, and ultimately achieve greater success in your role.</p>";
+$language["report_table_scores"] = "SCORES";
+$language["report_table_high"] = "High";
+$language["report_table_average"] = "Average";
+$language["report_table_low"] = "Low";
+$language["report_table_unused_strength"] = "Unused Strength";
+$language["report_table_competent"] = "Competent";
+$language["report_table_strength"] = "Strength";
+$language["report_table_opportunity"] = "Opportunity";
+$language["report_table_development_need"] = "Development Need";
+$language["report_table_latent_need"] = "Latent Need";
+$language["report_table_critical_need"] = "Critical Need";
+$language["report_table_low_importance"] = "Low Importance";
+$language["report_table_important"] = "Important";
+$language["report_table_very_important"] = "Very Important";
+$language["report_table_degree_of_importance"] = "DEGREE OF IMPORTANCE";
+
+//summary of feedback from Open-end Question
+$language["report_feedback-openend_title"] = "8. Summary of Feedback from Open-end Question";
+$language["report_feedback-openend_staffinfobox_label"] = "Staff Info";
+$language["report_feedback-openend_staffinfobox_position"] = "Staff Position: ";
+$language["report_feedback-openend_staffinfobox_name"] = "Staff Name: ";
+$language["report_feedback-openend_staffinfobox_department"] = "Department: ";
+$language["report_feedback-openend_staffinfobox_email"] = "Email: ";
+//-------------------------------------------------------------------------------------
+
 ?>

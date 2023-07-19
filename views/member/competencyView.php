@@ -6,8 +6,6 @@ use Mpdf\Language\ScriptToLanguage;
 <? include_once '../member/header.php'; ?>
 
 
-
-
 <body>
   <div class="wrapper">
     <? include_once '../member/leftmenu.php'; ?>
@@ -60,7 +58,7 @@ use Mpdf\Language\ScriptToLanguage;
           </div>
           <?
             $focus_comp_id = isset($_GET['id'])?$_GET['id']:'';
-            //var_dump($focus_comp_id);
+            var_dump($focus_comp_id);
             
           ?>
           <script>
@@ -78,7 +76,7 @@ use Mpdf\Language\ScriptToLanguage;
       <!-- --------------------------------NEW TABLE------------------------- -->
       <section id="competency-selection-page-button" class="competency-page">
       <div style="margin-top: 95px; position: absolute; right: 12px;">
-        <button type="button" class="btn btn-primary test-btn" href="assess360?a=focuscompetency"><?= $language["confirm_button"]; ?></button>
+        <button type="button" class="btn btn-primary test-btn"><?= $language["confirm_button"]; ?></button>
         
       </div>
       </section>
@@ -91,8 +89,33 @@ use Mpdf\Language\ScriptToLanguage;
                   <section id="focus-selection-page" class="competency-page competency-page-active">
                     <form method="post" id="rateform" action="assess360">
                     <!-- <? $listofratersClass->print_comp_selection_tb()?> -->
-                      
-                            
+                      <!-- <table id="raterlisttable" class="table table-hover" style="width:100%;">
+                        <thead class="text-danger">
+                          <tr>
+                            <th><?= $language["competency_focus_selection_firstname"]?></th>
+                            <th><?= $language["competency_focus_selection_lastname"]?></th>
+                            <th><?= $language["competency_focus_selection_position"]?></th>
+                            <th><?= $language["competency_focus_selection_launchdate"]?></th>
+                            <th><?= $language["competency_focus_selection_enddate"]?></th>
+                            <th><?= $language["competency_focus_selection_action"]?></th>
+                            <th style="display:none"><?= $language["competency_focus_selection_focusid"]?></th>
+                          </tr>
+                        </thead>
+                        <tbody> -->
+                          <!-- ------------------SHOW THE FOCUS SELECTION TABLE HERE------------- -->
+                            <?
+                            // for($i=0; $i<2; $i++){
+                            // echo '
+                            // <tr>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td>temp</td>
+                            // <td><button class="btn btn-primary btn-sm goto-competency-selection">Competency Selection</button></td>
+                            // </tr>';
+                            // }
+                            ?>
                           <!-- ------------------------------------------------------------------ -->
                         <!-- </tbody>
                       </table>  -->
@@ -196,15 +219,12 @@ use Mpdf\Language\ScriptToLanguage;
             </div>
             <br><br><br>
           </div>
-          
           <p><a class="nav-link" href="./assess360?a=questionnaire">Questionnaire temp</a></p>
           <!-- ---------------------------------------------------------------- -->
-          <!-- <? $questionsClass->SelectedComps($focus_comp_id)?> -->
           <? include_once '../member/footer.php'; ?>
         </div>
       </div>
       </section>
-      
     </div>
   </div>
   <?
@@ -240,20 +260,6 @@ use Mpdf\Language\ScriptToLanguage;
     var competency = new Competency();
   
   </script>
-<!-- <script>
-  window.addEventListener('load', function() {
-    // Get all table rows
-    const rows = document.querySelectorAll('table tr');
-
-    // Iterate over rows and hide those with a column "hideRowId" and value of -1
-    rows.forEach(row => {
-      const hideRowId = row.querySelector('.hideRowId');
-      if (hideRowId && hideRowId.innerHTML === '-1') {
-        row.style.display = 'none';
-      }
-    });
-  });
-</script> -->
 
 </body>
 

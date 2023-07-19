@@ -162,61 +162,132 @@ class CompetencyClass
         $stmt->close();
     }
     //////////////////////////////////////Sarb///////////////////////////////////////
-    public function getQuestions($companyId, $arr_comp){
-        require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
-        $query = "SELECT Questions FROM `" . $dbName . "`.`question_base` WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('s', $arr_comp);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
+    // public function getQuestions($companyId, $arr_comp){
+    //     require '../config/dbconnect.php';
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+    //     $query = "SELECT Questions FROM `" . $dbName . "`.`question_base` WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->bind_param('s', $arr_comp);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
 
-         // Fetch the rows from the result set and store them in an array
-        $questions = array();
-            while ($row = $result->fetch_assoc()) {
-                $questions[] = $row['Questions'];
-            }
+    //      // Fetch the rows from the result set and store them in an array
+    //     $questions = array();
+    //         while ($row = $result->fetch_assoc()) {
+    //             $questions[] = $row['Questions'];
+    //         }
 
-        return $questions;
+    //     return $questions;
+    // }
+
+
+    // public function getsetQuestions($companyId, $arr_comp) {
+    //     require '../config/dbconnect.php';
+    //     if ($this->memberClass->isAdmin()) {
+    //         $dbName = $this->memberClass->getCompanyDBById($companyId);
+    //     } else {
+    //         $dbName = $this->memberClass->getCompanyDB();
+    //     }
+        
+    //     $query = "SELECT Questions FROM `" . $dbName . "`.`question_base` WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->bind_param('s', $arr_comp);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $stmt->close();
+
+    //     $questions = array();
+    //         while ($row = $result->fetch_assoc()) {
+    //             array_push($questions, $row['Questions']);
+    //         }
+    
+    //     // Insert the questions into the database
+    //     $insertQuery = "INSERT INTO `" . $dbName . "`.`competency_questions` (competency, question) VALUES (?, ?)";
+    //     $stmt = $conn->prepare($insertQuery);
+    //     for ($x = 0 ; $x<3 ;$x++) {
+    //         $stmt->bind_param('ss', $arr_comp, $questions[$x]);
+    //         $stmt->execute();
+    //     }
+    //     $stmt->close();
+    
+    //     //return $questions;
+    // }
+
+    public function getsetQuestions($comp_arr, $focus_id)
+{
+    require '../config/dbconnect.php';
+
+    if ($this->memberClass->isAdmin()) {
+        $dbName = $this->memberClass->getCompanyDBById($companyId);
+    } else {
+        $dbName = $this->memberClass->getCompanyDB();
     }
 
+    // Check if data for this focus_id already exists in the competency_questions table
+    $checkQuery = "SELECT id FROM competency_questions WHERE focus_id = ?";
+    $stmt = $conn->prepare($checkQuery);
+    $stmt->bind_param('i', $focus_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
 
-    public function getsetQuestions($companyId, $arr_comp) {
-        require '../config/dbconnect.php';
-        if ($this->memberClass->isAdmin()) {
-            $dbName = $this->memberClass->getCompanyDBById($companyId);
-        } else {
-            $dbName = $this->memberClass->getCompanyDB();
-        }
-        
-        $query = "SELECT Questions FROM `" . $dbName . "`.`question_base` WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
+    if ($result->num_rows > 0) {
+        // Data for this focus_id already exists, so delete the existing data before inserting the new data
+        $deleteQuery = "DELETE FROM competency_questions WHERE focus_id = ?";
+        $stmt = $conn->prepare($deleteQuery);
+        $stmt->bind_param('i', $focus_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    foreach ($comp_arr as $comp) {
+        // Get focus information from the database
+        $focusQuery = "SELECT focus_first_name, focus_last_name, start_date , end_date FROM `$dbName`.`focus` WHERE focus_id = ?";
+        $stmt = $conn->prepare($focusQuery);
+        $stmt->bind_param('i', $focus_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        // Get focus information from the first row of the result set
+        $focusInfo = $result->fetch_assoc();
+        $focus_first_name = $focusInfo['focus_first_name'];
+        $focus_last_name = $focusInfo['focus_last_name'];
+        $start_date = $focusInfo['start_date'];
+        $end_date = $focusInfo['end_date'];
+
+        // Get questions from the database
+        $query = "SELECT Questions FROM question_base WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('s', $arr_comp);
+        $stmt->bind_param('s', $comp);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
 
         $questions = array();
-            while ($row = $result->fetch_assoc()) {
-                array_push($questions, $row['Questions']);
-            }
-    
-        // Insert the questions into the database
-        $insertQuery = "INSERT INTO `" . $dbName . "`.`competency_questions` (competency, question) VALUES (?, ?)";
+        while ($row = $result->fetch_assoc()) {
+            array_push($questions, $row['Questions']);
+        }
+        
+        // Insert questions and focus information into the database
+        $insertQuery = "INSERT INTO competency_questions (competency, question, focus_first_name, focus_last_name, focus_id, launch_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insertQuery);
-        for ($x = 0 ; $x<3 ;$x++) {
-            $stmt->bind_param('ss', $arr_comp, $questions[$x]);
+        foreach ($questions as $question) {
+            $stmt->bind_param('ssssiss', $comp, $question, $focus_first_name, $focus_last_name, $focus_id, $start_date, $end_date);
             $stmt->execute();
         }
         $stmt->close();
-    
-        //return $questions;
     }
-     /////////////////////////////////////Sarb///////////////////////////////////////
+}
+
+
+
+
+    /////////////////////////////////////Sarb///////////////////////////////////////
 }
 ?>

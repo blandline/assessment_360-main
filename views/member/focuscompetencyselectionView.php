@@ -64,7 +64,7 @@
       <!-- --------------------------------NEW TABLE------------------------- -->
       <section id="competency-selection-page-button" class="competency-page">
       <div style="margin-top: 95px; position: absolute; right: 12px;">
-        <button type="button" class="btn btn-primary test-btn"><?= $language["confirm_button"]; ?></button>
+        <!-- <button type="button" class="btn btn-primary test-btn"><?= $language["confirm_button"]; ?></button> -->
       </div>
       </section>
       <div class="content search-competency-content">
@@ -81,11 +81,12 @@
                     </form>
                     
           <!-- ---------------------------------------------------------------- -->
-          <? include_once '../member/footer.php'; ?>
+         
         </div>
       </div>
       </section>
     </div>
+    <? include_once '../member/footer.php'; ?>
   </div>
   
   
