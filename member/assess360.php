@@ -13,7 +13,7 @@ $login = new MemberClass();
 $competency = new CompetencyClass($login);
 $listofratersClass = new listofratersClass($login);
 $questionsClass = new QuestionsClass($login);
-//$emailClass = new emailClass($login);
+
 
 if ($login->isLoggedIn()) {
   if ($login->isAdmin()) {
@@ -33,6 +33,18 @@ if ($login->isLoggedIn()) {
     $companyId = $login->getCompanyId();
   }
 
+   
+ 
+
+ 
+        
+
+  
+  
+
+ 
+  
+
  
   if(isset($_POST["a"]) && $_POST["a"] == "activate"){
     
@@ -47,7 +59,7 @@ if ($login->isLoggedIn()) {
  
  
      if($i == 0){
-       $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
+       $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["department"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
       
  
  
@@ -60,7 +72,7 @@ if ($login->isLoggedIn()) {
        $focusID = $listofratersClass->getFocusId($companyId);
  
  
-       $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
+       $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["department"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
        $listofratersClass->generatePassword($companyId);
  
  
@@ -77,6 +89,10 @@ if ($login->isLoggedIn()) {
   header("Location: welcome.php");
 
   }
+
+
+
+ 
 
   // add/edit competency framework
   if (isset($_POST["a"]) && $_POST["a"] == "addFramework") {

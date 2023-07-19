@@ -2048,6 +2048,7 @@ $language["listofraters_framework_enddate"] = "Ended on";
 $language["listofraters_framework_raters"] = "Raters";
 $language["listofraters_framework_role"] = "Role";
 $language["listofraters_framework_gender"] = "Gender";
+$language["listofraters_framework_department"] = "Department";
 $language["listofraters_framework_position"] = "Position";
 $language["listofraters_framework_email"] = "Email";
 $language["listofraters_framework_firstname"] = "First";

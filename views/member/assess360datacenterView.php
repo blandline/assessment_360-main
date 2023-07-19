@@ -1,5 +1,10 @@
 <? include_once '../config/config.php'; ?>
 <? include_once '../member/header.php'; ?>
+<?include_once  '../classes/listofratersClass.php'?>
+
+
+
+
 
 
 
@@ -43,68 +48,70 @@
 
 
       <!-- --------------------------------NEW TABLE------------------------- -->
-      <div class="content search-competency-content">
+      
+            <div class="content search-competency-content">
         <div class="container-fluid">
           <div class="row">
-          
             <div class="competency-frm-table-div">
+              <form method="post">
+                <div class="dropdown custom-dropdown">
+                  <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight: bold;">
+                    YEAR
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownButton" id="dropdownMenu">
+                    <?php
+                    $currentYear = date("Y");
+                    for ($i = 0; $i < 3; $i++) {
+                      $year = $currentYear - $i;
+                      echo '<button class="dropdown-item" type="submit" name="selectedYear" value="' . $year . '">' . $year . '</button>';
+                    }
+                    ?>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- <?php
+          if (isset($_POST["selectedYear"])) {
+            $selectedYear = $_POST["selectedYear"];
+            echo '<div class="row"><div class="col-lg-12"><div class="table-responsive">';
+            $listofratersClass->printTableByStartYear($companyId, $selectedYear);
+            echo '</div></div></div>';
+          }
+          ?>
 
-           
-            <?$listofratersClass->printTabletwo($companyId); ?>
-              <!-- <div class="card">
-                <div class="div-datatable-competency card-body table-responsive">
-                  <div class="listofraters-form-and-button-container">
-                    <form method="post" id="rateform" action="assess360">
-                      <table id="raterlisttable" class="competency-frm-table table table-hover" style="width:100%;">
-                      
-                        <thead class="text-danger">
-                          <tr>
-                            <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_focusname"]; ?></th>
-                            <th colspan="2" rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_launchdate"]; ?></th>
-                            <th colspan="2" rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_enddate"]; ?></th>
-                            <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_raters"]; ?></th>
-                            <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_role"]; ?></th>
-                            <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_gender"]; ?></th>
-                            <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_position"]; ?></th>
-                            <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_email"]; ?></th>
-                            <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_actions"]; ?></th>
-                            <th colspan="2" style="text-align: center;"><?= $language["listofraters_data_center_status"]?></th>
-                            <
-                          </tr>
-                          <tr>
-                            <th style="text-align: center;"><?= $language["listofraters_framework_firstname"]; ?></th>
-                            <th style="text-align: center;"><?= $language["listofraters_framework_lastname"]; ?></th>
-                            <th style="text-align: center;"><?= $language["listofraters_framework_firstname"]; ?></th>
-                            <th style="text-align: center;"><?= $language["listofraters_framework_lastname"]; ?></th>
-                            <th style="text-align: center;"><?= $language["listofraters_data_center_status_start"]?></th>
-                            <th style="text-align: center;"><?= $language["listofraters_data_center_status_end"]?></th>
-                          </tr>
-                         
-                        </thead>
-                        <tbody>
-                        
-                           
-                            <!-- ------------ MAKE NEW TABLE HERE ----------------------- -->
-                            <!-- <tr>
-                                                 
-                                <td>Shadman</td>
-                                <td>Yakub</td>
-                                <td>13  - 08</td>
-                                <td>-2023</td>
-                                <td>18  - 08</td>
-                                <td>-2023</td>
-                                <td>Shadman</td>
-                                <td>Yakub</td>
-                                <td>Focus</td>
-                                <td>Male</td>
-                                <td>Manager</td>
-                                <td>shadmanyakub747@gmail.com</td>
-                                <td>Yes</td>
-                                <td>Yes</td>
-                                <td>No</td> 
-                                
-                            </tr> -->
-                            <!-------------------------------------------------------------- -->
+          <br><br>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="table-responsive">
+                <?php $listofratersClass->printTabletwo($companyId); ?>
+              </div>
+            </div>
+          </div> -->
+          
+          <?php
+          if (!isset($_POST["selectedYear"])) {
+          ?>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="table-responsive">
+                  <?php $listofratersClass->printTabletwo($companyId); ?>
+                </div>
+              </div>
+            </div>
+          <?php
+          } else {
+            $selectedYear = $_POST["selectedYear"];
+            echo '<div class="row"><div class="col-lg-12"><div class="table-responsive">';
+            $listofratersClass->printTableByStartYear($companyId, $selectedYear);
+            echo '</div></div></div>';
+          }
+          ?>
+
+
+        </div>
+      </div>
+              
                         </tbody>                      
                         
                       </table>
@@ -113,6 +120,9 @@
               </div>
             </div>
         </div>
+
+
+   
 
        
     </div>
@@ -137,8 +147,11 @@
     <script src="../assets/js/plugins/bootstrap-notify.js"></script>
     <script src="../assets/js/material-dashboard.js?v=2.1.1"></script>
     <script src="../lib/dataTables/js/dataTables.min.js"></script>
+    <script src="../js/assess360.js"></script>
+
 </body>
 
 </html>
+   
 
  

@@ -1,10 +1,10 @@
 <?
 use Mpdf\Tag\Br;
-require("classes/MemberClass.php");
-require("classes/QuestionsClass.php");
-require("vendor/autoload.php");
-require("lang/en.php");
-include_once ("classes/Encryption.php");
+require("../classes/MemberClass.php");
+require("../classes/QuestionsClass.php");
+require("../vendor/autoload.php");
+require("../lang/en.php");
+include_once ("../classes/Encryption.php");
 // use Spipu\Html2Pdf\Html2Pdf;
 $login = new MemberClass();
 $questionsClass = new QuestionsClass($login);

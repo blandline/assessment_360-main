@@ -79,6 +79,7 @@
                             <th colspan="2" style="text-align: center;"><?= $language["listofraters_framework_raters"]; ?></th>
                             <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_role"]; ?></th>
                             <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_gender"]; ?></th>
+                            <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_department"]; ?></th>
                             <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_position"]; ?></th>
                             <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_email"]; ?></th>
                             <th rowspan="2" style="text-align: center;"><?= $language["listofraters_framework_actions"]; ?></th>
@@ -115,6 +116,7 @@
                               <option value="Other Gender" name='other_gender'><?= $language["listofraters_gender_other"]; ?></option>
                             </select>
                           </td>
+                          <td><input type="text" name="rows[0][department]" style="width:75px"></td>
                           <td><input type="text" name="rows[0][position]" style="width:75px"></td>
                           <td><input type="text" name="rows[0][email]" style="width:80px"></td>
                           <td></td>

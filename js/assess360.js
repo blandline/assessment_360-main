@@ -172,6 +172,17 @@ var Competency = function () {
         }
     }
 
+
+   
+
+
+
+
+
+
+
+
+
     function updateFrameworkTable() {
         var data = [];
 
@@ -663,9 +674,12 @@ var Competency = function () {
         var cell6 = row.insertCell(5);
         var cell7 = row.insertCell(6);
         var cell8 = row.insertCell(7);
-        var cell9 = row.insertCell(8);
-        var cell10 = row.insertCell(9);
-        var cell11 = row.insertCell(10);
+        var cell12 = row.insertCell(8)
+        var cell9 = row.insertCell(9);
+        var cell10 = row.insertCell(10);
+        var cell11 = row.insertCell(11);
+       
+      
 
         cell1.innerHTML = ""; // row counter is added to give every column a unique name to assist in the php form handling
         cell2.innerHTML = "";
@@ -703,6 +717,12 @@ var Competency = function () {
             "</option><option value='Other Gender' name='other_gender'>" +
             lang["listofraters_gender_other"] +
             "</option></select>";
+        cell12.innerHTML =
+            "<input type='text' name='rows[" +
+            rowcounter +
+            "][department]' style='width: 75px;'>";
+            
+            
         cell9.innerHTML =
             "<input type='text' name='rows[" +
             rowcounter +
@@ -729,6 +749,14 @@ var Competency = function () {
         }
     });
 
+   
+
+           
+        
+
+    
+
+    
     /*
             function activate_button(){
                 confirm("Are you sure");
@@ -736,6 +764,36 @@ var Competency = function () {
 
     jQuery(document).ready(function ($) {
         ac = $("#ac").length > 0 ? $("#ac").val() : -1;
+
+        // var currentYear = new Date().getFullYear();
+        // var option1 = document.createElement("a");
+        // option1.setAttribute("class", "dropdown-item");
+        // option1.setAttribute("href", "#");
+        // option1.innerHTML = currentYear;
+        // option1.onclick = function() {
+        //   printTableByStartYear(option1.innerHTML); // execute the function with the current year as parameter
+         
+        // };
+        // document.getElementById("dropdownMenu").appendChild(option1);
+
+        // var option2 = document.createElement("a");
+        // option2.setAttribute("class", "dropdown-item");
+        // option2.setAttribute("href", "#");
+        // option2.innerHTML = currentYear - 1;
+        // option2.onclick = function() {
+        //   printTableByStartYear(option2.innerHTML); // execute the function with the current year as parameter
+        // };
+        // document.getElementById("dropdownMenu").appendChild(option2);
+
+        // var option3 = document.createElement("a");
+        // option3.setAttribute("class", "dropdown-item");
+        // option3.setAttribute("href", "#");
+        // option3.innerHTML = currentYear - 2;
+        // option3.onclick = function() {
+        //   printTableByStartYear(option3.innerHTML); // execute the function with the current year as parameter
+        // };
+        // document.getElementById("dropdownMenu").appendChild(option3);
+
 
         $("#ac").change(function () {
             var form = document.createElement("form");
@@ -1306,3 +1364,81 @@ $(document).ready(function() {
     }
   });
 });
+
+
+
+        //     <!-- <html>
+        // <head>
+
+        //   <link rel="stylesheet" href="style.css">
+         
+        //   <style>
+        //     .custom-dropdown .dropdown-toggle {
+        //       background-color: red;
+        //       color: white;
+        //       font-weight: bold;
+        //     }
+
+        //     .custom-dropdown .dropdown-item {
+        //       color: black;
+        //       font-weight: bold;
+        //     }
+
+        //     .custom-dropdown .dropdown-item:hover {
+        //       background-color: red;
+        //       color: black;
+        //       font-weight: bold
+        //     }
+        //   </style>
+        // </head>
+        // <body>
+        //   <div class="dropdown custom-dropdown">
+        //     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight: bold;">
+        //     YEAR
+        //     </button>
+        //     <div class="dropdown-menu" aria-labelledby="dropdownButton" id="dropdownMenu">
+        //     </div>
+        //   </div>
+          
+ 
+         
+        //   <script>
+
+            
+           
+        //   var currentYear = new Date().getFullYear();
+        //   var option1 = document.createElement("a");
+        //   option1.setAttribute("class", "dropdown-item");
+        //   option1.setAttribute("href", "#");
+        //   option1.innerHTML = currentYear;
+        //   option1.onclick = function() {
+        //     printTableByStartYear($companyId,option1.innerHTML); // execute the function with the current year as parameter
+           
+        //   };
+        //   document.getElementById("dropdownMenu").appendChild(option1);
+
+        //   var option2 = document.createElement("a");
+        //   option2.setAttribute("class", "dropdown-item");
+        //   option2.setAttribute("href", "#");
+          
+        //   option2.innerHTML = currentYear - 1;
+        
+        //   option2.onclick = function() {
+        //     printTableByStartYear($companyId,option2.innerHTML); // execute the function with the current year as parameter
+        //   };
+        //   document.getElementById("dropdownMenu").appendChild(option2);
+
+        //   var option3 = document.createElement("a");
+        //   option3.setAttribute("class", "dropdown-item");
+        //   option3.setAttribute("href", "#");
+        //   option3.innerHTML = currentYear - 2;
+        //   option3.onclick = function() {
+        //     printTableByStartYear($companyId,option3.innerHTML); // execute the function with the current year as parameter
+        //   };
+        //   document.getElementById("dropdownMenu").appendChild(option3);
+        // </script> 
+
+        
+       
+        // </body> 
+        // </html> -->
