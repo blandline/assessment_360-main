@@ -15,8 +15,6 @@ include_once '../config/config.php'; ?>
     <title>Assessment Report</title>
 </head>
 <?
-    //------------------TEMP-------------------
-    $focus_id = 244;
     $focus_full_name = $reportClass->getFocusNameByFocusId($companyId, $focus_id);
     $report_date = $reportClass->getReportDateByFocusId($companyId, $focus_id);
 ?>
@@ -166,7 +164,9 @@ include_once '../config/config.php'; ?>
             if($reportClass->getRoleByRaterId($rater_id) == "FOCUS"){
                 $focus_answers_assoc_arr = $reportClass->getImportanceOfCompetencyAnswerByRaterId($rater_id);
                 foreach($report_competency_id_arr as $comp_id){
-                    $focus_answers_arr[] = $focus_answers_assoc_arr[$comp_id];
+                    if(isset($focus_answers_assoc_arr[$comp_id])){
+                        $focus_answers_arr[] = $focus_answers_assoc_arr[$comp_id];
+                    }
                 }
             }
             else if($reportClass->getRoleByRaterId($rater_id) == "Manager"){
@@ -254,7 +254,9 @@ include_once '../config/config.php'; ?>
                     continue;
                 }
                 $average_score_count++;
-                $total_score += $seriesdata[$role];
+                if(isset($seriesdata[$role])){
+                    $total_score += $seriesdata[$role];
+                }
             }
             $average_score = 0; 
             if($total_score != 0) {
@@ -308,7 +310,9 @@ include_once '../config/config.php'; ?>
         }
         foreach(array_keys($average_score_assoc_arr) as $question_id){
             $other_than_focus_count = $reportClass->getNumberOfRatersOtherThanFocusByQuestionId($question_id);
-            $average_score_assoc_arr[$question_id] = floatval($average_score_assoc_arr[$question_id]) / $other_than_focus_count;
+            if($other_than_focus_count != 0){
+                $average_score_assoc_arr[$question_id] = floatval($average_score_assoc_arr[$question_id]) / $other_than_focus_count;
+            }
         }
         $highest_score_assoc_arr = $average_score_assoc_arr;
         arsort($highest_score_assoc_arr);
@@ -330,14 +334,16 @@ include_once '../config/config.php'; ?>
             $highest_table_competency = $reportClass->getCompetencyByCompetencyId($reportClass->getCompetencyIdByQuestionId(array_keys($highest_score_assoc_arr)[$i]));
             $highest_table_avg_score = array_values($highest_score_assoc_arr)[$i];
             $highest_table_avg_score = number_format($highest_table_avg_score, 2);
-            $highest_table_focus_score = $focus_score_assoc_arr[array_keys($highest_score_assoc_arr)[$i]];
+            if(isset($focus_score_assoc_arr[array_keys($highest_score_assoc_arr)[$i]])){
+                $highest_table_focus_score = $focus_score_assoc_arr[array_keys($highest_score_assoc_arr)[$i]];
+            }
             $highest_table_question_statement = $reportClass->getQuestionByRaterId(array_keys($highest_score_assoc_arr)[$i]);
             echo "<tr>
                     <td>". $i + 1 ."</td>
                     <td style='text-align:left;'>". $highest_table_question_statement ."</td>
                     <td style='text-align:left;'>". $highest_table_competency ."</td>
                     <td>". $highest_table_avg_score ."</td>
-                    <td>". $highest_table_focus_score ."</td>
+                    <td>". (isset($highest_table_focus_score)?$highest_table_focus_score:"") ."</td>
                 </tr>";
         }
         echo "</table>";
@@ -358,14 +364,16 @@ include_once '../config/config.php'; ?>
             $lowest_table_competency = $reportClass->getCompetencyByCompetencyId($reportClass->getCompetencyIdByQuestionId(array_keys($lowest_score_assoc_arr)[$i]));
             $lowest_table_avg_score = array_values($lowest_score_assoc_arr)[$i];
             $lowest_table_avg_score = number_format($lowest_table_avg_score, 2);
-            $lowest_table_focus_score = $focus_score_assoc_arr[array_keys($lowest_score_assoc_arr)[$i]];
+            if(isset($focus_score_assoc_arr[array_keys($lowest_score_assoc_arr)[$i]])){
+                $lowest_table_focus_score = $focus_score_assoc_arr[array_keys($lowest_score_assoc_arr)[$i]];
+            }
             $lowest_table_question_statement = $reportClass->getQuestionByRaterId(array_keys($lowest_score_assoc_arr)[$i]);
             echo "<tr>
                     <td>". $i + 1 ."</td>
                     <td style='text-align:left;'>". $lowest_table_question_statement ."</td>
                     <td style='text-align:left;'>". $lowest_table_competency ."</td>
                     <td>". $lowest_table_avg_score ."</td>
-                    <td>". $lowest_table_focus_score ."</td>
+                    <td>". (isset($lowest_table_focus_score)?$lowest_table_focus_score:"") ."</td>
                 </tr>";
         }
         echo "</table>";
@@ -389,7 +397,9 @@ include_once '../config/config.php'; ?>
         // print_r($summary_average_score_assoc_arr); echo "<br>";
         $degree_of_importance_arr = array_fill_keys($report_competency_id_arr, 0);
         for ($i = 0; $i < count($report_competency_id_arr); $i++) {
-            $degree_of_importance_arr[$report_competency_id_arr[$i]] = (float) $focus_answers_arr[$i] + $manager_answers_arr[$i];
+            if(isset($degree_of_importance_arr[$report_competency_id_arr[$i]], $focus_answers_arr[$i], $manager_answers_arr[$i])){
+                $degree_of_importance_arr[$report_competency_id_arr[$i]] = (float) $focus_answers_arr[$i] + $manager_answers_arr[$i];
+            }
         }
         // print_r($degree_of_importance_arr);
 

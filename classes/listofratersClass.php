@@ -1,5 +1,6 @@
 <?
 include 'Encryption.php';
+include '../lang/en.php';
 
 class listofratersClass
 {
@@ -1291,6 +1292,7 @@ public function printTabletwo($companyId){
     $result = $conn->query($query);
     if ($result->num_rows > 0) {
         $currentFocusId = null;
+        echo "<div class = 'datacenter_focus_and_button_container'>";
         echo "<table style='border-collapse: collapse;'>";
         while ($row = $result->fetch_assoc()) {
             if ($currentFocusId !== $row['focus_id']) {
@@ -1304,12 +1306,14 @@ public function printTabletwo($companyId){
             }
             if ($row["roles"] === "FOCUS") {
                 echo "<tr style='background-color: white; color: Black; font-weight: bold;'>";
+                echo "<button id='assess360-viewreport[". (isset($row['focus_id'])?$row['focus_id']:""). "]'class='btn btn-success btn-sm assess360-viewreport' style='float:right;'>View Report</button>";
             } else {
                 echo "<tr style='background-color: #fff; color: #333;'>";
             }
             echo "<td style='padding: 10px;'>" . $row["roles"] . "</td><td style='padding: 10px;'>" . $row["start_date"] . "</td><td style='padding: 10px;'>" . $row["end_date"] . "</td><td style='padding: 10px;'>" . $row["rater_first_name"] . "</td><td style='padding: 10px;'>" . $row["rater_last_name"] . "</td><td style='padding: 10px;'>" . $row["gender"] . "</td><td style='padding: 10px;'>" . $row["position"] . "</td><td style='padding: 10px;'>" . $row["email"] . "</td></tr>";
         }
         echo "</table>";
+        echo "</div>";
     } else {
         echo "No data found in the table.";
     }
@@ -1339,6 +1343,7 @@ public function printTableByStartDate($companyId, $startDate) {
     $result = $conn->query($query);
     if ($result->num_rows > 0) {
         $currentFocusId = null;
+        echo "<div class = 'datacenter_focus_and_button_container'>";
         echo "<table style='border-collapse: collapse;'>";
         while ($row = $result->fetch_assoc()) {
             if ($currentFocusId !== $row['focus_id']) {
@@ -1352,6 +1357,7 @@ public function printTableByStartDate($companyId, $startDate) {
             }
             if ($row["roles"] === "FOCUS") {
                 echo "<tr style='background-color: white; color: Black; font-weight: bold;'>";
+                echo "<button id='assess360-viewreport[". $row['focus_id']. "]'class='btn btn-success btn-sm assess360-viewreport' style='float:right;'>View Report</button>";
             } else {
                 echo "<tr style='background-color: #fff; color: #333;'>";
             }
@@ -1364,6 +1370,8 @@ public function printTableByStartDate($companyId, $startDate) {
             }
         }
         echo "</table>";
+        echo "<button>test</button>";
+        echo "</div>";
     } else {
         echo "No data found in the table.";
     }
@@ -1422,6 +1430,7 @@ public function printTableByStartYear($companyId, $selectedYear) {
     $result = $conn->query($query);
     if ($result->num_rows > 0) {
         $currentFocusId = null;
+        echo "<div class = 'datacenter_focus_and_button_container' style='position:relative;'>";
         while ($row = $result->fetch_assoc()) {
             if ($row["focus_id"] !== $currentFocusId) {
                 // Start a new table for a new focus ID
@@ -1436,6 +1445,7 @@ public function printTableByStartYear($companyId, $selectedYear) {
 
             if ($row["roles"] === "FOCUS") {
                 echo "<tr style='background-color: white; color: Black; font-weight: bold;'>";
+                echo "<button id='assess360-viewreport[". (isset($row['focus_id'])?$row['focus_id']:""). "]'class='btn btn-success btn-sm assess360-viewreport' style='float:right;'>View Report</button>";
             } else {
                 echo "<tr style='background-color: #fff; color: #333;'>";
             }
@@ -1443,6 +1453,7 @@ public function printTableByStartYear($companyId, $selectedYear) {
             echo "<td style='padding: 10px;'>" . $startYear . "</td><td style='padding: 10px;'>" . $row["roles"] . "</td><td style='padding: 10px;'>" . $row["start_date"] . "</td><td style='padding: 10px;'>" . $row["end_date"] . "</td><td style='padding: 10px;'>" . $row["rater_first_name"] . "</td><td style='padding: 10px;'>" . $row["rater_last_name"] . "</td><td style='padding: 10px;'>" . $row["gender"] . "</td><td style='padding: 10px;'>" . $row["department"] . "</td><td style='padding: 10px;'>" . $row["position"] . "</td><td style='padding: 10px;'>" . $row["email"] . "</td></tr>";
         }
         echo "</table>";
+        echo "</div>";
     } else {
         echo "No data found in the table.";
     }

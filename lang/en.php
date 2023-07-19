@@ -2075,6 +2075,7 @@ $language["listofraters_data_center_framework_title"] = "Data Center";
 $language["listofraters_data_center_status"] = "Status";
 $language["listofraters_data_center_status_start"] = "Start on";
 $language["listofraters_data_center_status_end"] = "Finish on";
+$language["listofraters_data_center_view_report"] = "View Report";
 
 //focus selection page
 $language["competency_focus_selection_firstname"] = "First Name";
