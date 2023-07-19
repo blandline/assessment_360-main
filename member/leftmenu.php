@@ -39,11 +39,11 @@
       ?>
 
         <li class="nav-item">
-          <a class="nav-link <?= $isViewAssess360 ? '' : 'collapsed'; ?><? if ($isViewRaterForm || $isViewDataCenter || $isViewCompetencySelection || $isViewFocusCompetency) echo "leftMenuActive"; ?>" href="./assess360" data-toggle="collapse" data-target="#collapseConfig" aria-expanded="<?= $isViewAssess360 ? 'false' : 'true'; ?>" aria-controls="collapseConfig">
+          <a class="nav-link <?= $isViewAssess360 ? '' : 'collapsed'; ?><? if ($isViewRaterForm || $isViewDataCenter || $isViewCompetencySelection || $isViewFocusCompetency || $isViewFocusCompetencySelection) echo "leftMenuActive"; ?>" href="./assess360" data-toggle="collapse" data-target="#collapseConfig" aria-expanded="<?= $isViewAssess360 ? 'false' : 'true'; ?>" aria-controls="collapseConfig">
             <i class="material-icons">check_circle</i>
             <span><?= $language["leftmenu_assessment360"]; ?></span>
           </a>
-          <div id="collapseConfig" class="collapse <?= ($isViewRaterForm || $isViewDataCenter || $isViewCompetencySelection || $isViewFocusCompetency) ? 'show' : ''; ?>">
+          <div id="collapseConfig" class="collapse <?= ($isViewRaterForm || $isViewDataCenter || $isViewCompetencySelection || $isViewFocusCompetency || $isViewFocusCompetencySelection) ? 'show' : ''; ?>">
             <div class="bg-white py-2 collapse-inner rounded collapse-item-div">
               <ul class="nav sub-nav">
                 <li class="nav-item">
@@ -66,18 +66,18 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link <?= ($isViewCompetencySelection || $isViewFocusCompetency) ? '' : 'collapsed'; ?>" href="#" data-toggle="collapse" data-target="#collapseCompetency" aria-expanded="<?= ($isViewCompetencySelection || $isViewFocusCompetency) ? 'false' : 'true'; ?>" aria-controls="collapseCompany">
+                  <a class="nav-link <?= ($isViewCompetencySelection || $isViewFocusCompetency || $isViewFocusCompetencySelection) ? '' : 'collapsed'; ?>" href="#" data-toggle="collapse" data-target="#collapseCompetency" aria-expanded="<?= ($isViewCompetencySelection || $isViewFocusCompetency) ? 'false' : 'true'; ?>" aria-controls="collapseCompany">
                     <span><?= $language["leftmenu_competency"] ?></span>
                   </a>
 
-                  <div id="collapseCompetency" class="collapse <?= ($isViewCompetencySelection || $isViewFocusCompetency) ? 'show' : ''; ?>">
+                  <div id="collapseCompetency" class="collapse <?= ($isViewCompetencySelection || $isViewFocusCompetency || $isViewFocusCompetencySelection) ? 'show' : ''; ?>">
                     <!-- <div class="bg-white py-2 collapse-inner rounded collapse-item-div sub-sub-nav">
                       <a class="collapse-item <? if ($isViewCompetencySelection) echo "leftMenuActive"; ?>" href="./assess360?a=competency">
                         <p><span style="font-weight:100;">•</span>&nbsp;&nbsp;&nbsp;<?= $language["leftmenu_competency_selection"]; ?></p>
                       </a>
                     </div> -->
                     <div class="bg-white py-2 collapse-inner rounded collapse-item-div sub-sub-nav">
-                      <a class="collapse-item <? if ($isViewFocusCompetencySelection) echo "leftMenuActive"; ?>" href="./assess360?a=focuscompetencyselection">
+                      <a class="collapse-item <? if ($isViewFocusCompetencySelection || $isViewCompetencySelection) echo "leftMenuActive"; ?>" href="./assess360?a=focuscompetencyselection">
                         <p><span style="font-weight:100;">•</span>&nbsp;&nbsp;&nbsp;Competency <br> &nbsp;&nbsp;&nbsp; Selection</p>
                       </a>
                     </div>
@@ -86,9 +86,6 @@
                         <p><span style="font-weight:100;">•</span>&nbsp;&nbsp;&nbsp;<?= $language["leftmenu_competency_focus_competency"]; ?></p>
                       </a>
                     </div>
-                    <!--  -->
-                    
-                    <!--  -->
                   </div>
                 </li>
               </ul>
