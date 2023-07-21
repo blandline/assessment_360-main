@@ -482,7 +482,7 @@ var Competency = function () {
     $("body").on("click", ".deleteButton", function () {
       if (editRowID >= 0 && frameworkTableObj[editRowID]) {
         var id = $(this).attr("id");
-        for (var i = 1; i < frameworkTableColCount - 3; i++) {
+        for (var i = 0; i < frameworkTableColCount - 3; i++) {
           if (frameworkTableObj[editRowID][i]) {
             var index = frameworkTableObj[editRowID][i].indexOf(id);
             if (index >= 0) {
