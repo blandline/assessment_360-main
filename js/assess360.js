@@ -421,7 +421,66 @@ var Competency = function () {
 
       changeCompetencyTable();
     }
-
+    $("body").on("click", ".competency-confirm-btn", function () {
+      // Get all the rows in the table
+      const rows = document.querySelectorAll("table.competency-frm-table tbody tr");
+    
+      // Create an array to store the data for each row
+      var data_arr = [];
+      var comp_arr = [];
+      // Loop through each row
+      rows.forEach((row) => {
+        // Get all the div elements with class "nowrap" within the row
+        const divs = row.querySelectorAll("div.nowrap");
+    
+        // Create an array to store the text content of each div element in the row
+    
+        // Loop through each div element and push its text content into the array
+        divs.forEach((div) => {
+          var text = div.textContent.trim();
+          if (!text.includes("Edit")) {
+            text = text.substring(2);
+            comp_arr.push(text);
+          }
+        });
+    
+        // Push the array of text content into the data_arr array
+    
+        console.log(comp_arr);
+      });
+      var focusnumid = Number(focusCompId);
+    
+      // Create an AJAX request to send the array to the PHP file
+      $.ajax({
+        url: "assess360",
+        data: { comp_arr: comp_arr, focusCompId: focusnumid },
+        type: "POST",
+        dataType: "json",
+        success: function (response) {
+          // Get the response from the PHP file
+          console.log(response);
+        },
+        // error: function(jqXHR, textStatus, errorThrown) {
+        //     console.log(textStatus, errorThrown);
+        // }
+      });
+      window.location.href = "assess360?a=focuscompetency";
+    });
+    
+    $("a.goto-competency-selection").click(function (event) {
+      // Get the data-id attribute value from the clicked button
+      var dataId = $(this).attr("data_id");
+  
+      if (dataId) {
+        // Prevent the default behavior of the link
+        event.preventDefault();
+  
+        // Store the href value in a variable
+        var linkHref = $(this).attr("href");
+  
+        window.location.href = "assess360?a=competency&id=" + dataId;
+      }
+    });
     $(".competency-table-group tr").click(function () {
       if ($(this).parent("tbody").is("tbody")) {
         $(".competency-table-group")
@@ -1338,51 +1397,6 @@ var CompetencySelection = function () {
 
 
 ////////////////////////////////////////////test new func//////////////////////////
-$("body").on("click", ".test-btn", function () {
-  // Get all the rows in the table
-  const rows = document.querySelectorAll("table.competency-frm-table tbody tr");
-
-  // Create an array to store the data for each row
-  var data_arr = [];
-  var comp_arr = [];
-  // Loop through each row
-  rows.forEach((row) => {
-    // Get all the div elements with class "nowrap" within the row
-    const divs = row.querySelectorAll("div.nowrap");
-
-    // Create an array to store the text content of each div element in the row
-
-    // Loop through each div element and push its text content into the array
-    divs.forEach((div) => {
-      var text = div.textContent.trim();
-      if (!text.includes("Edit")) {
-        text = text.substring(2);
-        comp_arr.push(text);
-      }
-    });
-
-    // Push the array of text content into the data_arr array
-
-    console.log(comp_arr);
-  });
-  var focusnumid = Number(focusCompId);
-
-  // Create an AJAX request to send the array to the PHP file
-  $.ajax({
-    url: "assess360",
-    data: { comp_arr: comp_arr, focusCompId: focusnumid },
-    type: "POST",
-    dataType: "json",
-    success: function (response) {
-      // Get the response from the PHP file
-      console.log(response);
-    },
-    // error: function(jqXHR, textStatus, errorThrown) {
-    //     console.log(textStatus, errorThrown);
-    // }
-  });
-  window.location.href = "assess360?a=focuscompetency";
-});
 
 ////////////////////////////////srb/////////////////////////////////
 // $(document).ready(function() {
@@ -1464,20 +1478,7 @@ $("body").on("click", ".test-btn", function () {
 
 $(document).ready(function () {
   // Attach a click event listener to all links with class "btn"
-  $("a.goto-competency-selection").click(function (event) {
-    // Get the data-id attribute value from the clicked button
-    var dataId = $(this).attr("data_id");
-
-    if (dataId) {
-      // Prevent the default behavior of the link
-      event.preventDefault();
-
-      // Store the href value in a variable
-      var linkHref = $(this).attr("href");
-
-      window.location.href = "assess360?a=competency&id=" + dataId;
-    }
-  });
+  
 });
 
 var AssessmentReport = function () {

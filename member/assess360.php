@@ -440,7 +440,7 @@ if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
 
     $_SESSION[$session_page] = $SESSION_PAGE_COMPETENCY_SELECTION;
 
-    include("../views/member/assess360competencyView.php");
+    include("../views/member/assess360competencybasicView.php");
   } elseif (isset($_GET["a"]) && $_GET["a"] == "focuscompetency") {
     if (!isset($_SESSION[$session_page]) || $_SESSION[$session_page] != $SESSION_PAGE_COMPETENCY_FOCUS_COMPETENCY) {
       $login->insertActionLog($ACTION_LOG_ENTER_ASSESS_360);

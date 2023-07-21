@@ -76,7 +76,7 @@ use Mpdf\Language\ScriptToLanguage;
       <!-- --------------------------------NEW TABLE------------------------- -->
       <section id="competency-selection-page-button" class="competency-page">
       <div style="margin-top: 95px; position: absolute; right: 12px;">
-        <button type="button" class="btn btn-primary test-btn"><?= $language["confirm_button"]; ?></button>
+        <button type="button" class="btn btn-primary competency-confirm-btn"><?= $language["confirm_button"]; ?></button>
         
       </div>
       </section>

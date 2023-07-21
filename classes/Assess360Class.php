@@ -292,7 +292,12 @@ public function getQuestions($comp_arr) {
 
     foreach ($comp_arr as $comp) {
         // Get 3 random questions for this competency from the database
-        $query = "SELECT Questions FROM question_base WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
+        $query = "SELECT qb.Questions
+        FROM question_base AS qb
+        JOIN competency AS c ON qb.comp_id = c.id
+        WHERE c.en_name = ?
+        ORDER BY RAND() LIMIT 3";
+        //$query = "SELECT Questions FROM question_base WHERE sub_headings = ? ORDER BY RAND() LIMIT 3";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('s', $comp);
         $stmt->execute();
@@ -357,7 +362,10 @@ public function setQuestions($questions, $focus_id) {
     $stmt = $conn->prepare($insertQuery);
     foreach ($questions as $question) {
         // Get the competencies corresponding to this question from the question_base table
-        $compQuery = "SELECT sub_headings FROM question_base WHERE Questions = ?";
+        $compQuery = "SELECT c.en_name
+        FROM competency AS c
+        JOIN question_base AS qb ON c.id = qb.comp_id
+        WHERE qb.Questions = ?";
         $stmt2 = $conn->prepare($compQuery);
         $stmt2->bind_param('s', $question);
         $stmt2->execute();
@@ -366,7 +374,7 @@ public function setQuestions($questions, $focus_id) {
 
         // Insert the question and focus information into the database for each competency
         while ($row = $result2->fetch_assoc()) {
-            $competency = $row['sub_headings'];
+            $competency = $row['en_name'];
             $stmt->bind_param('ssssiss', $competency, $question, $focus_first_name, $focus_last_name, $focus_id, $start_date, $end_date);
             $stmt->execute();
         }
