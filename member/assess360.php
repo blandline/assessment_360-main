@@ -390,13 +390,14 @@ if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
 
  
   // Loop through the company names and call the getquestion function on each one
-  $questions = array();
+  $questions = $competency->getQuestions($comp_arr);
+
   // foreach ($comp_arr as $comp) {
   //   $string = print_r($comp,true);
     
   //   //$questions[] = $competency->getQuestions($companyId,$comp);
   // }
-  $competency->getsetQuestions($comp_arr,$focus_comp_add_id);
+  $competency->setQuestions($questions,$focus_comp_add_id);
   // Return the questions as a JSON response
   // echo json_encode($questions);
 
