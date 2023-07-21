@@ -34,50 +34,19 @@ if ($login->isLoggedIn()) {
 
     $companyId = $login->getCompanyId();
   }
-
- 
   if(isset($_POST["a"]) && $_POST["a"] == "activate"){
-    
- 
- 
- 
      for($i=0;$i<count($_POST["rows"]);$i++){ 
- 
- 
- 
- 
- 
- 
      if($i == 0){
-       $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
-      
- 
- 
+       $listofratersClass->addFocusData($companyId, $_POST["rows"][$i]["FOCUS_first_name"], $_POST["rows"][$i]["FOCUS_last_name"], $_POST["rows"][$i]["Launch-date"], $_POST["rows"][$i]["End-date"], $_POST["rows"][$i]["Roles"],$_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["department"],$_POST["rows"][$i]["position"],$_POST["rows"][$i]["email"]);
      }
-
-     
- 
- 
- 
        $focusID = $listofratersClass->getFocusId($companyId);
- 
- 
-       $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
+       $listofratersClass->addRaterData($companyId, $_POST["rows"][$i]["Rater-first-name"], $_POST["rows"][$i]["Rater-last-name"], $focusID, $_POST["rows"][$i]["Roles"], $_POST["rows"][$i]["Genders"],$_POST["rows"][$i]["department"], $_POST["rows"][$i]["position"], $_POST["rows"][$i]["email"]);
        $listofratersClass->generatePassword($companyId);
- 
- 
- 
-     
-     
- 
    }
-
-
    foreach ($_POST["rows"] as $row) {
     $listofratersClass->sendEmail($companyId, $row["email"]);
   };
   header("Location: welcome.php");
-
   }
 
   // add/edit competency framework
@@ -502,6 +471,8 @@ if (isset($_POST['comp_arr']) && isset($_POST['focusCompId'])) {
     }
 
     $_SESSION[$session_page] = $SESSION_PAGE_ASSESSMENT_REPORT;
+
+    $focus_id = isset($_GET["id"])?$_GET["id"]:"";
 
     include("../views/member/assess360reportView.php");
   }

@@ -2050,6 +2050,7 @@ $language["listofraters_framework_enddate"] = "Ended on";
 $language["listofraters_framework_raters"] = "Raters";
 $language["listofraters_framework_role"] = "Role";
 $language["listofraters_framework_gender"] = "Gender";
+$language["listofraters_framework_department"] = "Department";
 $language["listofraters_framework_position"] = "Position";
 $language["listofraters_framework_email"] = "Email";
 $language["listofraters_framework_firstname"] = "First";
@@ -2074,6 +2075,7 @@ $language["listofraters_data_center_framework_title"] = "Data Center";
 $language["listofraters_data_center_status"] = "Status";
 $language["listofraters_data_center_status_start"] = "Start on";
 $language["listofraters_data_center_status_end"] = "Finish on";
+$language["listofraters_data_center_view_report"] = "View Report";
 
 //focus selection page
 $language["competency_focus_selection_firstname"] = "First Name";

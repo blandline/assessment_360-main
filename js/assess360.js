@@ -671,69 +671,78 @@ var Raterlist = function () {
     var row = table.insertRow(-1);
     var cell1 = row.insertCell(0);
 
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    cell3.colSpan = "2"; //adjust the size of columns to fit the table
-    var cell4 = row.insertCell(3);
-    cell4.colSpan = "2";
-    var cell5 = row.insertCell(4);
-    var cell6 = row.insertCell(5);
-    var cell7 = row.insertCell(6);
-    var cell8 = row.insertCell(7);
-    var cell9 = row.insertCell(8);
-    var cell10 = row.insertCell(9);
-    var cell11 = row.insertCell(10);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        cell3.colSpan = "2"; //adjust the size of columns to fit the table
+        var cell4 = row.insertCell(3);
+        cell4.colSpan = "2";
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+        var cell8 = row.insertCell(7);
+        var cell12 = row.insertCell(8)
+        var cell9 = row.insertCell(9);
+        var cell10 = row.insertCell(10);
+        var cell11 = row.insertCell(11);
+       
+      
 
-    cell1.innerHTML = ""; // row counter is added to give every column a unique name to assist in the php form handling
-    cell2.innerHTML = "";
-    cell3.innerHTML = "";
-    cell4.innerHTML = "";
-    cell5.innerHTML =
-      "<input type='text' name='rows[" +
-      rowcounter +
-      "][Rater-first-name]' style='width: 75px;'>";
-    cell6.innerHTML =
-      "<input type='text' name='rows[" +
-      rowcounter +
-      "][Rater-last-name]' style='width: 75px;'>";
-    cell7.innerHTML =
-      "<select name='rows[" +
-      rowcounter +
-      "][Roles]' id='roles' style='width: 95px; -webkit-appearance: menulist;'><option value='Focus' name='focus_role'>" +
-      lang["listofraters_role_focus"] +
-      "</option><option value='manager' name='manager_role'>" +
-      lang["listofraters_role_manager"] +
-      "</option><option value='colleague' name='colleague_role'>" +
-      lang["listofraters_role_colleague"] +
-      "</option><option value='direct-report' name='direct_report_role'>" +
-      lang["listofraters_role_directreport"] +
-      "</option><option value='Other' name='other_role'>" +
-      lang["listofraters_role_other"] +
-      "</option></select>";
-    cell8.innerHTML =
-      "<select name='rows[" +
-      rowcounter +
-      "][Genders]' id='genders' style='width: 80px; -webkit-appearance: menulist;'><option value='Male' name='male_gender'>" +
-      lang["listofraters_gender_male"] +
-      "</option><option value='Female' name='female_gender'>" +
-      lang["listofraters_gender_female"] +
-      "</option><option value='Other Gender' name='other_gender'>" +
-      lang["listofraters_gender_other"] +
-      "</option></select>";
-    cell9.innerHTML =
-      "<input type='text' name='rows[" +
-      rowcounter +
-      "][position]' style='width: 75px;'>";
-    cell10.innerHTML =
-      "<input type='text' name='rows[" +
-      rowcounter +
-      "][email]' style='width: 80px;'>";
-    cell11.innerHTML =
-      "<button class='btn btn-dark btn-sm addButton raterlist-delete-btn'>" +
-      lang["listofraters_delete_button"] +
-      "</button>";
-    rowcounter++;
-  });
+        cell1.innerHTML = ""; // row counter is added to give every column a unique name to assist in the php form handling
+        cell2.innerHTML = "";
+        cell3.innerHTML = "";
+        cell4.innerHTML = "";
+        cell5.innerHTML =
+            "<input type='text' name='rows[" +
+            rowcounter +
+            "][Rater-first-name]' style='width: 75px;'>";
+        cell6.innerHTML =
+            "<input type='text' name='rows[" +
+            rowcounter +
+            "][Rater-last-name]' style='width: 75px;'>";
+        cell7.innerHTML =
+            "<select name='rows[" +
+            rowcounter +
+            "][Roles]' id='roles' style='width: 95px; -webkit-appearance: menulist;'><option value='Focus' name='focus_role'>" +
+            lang["listofraters_role_focus"] +
+            "</option><option value='manager' name='manager_role'>" +
+            lang["listofraters_role_manager"] +
+            "</option><option value='colleague' name='colleague_role'>" +
+            lang["listofraters_role_colleague"] +
+            "</option><option value='direct-report' name='direct_report_role'>" +
+            lang["listofraters_role_directreport"] +
+            "</option><option value='Other' name='other_role'>" +
+            lang["listofraters_role_other"] +
+            "</option></select>";
+        cell8.innerHTML =
+            "<select name='rows[" +
+            rowcounter +
+            "][Genders]' id='genders' style='width: 80px; -webkit-appearance: menulist;'><option value='Male' name='male_gender'>" +
+            lang["listofraters_gender_male"] +
+            "</option><option value='Female' name='female_gender'>" +
+            lang["listofraters_gender_female"] +
+            "</option><option value='Other Gender' name='other_gender'>" +
+            lang["listofraters_gender_other"] +
+            "</option></select>";
+        cell12.innerHTML =
+            "<input type='text' name='rows[" +
+            rowcounter +
+            "][department]' style='width: 75px;'>";
+            
+            
+        cell9.innerHTML =
+            "<input type='text' name='rows[" +
+            rowcounter +
+            "][position]' style='width: 75px;'>";
+        cell10.innerHTML =
+            "<input type='text' name='rows[" +
+            rowcounter +
+            "][email]' style='width: 80px;'>";
+        cell11.innerHTML =
+            "<button class='btn btn-dark btn-sm addButton raterlist-delete-btn'>" +
+            lang["listofraters_delete_button"] +
+            "</button>";
+        rowcounter++;
+    });
 
   $("body").on("click", ".raterlist-delete-btn", function () {
     // get the parent row of the clicked button
@@ -746,19 +755,50 @@ var Raterlist = function () {
     }
   });
 
-    /*
-            function activate_button(){
-                confirm("Are you sure");
-            }*/
+  $("body").on("click", ".assess360-viewreport", function (event) {
+    event.preventDefault();
+    var focus_id = $(this).attr('id').match(/\[(\d+)\]/)[1];
+          window.location.href = "assess360?a=report&id=" + focus_id;
+  });
 
   jQuery(document).ready(function ($) {
     ac = $("#ac").length > 0 ? $("#ac").val() : -1;
 
-    $("#ac").change(function () {
-      var form = document.createElement("form");
-      form.style.visibility = "hidden";
-      form.method = "POST";
-      form.action = "competency";
+        // var currentYear = new Date().getFullYear();
+        // var option1 = document.createElement("a");
+        // option1.setAttribute("class", "dropdown-item");
+        // option1.setAttribute("href", "#");
+        // option1.innerHTML = currentYear;
+        // option1.onclick = function() {
+        //   printTableByStartYear(option1.innerHTML); // execute the function with the current year as parameter
+         
+        // };
+        // document.getElementById("dropdownMenu").appendChild(option1);
+
+        // var option2 = document.createElement("a");
+        // option2.setAttribute("class", "dropdown-item");
+        // option2.setAttribute("href", "#");
+        // option2.innerHTML = currentYear - 1;
+        // option2.onclick = function() {
+        //   printTableByStartYear(option2.innerHTML); // execute the function with the current year as parameter
+        // };
+        // document.getElementById("dropdownMenu").appendChild(option2);
+
+        // var option3 = document.createElement("a");
+        // option3.setAttribute("class", "dropdown-item");
+        // option3.setAttribute("href", "#");
+        // option3.innerHTML = currentYear - 2;
+        // option3.onclick = function() {
+        //   printTableByStartYear(option3.innerHTML); // execute the function with the current year as parameter
+        // };
+        // document.getElementById("dropdownMenu").appendChild(option3);
+
+
+        $("#ac").change(function () {
+            var form = document.createElement("form");
+            form.style.visibility = "hidden";
+            form.method = "POST";
+            form.action = "competency";
 
       var typeInput = document.createElement("input");
       typeInput.name = "ac";
