@@ -1587,7 +1587,7 @@ public function printTableByStartYear($companyId, $selectedYear) {
         $dbName = $this->memberClass->getCompanyDB();
     }
     // Fetch data from the database
-    $sql = "SELECT * FROM " . $dbName . ".focus WHERE start_date > CURDATE() ORDER BY start_date";
+    $sql = "SELECT * FROM " . $dbName . ".focus WHERE DATE_ADD(start_date, INTERVAL 1 DAY) > CURDATE() ORDER BY start_date";
     $result = $conn->query($sql);
 
     // Generate the HTML table
